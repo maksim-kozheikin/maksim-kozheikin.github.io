@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Максим Кожейкин — Продукт-дизайнер</title>
+<meta name="description" content="Максим Кожейкин — продукт-дизайнер. 7+ лет в FinTech и MedTech. Проектирую продукты и выстраиваю дизайн-команды.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* бесшовные переходы между отдельными страницами */
+@view-transition{navigation:auto}
+::view-transition-old(main-col){animation:fOut .16s ease both}
+::view-transition-new(main-col){animation:fIn .22s ease both}
+@keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
+@keyframes fIn{from{opacity:0;transform:translateY(6px)}}
+
+:root{
+  --bg:#FCFCFD; --surface:#FFFFFF; --ink:#131316; --muted:#6C6C74; --faint:#9A9AA2;
+  --line:#EBEBEF; --accent:#F0523C; --sel:#F1F1F4;
+  /* типографическая шкала — единая на весь сайт */
+  --h1:clamp(1.35rem,1.8vw,1.65rem);   /* имя, лид, заголовок раздела, CV */
+  --h2:clamp(1.1rem,1.5vw,1.3rem);     /* позиция·компания, подзаголовок */
+  --h3:.98rem;                          /* заголовок карточки */
+  --eyebrow:.72rem;                     /* надзаголовки, мета */
+  --sans:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --sidebar-w:clamp(300px,40vw,560px);
+  --pad:clamp(20px,3vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+
+/* ============================================================
+   КОМПОНЕНТЫ — переиспользуются везде. Новых не заводим.
+   .row   — строка списка (проекты, образование, портфолио)
+   .card  — карточка (проблемы, решения, цели, результаты)
+   .shot  — плейсхолдер изображения
+   .chip  — тег
+============================================================ */
+.list{display:flex;flex-direction:column}
+.row{display:flex;gap:12px;align-items:baseline;padding:11px 2px;border-top:1px solid var(--line);
+  transition:padding-left .18s,color .18s}
+.list > .row:last-child,.list > a.row:last-of-type{border-bottom:1px solid var(--line)}
+a.row:hover{padding-left:7px}
+a.row:hover .row-ti{color:var(--accent)}
+.row-yr{flex:0 0 82px;font-size:.82rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.row-ti{font-size:.95rem;line-height:1.4}
+.row-arr{margin-left:auto;color:var(--faint);font-size:1rem;line-height:1;align-self:center;transition:transform .2s,color .2s}
+.chip-tag ~ .row-arr{margin-left:10px}
+a.row:hover .row-arr{transform:translateX(3px)}
+a.row[aria-current="page"] .row-arr{transform:rotate(90deg)}
+a.row[aria-current="page"] .row-ti{color:var(--accent);font-weight:600}
+a.row[aria-current="page"] .row-arr{color:var(--accent)}
+
+.subnav{display:flex;flex-direction:column;padding:4px 0 10px 94px;gap:2px}
+.subnav a{color:var(--muted);font-size:.88rem;transition:color .15s,padding-left .15s}
+.subnav a:hover{color:var(--accent);padding-left:4px}
+.subnav a.active{color:var(--accent);font-weight:600}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h3{font-weight:600;font-size:var(--h3);margin-bottom:9px}
+.card p{color:var(--muted);font-size:.9rem}
+/* метрика — только цифра и подпись, разделение воздухом */
+.card.metric{background:none;border:none;border-radius:0;padding:0;text-align:left}
+.card.metric .num{font-weight:700;font-size:2.2rem;line-height:1.1;letter-spacing:-.03em;color:var(--ink)}
+.card.metric .lbl{font-weight:600;margin-top:5px;font-size:.95rem}
+.card.metric .desc{color:var(--muted);font-size:.85rem;margin-top:6px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
+
+.shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:linear-gradient(135deg,#eef2fb,#f7f9fd);
+  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.85rem;text-align:center;padding:20px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+.caption{color:var(--muted);font-size:.9rem;margin-top:10px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:.85rem;color:var(--muted)}
+.chip-tag{margin-left:auto;padding:3px 10px;font-size:.75rem;flex:0 0 auto}
+.chip-btn{cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+.chip-btn:hover{border-color:var(--accent);color:var(--accent)}
+.chip-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip-life{border-color:var(--accent);color:var(--accent)}
+
+#filters{margin-bottom:16px}
+#filters:empty{display:none}
+a.row .chip-tag + .row-arr{margin-left:10px}
+
+.shell{display:flex;min-height:100vh}
+.sidebar{
+  view-transition-name:side-col;
+  width:var(--sidebar-w);flex:0 0 var(--sidebar-w);position:sticky;top:0;align-self:flex-start;
+  height:100vh;overflow-y:auto;padding:var(--pad);padding-right:clamp(48px,9vw,170px);
+  display:flex;flex-direction:column;gap:24px;background:var(--bg);
+}
+.main{view-transition-name:main-col;flex:1 1 auto;min-width:0;padding:var(--pad);padding-left:clamp(32px,4vw,80px)}
+.main-inner{max-width:820px}
+
+.side-name{font-weight:700;font-size:var(--h1);line-height:1.15;letter-spacing:-.02em}
+.side-role{margin-top:4px;color:var(--muted);font-weight:500;font-size:.95rem}
+.avatar{width:64px;height:64px;border-radius:16px;flex:0 0 auto;background:linear-gradient(135deg,#dfe6ff,#eef1f7);
+  display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--accent);font-size:18px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+
+
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
+.side-links{display:flex;flex-direction:column;gap:2px;font-size:1.02rem}
+.side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
+.side-links a:hover{opacity:.65}
+.side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.segmented{display:flex;gap:2px;background:var(--sel);padding:3px;border-radius:10px}
+.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:.8rem;color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.segmented button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.06)}
+.lang{display:inline-flex;gap:2px;font-size:.8rem;font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
+.lang button{padding:6px 11px;border-radius:7px;color:var(--faint)}
+.lang button[aria-pressed="true"]{color:var(--ink);background:var(--surface);box-shadow:0 1px 2px rgba(20,20,25,.06)}
+
+.about-lead{font-weight:700;font-size:var(--h1);line-height:1.25;letter-spacing:-.02em}
+.about-lead b{color:var(--accent)}
+.about-body{margin-top:18px;color:var(--muted);max-width:56ch;font-size:1.02rem}
+.section{margin-top:clamp(48px,7vh,80px)}
+.section-head{font-weight:700;font-size:var(--h2);line-height:1.2;letter-spacing:-.01em;margin-bottom:20px}
+
+.exp{padding:clamp(64px,10vh,110px) 0 0}
+.exp:first-child{padding-top:0}
+.exp-eyebrow{font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.exp-role{font-weight:700;font-size:var(--h2);line-height:1.2;margin-top:6px;letter-spacing:-.01em}
+.exp-company{color:var(--accent)}
+.exp-summary{margin-top:10px;color:var(--muted)}
+.toggle{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:.92rem}
+.toggle .chev{transition:transform .2s;color:var(--faint)}
+.toggle[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.duties{overflow:hidden;max-height:0;transition:max-height .3s ease}
+.duties-inner{padding-top:14px}
+.duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.duties li{position:relative;padding-left:18px;color:var(--muted);font-size:.96rem}
+.duties li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+/* пункт-подзаголовок (целиком жирный) — без маркера */
+.duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
+.duties li:has(> b:only-child)::before{display:none}
+.case-link{margin-top:10px;display:flex;width:fit-content;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:.95rem}
+.case-link .arr{transition:transform .18s}
+.case-link:hover .arr{transform:translate(2px,-2px)}
+.exp-media{margin-top:20px;border-radius:16px;aspect-ratio:16/10;overflow:hidden;display:flex;align-items:flex-end;padding:20px;border:1px solid var(--line);position:relative}
+.exp-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.exp-media .cap{position:relative;font-weight:700;color:#fff;font-size:1.05rem;text-shadow:0 1px 12px rgba(0,0,0,.25)}
+.exp-media .yrbig{position:absolute;top:16px;right:20px;font-weight:600;color:rgba(255,255,255,.85);font-size:.85rem}
+
+
+
+.cv-view{display:none}
+.cv-view.active{display:block}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:.92rem;margin-bottom:28px}
+.back:hover{color:var(--accent)}
+.cv-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.cv-title{font-weight:700;font-size:var(--h1);letter-spacing:-.02em}
+.cv-sub{color:var(--muted);margin-top:6px}
+.dl-btn{padding:11px 20px;background:var(--accent);color:#fff;border-radius:10px;font-weight:500;white-space:nowrap}
+.cv-block{margin-top:32px}
+.cv-block h3{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.cv-item{padding:12px 0;border-top:1px solid var(--line)}
+.cv-item .r{font-weight:600}
+.cv-item .m{color:var(--muted);font-size:.92rem}
+
+/* work виден всегда; personal добавляется только в режиме Private */
+[data-view="personal"]{display:none}
+body[data-mode="life"] [data-view="personal"]{display:block}
+
+
+
+.topbar{display:none}
+@media (max-width:900px){
+  .shell{flex-direction:column}
+  .topbar{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;padding:14px var(--pad);background:var(--bg);border-bottom:1px solid var(--line)}
+  .tb-name{font-weight:700}
+  .burger{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+  .burger span{width:18px;height:2px;background:var(--ink);border-radius:2px}
+  .sidebar{position:fixed;inset:0 0 0 auto;width:min(88vw,340px);z-index:50;transform:translateX(100%);transition:transform .28s ease;box-shadow:-20px 0 60px rgba(20,20,25,.08)}
+  body.nav-open .sidebar{transform:translateX(0)}
+  .scrim{position:fixed;inset:0;background:rgba(20,20,25,.3);opacity:0;pointer-events:none;transition:.28s;z-index:45}
+  body.nav-open .scrim{opacity:1;pointer-events:auto}
+}
+@media (min-width:901px){.scrim{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.sidebar,.topbar,.scrim,.back,.dl-btn,#home{display:none!important}.cv-view{display:block!important}.main{padding:0}}
+</style>
+</head>
+<body data-mode="work" data-lang="ru">
+
+<div class="topbar">
+  <span class="tb-name">Максим Кожейкин</span>
+  <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div>
+      <div class="side-name" data-i18n="name"></div>
+      <div class="side-role" data-i18n="role"></div>
+    </div>
+
+    <!-- Замени на фото: <div class="avatar"><img src="assets/photo.jpg" alt=""></div> -->
+    <div class="avatar" aria-hidden="true">МК</div>
+
+    <div class="side-bottom">
+      <div class="side-links">
+        <a href="#cv" data-i18n="cv"></a>
+        <a href="mailto:maksim.kozheikin@gmail.com">email</a>
+        <a href="https://t.me/" target="_blank" rel="noopener">telegram</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
+      </div>
+      <div class="side-tabs">
+        <div class="segmented" role="group" aria-label="Mode">
+          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork"></button>
+          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife"></button>
+        </div>
+        <div class="lang" role="group" aria-label="Language">
+          <button data-lang-btn="ru" aria-pressed="true">RU</button>
+          <button data-lang-btn="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-inner">
+      <div id="home">
+        <section id="about">
+          <h1 class="about-lead" data-i18n="lead"></h1>
+          <p class="about-body" data-i18n="bio"></p>
+        </section>
+
+        <section class="section">
+          <div class="chips" id="filters"></div>
+          <nav class="list" id="projects"></nav>
+        </section>
+
+        <section class="section" data-view="work"><div id="experience"></div></section>
+
+        <section class="section" data-view="work">
+          <div class="section-head" data-i18n="eduHead"></div>
+          <div class="list" id="education"></div>
+        </section>
+
+        <section class="section" data-view="work">
+          <div id="skills"></div>
+        </section>
+
+        <section class="section" id="personal-sec" data-view="personal">
+          <div class="section-head" data-i18n="personalHead"></div>
+          <p class="about-body" style="margin-top:0" data-i18n="personalIntro"></p>
+          <div class="cols" id="personal" style="margin-top:24px"></div>
+        </section>
+      </div>
+
+      <div class="cv-view" id="cv-view">
+        <a class="back" href="#" data-i18n="back"></a>
+        <div class="cv-head">
+          <div>
+            <div class="cv-title" data-i18n="name"></div>
+            <div class="cv-sub" data-i18n="roleFull"></div>
+          </div>
+          <button class="dl-btn" onclick="window.print()" data-i18n="download"></button>
+        </div>
+        <div id="cv-body"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   СПИСОК ПРОЕКТОВ = навигация слева.
+   Тот же массив есть в каждом case-*.html — при добавлении
+   проекта допиши строку сюда и в файлы кейсов.
+============================================================ */
+const PROJECTS = [
+  {id:"rwb", tag:"work", yr:"2024 — н.в.", href:"case-rwb.html", ti:{ru:"RWB. Маркетплейс",en:"RWB. Marketplace"}, sections:[]},
+
+  {id:"medsi", tag:"work", yr:"2022–2024", href:"case-medsi.html", ti:{ru:"Medsi Digital",en:"Medsi Digital"},
+   sections:[
+     {a:"tasks",     group:true, ti:{ru:"Задачи Lead UX/UI Designer",en:"Lead UX/UI Designer tasks"}},
+     {a:"team",      ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
+     {a:"research",  ti:{ru:"Исследования",en:"Research"}},
+     {a:"mobile",    group:true, ti:{ru:"Приложение SmartMed",en:"SmartMed app"}},
+     {a:"cabinet",   ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
+     {a:"marketing", ti:{ru:"Маркетинг",en:"Marketing"}}
+   ]},
+
+  {id:"sberpravo", tag:"work", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
+   sections:[
+     {a:"menu",    ti:{ru:"Меню и «Заказы»",en:"Menu & Orders"}},
+     {a:"landing", ti:{ru:"Главный лендинг",en:"Landing page"}},
+     {a:"flow",    ti:{ru:"Путь юзера",en:"User flow"}},
+     {a:"screens", ti:{ru:"Макеты",en:"Screens"}}
+   ]},
+
+  {id:"vtb", tag:"work", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
+  {id:"loko", tag:"work", yr:"2019", href:"case-loko.html", ti:{ru:"Локо Банк",en:"Loko Bank"}, sections:[]},
+  {id:"zephyr", tag:"work", yr:"2017–2018", href:"case-zephyr.html", ti:{ru:"ZephyrLab",en:"ZephyrLab"}, sections:[]}
+];
+
+const STR = {
+  ru:{
+    name:"Максим Кожейкин", role:"Продукт-дизайнер", roleFull:"Senior/Lead UX/UI Designer",
+    lead:'Проектирую продукты в <b>FinTech и MedTech</b> — и выстраиваю дизайн-команды, которые их делают',
+    bio:"Более 7 лет опыта работы продукт-дизайнером в FinTech, MedTech и дизайн-студии. Веду команды и проектирую сам. Люблю дизайн во всех его проявлениях.",
+    modeWork:"Work", modeLife:"Work + Life",
+    cv:"cv", eduHead:"Образование", skillHead:"Навыки", expHead:"Опыт",
+    personalHead:"Личное", personalIntro:"Пет-проекты, фотографии, картины и заметки. Раздел в наполнении.",
+    duties:"Обязанности на рабочем месте", back:"← На главную", download:"Скачать PDF"
+  },
+  en:{
+    name:"Maksim Kozheikin", role:"Product designer", roleFull:"Senior/Lead UX/UI Designer",
+    lead:'I design products in <b>FinTech and MedTech</b> — and build the design teams that ship them',
+    bio:"7+ years as a product designer across FinTech, MedTech and a design studio. I lead teams and design hands-on. I love design in all its forms.",
+    modeWork:"Work", modeLife:"Work + Life",
+    cv:"cv", eduHead:"Education", skillHead:"Skills", expHead:"Experience",
+    personalHead:"Personal", personalIntro:"Pet projects, photography, paintings and notes. In progress.",
+    duties:"Responsibilities", back:"← Back home", download:"Download PDF"
+  }
+};
+
+const EXPERIENCE = [
+  {date:{ru:"Июль 2024 — наст. время",en:"Jul 2024 — present"},
+   role:{ru:"Senior UX/UI Designer",en:"Senior UX/UI Designer"},
+   company:{ru:"RWB",en:"RWB"},
+   summary:{ru:"RWB — крупнейший маркетплейс в России.",en:"RWB — the largest marketplace in Russia."},
+   grad:"linear-gradient(135deg,#7c3aed,#2a5bff)",
+   bullets:{ru:["Заполнить."],en:["To fill."]},
+   case:{href:"case-rwb.html", label:{ru:"Смотреть кейс",en:"View case"}}},
+
+  {date:{ru:"Июнь 2022 - Март 2024",en:"Jun 2022 — Mar 2024"},
+   role:{ru:"Lead UX/UI Designer",en:"Lead UX/UI Designer"},
+   company:{ru:"Medsi Digital",en:"Medsi Digital"},
+   summary:{ru:"Medsi Digital — сервисы для сети клиник МЕДСИ и их пользователей.",en:"Medsi Digital — services for the MEDSI clinic network and its users."},
+   grad:"linear-gradient(135deg,#7fd4e8,#c7b6ff 55%,#8fe3a8)",
+   bullets:{ru:[
+     "<b>Сервисы, над которыми я работал:</b>",
+     "SmartMed — это веб-сайт и приложение на iOS и Android для пациентов. Включает в себя продукты: аптека, запись в клинику, телемедицина, анализы, медкарта с документами и динамикой показателей, личный кабинет, бонусы лояльности и прочее.",
+     "Кабинет врача — это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
+     "Контроль качества — это веб-сервис для \"супер-врачей\", чтобы отслеживать корректность выполнения работ другими врачами. Включает продукты: медицинский контроль, аудит, экспертный контроль.",
+     "Админка — это веб-сервис для управления всеми другими сервисами.",
+     "<b>Как Lead UX/UI Designer</b>",
+     "Одна из основных задач — создание команды дизайна в компании. Сформировал команду из пяти дизайнеров, менторил джунов. Ввел скрам-практики: онбординг, ретро, демо, дэйли и прочее. Создал базу знаний для команды в YouTrack.",
+     "Осуществлял поддержку и развитие всех вышеупомянутых продуктов и сервисов.",
+     "В сотрудничестве с продактами и CPO накидывали идеи для развития сервисов, помогал с разработкой концепций и новых фичей, основываясь на потребностях бизнеса и обратной связи от пользователей.",
+     "Разработал концепцию дизайна приложения, которая объединила различные продукты в единую визуальную систему. Это позволило нашей платформе выглядеть консистентно и современно в глазах пользователей и положительно выделяться на фоне конкурентов.",
+     "Создал и поддерживал дизайн-систему в тесном сотрудничестве с фронтенд-разработчиками, что ускорело процесс разработки. Позже нанял дизайнера, который занимался только дизайн-системой.",
+     "Благодаря быстрым качественным UX-исследованиям, улучшил процесс записи, что значительно уменьшило нагрузку на колл-центр, тем самым экономя деньги для компании.",
+     "Принимая участие в процессе найма, помог отделу HR с описанием и оформлением вакансий с точки зрения дизайнеров, которые могут рассматривать нашу компанию как потенциального работодателя.",
+     "Содействовал созданию и визуализации маркетинговых кампаний: рассылки, строиз, лендинги с интерактивами к большим праздникам, что привлекло новых клиентов и укрепило лояльность уже существующих пользователей.",
+     "Регулярно выступал с отчетными презентациями перед руководством компании и коллегами из различных команд."],
+    en:[
+     "<b>Products I worked on:</b>",
+     "SmartMed — a website and iOS/Android app for patients: pharmacy, clinic booking, telemedicine, lab tests, medical records with documents and metrics, personal account, loyalty points and more.",
+     "Doctor’s workspace — a web service for call-center staff and doctors seeing patients: schedule, reports, appointment flow and more.",
+     "Quality control — a web service for senior doctors to audit the work of other doctors: medical control, audit, expert review.",
+     "Admin — a web service to manage all other services.",
+     "<b>As Lead UX/UI Designer</b>",
+     "One of the main tasks was building the design team. I formed a team of five designers and mentored juniors. Introduced scrum practices: onboarding, retro, demo, daily. Built a team knowledge base in YouTrack.",
+     "Supported and grew all of the products and services above.",
+     "With PMs and the CPO we generated ideas for the services; I helped shape concepts and new features based on business needs and user feedback.",
+     "Created an app design concept that unified the different products into one visual system. This made our platform look consistent and modern to users and stand out against competitors.",
+     "Built and maintained a design system in close collaboration with front-end developers, which sped up development. Later hired a designer dedicated to the design system.",
+     "Thanks to fast, high-quality UX research I improved the booking flow, which significantly reduced call-center load and saved the company money.",
+     "Taking part in hiring, I helped HR describe and present vacancies from a designer’s point of view.",
+     "Contributed to creating and visualising marketing campaigns: newsletters, stories, interactive holiday landing pages, which attracted new clients and strengthened loyalty of existing users.",
+     "Regularly presented results to company leadership and colleagues from different teams."]},
+   case:{href:"case-medsi.html", label:{ru:"Смотреть кейсы",en:"View cases"}}},
+
+  {date:{ru:"Февраль 2021 - Апрель 2022",en:"Feb 2021 — Apr 2022"},
+   role:{ru:"Senior → Lead UX/UI Designer",en:"Senior → Lead UX/UI Designer"},
+   company:{ru:"СберПраво",en:"SberPravo"},
+   summary:{ru:"СберПраво — Онлайн-сервис юридической помощи.",en:"SberPravo — an online legal help service."},
+   grad:"linear-gradient(135deg,#2a9d8f,#4fc3dc)",
+   bullets:{ru:[
+     "Продукт представлен на платформах: веб-сайт с адаптивным дизайном и мобильные приложения для iOS и Android. Продукт включает несколько ролей: сторону заказчика, сторону исполнителя и сторону администратора.",
+     "<b>Как Senior UX/UI Designer</b>",
+     "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
+     "Создал дизайн-систему для дальнейшего масштабирования продукта.",
+     "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы.",
+     "<b>Как Lead UX/UI Designer</b>",
+     "К моим обязанностям добавилось проведение исследований, результаты которых я представил в портфолио в виде кейсов. Занимался менторством одного дизайнера, распределял задачи и проводил ревью выполненных работ.",
+     "Активно участвовал в планировании продукта, определении ключевых потребностей пользователей и бизнес-целей. Настроил тесное взаимодействие между дизайном и разработкой для корректной реализации дизайна. Подготавливал презентации с результатами работы для бизнеса и коллег по команде.",
+     "Во время работы нам успешно удалось запустить продукт, получив 10 тысяч заказов. Мы также собрали обратную связь и приступили к исправлению ошибок."],
+    en:[
+     "The product runs on responsive web plus iOS and Android apps. It has several roles: client, professional and admin.",
+     "<b>As Senior UX/UI Designer</b>",
+     "The task was to grow the product across all platforms. I designed solutions together with the design lead.",
+     "Built a design system for further scaling of the product.",
+     "Created a user flow map, which helped analysts find bugs, new colleagues understand the system logic, and developers estimate upcoming work.",
+     "<b>As Lead UX/UI Designer</b>",
+     "Research was added to my duties; the results are presented as case studies in this portfolio. I mentored one designer, distributed tasks and reviewed completed work.",
+     "Actively took part in product planning, defining key user needs and business goals. Set up close collaboration between design and development. Prepared presentations of results for the business and the team.",
+     "During my time there we successfully launched the product and reached 10,000 orders. We also collected feedback and started fixing issues."]},
+   case:{href:"case-sberpravo.html", label:{ru:"Смотреть кейсы",en:"View cases"}}},
+
+  {date:{ru:"Февраль 2020 - Февраль 2021",en:"Feb 2020 — Feb 2021"},
+   role:{ru:"Senior UX/UI Designer",en:"Senior UX/UI Designer"},
+   company:{ru:"Банк ВТБ",en:"VTB Bank"},
+   summary:{ru:"Банк ВТБ — Платформа онлайн-банкинга для юридических лиц.",en:"VTB Bank — online banking platform for businesses."},
+   grad:"linear-gradient(135deg,#1e63c4,#5aa0ff)",
+   bullets:{ru:[
+     "Разрабатывал веб-интерфейсы платформы онлайн-банкинга для юридических лиц. Совместно с аналитиками и продактами участвовал в создании пользовательских сценариев. Осуществлял контроль за реализацией дизайна командой из 8 разработчиков.",
+     "В процессе работы над продуктом коллеги отметили ускорение и предсказуемость сроков поставки дизайна. Внедрение новых функций и исправление логических ошибок в текущих сценариях повысили лояльность существующих пользователей. Упрощение авторизации и открытия счетов увеличило число новых пользователей на 15%."],
+    en:[
+     "Designed web interfaces for the business online-banking platform. Created user scenarios together with analysts and PMs. Oversaw design implementation by a team of 8 developers.",
+     "Colleagues noted faster and more predictable design delivery. New features and fixes to logical errors in existing scenarios improved loyalty among existing users. Simplifying sign-in and account opening increased new users by 15%."]},
+   case:{href:"case-vtb.html", label:{ru:"Смотреть макеты",en:"View screens"}}},
+
+  {date:{ru:"Апрель 2019 - Март 2020",en:"Apr 2019 — Mar 2020"},
+   role:{ru:"Middle UX/UI Designer",en:"Middle UX/UI Designer"},
+   company:{ru:"Локо Банк",en:"Loko Bank"},
+   summary:{ru:"Локо Банк — Мобильное приложения для юридических лиц.",en:"Loko Bank — mobile app for business clients."},
+   grad:"linear-gradient(135deg,#f2b705,#f57c00)",
+   bullets:{ru:[
+     "Моя основная задача заключалась в редизайне мобильного приложения для iOS и Android. Редизайн требовался из-за устаревшего дизайна, отсутствия важных функций и сложной навигации.",
+     "Провел офлайн встречи с пользователями, что помогло выявить конкретные проблемы в навигации. Также проведя анализ конкурентов, показал бизнесу дополнительные возможные функции и получил одобрение для их проработки.",
+     "Создал дизайн-систему, которая упростила взаимодействие между разработчиками и дизайнерами, ускорив процесс разработки и сроки выхода продукта на рынок.",
+     "После релиза новой версии количество пользователей возросло на 30 тысяч, а в рейтинге «Markswebb» приложение поднялось с 25-го на 7-е место."],
+    en:[
+     "My main task was redesigning the iOS and Android app. The redesign was needed because of outdated design, missing key features and complex navigation.",
+     "Ran offline sessions with users, which helped identify specific navigation problems. A competitor analysis showed the business additional possible features and I got approval to work on them.",
+     "Created a design system that simplified collaboration between developers and designers, speeding up development and time to market.",
+     "After the release of the new version the user base grew by 30,000, and in the Markswebb ranking the app rose from 25th to 7th place."]},
+   case:{href:"case-loko.html", label:{ru:"Смотреть макеты",en:"View screens"}}},
+
+  {date:{ru:"Апрель 2017 - Декабрь 2018",en:"Apr 2017 — Dec 2018"},
+   role:{ru:"Junior → Middle UX/UI Designer",en:"Junior → Middle UX/UI Designer"},
+   company:{ru:"ZephyrLAB",en:"ZephyrLAB"},
+   summary:{ru:"ZephyrLAB — Дизайн студия.",en:"ZephyrLAB — design studio."},
+   grad:"linear-gradient(135deg,#3a3a44,#6b6b78)",
+   bullets:{ru:[
+     "В роли начинающего дизайнера мои обязанности включали быстрый поиск референсов, создание первичных дизайн-концепций, прототипирование и поддержка существующих проектов. Мобильные приложения, сайты, адаптивы, crm-системы, интернет магазины, лендинги и тд.",
+     "Работая в условиях жестких сроков и находясь в окружении более опытных коллег, я научился эффективно распределять свое время и значительно улучшил свои навыки в дизайне.",
+     "С течением времени лид дизайнер начал доверять мне выполнение более сложных задач, которые я успешно завершал — от этапа работы с аналитиком до этапа дизайн-ревью готового продукта.",
+     "Работа в команде показала мне ценность дружелюбной атмосферы для достижения лучших результатов. Также я понял, что обратная связь от лид дизайнера и коллег представляет собой не критику меня, а инструмент для развития и совершенствования моих профессиональных качеств)"],
+    en:[
+     "As a junior designer my duties included quickly finding references, creating first design concepts, prototyping and supporting existing projects. Mobile apps, websites, responsive layouts, CRM systems, online stores, landing pages and so on.",
+     "Working under tight deadlines surrounded by more experienced colleagues, I learned to manage my time effectively and significantly improved my design skills.",
+     "Over time the design lead began trusting me with more complex tasks, which I completed successfully — from working with the analyst to the design review of the finished product.",
+     "Working in a team showed me the value of a friendly atmosphere for achieving better results. I also realised that feedback from the lead and colleagues is not criticism of me, but a tool for growth."]},
+   case:{href:"case-zephyr.html", label:{ru:"Смотреть макеты",en:"View screens"}}},
+
+  {date:{ru:"Май 2016 - Март 2017",en:"May 2016 — Mar 2017"},
+   role:{ru:"Junior UX/UI Designer",en:"Junior UX/UI Designer"},
+   company:{ru:"Фриланс",en:"Freelance"},
+   summary:{ru:"Фриланс. Студия дизайна. Дизайнерское образование.",en:"Freelance. Design studio. Design education."},
+   grad:"linear-gradient(135deg,#5b6470,#98a2ad)",
+   bullets:{ru:[],en:[]},
+   case:{href:"https://www.behance.net/maksimdesigner", label:{ru:"2016. Проекты на Behance",en:"2016. Projects on Behance"}}}
+];
+
+const EDUCATION = [
+  {yr:"2020", ti:{ru:"Бюро Горбунова — «Пользовательский интерфейс и представление информации»",en:"Gorbunov Bureau — Interface & information design"}},
+  {yr:"2017", ti:{ru:"Moscow Digital Academy — «Digital, UX/UI»",en:"Moscow Digital Academy — Digital, UX/UI"}},
+  {yr:"2016", ti:{ru:"Онлайн-курс Данилы Фимушина — «Design:GYM 3.0»",en:"Design:GYM 3.0"}},
+  {yr:"2016", ti:{ru:"Школа веб-дизайна М. Солдатчина — «Веб-дизайн. Исследование»",en:"Web design school — Research"}},
+  {yr:"2014", ti:{ru:"Курский госуниверситет — «Бакалавр технологического образования»",en:"Kursk State University — B.Sc."}}
+];
+
+const SKILLS = {
+  tools:["Figma","Miro","Sketch","Photoshop","Illustrator","Principle","InVision","Jira","YouTrack"],
+  methods:["Research","Prototyping","CJM","JTBD","Design Thinking","GMD","HIG"],
+  langs:{ru:["Русский — родной","Английский — B2"],en:["Russian — native","English — B2"]},
+  /* появляются только в режиме Work + Life */
+  life:{
+    ru:["Горные лыжи","Граффити","Керамика","Фотография","Живопись","Вайбкодинг","Путешествия"],
+    en:["Skiing","Graffiti","Ceramics","Photography","Painting","Vibecoding","Travel"]
+  }
+};
+
+/* Личные разделы — появляются в режиме Work + Life */
+const PERSONAL_PROJECTS = [
+  {id:"pets",     tag:"pet",      yr:"2023 — н.в.", href:"#personal-sec", ti:{ru:"Пет-проекты",en:"Pet projects"}},
+  {id:"graffiti", tag:"graffiti", yr:"—",           href:"#personal-sec", ti:{ru:"Граффити",en:"Graffiti"}},
+  {id:"photo",    tag:"photo",    yr:"—",           href:"#personal-sec", ti:{ru:"Фотография",en:"Photography"}},
+  {id:"ceramics", tag:"ceramics", yr:"—",           href:"#personal-sec", ti:{ru:"Керамика",en:"Ceramics"}},
+  {id:"paint",    tag:"paint",    yr:"—",           href:"#personal-sec", ti:{ru:"Картины",en:"Paintings"}},
+  {id:"blog",     tag:"blog",     yr:"—",           href:"#personal-sec", ti:{ru:"Блог",en:"Blog"}}
+];
+
+/* Подписи тегов */
+const TAGS = {
+  work:     {ru:"Работа",     en:"Work"},
+  pet:      {ru:"Пет-проекты",en:"Pet projects"},
+  graffiti: {ru:"Граффити",   en:"Graffiti"},
+  photo:    {ru:"Фото",       en:"Photo"},
+  ceramics: {ru:"Керамика",   en:"Ceramics"},
+  paint:    {ru:"Картины",    en:"Paintings"},
+  blog:     {ru:"Блог",       en:"Blog"}
+};
+
+const PERSONAL = [
+  {t:{ru:"Пет-проекты",en:"Pet projects"}, d:{ru:"Продукты, которые делаю для себя.",en:"Products I build for myself."}},
+  {t:{ru:"Фотография",en:"Photography"}, d:{ru:"Снимки из поездок и повседневности.",en:"Shots from travels and daily life."}},
+  {t:{ru:"Картины",en:"Paintings"}, d:{ru:"То, что рисую вне экрана.",en:"What I paint away from the screen."}},
+  {t:{ru:"Блог",en:"Blog"}, d:{ru:"Заметки о дизайне и не только.",en:"Notes on design and beyond."}}
+];
+
+
+/* ============================================================
+   ТИПОГРАФИКА: убираем висячие предлоги.
+   Текст не меняется — только пробел после коротких слов
+   становится неразрывным, чтобы они не висели в конце строки.
+============================================================ */
+const SHORT_WORDS = [
+  // предлоги
+  "в","во","на","за","к","ко","с","со","о","об","обо","от","ото","по","до","из","изо",
+  "у","для","при","про","над","под","без","перед","через","между","около","среди","после",
+  // союзы и частицы
+  "и","а","но","ни","не","же","ли","бы","то","что","как","чтобы","или","либо","если","так",
+  // местоимения
+  "я","мы","он","она","оно","они","их","его","её","мой","моя","моё","наш","эта","это","этот","все","всё",
+  // англ.
+  "a","an","the","in","on","at","to","of","for","and","or","with","by","from","as","is","are","was","we","i","it","my","our"
+];
+
+function fixOrphans(root){
+  if(!root) return;
+  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")\\s+", "gi");
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    let t = n.nodeValue;
+    if(!t || !t.trim()) return;
+    // короткие слова склеиваем со следующим
+    let prev;
+    do { prev = t; t = t.replace(re, (m,a,w)=> a + w + "\u00A0"); } while(t !== prev);
+    // тире не должно начинать строку
+    t = t.replace(/\s+([—–])\s/g, "\u00A0$1 ");
+    // разряды в числах не рвутся: 10 000
+    t = t.replace(/(\d)\s(?=\d{3}\b)/g, "$1\u00A0");
+    if(t !== n.nodeValue) n.nodeValue = t;
+  });
+}
+
+/* ---------- рендер ---------- */
+let LANG = (()=>{try{return localStorage.getItem("lang")||"ru"}catch(e){return "ru"}})();
+const t=k=>STR[LANG][k];
+const $=s=>document.querySelector(s);
+
+function fillI18n(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n");
+    if(STR[LANG][k]!==undefined) el.innerHTML=STR[LANG][k];
+  });
+}
+let FILTER = "all";
+
+function renderProjects(){
+  const life = document.body.getAttribute("data-mode")==="life";
+  const all = life ? [...PROJECTS, ...PERSONAL_PROJECTS] : PROJECTS;
+  const items = (FILTER==="all") ? all : all.filter(p=>p.tag===FILTER);
+
+  $("#projects").innerHTML = items.map(p=>`
+    <a class="row" href="${p.href}">
+      <span class="row-yr">${p.yr}</span>
+      <span class="row-ti">${p.ti[LANG]}</span>
+      ${life ? `<span class="chip chip-tag">${TAGS[p.tag][LANG]}</span>` : ""}
+      <span class="row-arr">›</span>
+    </a>`).join("");
+
+  // фильтры — только в режиме Work + Life
+  const box = $("#filters");
+  if(!life){ box.innerHTML=""; return; }
+  const tags = ["all", ...new Set(all.map(p=>p.tag))];
+  box.innerHTML = tags.map(t=>
+    `<button class="chip chip-btn" data-filter="${t}" aria-pressed="${FILTER===t}">${
+      t==="all" ? (LANG==="ru"?"Все":"All") : TAGS[t][LANG]}</button>`).join("");
+  box.querySelectorAll("[data-filter]").forEach(b=>
+    b.addEventListener("click",()=>{ FILTER=b.getAttribute("data-filter"); renderProjects(); }));
+}
+function renderExperience(){
+  $("#experience").innerHTML = EXPERIENCE.map((e,i)=>`
+    <article class="exp">
+      <div class="exp-eyebrow">${e.date[LANG]}</div>
+      <h3 class="exp-role">${e.role[LANG]} · <span class="exp-company">${e.company[LANG]}</span></h3>
+      <p class="exp-summary">${e.summary[LANG]}</p>
+      <button class="toggle" aria-expanded="false" data-toggle="${i}"><span class="chev">›</span><span>${t("duties")}</span></button>
+      <div class="duties" id="duties-${i}"><div class="duties-inner">
+        <ul>${e.bullets[LANG].map(b=>`<li>${b}</li>`).join("")}</ul></div></div>
+      <a class="case-link" href="${e.case.href}">${e.case.label[LANG]}<span class="arr">↗</span></a>
+      <div class="exp-media" style="background:${e.grad}">
+        <span class="yrbig">${e.date[LANG].match(/\d{4}/)?.[0]||""}</span>
+        <span class="cap">${e.company[LANG]}</span>
+      </div>
+    </article>`).join("");
+  document.querySelectorAll("[data-toggle]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const i=btn.getAttribute("data-toggle"), dv=$("#duties-"+i);
+      const open=btn.getAttribute("aria-expanded")==="true";
+      btn.setAttribute("aria-expanded",String(!open));
+      dv.style.maxHeight = open ? "0" : dv.scrollHeight+"px";
+    });
+  });
+}
+function renderEducation(){
+  $("#education").innerHTML = EDUCATION.map(e=>
+    `<div class="row"><span class="row-yr">${e.yr}</span><span class="row-ti">${e.ti[LANG]}</span></div>`).join("");
+}
+function renderSkills(){
+  const life = document.body.getAttribute("data-mode")==="life";
+  const pro = [...SKILLS.tools,...SKILLS.methods,...SKILLS.langs[LANG]];
+  const proHtml = pro.map(x=>`<span class="chip">${x}</span>`).join("");
+  const lifeHtml = life
+    ? SKILLS.life[LANG].map(x=>`<span class="chip chip-life">${x}</span>`).join("")
+    : "";
+  $("#skills").innerHTML = `<div class="chips">${proHtml}${lifeHtml}</div>`;
+}
+function renderPersonal(){
+  $("#personal").innerHTML = PERSONAL.map(p=>
+    `<div class="card"><h3>${p.t[LANG]}</h3><p>${p.d[LANG]}</p></div>`).join("");
+}
+function renderCV(){
+  const exp=EXPERIENCE.map(e=>`<div class="cv-item"><div class="r">${e.role[LANG]} — ${e.company[LANG]}</div>
+    <div class="m">${e.date[LANG]}. ${e.summary[LANG]}</div></div>`).join("");
+  const edu=EDUCATION.map(e=>`<div class="cv-item"><div class="r">${e.ti[LANG]}</div><div class="m">${e.yr}</div></div>`).join("");
+  $("#cv-body").innerHTML=`
+    <div class="cv-block"><h3>${LANG==="ru"?"О себе":"About"}</h3><p style="color:var(--muted);max-width:60ch">${t("bio")}</p></div>
+    <div class="cv-block"><h3>${t("expHead")}</h3>${exp}</div>
+    <div class="cv-block"><h3>${t("eduHead")}</h3>${edu}</div>
+    <div class="cv-block"><h3>${t("skillHead")}</h3>
+      <p style="color:var(--muted)">${[...SKILLS.tools,...SKILLS.methods].join(" · ")}</p>
+      <p style="color:var(--muted);margin-top:8px">${SKILLS.langs[LANG].join(" · ")}</p></div>`;
+}
+function renderAll(){fillI18n();renderProjects();renderExperience();renderEducation();renderSkills();renderPersonal();renderCV();fixOrphans(document.querySelector(".main"));fixOrphans(document.querySelector(".sidebar"));}
+
+function setMode(m){
+  document.body.setAttribute("data-mode",m);
+  try{localStorage.setItem("mode",m)}catch(e){}
+  document.querySelectorAll("[data-mode-btn]").forEach(b=>
+    b.setAttribute("aria-pressed",String(b.getAttribute("data-mode-btn")===m)));
+  FILTER="all";
+  renderProjects();   // список зависит от режима
+  renderSkills();     // навыки тоже
+}
+function setLang(l){
+  LANG=l; document.documentElement.lang=l;
+  document.querySelectorAll("[data-lang-btn]").forEach(b=>
+    b.setAttribute("aria-pressed",String(b.getAttribute("data-lang-btn")===l)));
+  try{localStorage.setItem("lang",l)}catch(e){}
+  renderAll();
+}
+document.querySelectorAll("[data-mode-btn]").forEach(b=>
+  b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));
+document.querySelectorAll("[data-lang-btn]").forEach(b=>
+  b.addEventListener("click",()=>setLang(b.getAttribute("data-lang-btn"))));
+
+function route(){
+  const cv=location.hash.startsWith("#cv");
+  $("#cv-view").classList.toggle("active",cv);
+  $("#home").style.display=cv?"none":"block";
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+
+$("#burger").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
+$("#scrim").addEventListener("click",()=>document.body.classList.remove("nav-open"));
+$("#sidebar").addEventListener("click",e=>{if(e.target.closest("a"))document.body.classList.remove("nav-open")});
+
+setLang(LANG);
+setMode((()=>{try{return localStorage.getItem("mode")||"work"}catch(e){return "work"}})());
+route();
+</script>
+</body>
+</html>
