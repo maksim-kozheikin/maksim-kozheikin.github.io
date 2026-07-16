@@ -18,11 +18,20 @@
 :root{
   --bg:#FCFCFD; --surface:#FFFFFF; --ink:#131316; --muted:#6C6C74; --faint:#9A9AA2;
   --line:#EBEBEF; --panel:#F4F4F7; --accent:#F0523C; --sel:#F1F1F4;
-  /* типографическая шкала — единая на весь сайт */
-  --h1:clamp(1.35rem,1.8vw,1.65rem);   /* имя, лид, заголовок раздела, CV */
-  --h2:clamp(1.1rem,1.5vw,1.3rem);     /* позиция·компания, подзаголовок */
-  --h3:.98rem;                          /* заголовок карточки */
-  --eyebrow:.72rem;                     /* надзаголовки, мета */
+  /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
+     --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
+     --h2  Заголовок кейса:    «Расписание», «Главный экран»
+           Заголовок страницы: «Lead UX/UI Designer · Medsi Digital»
+     --h3  Подзаголовок:       «Проблемы», «Результат»
+     --text  Основной текст:   пункты списков, описания, обязанности
+     --small Вторичный текст:  чипы, подписи, навигация, мета
+     --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
+  --h1:clamp(2rem,3.4vw,2.9rem);
+  --h2:clamp(1.25rem,1.7vw,1.5rem);
+  --h3:1.02rem;
+  --text:.98rem;
+  --small:.88rem;
+  --eyebrow:.72rem;
   --sans:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
   --sidebar-w:clamp(300px,40vw,560px);
   --pad:clamp(20px,3vw,40px);
@@ -47,48 +56,60 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .list > .row:last-child,.list > a.row:last-of-type{border-bottom:1px solid var(--line)}
 a.row:hover{padding-left:7px}
 a.row:hover .row-ti{color:var(--accent)}
-.row-yr{flex:0 0 82px;font-size:.82rem;color:var(--faint);font-variant-numeric:tabular-nums}
-.row-ti{font-size:.95rem;line-height:1.4}
-.row-arr{margin-left:auto;color:var(--faint);font-size:1rem;line-height:1;align-self:center;transition:transform .2s,color .2s}
+.row-yr{flex:0 0 82px;font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.row-ti{font-size:var(--text);line-height:1.4}
+.row-arr{margin-left:auto;color:var(--faint);font-size:var(--text);line-height:1;align-self:center;transition:transform .2s,color .2s}
 a.row:hover .row-arr{transform:translateX(3px)}
 a.row[aria-current="page"] .row-arr{transform:rotate(90deg)}
 a.row[aria-current="page"] .row-ti{color:var(--accent);font-weight:600}
 a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 .subnav{display:flex;flex-direction:column;padding:4px 0 10px 94px;gap:2px}
-.subnav a{color:var(--muted);font-size:.88rem;transition:color .15s,padding-left .15s}
+.subnav a{color:var(--muted);font-size:var(--small);transition:color .15s,padding-left .15s}
 .subnav a:hover{color:var(--accent);padding-left:4px}
 .subnav a.active{color:var(--accent);font-weight:600}
-.subnav a.grp{color:var(--ink);font-weight:600;margin-top:6px}
-.subnav a.grp:first-child{margin-top:0}
-.subnav a:not(.grp){padding-left:12px}
+
+/* разделы — тихие рубрики (eyebrow, уже есть в системе), кейсы — основной текст */
+.subnav a.grp{color:var(--muted);font-size:var(--small)}
+.subnav a.grp:hover{color:var(--accent)}
+.subnav a.cs{display:flex;gap:8px;align-items:baseline;color:var(--faint);font-size:var(--small)}
+.subnav a.cs:hover{color:var(--accent)}
+.subnav a.cs .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums;font-size:var(--small)}
+.subnav a.active{color:var(--accent)}
+
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
 .card h3{font-weight:600;font-size:var(--h3);margin-bottom:9px}
-.card p{color:var(--muted);font-size:.9rem}
+.card p{color:var(--muted);font-size:var(--text)}
 /* метрика — только цифра и подпись, разделение воздухом */
 .card.metric{background:none;border:none;border-radius:0;padding:0;text-align:left}
-.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:36px 48px;margin-top:24px}
-.card.metric .num{font-weight:700;font-size:2.2rem;line-height:1.1;letter-spacing:-.03em;color:var(--ink)}
-.card.metric .lbl{color:var(--muted);font-size:.92rem;margin-top:10px;font-weight:400;line-height:1.45;max-width:26ch}
-.card.metric .desc{color:var(--muted);font-size:.92rem;font-weight:400;line-height:1.4}
+.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 40px;margin-top:20px}
+.card.metric .num{display:inline;font-weight:600;font-size:var(--text);color:var(--ink)}
+.card.metric .lbl{display:inline;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5}
+.card.metric .desc{display:none}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
 /* пункты внутри кейса */
 .points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
-.points li{position:relative;padding-left:20px;color:var(--muted);font-size:.98rem}
-.points li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
 .points li b{color:var(--ink);font-weight:600}
+
+/* маркер по умолчанию ✦; в «Проблемах» — точка */
+.points.cross li::before{content:"";top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
 
 /* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
 .points.inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;max-width:none;margin-top:20px}
-.points.inline li{padding-left:20px;color:var(--ink);font-weight:500;font-size:.95rem;line-height:1.45}
+/* длинные пункты — шире колонка, чтобы не превращались в лапшу */
+.points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
+.points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
 .points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
   border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55}
 
 .shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
-  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.85rem;text-align:center;padding:20px}
+  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
 .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
-.caption{color:var(--muted);font-size:.9rem;margin-top:10px}
+.caption{color:var(--muted);font-size:var(--small);margin-top:10px}
 /* изображения в ряд: одинаковая высота, ширина по пропорции, без обрезки */
 .figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
 .fig{margin:0;min-width:0;flex:1 1 0}
@@ -126,8 +147,8 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 }
 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:.85rem;color:var(--muted)}
-.jtbd{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:var(--small);color:var(--muted)}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
 .jtbd b{color:var(--ink);font-weight:600}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:24px}
 .gallery .shot{aspect-ratio:3/4}
@@ -137,7 +158,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .company-logo{width:56px;height:56px;border-radius:14px;display:block;margin-bottom:20px}
 
 /* шапка страницы = блок опыта с главной (переиспользуем) */
-.exp-eyebrow{font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.exp-eyebrow{font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
 .exp-role{font-weight:700;font-size:var(--h1);line-height:1.2;margin-top:6px;letter-spacing:-.02em}
 .exp-company{color:var(--accent)}
 .exp-summary{margin-top:10px;color:var(--muted)}
@@ -147,7 +168,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
   background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
 .duties.open::after{opacity:0}
-.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:.92rem}
+.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:var(--small)}
 .duties-more .chev{transition:transform .2s}
 .duties-more:hover .chev{transform:translateY(2px)}
 .duties-more.hidden{display:none}
@@ -155,25 +176,25 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .achievements{margin-top:clamp(36px,5vh,52px)}
 .section-head{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
 /* шапка отделена от кейсов */
-.head-sep{margin-top:clamp(24px,4vh,40px)}
+.head-sep{margin-top:clamp(120px,16vh,200px)}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
-.duties li{position:relative;padding-left:18px;color:var(--muted);font-size:.96rem}
-.duties li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}
 
 
 .side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
-.side-links{display:flex;flex-direction:column;gap:2px;font-size:1.02rem}
+.side-links{display:flex;flex-direction:column;gap:2px;font-size:var(--text)}
 .side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
 .side-links a:hover{opacity:.65}
 .side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .segmented{display:flex;gap:2px;background:var(--sel);padding:3px;border-radius:10px}
-.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:.8rem;color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:var(--eyebrow);color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
 .segmented button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.06)}
-.lang{display:inline-flex;gap:2px;font-size:.8rem;font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
+.lang{display:inline-flex;gap:2px;font-size:var(--eyebrow);font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
 .lang button{padding:6px 11px;border-radius:7px;color:var(--faint)}
 .lang button[aria-pressed="true"]{color:var(--ink);background:var(--surface);box-shadow:0 1px 2px rgba(20,20,25,.06)}
 
@@ -183,7 +204,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .main{view-transition-name:main-col;flex:1 1 auto;min-width:0;padding:var(--pad);padding-left:clamp(32px,4vw,80px)}
 .main-inner{max-width:820px}
 
-.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:.92rem}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:var(--small)}
 .back:hover{color:var(--accent)}
 
 
@@ -191,38 +212,45 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 /* блок = один раздел */
 /* кейс — без подложки, разделение воздухом */
-.block{margin-top:120px;scroll-margin-top:20px}
+/* новый раздел (группа) — большой отступ */
+.block.group{margin-top:200px;position:relative}
+/* цветная полоска-разделитель между разделами */
+.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group:first-of-type::before{display:none}
+.block.group:first-of-type{margin-top:0}
+.block.group .block-title{font-size:var(--h1);letter-spacing:-.03em}
 
-/* группа = заголовок для кейсов ниже */
-.block.group{margin-top:120px}
-.block.group .block-title{font-size:clamp(1.7rem,2.6vw,2.2rem);letter-spacing:-.03em}
-.block.group + .block{margin-top:80px}   /* первый кейс группы ближе к своей группе */
+/* кейс внутри раздела — средний отступ */
+.block{margin-top:140px;scroll-margin-top:20px}
+
+/* первый кейс сразу под своим разделом — ближе */
+.block.group + .block:not(.group){margin-top:88px}   /* первый кейс под разделом; группа после группы сохраняет 200px */
 .block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.block-title{font-weight:700;font-size:var(--h1);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
+.block-title{font-weight:700;font-size:var(--h2);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
 .block-lead{color:var(--muted);margin-top:10px;max-width:60ch}
 
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 26px;margin-top:24px;padding:22px 0;border-top:1px solid rgba(19,19,22,.08);border-bottom:1px solid rgba(19,19,22,.08)}
-.meta h4{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
-.meta p{font-size:.92rem}
+.meta h4{font-size:var(--eyebrow);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
+.meta p{font-size:var(--small)}
 .meta .dim{color:var(--muted)}
-.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:.8rem;padding:3px 9px;border-radius:20px;margin-top:4px}
+.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:var(--small);padding:3px 9px;border-radius:20px;margin-top:4px}
 
 .sub{margin-top:16px}                 /* внутреннее: подсекция под заголовком */
 .sub + .sub{margin-top:40px}          /* внешнее: между подсекциями */
 .sub > *:first-child{margin-top:0}    /* первый элемент подсекции не отрывается */
 .sub > .points:first-child{margin-top:0}  /* список сразу под заголовком блока */
-.sub-title{font-weight:700;font-size:var(--h2);letter-spacing:-.01em}
+.sub-title{font-weight:700;font-size:var(--h3);letter-spacing:-.01em}
 .sub-title ~ .points,.sub-title ~ .sub-note{margin-top:12px}
-.sub-note{color:var(--muted);margin-top:0;max-width:56ch;font-size:.96rem}
+.sub-note{color:var(--ink);margin-top:0;max-width:56ch;font-size:var(--text)}
 
-.jtbd{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
 .jtbd b{color:var(--ink);font-weight:600}
 
 
 
 
 .foot{margin-top:80px;padding:32px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.foot a{color:var(--accent);font-weight:500}
+.foot a{color:var(--accent);font-weight:500;font-size:var(--small)}
 
 
 
@@ -286,6 +314,23 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 <script>
 const IMG = {
+  marketing: "assets/medsi-marketing.png",
+  diagnosis: "assets/medsi-diagnosis.png",
+  emk: "assets/medsi-emk.png",
+  newbooking: "assets/medsi-newbooking.png",
+  schedule: "assets/medsi-schedule.png",
+  bonuses: "assets/medsi-bonuses.png",
+  statuses: "assets/medsi-statuses.png",
+  doctorcard: "assets/medsi-doctorcard.png",
+  doctor: "assets/medsi-doctor.png",
+  flow: "assets/medsi-flow.png",
+  booking: "assets/medsi-booking.png",
+  cart: "assets/medsi-cart.png",
+  product: "assets/medsi-product.png",
+  map: "assets/medsi-map.png",
+  pharmacy: "assets/medsi-pharmacy.png",
+  main: "assets/medsi-main.png",
+  style: "assets/medsi-style.png",
   research: "assets/medsi-research.webp",
   team: "assets/medsi-team.webp"
 };
@@ -297,19 +342,48 @@ const PROJECTS = [
   {id:"rwb", yr:"2024 — н.в.", href:"case-rwb.html", ti:{ru:"RWB. Маркетплейс",en:"RWB. Marketplace"}, sections:[]},
   {id:"medsi", yr:"2022–2024", href:"case-medsi.html", ti:{ru:"Medsi Digital",en:"Medsi Digital"},
    sections:[
-     {a:"tasks",     group:true, ti:{ru:"Задачи Lead UX/UI Designer",en:"Lead UX/UI Designer tasks"}},
-     {a:"team",      ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
-     {a:"research",  ti:{ru:"Исследования",en:"Research"}},
+     {a:"team",      group:true, ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
+     {a:"research",  group:true, ti:{ru:"Исследования",en:"Research"}},
      {a:"mobile",    group:true, ti:{ru:"Приложение SmartMed",en:"SmartMed app"}},
-     {a:"cabinet",   ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
-     {a:"marketing", ti:{ru:"Маркетинг",en:"Marketing"}}
+     {a:"style",     ti:{ru:"Единый стиль приложения",en:"One visual style"}},
+     {a:"main",      ti:{ru:"Главный экран",en:"Home screen"}},
+     {a:"booking",   ti:{ru:"Запись",en:"Booking"}},
+     {a:"flow",      ti:{ru:"Флоу записи",en:"Booking flow"}},
+     {a:"doctor",    ti:{ru:"Выбор врача",en:"Choosing a doctor"}},
+     {a:"doctorcard",ti:{ru:"Карточка врача",en:"Doctor card"}},
+     {a:"statuses",  ti:{ru:"Статусы записи",en:"Booking statuses"}},
+     {a:"pharmacy",  ti:{ru:"Аптека",en:"Pharmacy"}},
+     {a:"map",       ti:{ru:"Выбор на карте",en:"Choosing on the map"}},
+     {a:"product",   ti:{ru:"Карточка товара",en:"Product card"}},
+     {a:"cart",      ti:{ru:"Корзина",en:"Cart"}},
+     {a:"bonuses",   ti:{ru:"Бонусы",en:"Loyalty points"}},
+     {a:"cabinet",   group:true, ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
+     {a:"schedule",  ti:{ru:"Расписание",en:"Schedule"}},
+     {a:"newbooking",ti:{ru:"Создание записи",en:"Creating an appointment"}},
+     {a:"emk",       ti:{ru:"Резюме ЭМК",en:"EMR summary"}},
+     {a:"diagnosis", ti:{ru:"Диагноз",en:"Diagnosis"}},
+     {a:"marketing", group:true, ti:{ru:"Маркетинг",en:"Marketing"}}
    ]},
   {id:"sberpravo", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
    sections:[
-     {a:"menu",ti:{ru:"Меню и «Заказы»",en:"Menu & Orders"}},
-     {a:"landing",ti:{ru:"Главный лендинг",en:"Landing page"}},
-     {a:"flow",ti:{ru:"Путь юзера",en:"User flow"}},
-     {a:"screens",ti:{ru:"Макеты",en:"Screens"}}
+     {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
+     {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
+     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
+     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"menu-problems",    ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"menu-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"menu-result",      ti:{ru:"Результат",en:"Result"}},
+     {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
+     {a:"landing-research", ti:{ru:"Исследование",en:"Research"}},
+     {a:"landing-problems", ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"landing-abtest",   ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"landing-result",   ti:{ru:"Результат",en:"Result"}},
+     {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
    ]},
   {id:"vtb", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
   {id:"loko", yr:"2019", href:"case-loko.html", ti:{ru:"Локо Банк",en:"Loko Bank"}, sections:[]},
@@ -329,17 +403,11 @@ ru:{
   desc:"Medsi Digital — сервисы для сети клиник МЕДСИ и их пользователей.",
   dutiesLabel:"Обязанности на рабочем месте", dutiesMore:"Посмотреть ещё",
   achLabel:"Ключевые достижения", navOverview:"Обязанности и достижения",
-  tasksLabel:"Задачи Lead UX/UI Designer",
-  tasks:[
-    "Создать команду дизайна в компании",
-    "Поддерживать и развивать сервисы",
-    "Предлагать идеи и концепции",
-    "Создать единую концепцию дизайна приложения и других сервисов"
-  ],
   achievements:[
-    {n:"5", l:"дизайнеров — собрал команду с нуля", d:""},
-    {n:"4", l:"продукта в единой визуальной системе", d:""},
-    {n:"↓", l:"нагрузка на колл-центр после UX-исследований", d:""}
+    {n:"", l:"Собрал команду дизайна из пяти человек", d:""},
+    {n:"", l:"Объединил 4 продукта в единой визуальной системе", d:""},
+    {n:"", l:"Нагрузка на колл-центр снизилась", d:""},
+    {n:"", l:"Количество записей через приложение увеличилось", d:""}
   ],
   duties:[
     "<b>Сервисы, над которыми я работал:</b>",
@@ -361,7 +429,7 @@ ru:{
 
   blocks:[
   {
-    a:"team", num:"Кейс 01",
+    a:"team", group:true,
     title:"Создание команды дизайна",
     lead:"",
     subs:[
@@ -378,7 +446,7 @@ ru:{
   },
 
   {
-    a:"research", num:"Кейс 02",
+    a:"research", group:true,
     title:"Исследования",
     lead:"",
     tags:["Коридорки","Глубинные интервью","А/Б тесты","Анализ метрик: Appmetrica, Appsflyer, Amplitude","Отзывы клиентов в сторах и обращения в чат","Аудит от профильных агенств","Анализ конкурентов и лучших практик на рынке"],
@@ -389,66 +457,339 @@ ru:{
   },
 
   {
-    a:"mobile", group:true, num:"",
+    a:"mobile", group:true,
     title:"Приложение SmartMed",
     lead:"",
     subs:[
       {ti:"", row:true, cards:[
-        {h:"Поддерживать и развивать продукты", p:""},
-        {h:"Предлагать идеи новых фичей", p:""},
-        {h:"Разработать единую концепцию дизайна", p:""},
-        {h:"Увеличить конверсию", p:""},
-        {h:"Исправить ошибки", p:""}
+        {h:"", p:"Поддерживать и развивать продукты"},
+        {h:"", p:"Предлагать идеи новых фичей"},
+        {h:"", p:"Разработать единую концепцию дизайна"},
+        {h:"", p:"Увеличить конверсию"},
+        {h:"", p:"Исправить ошибки"}
       ]}
     ]
   },
 
   {
-    a:"cabinet", num:"Кейс 03",
-    title:"Кабинет врача и контроль качества",
-    lead:"Веб-сервисы для врачей и колл-центра: расписание, отчёты, флоу приёма пациента. Плюс сервис для «супер-врачей» — медицинский контроль, аудит, экспертный контроль.",
-    meta:[
-      ["Задача","Проектирование внутренних сервисов"],
-      ["Моя роль","Lead UX/UI Designer"],
-      ["Пользователи","Врачи, колл-центр, эксперты"],
-      ["Методы","Заполнить"],
-      ["Сроки","2022 — 2024"]
-    ],
-    goals:["Заполнить цель"],
+    a:"style",
+    title:"Единый стиль приложения",
+    lead:"",
     subs:[
-      {ti:"Что делал", cards:[
-        {h:"Кабинет врача", p:"Расписание, отчёты, флоу приёма пациента — для врачей и сотрудников колл-центра."},
-        {h:"Контроль качества", p:"Сервис для «супер-врачей»: отслеживание корректности работы других врачей, аудит, экспертный контроль."},
-        {h:"Админка", p:"Веб-сервис управления всеми остальными продуктами."}
+      {ti:"", mark:"star", cards:[
+        {h:"", p:"Все сервисы в  приложения имели разный дизайн похожих элементов, а единый стиль, сокращает время на узучения интерфейса"},
+        {h:"", p:"Единый визуальный стиль мобильного приложения обеспечивает его узнаваемость и повышает доверие к продукту"},
+        {h:"", p:"Упрощает разработку и облегчает добавление новых функций, оптимизируя ресурсы"}
       ],
-      shots:[["Скрин: кабинет врача","Скрин: контроль качества"]],
-      caption:"Заполнить подпись."},
-      {ti:"Результаты", results:[
-        {n:"—", l:"Метрика", d:"заполнить"},
-        {n:"—", l:"Метрика", d:"заполнить"}
+       imgs:[{src:IMG.style, cap:"Единый стиль приложения"}]}
+    ]
+  },
+
+  {
+    a:"main",
+    title:"Главный экран",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Пользователи не задерживались и не заходили на этот экран, считая его бесполезным"},
+        {h:"", p:"Сториз не имели привычный вид"},
+        {h:"", p:"Кнопоки записи дублировались"},
+        {h:"", p:"Пакеты услуг были не видны без скролла"}
+      ]},
+      {ti:"Результаты", mark:"star", cards:[
+        {h:"", p:"Кликабельность сториз +20% и во время акций +70%, а через сториз мы продаем продукты и “удерживаем”"},
+        {h:"", p:"Счет на оплату и Назначения вам — связаны с оплатой. Каждая оплата через приложение уменьшает нагрузку на регистратуру и увеличивает доход компании. Также пользователям не надо искать конкретный прием в медкарте для оплаты и покупки лекарств"},
+        {h:"", p:"В Пакеты услуг стали заходить чаще +23%"}
+      ],
+       imgs:[{src:IMG.main, cap:"Главный экран"}]}
+    ]
+  },
+
+  {
+    a:"booking",
+    title:"Запись",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Один пользователь может иметь несколько профилей. Переключение в одном из разделов, не меняло профиль в других разделах"},
+        {h:"", p:"Перед записью не видно предстоящих приемов"},
+        {h:"", p:"Добавить просмотр избранных врачей, клиник, специализаций"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Переименовали “Еще” в “Профиль” и перенесли все переключения профилей в единый раздел"},
+        {h:"", p:"Исследование показало, что теперь стало проще ориентироваться в кнопках записи. Теперь кнопки выделяются формой и расположением, что помогает быстрее ориентироваться при частом использовании"},
+        {h:"", p:"Баланс бонусов и депозита, должно познакомить пользователей с этими сервисами и стимулировать чаще оплачивать услуги"},
+        {h:"", p:"Поиск перенесли под большой палец. Чаще через поиск ищут, если надо быстро найти что-то конкретное"}
+      ],
+       imgs:[{src:IMG.booking, cap:"Запись"}]}
+    ]
+  },
+
+  {
+    a:"flow",
+    title:"Флоу записи",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Разный дизайн и маленький шрифт"},
+        {h:"", p:"У пользователей нет чувства контроля"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Экран, который нельзя пропустить, сделал как плашку"},
+        {h:"", p:"Заметил, что пользователям не хватало чувства контроля, так как они не понимали на каком этапе записи находятся, сколько еще осталось и о чем была эта запись. Поэтому процесс записи, пока идут сложные запросы на бэк, предложил не делать отдельным экраном, а сделать внутри кнопки"},
+        {h:"", p:"Добавил “Информацию о подготовке”, которую просили пользователи. Также более подробно отобразил данные о записи, чтобы уменьшить обеспокоиность пациентов перед приемом"},
+        {h:"", p:"При записи на диагностику и запись к врачу, после унификации дизайна, пользователям не надо каждый раз разбираться и привыкать к новому дизайну для одних и тех же фунцкий"}
+      ],
+       imgs:[{src:IMG.flow, cap:"Флоу записи"}]}
+    ]
+  },
+
+  {
+    a:"doctor",
+    title:"Выбор врача",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Нельзя посмотреть даты на весь месяц"},
+        {h:"", p:"Нет информации о предстоящих приемах"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Обновил хедер. Были жалобы от пользователей, которые подтвердились исследованиям, в котором пользователи терялись и забывали в каком разделе они находятся. Поэтому добавил наименование раздела на каждый шаг флоу"},
+        {h:"", p:"Дни недели в выборе даты зафиксированы, это помогает быстрее понять в какой день недели есть свободные слоты"},
+        {h:"", p:"Не надо переключаться между разделами, запоминать или выписывать на бумажку предстоящие приемы в этот же день, так как теперь это наглядно видно"}
+      ],
+       imgs:[{src:IMG.doctor, cap:"Выбор врача"}]}
+    ]
+  },
+
+  {
+    a:"doctorcard",
+    title:"Карточка врача",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Закрыть возражение о том, что часть пользователей не понимало, что временные слоты можно горизонтально скролить"},
+        {h:"", p:"Нет отличия премиум приема над обычными"},
+        {h:"", p:"Длинные кнопки с выбором клиники"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Если врач принимает в нескольких клиниках, то расписание переключалось по нажатию на кнопки, но эти кнопки могли быть с очень длинными названиями клиник, поэтому они не помещались на экран. Пользователи не понимали, что там есть скрол и выбор другой клиники. Сейчас видны сразу все клиники, в которых ведет прием врач"},
+        {h:"", p:"Также я предложил показывать онлайн-консультации этого же врача, чтобы увеличить продажи сервиса"},
+        {h:"", p:"Входе исследований, обнаружили потребность пользователей в ознакомлении с врачом перед решением о записи. Поэтому сделали блок-кнопку, которую переиспользовали на других этапах записи"},
+        {h:"", p:"Карточка премиум приятно обращает на себя внимание, не выбиваясь из общего дизайна"}
+      ],
+       imgs:[{src:IMG.doctorcard, cap:"Карточка врача"}]}
+    ]
+  },
+
+  {
+    a:"statuses",
+    title:"Статусы записи",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Пользователи не замечали разницу между статусами и могли прийти на уже отмененный прием"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Среди отзывов были обнаружены случаи, когда из-за ошибок системы, запись отменялась, но пользователи этого не замечали, так как интерфейс успешной записи похож на интерфейс записи с ошибкой. Чтобы исправить эту ошибку сделал экраны с разным дизайном статусов. Добавил зеленую подложку для успешной записи, серую для завершенных приёмов и красную для записей с ошибками. Также разделил статус об оплате и статус о записи, для большого чувства контроля пользователей"},
+        {h:"", p:"Сделал кнопку “Оплатить” больше, чтобы она стала заметнее. Это увеличило число оплат через приложение и снизило нагрузку с регистратуры . Также это снизило число отменных приёмов, так как после оплаты приём шансы, что этот прием отменит снижаются и тем самым нет простоя у врачей"},
+        {h:"", p:"Выделил: Тип записи, Кабинет приёма, Информацие о враче. Добавил Информацию о подготовке. Все эти изменения позволяют пользователю получить больший объем информации о записи"}
+      ],
+       imgs:[{src:IMG.statuses, cap:"Статусы записи"}]}
+    ]
+  },
+
+  {
+    a:"pharmacy",
+    title:"Аптека",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Добавить новую функцию “Аптеки МЕДСИ”. Компания зарабатывает с покупок из собственных аптек, поэтому важно выделить этот блок"},
+        {h:"", p:"Пользователи не понимали, как попасть в каталог"},
+        {h:"", p:"Дублирование сториз не нужно и съедает место"},
+        {h:"", p:"Вкладка “Заказы” пропадала на маленьких экранах"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Блок “Аптеки МЕДСИ” видят и заходят. Позже надо проанализировать статутистику переходов и покупок"},
+        {h:"", p:"На поиск стали тоже чаще нажимать"},
+        {h:"", p:"Все респонденты быстрее стали находить каталог"},
+        {h:"", p:"Покупка через Избранные товары частый флоу, теперь стал доступнее, что должно увеличить продажи"},
+        {h:"", p:"Появилась возможность размещать на главном экране рекламный баннер, зарабатывая на нем"}
+      ],
+       imgs:[{src:IMG.pharmacy, cap:"Аптека"}]}
+    ]
+  },
+
+  {
+    a:"map",
+    title:"Выбор на карте",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Нет акцента на аптеках Медси"},
+        {h:"", p:"Нет полезных функций, которые просят пользователи"},
+        {h:"", p:"Нельзя посмотреть товаровы, которых нет в наличии"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Количество покупок через аптеки Медси выросло, засчет приоритетного показа пинов аптек Медси на карте"},
+        {h:"", p:"Можно понять, какие товары есть в конкретной аптеки не преходя в корзину"},
+        {h:"", p:"Создавали дизайн с учетом других продуктов, в котором также есть выбор на карте. Единый дизайн помог сэкономить время на разработку и развитие"}
+      ],
+       imgs:[{src:IMG.map, cap:"Выбор на карте"}]}
+    ]
+  },
+
+  {
+    a:"product",
+    title:"Карточка товара",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Разный дизайн"},
+        {h:"", p:"Маленький шрифт"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Карточки стали выглядеть в едином стиле, что помогло не тратить время на изучение разных дизайнов"},
+        {h:"", p:"Фотографии и шрифты стали больше, а добавление новых фичей не скрыло уже существующие"}
+      ],
+       imgs:[{src:IMG.product, cap:"Карточка товара"}]}
+    ]
+  },
+
+  {
+    a:"cart",
+    title:"Корзина",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Разный дизайн и маленький шрифт"},
+        {h:"", p:"Поломанный флоу выбора аптеки или клиники"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Сделал кнопку “Выбор адреса”, которая после выбора заполняется адресом. Теперь всегда очивидно в какие цены в определенной аптеки или клиники"},
+        {h:"", p:"Выделили блок “Обязательные услуги”, чтобы уменьшить негатив от пользователей, которым раньше не было очевидно за что надо доплатить и почему итогая цена менялась"}
+      ],
+       imgs:[{src:IMG.cart, cap:"Корзина"}]}
+    ]
+  },
+
+  {
+    a:"bonuses",
+    title:"Бонусы",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Нет возможности просмотреть бонусы всех профилей, приходится переключаться между экранами"},
+        {h:"", p:"Добавить новые фичи"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Теперь не надо переключаться между экранами, чтобы просмотреть бонусы другого профиля"},
+        {h:"", p:"Приемущества программы лояльности стало проще понять"},
+        {h:"", p:"Проработал три новых фичи. За основу взял привычные паттерны банковских приложений"}
+      ],
+       imgs:[{src:IMG.bonuses, cap:"Бонусы"}]}
+    ]
+  },
+
+  {
+    a:"cabinet", group:true,
+    title:"Кабинет врача",
+    lead:"Это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
+    subs:[
+      {ti:"", row:true, cards:[
+        {h:"", p:"Ускорить заполнение приема врачами"},
+        {h:"", p:"Уменьшить порог входа для новых врачей"},
+        {h:"", p:"Создать единый дизайн"},
+        {h:"", p:"Исправить ошибки"}
       ]}
     ]
   },
 
   {
-    a:"marketing", num:"Кейс 04",
+    a:"schedule",
+    title:"Расписание",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Высокий порог входа для новых врачей"},
+        {h:"", p:"Тяжелый интерефейс даже для опытных пользователей"},
+        {h:"", p:"Маленькие размеры элементов"},
+        {h:"", p:"Тратится много время на взаимодействие с интерфейсом"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Убрал или скрыл все редко используемые кнопки. Увеличил шрифт. Переработали цвета и иконки"},
+        {h:"", p:"Слот в расписании имеет пропорциональную высоту, которая зависит от продолжительности приема"},
+        {h:"", p:"Вынес популярные функции из контекстного меню в правую панель"}
+      ],
+       imgs:[{src:IMG.schedule, cap:"Расписание"}]}
+    ]
+  },
+
+  {
+    a:"newbooking",
+    title:"Создание записи",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Куда тут нажимать то?!"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Открывается модальный экран, который не забирает фокус внимания с предыдущего экрана, позволяя находится в контексте, если есть потребность вернуться назад и выбрать другой слот"},
+        {h:"", p:"Стало очевидно, что надо двигаться сверху вниз. От заголовка к кнопке"}
+      ],
+       imgs:[{src:IMG.newbooking, cap:"Создание записи"}]}
+    ]
+  },
+
+  {
+    a:"emk",
+    title:"Резюме ЭМК",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Табы снизу сложно заметить"},
+        {h:"", p:"Неочевидно какой пацент открыт"},
+        {h:"", p:"Неочевидный выбор цветов"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Интерфейс стал предсказуймее. Все экраны поделены на три зоны: Навигационная сверху, Основная по центру, Вспомогательная панель справа."},
+        {h:"", p:"Разные ЭМК пациентов, теперь открываются как вкладки, что упростило заполнение множества карт одновременно"}
+      ],
+       imgs:[{src:IMG.emk, cap:"Резюме ЭМК"}]}
+    ]
+  },
+
+  {
+    a:"diagnosis",
+    title:"Диагноз",
+    lead:"",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Много лишних элементов"},
+        {h:"", p:"Интерфейс отнимает много времени на взаимодействие"}
+      ]},
+      {ti:"Результат", mark:"star", cards:[
+        {h:"", p:"Все вкладки по заполнению приема стали выглядеть в едином стиле, так как была разработана дизайн-система включающая элементы и поведение блоков"},
+        {h:"", p:"Конкретно на этой вкладке отделил Основной диагноз и Дополнительный, так как они отличаются по набору полей для заполнения. Настраивать диагнозы стало быстрее"},
+        {h:"", p:"Расскрыл все дропдауны, чтобы ускорить настройку диагноза"}
+      ],
+       imgs:[{src:IMG.diagnosis, cap:"Диагноз"}]}
+    ]
+  },
+
+  {
+    a:"marketing", group:true,
     title:"Маркетинг",
-    lead:"Рассылки, сторис, интерактивные лендинги к большим праздникам — привлекали новых клиентов и укрепляли лояльность существующих.",
-    meta:[
-      ["Задача","Визуализация маркетинговых кампаний"],
-      ["Моя роль","Lead UX/UI Designer"],
-      ["Форматы","Рассылки, сторис, лендинги"],
-      ["Сроки","2022 — 2024"]
-    ],
-    goals:["Привлечение и удержание клиентов"],
+    lead:"",
     subs:[
-      {ti:"Что делал", cards:[
-        {h:"Кампании", p:"Содействовал созданию и визуализации маркетинговых кампаний: рассылки, сторис, интерактивные лендинги к праздникам."},
-        {h:"Эффект", p:"Кампании привлекали новых клиентов и укрепляли лояльность существующих пользователей."}
+      {ti:"", row:true, wide:true, mark:"star", cards:[
+        {h:"", p:"Содействовал созданию и визуализации маркетинговых кампаний: рассылки, строиз, лендинги с интерактивами к большим праздникам. Всё это привлекло новых клиентов и укрепило лояльность уже существующих"},
+        {h:"", p:"Систематизировал процесс постановки задач и разработку дизайна для маркейтинга, что ускорило запуск новых акций"},
+        {h:"", p:"Обновил скриншоты для App Store и Google Play, что привело к росту переходов, а также повысило имидж и доверие к бренду"},
+        {h:"", p:"Помог отделу HR с описанием и оформлением вакансий с точки зрения дизайнеров"}
       ],
-      shots:[["Скрин: лендинг","Скрин: сторис / рассылка"]],
-      caption:"Заполнить подпись."},
-      {ti:"Макеты", note:"Интерфейсы продуктов Medsi, 2022–2024."}
+       imgs:[{src:IMG.marketing, cap:"Маркетинг"}]}
     ]
   }
   ],
@@ -465,17 +806,11 @@ en:{
   desc:"Products for the MEDSI clinic network: SmartMed (patient web and app), Doctor’s workspace, Quality control, Admin.",
   dutiesLabel:"Responsibilities", dutiesMore:"Show more",
   achLabel:"Key achievements", navOverview:"Responsibilities & impact",
-  tasksLabel:"Lead UX/UI Designer tasks",
-  tasks:[
-    "Build the design team in the company",
-    "Support and grow the services",
-    "Propose ideas and concepts",
-    "Create a single design concept for the app and other services"
-  ],
   achievements:[
-    {n:"5", l:"designers — team built from scratch", d:""},
-    {n:"4", l:"products in one visual system", d:""},
-    {n:"↓", l:"call-center load after UX research", d:""}
+    {n:"", l:"Built a design team of five", d:""},
+    {n:"", l:"Unified 4 products into one visual system", d:""},
+    {n:"", l:"Call-center load went down", d:""},
+    {n:"", l:"Bookings through the app went up", d:""}
   ],
   duties:[
     "Built the design team from scratch: five designers, mentored juniors, introduced scrum rituals and a YouTrack knowledge base.",
@@ -491,7 +826,7 @@ en:{
 
   blocks:[
   {
-    a:"team", num:"Case 01",
+    a:"team", group:true,
     title:"Building the design team",
     lead:"",
     subs:[
@@ -508,7 +843,7 @@ en:{
   },
 
   {
-    a:"research", num:"Case 02",
+    a:"research", group:true,
     title:"Research",
     lead:"",
     tags:["Hallway testing","In-depth interviews","A/B tests","Metrics: Appmetrica, Appsflyer, Amplitude","Store reviews and chat requests","Audits by specialised agencies","Competitor and best-practice analysis"],
@@ -518,50 +853,337 @@ en:{
     ]
   },
   {
-    a:"mobile", group:true, num:"",
+    a:"mobile", group:true,
     title:"SmartMed app",
     lead:"",
     subs:[
       {ti:"", row:true, cards:[
-        {h:"Support and grow the products", p:""},
-        {h:"Propose ideas for new features", p:""},
-        {h:"Create a single design concept", p:""},
-        {h:"Increase conversion", p:""},
-        {h:"Fix issues", p:""}
+        {h:"", p:"Support and grow the products"},
+        {h:"", p:"Propose ideas for new features"},
+        {h:"", p:"Create a single design concept"},
+        {h:"", p:"Increase conversion"},
+        {h:"", p:"Fix issues"}
       ]}
     ]
   },
   {
-    a:"cabinet", num:"Case 03",
-    title:"Doctor’s workspace & quality control",
-    lead:"Web services for doctors and the call center: schedule, reports, patient flow. Plus a quality-control service for senior doctors.",
-    meta:[["Task","Design internal services"],["My role","Lead UX/UI Designer"],["Users","Doctors, call center, experts"],["Methods","To fill"],["Timeline","2022 — 2024"]],
-    goals:["To fill"],
+    a:"style",
+    title:"One visual style",
+    lead:"",
     subs:[
-      {ti:"What I did", cards:[
-        {h:"Doctor’s workspace", p:"Schedule, reports, patient appointment flow."},
-        {h:"Quality control", p:"Service for senior doctors: audit and expert review of other doctors’ work."},
-        {h:"Admin", p:"Web service to manage all other products."}
+      {ti:"", mark:"star", cards:[
+        {h:"", p:"Services in the app had different designs for similar elements; one style cuts the time needed to learn the interface"},
+        {h:"", p:"A single visual style makes the app recognisable and builds trust in the product"},
+        {h:"", p:"It simplifies development and makes adding new features easier, saving resources"}
       ],
-      shots:[["Screen: doctor’s workspace","Screen: quality control"]],
-      caption:"To fill."},
-      {ti:"Results", results:[{n:"—",l:"Metric",d:"to fill"},{n:"—",l:"Metric",d:"to fill"}]}
+       imgs:[{src:IMG.style, cap:"One visual style"}]}
+    ]
+  },
+
+  {
+    a:"main",
+    title:"Home screen",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Users didn’t stay on this screen and didn’t open it, considering it useless"},
+        {h:"", p:"Stories didn’t look familiar"},
+        {h:"", p:"Booking buttons were duplicated"},
+        {h:"", p:"Service packages weren’t visible without scrolling"}
+      ]},
+      {ti:"Results", mark:"star", cards:[
+        {h:"", p:"Story click-through +20%, and +70% during promotions; through stories we sell products and retain users"},
+        {h:"", p:"Invoice and Prescriptions are linked to payment. Every payment through the app reduces front-desk load and increases company revenue. Users no longer need to find a specific appointment in their records to pay or buy medicine"},
+        {h:"", p:"Service packages are visited 23% more often"}
+      ],
+       imgs:[{src:IMG.main, cap:"Home screen"}]}
+    ]
+  },
+
+  {
+    a:"booking",
+    title:"Booking",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"One user can have several profiles. Switching in one section didn’t change the profile in other sections"},
+        {h:"", p:"Upcoming appointments weren’t visible before booking"},
+        {h:"", p:"Add a view for favourite doctors, clinics and specialisations"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Renamed “More” to “Profile” and moved all profile switching into one section"},
+        {h:"", p:"Research showed booking buttons are now easier to navigate. Buttons stand out by shape and placement, which helps with frequent use"},
+        {h:"", p:"The bonus and deposit balance should introduce users to these services and encourage more payments"},
+        {h:"", p:"Search moved under the thumb. Search is used more often when people need to find something specific quickly"}
+      ],
+       imgs:[{src:IMG.booking, cap:"Booking"}]}
+    ]
+  },
+
+  {
+    a:"flow",
+    title:"Booking flow",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Inconsistent design and small type"},
+        {h:"", p:"Users had no sense of control"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Made the screen you can’t skip into a banner"},
+        {h:"", p:"I noticed users lacked a sense of control: they didn’t know which booking step they were on, how much was left, or what the appointment was about. So while heavy back-end requests run, I proposed not to use a separate screen but to show the state inside the button"},
+        {h:"", p:"Added “Preparation info” that users asked for. Also showed appointment details in more depth to reduce patient anxiety before the visit"},
+        {h:"", p:"After unifying the design of diagnostics booking and doctor booking, users no longer have to re-learn a new design for the same functions"}
+      ],
+       imgs:[{src:IMG.flow, cap:"Booking flow"}]}
+    ]
+  },
+
+  {
+    a:"doctor",
+    title:"Choosing a doctor",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"You can’t see dates for the whole month"},
+        {h:"", p:"No information about upcoming appointments"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Updated the header. There were user complaints, confirmed by research, where users got lost and forgot which section they were in. So I added the section name to every step of the flow"},
+        {h:"", p:"Weekdays in the date picker are fixed in place, which helps to see faster which day has free slots"},
+        {h:"", p:"No need to switch between sections, memorise or write down upcoming appointments on that day — it’s now visible at a glance"}
+      ],
+       imgs:[{src:IMG.doctor, cap:"Choosing a doctor"}]}
+    ]
+  },
+
+  {
+    a:"doctorcard",
+    title:"Doctor card",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Address the objection that some users didn’t realise time slots could be scrolled horizontally"},
+        {h:"", p:"No distinction between premium and regular appointments"},
+        {h:"", p:"Long buttons for choosing a clinic"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"If a doctor works at several clinics, the schedule switched by tapping buttons, but those buttons could carry very long clinic names and didn’t fit on screen. Users didn’t realise there was scrolling and a choice of another clinic. Now all clinics where the doctor practises are visible at once"},
+        {h:"", p:"I also proposed showing online consultations with the same doctor, to increase service sales"},
+        {h:"", p:"During research we found users needed to get to know the doctor before deciding to book. So we made a block-button, which we reused at other booking steps"},
+        {h:"", p:"The premium card draws attention pleasantly without breaking the overall design"}
+      ],
+       imgs:[{src:IMG.doctorcard, cap:"Doctor card"}]}
+    ]
+  },
+
+  {
+    a:"statuses",
+    title:"Booking statuses",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Users didn’t notice the difference between statuses and could show up for an already cancelled appointment"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Among the reviews we found cases where a booking was cancelled due to system errors, but users didn’t notice, because the successful booking screen looked like the failed one. To fix this I made screens with distinct status designs: a green background for a successful booking, grey for completed appointments and red for failed ones. I also separated the payment status from the booking status, to give users a greater sense of control"},
+        {h:"", p:"Made the “Pay” button bigger so it stands out. This increased the number of in-app payments and reduced front-desk load. It also reduced the number of cancelled appointments, since after payment the chance of cancellation drops and doctors have less idle time"},
+        {h:"", p:"Highlighted: appointment type, consulting room, doctor info. Added preparation info. All of this gives the user much more information about the appointment"}
+      ],
+       imgs:[{src:IMG.statuses, cap:"Booking statuses"}]}
+    ]
+  },
+
+  {
+    a:"pharmacy",
+    title:"Pharmacy",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Add a new “MEDSI Pharmacies” feature. The company earns from purchases in its own pharmacies, so this block had to stand out"},
+        {h:"", p:"Users didn’t understand how to get to the catalog"},
+        {h:"", p:"Duplicated stories weren’t needed and ate up space"},
+        {h:"", p:"The “Orders” tab disappeared on small screens"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"The “MEDSI Pharmacies” block is seen and used. Next step is to analyse click-through and purchase stats"},
+        {h:"", p:"Search is also tapped more often"},
+        {h:"", p:"All respondents found the catalog faster"},
+        {h:"", p:"Buying via Favourites is a frequent flow and is now easier, which should increase sales"},
+        {h:"", p:"It became possible to place an ad banner on the home screen and earn from it"}
+      ],
+       imgs:[{src:IMG.pharmacy, cap:"Pharmacy"}]}
+    ]
+  },
+
+  {
+    a:"map",
+    title:"Choosing on the map",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"No emphasis on MEDSI pharmacies"},
+        {h:"", p:"No useful features that users ask for"},
+        {h:"", p:"You can’t see items that are out of stock"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Purchases through MEDSI pharmacies grew thanks to priority display of MEDSI pins on the map"},
+        {h:"", p:"You can see which items a specific pharmacy has without going to the cart"},
+        {h:"", p:"We designed with other products in mind, which also have map selection. A shared design saved development and growth time"}
+      ],
+       imgs:[{src:IMG.map, cap:"Choosing on the map"}]}
+    ]
+  },
+
+  {
+    a:"product",
+    title:"Product card",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Inconsistent design"},
+        {h:"", p:"Small type"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Cards now look consistent, so users don’t waste time figuring out different designs"},
+        {h:"", p:"Photos and type got bigger, and new features didn’t hide the existing ones"}
+      ],
+       imgs:[{src:IMG.product, cap:"Product card"}]}
+    ]
+  },
+
+  {
+    a:"cart",
+    title:"Cart",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Inconsistent design and small type"},
+        {h:"", p:"Broken flow for choosing a pharmacy or clinic"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Added an “Choose address” button that fills in with the address once selected. Prices at a specific pharmacy or clinic are now always clear"},
+        {h:"", p:"Highlighted the “Required services” block to reduce frustration: users previously couldn’t tell what the extra charges were for and why the final price changed"}
+      ],
+       imgs:[{src:IMG.cart, cap:"Cart"}]}
+    ]
+  },
+
+  {
+    a:"bonuses",
+    title:"Loyalty points",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"You can’t see points for all profiles, you have to switch between screens"},
+        {h:"", p:"Add new features"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"You no longer have to switch screens to see another profile’s points"},
+        {h:"", p:"The benefits of the loyalty program became easier to understand"},
+        {h:"", p:"Designed three new features, based on familiar patterns from banking apps"}
+      ],
+       imgs:[{src:IMG.bonuses, cap:"Loyalty points"}]}
+    ]
+  },
+
+  {
+    a:"cabinet", group:true,
+    title:"Doctor’s workspace",
+    lead:"A web service for call-center staff and for doctors seeing patients. Includes: schedule, reports, patient appointment flow and more.",
+    subs:[
+      {ti:"", row:true, cards:[
+        {h:"", p:"Speed up appointment filling for doctors"},
+        {h:"", p:"Lower the entry barrier for new doctors"},
+        {h:"", p:"Create one consistent design"},
+        {h:"", p:"Fix issues"}
+      ]}
+    ]
+  },
+
+  {
+    a:"schedule",
+    title:"Schedule",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"High entry barrier for new doctors"},
+        {h:"", p:"Heavy interface even for experienced users"},
+        {h:"", p:"Small element sizes"},
+        {h:"", p:"A lot of time is spent interacting with the interface"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"Removed or hid all rarely used buttons. Increased type size. Reworked colours and icons"},
+        {h:"", p:"A schedule slot has a proportional height that depends on appointment duration"},
+        {h:"", p:"Moved popular functions from the context menu into the right panel"}
+      ],
+       imgs:[{src:IMG.schedule, cap:"Schedule"}]}
     ]
   },
   {
-    a:"marketing", num:"Case 04",
-    title:"Marketing",
-    lead:"Newsletters, stories and interactive holiday landing pages that attracted new clients and strengthened loyalty.",
-    meta:[["Task","Visualize marketing campaigns"],["My role","Lead UX/UI Designer"],["Formats","Newsletters, stories, landings"],["Timeline","2022 — 2024"]],
-    goals:["Acquisition and retention"],
+    a:"newbooking",
+    title:"Creating an appointment",
+    lead:"",
     subs:[
-      {ti:"What I did", cards:[
-        {h:"Campaigns", p:"Created and visualized marketing campaigns: newsletters, stories, interactive holiday landings."},
-        {h:"Impact", p:"Campaigns attracted new clients and strengthened loyalty of existing users."}
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Where am I supposed to click here?!"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"A modal opens that doesn’t take attention away from the previous screen, keeping you in context if you need to go back and pick another slot"},
+        {h:"", p:"It became obvious that you move top to bottom. From the heading to the button"}
       ],
-      shots:[["Screen: landing","Screen: story / newsletter"]],
-      caption:"To fill."},
-      {ti:"Screens", note:"Medsi product interfaces, 2022–2024."}
+       imgs:[{src:IMG.newbooking, cap:"Creating an appointment"}]}
+    ]
+  },
+
+  {
+    a:"emk",
+    title:"EMR summary",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Tabs at the bottom are hard to notice"},
+        {h:"", p:"It’s not obvious which patient is open"},
+        {h:"", p:"Unclear colour choices"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"The interface became more predictable. Every screen is split into three zones: navigation on top, main area in the centre, supporting panel on the right."},
+        {h:"", p:"Different patient records now open as tabs, which made filling in many records at once easier"}
+      ],
+       imgs:[{src:IMG.emk, cap:"EMR summary"}]}
+    ]
+  },
+
+  {
+    a:"diagnosis",
+    title:"Diagnosis",
+    lead:"",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"Too many unnecessary elements"},
+        {h:"", p:"The interface takes a lot of time to interact with"}
+      ]},
+      {ti:"Result", mark:"star", cards:[
+        {h:"", p:"All appointment tabs now look consistent, because a design system was built covering elements and block behaviour"},
+        {h:"", p:"On this tab specifically I separated the primary and secondary diagnosis, since they differ in the set of fields. Setting up diagnoses became faster"},
+        {h:"", p:"Expanded all dropdowns to speed up diagnosis setup"}
+      ],
+       imgs:[{src:IMG.diagnosis, cap:"Diagnosis"}]}
+    ]
+  },
+
+  {
+    a:"marketing", group:true,
+    title:"Marketing",
+    lead:"",
+    subs:[
+      {ti:"", row:true, wide:true, mark:"star", cards:[
+        {h:"", p:"Contributed to creating and visualising marketing campaigns: newsletters, stories, interactive holiday landing pages. All of this attracted new clients and strengthened loyalty of existing ones"},
+        {h:"", p:"Systematised task setting and design production for marketing, which sped up the launch of new promotions"},
+        {h:"", p:"Updated App Store and Google Play screenshots, which increased click-throughs and improved brand image and trust"},
+        {h:"", p:"Helped HR describe and present vacancies from a designer’s point of view"}
+      ],
+       imgs:[{src:IMG.marketing, cap:"Marketing"}]}
     ]
   }
   ],
@@ -618,17 +1240,22 @@ function renderNav(){
     const active = p.id===CURRENT;
     const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
       <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
-    if(!active) return row;
-    // подменю открытого проекта: обзор + достижения + разделы
-    const items = [
-      {a:"overview", ti:d().navOverview},
-      ...p.sections.map(s=>({a:s.a, ti:s.ti[L]}))
-    ];
-    return row + `<div class="subnav">${items.map(s=>`<a href="#${s.a}">${s.ti}</a>`).join("")}</div>`;
+    if(!active || !p.sections.length) return row;
+
+    // подменю: разделы без номера, кейсы — с автонумерацией
+    const items = [{a:"overview", group:true, ti:d().navOverview}, ...p.sections];
+    let n = 0;
+    const links = items.map(s=>{
+      const label = typeof s.ti === "string" ? s.ti : s.ti[L];
+      if(s.group) return `<a class="grp" href="#${s.a}">${label}</a>`;
+      n++;
+      return `<a class="cs" href="#${s.a}"><span class="n">${String(n).padStart(2,"0")}</span>${label}</a>`;
+    }).join("");
+    return row + `<div class="subnav">${links}</div>`;
   }).join("");
 }
 
-function renderBlock(b){
+function renderBlock(b, num){
   const meta = b.meta ? `<div class="meta">
     ${b.meta.map(([h,v])=>`<div><h4>${h}</h4><p class="dim">${v}</p></div>`).join("")}
     ${b.goals?`<div><h4>${L==="ru"?"Цели":"Goals"}</h4>${b.goals.map(g=>`<span class="goal">✓ ${g}</span><br>`).join("")}</div>`:""}
@@ -639,7 +1266,7 @@ function renderBlock(b){
     const cards = s.cards ? (s.card
       ? `<div class="cols">${s.cards.map(c=>
           `<div class="card">${c.h?`<h3>${c.h}</h3>`:""}${c.p?`<p>${c.p}</p>`:""}</div>`).join("")}</div>`
-      : `<ul class="points${s.row?" inline":""}">${s.cards.map(c=>
+      : `<ul class="points${s.row?" inline":""}${s.wide?" wide":""}${s.mark?" "+s.mark:""}">${s.cards.map(c=>
           `<li>${c.h?`<b>${c.h}</b>`:""}${c.h&&c.p?" — ":""}${c.p||""}</li>`).join("")}</ul>`) : "";
     const shots = (s.shots||[]).map(row=>
       `<div class="shots">${row.map(x=>`<div class="shot">${x}</div>`).join("")}</div>`).join("");
@@ -673,7 +1300,7 @@ function renderBlock(b){
         `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
 
   return `<section class="block${b.group?" group":""}" id="${b.a}">
-    ${b.num ? `<div class="block-num">${b.num}</div>` : ""}
+    ${num ? `<div class="block-num">${num}</div>` : ""}
     <h2 class="block-title">${b.title}</h2>
     ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
     ${tags}${meta}${subs}${gallery}
@@ -695,18 +1322,17 @@ function render(){
 
     <div class="achievements" id="achievements" style="scroll-margin-top:20px">
       <div class="cols">${t.achievements.map(a=>
-        `<div class="card metric"><div class="num">${a.n}</div><div class="lbl">${a.l}</div><div class="desc">${a.d}</div></div>`).join("")}</div>
+        `<div class="card metric">${a.n?`<span class="num">${a.n}</span> `:""}<span class="lbl">${a.l}</span></div>`).join("")}</div>
     </div>
 
     <div class="head-sep"></div>
 
-    <section class="block group" id="tasks">
-      <h2 class="block-title">${t.tasksLabel}</h2>
-      <ul class="points inline">${t.tasks.map(x=>`<li>${x}</li>`).join("")}</ul>
-    </section>
 
-
-    ${t.blocks.map(renderBlock).join("")}
+    ${(()=>{ let n=0; return t.blocks.map(b=>{
+        if(b.group) return renderBlock(b, "");
+        n++;
+        return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
+      }).join(""); })()}
     <div class="foot">
       <a href="index.html">← ${t.back}</a>
       <a href="${t.nextHref}">${t.next}: ${t.nextName} →</a>

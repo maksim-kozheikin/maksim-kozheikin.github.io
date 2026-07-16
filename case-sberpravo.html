@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>СберПраво — Кейсы · Максим Кожейкин</title>
-<meta name="description" content="СберПраво: редизайн меню и «Заказов», главный лендинг, путь юзера, макеты. Кейсы продукт-дизайнера Максима Кожейкина.">
+<title>Максим Кожейкин — СберПраво</title>
+<meta name="description" content="Medsi Digital: сборка дизайн-команды, мобильное приложение SmartMed, кабинет врача, маркетинг. Кейсы Lead UX/UI дизайнера.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,11 +18,20 @@
 :root{
   --bg:#FCFCFD; --surface:#FFFFFF; --ink:#131316; --muted:#6C6C74; --faint:#9A9AA2;
   --line:#EBEBEF; --panel:#F4F4F7; --accent:#F0523C; --sel:#F1F1F4;
-  /* типографическая шкала — единая на весь сайт */
-  --h1:clamp(1.35rem,1.8vw,1.65rem);   /* имя, лид, заголовок раздела, CV */
-  --h2:clamp(1.1rem,1.5vw,1.3rem);     /* позиция·компания, подзаголовок */
-  --h3:.98rem;                          /* заголовок карточки */
-  --eyebrow:.72rem;                     /* надзаголовки, мета */
+  /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
+     --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
+     --h2  Заголовок кейса:    «Расписание», «Главный экран»
+           Заголовок страницы: «Lead UX/UI Designer · Medsi Digital»
+     --h3  Подзаголовок:       «Проблемы», «Результат»
+     --text  Основной текст:   пункты списков, описания, обязанности
+     --small Вторичный текст:  чипы, подписи, навигация, мета
+     --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
+  --h1:clamp(2rem,3.4vw,2.9rem);
+  --h2:clamp(1.25rem,1.7vw,1.5rem);
+  --h3:1.02rem;
+  --text:.98rem;
+  --small:.88rem;
+  --eyebrow:.72rem;
   --sans:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
   --sidebar-w:clamp(300px,40vw,560px);
   --pad:clamp(20px,3vw,40px);
@@ -47,53 +56,139 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .list > .row:last-child,.list > a.row:last-of-type{border-bottom:1px solid var(--line)}
 a.row:hover{padding-left:7px}
 a.row:hover .row-ti{color:var(--accent)}
-.row-yr{flex:0 0 82px;font-size:.82rem;color:var(--faint);font-variant-numeric:tabular-nums}
-.row-ti{font-size:.95rem;line-height:1.4}
-.row-arr{margin-left:auto;color:var(--faint);font-size:1rem;line-height:1;align-self:center;transition:transform .2s,color .2s}
+.row-yr{flex:0 0 82px;font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.row-ti{font-size:var(--text);line-height:1.4}
+.row-arr{margin-left:auto;color:var(--faint);font-size:var(--text);line-height:1;align-self:center;transition:transform .2s,color .2s}
 a.row:hover .row-arr{transform:translateX(3px)}
 a.row[aria-current="page"] .row-arr{transform:rotate(90deg)}
 a.row[aria-current="page"] .row-ti{color:var(--accent);font-weight:600}
 a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 .subnav{display:flex;flex-direction:column;padding:4px 0 10px 94px;gap:2px}
-.subnav a{color:var(--muted);font-size:.88rem;transition:color .15s,padding-left .15s}
+.subnav a{color:var(--muted);font-size:var(--small);transition:color .15s,padding-left .15s}
 .subnav a:hover{color:var(--accent);padding-left:4px}
 .subnav a.active{color:var(--accent);font-weight:600}
-.subnav a.grp{color:var(--ink);font-weight:600;margin-top:6px}
-.subnav a.grp:first-child{margin-top:0}
-.subnav a:not(.grp){padding-left:12px}
+
+/* разделы — тихие рубрики (eyebrow, уже есть в системе), кейсы — основной текст */
+.subnav a.grp{display:flex;gap:8px;align-items:baseline;color:var(--muted);font-size:var(--small)}
+.subnav a.grp .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums}
+.subnav a.grp:hover{color:var(--accent)}
+.subnav a.cs{display:flex;gap:8px;align-items:baseline;color:var(--faint);font-size:var(--small)}
+.subnav a.cs:hover{color:var(--accent)}
+.subnav a.cs .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums;font-size:var(--small)}
+.subnav a.active{color:var(--accent)}
+
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
 .card h3{font-weight:600;font-size:var(--h3);margin-bottom:9px}
-.card p{color:var(--muted);font-size:.9rem}
+.card p{color:var(--muted);font-size:var(--text)}
+
+
+
+/* крупная метрика (Outcomes) — большая цифра + подпись под ней */
+.card.metric-big{background:none;border:none;padding:0;text-align:left}
+.card.metric-big .num{display:flex;align-items:baseline;flex-wrap:nowrap;gap:2px;font-weight:800;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.05;letter-spacing:-.02em}
+.card.metric-big .num-from{color:var(--ink)}
+.card.metric-big .num-to{color:var(--accent)}
+.card.metric-big .num-suf{color:var(--accent);font-size:.6em;font-weight:700;margin-left:1px}
+.card.metric-big .num-arr{width:1.1em;height:.8em;color:var(--accent);align-self:center;margin:0 10px;flex:0 0 auto}
+.card.metric-big .lbl{color:var(--ink);font-size:var(--text);margin-top:10px;line-height:1.5;max-width:30ch}
+.cols:has(.card.metric-big){grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px 40px;margin-top:24px}
+
 /* метрика — только цифра и подпись, разделение воздухом */
 .card.metric{background:none;border:none;border-radius:0;padding:0;text-align:left}
-.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:36px 48px;margin-top:24px}
-.card.metric .num{font-weight:700;font-size:2.2rem;line-height:1.1;letter-spacing:-.03em;color:var(--ink)}
-.card.metric .lbl{color:var(--muted);font-size:.92rem;margin-top:10px;font-weight:400;line-height:1.45;max-width:26ch}
-.card.metric .desc{color:var(--muted);font-size:.92rem;font-weight:400;line-height:1.4}
+.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 40px;margin-top:20px}
+.card.metric .num{display:inline;font-weight:600;font-size:var(--text);color:var(--ink)}
+.card.metric .lbl{display:inline;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5}
+.card.metric .desc{display:none}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
+/* решение с раскрытием: заголовок-решение + под-пункты */
+.sub-solution{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5;max-width:64ch;margin-top:16px}
+.sub-solution .step-star{position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;font-weight:400}
+.steps{margin-top:40px;display:flex;flex-direction:column;gap:64px}
+.step{display:flex;flex-direction:column}
+.step-icon{width:24px;height:24px;color:var(--ink);margin-bottom:14px}
+.step-icon svg{width:100%;height:100%}
+.step-text{color:var(--ink);font-size:var(--text);line-height:1.5;max-width:60ch}
+.step .fig{margin-top:24px}
+
 /* пункты внутри кейса */
 .points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
-.points li{position:relative;padding-left:20px;color:var(--muted);font-size:.98rem}
-.points li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
 .points li b{color:var(--ink);font-weight:600}
+.points li br{content:"";display:block;margin-bottom:6px}
+
+/* маркер по умолчанию ✦; в «Проблемах» — точка */
+.points.cross li::before{content:"";top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.points.plain li{padding-left:0}
+.points.plain li::before{display:none}
+
+
+/* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
+.points.inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;max-width:none;margin-top:20px}
+/* длинные пункты — шире колонка, чтобы не превращались в лапшу */
+.points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
+.points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
+.points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55}
 
 .shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
-  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:.85rem;text-align:center;padding:20px}
+  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
 .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
-.caption{color:var(--muted);font-size:.9rem;margin-top:10px}
+.caption{color:var(--muted);font-size:var(--small);margin-top:10px}
+/* изображения в ряд: одинаковая высота, ширина по пропорции, без обрезки */
+.figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
+.figs.figs-full{display:block}
+.figs.figs-full .fig{width:100%;margin:0}
+.figs.figs-full .fig img{width:100%;height:auto;display:block}
+.fig{margin:0;min-width:0;flex:1 1 0}
+.fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
+  transition:transform .2s,filter .2s}
+.fig-btn:hover{transform:translateY(-2px);filter:brightness(.97)}
+.fig-btn img{width:100%;height:auto;display:block}
+.fig figcaption{display:none}
+@media (max-width:640px){.fig{flex:1 1 100%!important}}
+
+/* лайтбокс */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(19,19,22,.92);
+  display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.lightbox-close{position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#fff;font-size:1.3rem;line-height:1;z-index:2;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-close:hover{background:rgba(255,255,255,.22)}
+
+/* листание */
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#fff;font-size:1.8rem;line-height:1;z-index:2;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-nav:hover{background:rgba(255,255,255,.25)}
+.lightbox-nav.prev{left:24px}
+.lightbox-nav.next{right:24px}
+.lightbox-meta{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.85);font-size:.9rem;z-index:2}
+.lightbox-meta .count{color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .lightbox-nav{width:40px;height:40px;font-size:1.4rem}
+  .lightbox-nav.prev{left:10px}
+  .lightbox-nav.next{right:10px}
+}
 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:.85rem;color:var(--muted)}
-.jtbd{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:var(--small);color:var(--muted)}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
 .jtbd b{color:var(--ink);font-weight:600}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:24px}
 .gallery .shot{aspect-ratio:3/4}
 
 
+/* логотип компании */
+.company-logo{width:56px;height:56px;border-radius:14px;display:block;margin-bottom:20px}
+
 /* шапка страницы = блок опыта с главной (переиспользуем) */
-.exp-eyebrow{font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.exp-eyebrow{font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
 .exp-role{font-weight:700;font-size:var(--h1);line-height:1.2;margin-top:6px;letter-spacing:-.02em}
 .exp-company{color:var(--accent)}
 .exp-summary{margin-top:10px;color:var(--muted)}
@@ -103,7 +198,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
   background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
 .duties.open::after{opacity:0}
-.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:.92rem}
+.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:var(--small)}
 .duties-more .chev{transition:transform .2s}
 .duties-more:hover .chev{transform:translateY(2px)}
 .duties-more.hidden{display:none}
@@ -111,25 +206,25 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .achievements{margin-top:clamp(36px,5vh,52px)}
 .section-head{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
 /* шапка отделена от кейсов */
-.head-sep{margin-top:clamp(24px,4vh,40px)}
+.head-sep{margin-top:clamp(120px,16vh,200px)}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
-.duties li{position:relative;padding-left:18px;color:var(--muted);font-size:.96rem}
-.duties li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}
 
 
 .side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
-.side-links{display:flex;flex-direction:column;gap:2px;font-size:1.02rem}
+.side-links{display:flex;flex-direction:column;gap:2px;font-size:var(--text)}
 .side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
 .side-links a:hover{opacity:.65}
 .side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .segmented{display:flex;gap:2px;background:var(--sel);padding:3px;border-radius:10px}
-.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:.8rem;color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:var(--eyebrow);color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
 .segmented button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.06)}
-.lang{display:inline-flex;gap:2px;font-size:.8rem;font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
+.lang{display:inline-flex;gap:2px;font-size:var(--eyebrow);font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
 .lang button{padding:6px 11px;border-radius:7px;color:var(--faint)}
 .lang button[aria-pressed="true"]{color:var(--ink);background:var(--surface);box-shadow:0 1px 2px rgba(20,20,25,.06)}
 
@@ -139,7 +234,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .main{view-transition-name:main-col;flex:1 1 auto;min-width:0;padding:var(--pad);padding-left:clamp(32px,4vw,80px)}
 .main-inner{max-width:820px}
 
-.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:.92rem}
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:var(--small)}
 .back:hover{color:var(--accent)}
 
 
@@ -147,34 +242,46 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 /* блок = один раздел */
 /* кейс — без подложки, разделение воздухом */
-.block{margin-top:120px;scroll-margin-top:20px}
-.block:first-of-type{margin-top:0}
+/* новый раздел (группа) — большой отступ */
+.block.group{margin-top:200px;position:relative}
+/* цветная полоска-разделитель между разделами */
+.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group:first-of-type::before{display:none}
+.block.group:first-of-type{margin-top:0}
+.block.group .block-title{font-size:var(--h1);letter-spacing:-.03em}
+
+/* кейс внутри раздела — средний отступ */
+.block{margin-top:140px;scroll-margin-top:20px}
+
+/* первый кейс сразу под своим разделом — ближе */
+.block.group + .block:not(.group){margin-top:88px}   /* первый кейс под разделом; группа после группы сохраняет 200px */
 .block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.block-title{font-weight:700;font-size:var(--h1);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
-.block-lead{color:var(--muted);margin-top:10px;max-width:60ch}
+.block-title{font-weight:700;font-size:var(--h2);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
+.block-lead{color:var(--ink);margin-top:10px;max-width:60ch}
 
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 26px;margin-top:24px;padding:22px 0;border-top:1px solid rgba(19,19,22,.08);border-bottom:1px solid rgba(19,19,22,.08)}
-.meta h4{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
-.meta p{font-size:.92rem}
+.meta h4{font-size:var(--eyebrow);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
+.meta p{font-size:var(--small)}
 .meta .dim{color:var(--muted)}
-.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:.8rem;padding:3px 9px;border-radius:20px;margin-top:4px}
+.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:var(--small);padding:3px 9px;border-radius:20px;margin-top:4px}
 
 .sub{margin-top:16px}                 /* внутреннее: подсекция под заголовком */
 .sub + .sub{margin-top:40px}          /* внешнее: между подсекциями */
 .sub > *:first-child{margin-top:0}    /* первый элемент подсекции не отрывается */
 .sub > .points:first-child{margin-top:0}  /* список сразу под заголовком блока */
-.sub-title{font-weight:700;font-size:var(--h2);letter-spacing:-.01em}
+.sub-title{font-weight:700;font-size:var(--h3);letter-spacing:-.01em}
+.sub-title.sub-title-lg{font-size:var(--h2);letter-spacing:-.02em}
 .sub-title ~ .points,.sub-title ~ .sub-note{margin-top:12px}
-.sub-note{color:var(--muted);margin-top:0;max-width:56ch;font-size:.96rem}
+.sub-note{color:var(--ink);margin-top:0;max-width:56ch;font-size:var(--text)}
 
-.jtbd{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
 .jtbd b{color:var(--ink);font-weight:600}
 
 
 
 
 .foot{margin-top:80px;padding:32px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.foot a{color:var(--accent);font-weight:500}
+.foot a{color:var(--accent);font-weight:500;font-size:var(--small)}
 
 
 
@@ -228,7 +335,28 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <main class="main"><div class="main-inner" id="content"></div></main>
 </div>
 
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Закрыть">✕</button>
+  <button class="lightbox-nav prev" aria-label="Предыдущее">‹</button>
+  <img src="" alt="">
+  <button class="lightbox-nav next" aria-label="Следующее">›</button>
+  <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
+</div>
+
 <script>
+const IMG = {
+  sol1a: "assets/sberpravo-sol1a.webp",
+  sol1b: "assets/sberpravo-sol1b.webp",
+  abtesta: "assets/sberpravo-abtest-a.webp",
+  abtestb: "assets/sberpravo-abtest-b.webp",
+  beforeafter: "assets/sberpravo-beforeafter.webp",
+  sol3: "assets/sberpravo-sol3.webp",
+  sol2: "assets/sberpravo-sol2.webp",
+  sol1c: "assets/sberpravo-sol1c.webp",
+  research: "assets/sberpravo-research.png",
+  flow: "assets/sberpravo-flow.png"
+};
+
 const CURRENT = "sberpravo";
 
 /* СПИСОК ПРОЕКТОВ — синхронизирован с index.html */
@@ -236,19 +364,48 @@ const PROJECTS = [
   {id:"rwb", yr:"2024 — н.в.", href:"case-rwb.html", ti:{ru:"RWB. Маркетплейс",en:"RWB. Marketplace"}, sections:[]},
   {id:"medsi", yr:"2022–2024", href:"case-medsi.html", ti:{ru:"Medsi Digital",en:"Medsi Digital"},
    sections:[
-     {a:"tasks",     group:true, ti:{ru:"Задачи Lead UX/UI Designer",en:"Lead UX/UI Designer tasks"}},
-     {a:"team",      ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
-     {a:"research",  ti:{ru:"Исследования",en:"Research"}},
+     {a:"team",      group:true, ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
+     {a:"research",  group:true, ti:{ru:"Исследования",en:"Research"}},
      {a:"mobile",    group:true, ti:{ru:"Приложение SmartMed",en:"SmartMed app"}},
-     {a:"cabinet",   ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
-     {a:"marketing", ti:{ru:"Маркетинг",en:"Marketing"}}
+     {a:"style",     ti:{ru:"Единый стиль приложения",en:"One visual style"}},
+     {a:"main",      ti:{ru:"Главный экран",en:"Home screen"}},
+     {a:"booking",   ti:{ru:"Запись",en:"Booking"}},
+     {a:"flow",      ti:{ru:"Флоу записи",en:"Booking flow"}},
+     {a:"doctor",    ti:{ru:"Выбор врача",en:"Choosing a doctor"}},
+     {a:"doctorcard",ti:{ru:"Карточка врача",en:"Doctor card"}},
+     {a:"statuses",  ti:{ru:"Статусы записи",en:"Booking statuses"}},
+     {a:"pharmacy",  ti:{ru:"Аптека",en:"Pharmacy"}},
+     {a:"map",       ti:{ru:"Выбор на карте",en:"Choosing on the map"}},
+     {a:"product",   ti:{ru:"Карточка товара",en:"Product card"}},
+     {a:"cart",      ti:{ru:"Корзина",en:"Cart"}},
+     {a:"bonuses",   ti:{ru:"Бонусы",en:"Loyalty points"}},
+     {a:"cabinet",   group:true, ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
+     {a:"schedule",  ti:{ru:"Расписание",en:"Schedule"}},
+     {a:"newbooking",ti:{ru:"Создание записи",en:"Creating an appointment"}},
+     {a:"emk",       ti:{ru:"Резюме ЭМК",en:"EMR summary"}},
+     {a:"diagnosis", ti:{ru:"Диагноз",en:"Diagnosis"}},
+     {a:"marketing", group:true, ti:{ru:"Маркетинг",en:"Marketing"}}
    ]},
   {id:"sberpravo", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
    sections:[
-     {a:"menu",ti:{ru:"Меню и «Заказы»",en:"Menu & Orders"}},
-     {a:"landing",ti:{ru:"Главный лендинг",en:"Landing page"}},
-     {a:"flow",ti:{ru:"Путь юзера",en:"User flow"}},
-     {a:"screens",ti:{ru:"Макеты",en:"Screens"}}
+     {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
+     {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
+     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
+     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"menu-problems",    ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"menu-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"menu-result",      ti:{ru:"Результат",en:"Result"}},
+     {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
+     {a:"landing-research", ti:{ru:"Исследование",en:"Research"}},
+     {a:"landing-problems", ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"landing-abtest",   ti:{ru:"A/B-тест",en:"A/B test"}},
+     {a:"landing-result",   ti:{ru:"Результат",en:"Result"}},
+     {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
    ]},
   {id:"vtb", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
   {id:"loko", yr:"2019", href:"case-loko.html", ti:{ru:"Локо Банк",en:"Loko Bank"}, sections:[]},
@@ -286,126 +443,195 @@ ru:{
   ],
 
   blocks:[
-  /* ---------- 1. МЕНЮ И ЗАКАЗЫ ---------- */
   {
-    a:"menu", num:"Кейс 01",
-    title:"Редизайн Меню и «Заказы» исполнителя",
-    lead:"Исполнители терялись в интерфейсе и заваливали поддержку вопросами по навигации.",
-    meta:[
-      ["Задача","Редизайн меню и раздела «Заказы»"],
-      ["Моя роль","UX/UI Designer"],
-      ["Команда","Дизайнер, Product Owner, Аналитик, Разработчик"],
-      ["Методы","Guerrilla testing, интервью, юзабилити-тест"],
-      ["Сроки","05.2021 — 08.2021"]
-    ],
-    goals:["−50% обращений в поддержку","+5% CTR «Заказы»"],
-    subs:[
-      {ti:"Цели продукта", note:"Сформулированы по результатам JTBD-интервью.",
-       cards:[
-        {h:"Бизнес", p:"Создать удобный и безопасный сервис, где человек решает юридическую проблему, заказав услугу адвоката. Стать первыми на рынке."},
-        {h:"Пользователи", p:"<div class='jtbd'><b>Когда</b> у меня проблема, <b>я хочу</b> надёжный сервис, <b>чтобы</b> быть спокойным.</div><div class='jtbd'><b>Когда</b> я описал проблему, <b>я хочу</b>, чтобы её решили за меня.</div>"},
-        {h:"Адвокаты", p:"<div class='jtbd'><b>Когда</b> у меня нет заказов, <b>я хочу</b> надёжный источник клиентов.</div><div class='jtbd'><b>Когда</b> я нашёл заказ, <b>я хочу</b> быстро выйти на клиента.</div>"}
-       ]},
-      {ti:"Предпосылки", cards:[
-        {h:"Интервью", p:"5 пользователей в качественном интервью жаловались на навигацию."},
-        {h:"Обратная связь", p:"Регулярные жалобы на сложность ориентации в системе."},
-        {h:"Поддержка", p:"Тратила время на объяснения, как ориентироваться в продукте."}
-       ]},
-      {ti:"Проблемы", cards:[
-        {h:"Не понятно, где ты", p:"Сложно ориентироваться: непонятно, на каком экране находишься, приходится кликать заново."},
-        {h:"Нельзя сравнить", p:"Информацию, документы и чат нельзя видеть одновременно — постоянные переключения."},
-        {h:"Заказы далеко", p:"Сложно перейти в заказы и вернуться. Отсюда жалобы и запросы в поддержку."}
-       ]},
-      {ti:"Решения", cards:[
-        {h:"Раскрытое меню", p:"Дополнительное меню всегда раскрыто — пользователь видит, где находится."},
-        {h:"Табы вместо переключений", p:"Информация, документы, история и контакты — горизонтальными табами, чат на первом плане."},
-        {h:"Новая структура пунктов", p:"Раскрыл пункты, добавил новые, второстепенные — под основными."}
-       ],
-       shots:[["Скрин: до / после — раскрытое меню","Скрин: чат + информация о заказе"]],
-       caption:"Теперь чат и информация о заказе видны одновременно — не нужно переключаться между экранами."},
-      {ti:"Исследования",
-       note:"Перед передачей в разработку провёл коридорное тестирование: посадил разработчиков и коллег и дал типовые задачи. Прототип показал, что новая навигация читается без объяснений. После доработок — юзабилити-тест на реальных пользователях.",
-       shots:[["Фото/видео тестирования"]]},
-      {ti:"Результаты", results:[
-        {n:"+12%", l:"CTR «Заказы»", d:"при цели +5%"},
-        {n:"−90%", l:"Поддержка", d:"обращений, при цели −50%"},
-        {n:"5/5", l:"Скорость", d:"пользователи находят разделы быстрее"}
-       ]}
-    ]
+    a:"flow", group:true,
+    title:"Путь юзера",
+    lead:"Редизайн пути юзера из Каталога до Найти исполнителей.",
+    why:"Пользователи терялись на пути от каталога до поиска исполнителя — цель сократить время до действия и поднять конверсию в «Найти»."
   },
 
-  /* ---------- 2. ЛЕНДИНГ ---------- */
   {
-    a:"landing", num:"Кейс 02",
-    title:"Редизайн главного лендинга",
-    lead:"Заполнить: какая была проблема с лендингом и зачем его переделывали.",
-    meta:[
-      ["Задача","Редизайн главной страницы"],
-      ["Моя роль","UX/UI Designer"],
-      ["Команда","Заполнить"],
-      ["Методы","Заполнить"],
-      ["Сроки","2021"]
-    ],
-    goals:["Заполнить цель"],
+    a:"flow-research",
+    title:"Исследование",
+    lead:"",
     subs:[
-      {ti:"Проблемы", cards:[
-        {h:"Заполнить", p:"Опиши проблему, которую решал."},
-        {h:"Заполнить", p:"Опиши проблему."},
-        {h:"Заполнить", p:"Опиши проблему."}
-      ]},
-      {ti:"Решения", cards:[
-        {h:"Заполнить", p:"Что сделал и почему именно так."},
-        {h:"Заполнить", p:"Что сделал."},
-        {h:"Заполнить", p:"Что сделал."}
-      ], shots:[["Скрин: до","Скрин: после"]], caption:"Заполнить подпись."},
-      {ti:"Результаты", results:[
-        {n:"—", l:"Метрика", d:"заполнить"},
-        {n:"—", l:"Метрика", d:"заполнить"}
+      {ti:"", cards:[
+        {h:"", p:"Я использовал данные гугл аналитики.<br>По этим данным 66 юзеров из 1000 дошли до поиска откликов.<br>Я посмотрел запись флоу 20 юзеров, получил среднее время 50 секунд"},
+        {h:"", p:"Я пообщался с 5 юзерами, которые раньше не видели сервис.<br>Я попросил их найти определенную услугу через каталог и перейти к поиску исполнителя.<br>Мы обсудили возникшие трудности при прохождении флоу"}
+      ],
+       imgs:[{src:IMG.research, cap:"Исследование"}]},
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Нужно многое прочитать перед выбором услуги"},
+        {h:"", p:"Нужно много переключений, чтобы найти и настроить услугу"},
+        {h:"", p:"Нужно пройти долгий путь перед началом поиска откликов"}
       ]}
     ]
   },
 
-  /* ---------- 3. ПУТЬ ЮЗЕРА ---------- */
   {
-    a:"flow", num:"Кейс 03",
-    title:"Путь юзера: Каталог → Найти исполнителей",
-    lead:"Заполнить: где терялись пользователи на пути от каталога до поиска исполнителя.",
-    meta:[
-      ["Задача","Редизайн пути от Каталога до «Найти исполнителей»"],
-      ["Моя роль","UX/UI Designer"],
-      ["Команда","Заполнить"],
-      ["Методы","CJM, Заполнить"],
-      ["Сроки","2021"]
-    ],
-    goals:["Заполнить цель"],
+    a:"flow-design",
+    title:"Дизайн-решения",
+    lead:"",
     subs:[
-      {ti:"Проблемы", cards:[
-        {h:"Заполнить", p:"Опиши проблему."},
-        {h:"Заполнить", p:"Опиши проблему."},
-        {h:"Заполнить", p:"Опиши проблему."}
+      {ti:"Выбор категорий сделал на одном экране вместо двух, чтобы визуально упростить интерфейс", steps:[
+        {icon:"route", p:"Меню первого и второго уровня на одном экране, что уменьшает переходы между страницами и потерю внимания юзера", img:IMG.sol1a},
+        {icon:"text", p:"Нет лишнего текста о типе услуги, который занимал время на прочтение и отвлекал внимание юзера. Подробное описание услуги есть на заключительном шаге", img:IMG.sol1b},
+        {icon:"layers", p:"Теперь услуги и ситуации на одной странице и не надо проходить весь путь занового, чтобы ознакомится с ситуациями в одной и той же категории", img:IMG.sol1c}
       ]},
-      {ti:"Решения", cards:[
-        {h:"Заполнить", p:"Что сделал."},
-        {h:"Заполнить", p:"Что сделал."},
-        {h:"Заполнить", p:"Что сделал."}
-      ], shots:[["Скрин: CJM / флоу","Скрин: новые экраны"]], caption:"Заполнить подпись."},
-      {ti:"Результаты", results:[
-        {n:"—", l:"Метрика", d:"заполнить"},
-        {n:"—", l:"Метрика", d:"заполнить"}
+      {ti:"Убрал фильтр услуг, альтернативой сделал табы, чтобы ускорить флоу", solution:true, plain:true, cards:[
+        {h:"", p:"Теперь не надо проходить долгий путь выбора параметров, чтобы увидеть услугу"},
+        {h:"", p:"Стало проще сравнивать усулуги по цене и временю исполнения"},
+        {h:"", p:"Просмотрев базу данных, я обнаружил, что в одной категории может быть от 2 до 8 услуг. Поэтому сделал табы, как минимально простой способ фильтрации"}
+      ], imgs:[{src:IMG.sol2, cap:""}]},
+      {ti:"Просмотр услуги сделал шторкой, а не отдельной страницей, чтобы поднять конверсию в «Find»", solution:true, plain:true, cards:[
+        {h:"", p:"Подробное описание услуги открывается в шторке на этой же странице, что упрощяет навигацию и понимание с какой услугой уже ознакомились, а с какой еще нет"},
+        {h:"", p:"Из-за ограничений, заказчик не может выбрать услугу без перехода на экран описания"}
+      ], imgs:[{src:IMG.sol3, cap:""}]}
+    ]
+  },
+
+  {
+    a:"flow-abtest",
+    title:"A/B-тест",
+    lead:"Было сделано несколько вариантов дизайна. Какие-то варианты отсеялись после обсуждения внутри команды. Для А/В теста оставили два варианта.",
+    subs:[
+      {ti:"Вариант A", cards:[
+        {h:"", p:"161 из 1000 юзеров, которые прошли флоу"},
+        {h:"", p:"27 секунд требовалось чтобы пройти флоу"}
+      ], imgs:[{src:IMG.abtesta, cap:"Вариант A"}]},
+      {ti:"Вариант B", cards:[
+        {h:"", p:"155 из 1000 юзеров, которые прошли флоу"},
+        {h:"", p:"30 секунд требовалось чтобы пройти флоу"},
+        {h:"", p:"Юзерам сложнее сравнивать цену и время, также отвлекало большое количество текста на одной странице"}
+      ], imgs:[{src:IMG.abtestb, cap:"Вариант B"}]},
+      {ti:"Дизайн: до и после", big:true, full:true, imgs:[{src:IMG.beforeafter, cap:"Слева — старый флоу, справа — новый"}]}
+    ]
+  },
+
+  {
+    a:"flow-result",
+    title:"Результат",
+    lead:"Сделал повторное исследование готвоого дизайна и получились такие результаты",
+    subs:[
+      {ti:"", results:[
+        {from:"5", n:"5/5", l:"Юзеров, которые участвовали в первом интервью, оценили изменения дизайна положительно"},
+        {from:"6,6", n:"16,1", suf:"%", l:"161 из 1000 юзеров, которые дошли до поиска откликов после изменения в дизайне"},
+        {from:"50", n:"27", suf:" sec", l:"Теперь в среднем требуется юзеру, чтобы пройти флоу и начать поиск исполнителя"}
       ]}
     ]
   },
 
-  /* ---------- 4. МАКЕТЫ ---------- */
   {
-    a:"screens", num:"Галерея",
+    a:"menu", group:true,
+    title:"Меню и Заказы",
+    lead:"Заполнить: описание кейса.",
+    subs:[]
+  },
+
+  {
+    a:"menu-research",
+    title:"Исследование",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"menu-problems",
+    title:"Проблемы и цели",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"menu-design",
+    title:"Дизайн-решения",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"menu-abtest",
+    title:"A/B-тест",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"menu-result",
+    title:"Результат",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"landing", group:true,
+    title:"Лендинг",
+    lead:"Заполнить: описание кейса.",
+    subs:[]
+  },
+
+  {
+    a:"landing-research",
+    title:"Исследование",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"landing-problems",
+    title:"Проблемы и цели",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"landing-design",
+    title:"Дизайн-решения",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"landing-abtest",
+    title:"A/B-тест",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"landing-result",
+    title:"Результат",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+    ]
+  },
+
+  {
+    a:"screens", group:true,
     title:"Макеты",
-    lead:"Интерфейсы продукта: веб и мобильные экраны, 2021–2022.",
-    gallery:8
+    lead:"Заполнить: описание.",
+    subs:[]
   }
-  ],
-
-  next:"Следующий проект", nextName:"Medsi Digital", nextHref:"case-medsi.html"
+  ]
 },
 
 en:{
@@ -434,86 +660,194 @@ en:{
 
   blocks:[
   {
-    a:"menu", num:"Case 01",
-    title:"Menu & “Orders” redesign",
-    lead:"Lawyers got lost in the interface and flooded support with navigation questions.",
-    meta:[
-      ["Task","Redesign of the menu and Orders section"],
-      ["My role","UX/UI Designer"],
-      ["Team","Designer, Product Owner, Analyst, Developer"],
-      ["Methods","Guerrilla testing, interviews, usability test"],
-      ["Timeline","May — Aug 2021"]
-    ],
-    goals:["−50% support requests","+5% CTR “Orders”"],
-    subs:[
-      {ti:"Product goals", note:"Based on JTBD interviews.",
-       cards:[
-        {h:"Business", p:"Build a safe service where people solve legal problems by hiring a lawyer. Become the market leader."},
-        {h:"Users", p:"<div class='jtbd'><b>When</b> I have a problem, <b>I want</b> a service I can trust.</div><div class='jtbd'><b>When</b> I describe my case, <b>I want</b> it solved for me.</div>"},
-        {h:"Lawyers", p:"<div class='jtbd'><b>When</b> I have no orders, <b>I want</b> a reliable source of clients.</div><div class='jtbd'><b>When</b> I find an order, <b>I want</b> to reach the client fast.</div>"}
-       ]},
-      {ti:"Context", cards:[
-        {h:"Interviews", p:"5 users complained about navigation."},
-        {h:"Feedback", p:"Recurring complaints about getting lost."},
-        {h:"Support", p:"Spent time explaining how to navigate."}
-       ]},
-      {ti:"Problems", cards:[
-        {h:"No sense of place", p:"Hard to tell which screen you are on."},
-        {h:"No side-by-side view", p:"Info, documents and chat couldn’t be seen at once."},
-        {h:"Orders buried", p:"Getting to orders and back was hard."}
-       ]},
-      {ti:"Solutions", cards:[
-        {h:"Always-open menu", p:"The secondary menu stays expanded."},
-        {h:"Tabs instead of switching", p:"Info, documents, history and contacts as tabs; chat stays in front."},
-        {h:"Restructured items", p:"Expanded items, added new ones, moved secondary below."}
-       ],
-       shots:[["Screen: before / after — expanded menu","Screen: chat + order info"]],
-       caption:"Chat and order details are now visible at once."},
-      {ti:"Research",
-       note:"Before handoff I ran guerrilla testing with developers and colleagues. The prototype showed the new navigation reads without explanation. Then a usability test with real users.",
-       shots:[["Testing photo/video"]]},
-      {ti:"Results", results:[
-        {n:"+12%", l:"CTR “Orders”", d:"vs +5% target"},
-        {n:"−90%", l:"Support", d:"requests, vs −50% target"},
-        {n:"5/5", l:"Speed", d:"users find sections faster"}
-       ]}
-    ]
+    a:"flow", group:true,
+    title:"User flow",
+    lead:"Redesign of the user flow from Catalog to Find professionals.",
+    why:"Users got lost on the way from the catalog to finding a professional — the goal was to cut time-to-action and lift conversion into «Find»."
   },
-  {
-    a:"landing", num:"Case 02",
-    title:"Landing page redesign",
-    lead:"To fill: what was wrong with the landing and why it was redesigned.",
-    meta:[["Task","Homepage redesign"],["My role","UX/UI Designer"],["Team","To fill"],["Methods","To fill"],["Timeline","2021"]],
-    goals:["To fill"],
-    subs:[
-      {ti:"Problems", cards:[{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."}]},
-      {ti:"Solutions", cards:[{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."}],
-       shots:[["Screen: before","Screen: after"]], caption:"To fill."},
-      {ti:"Results", results:[{n:"—",l:"Metric",d:"to fill"},{n:"—",l:"Metric",d:"to fill"}]}
-    ]
-  },
-  {
-    a:"flow", num:"Case 03",
-    title:"User flow: Catalog → Find pros",
-    lead:"To fill: where users dropped off between catalog and finding a professional.",
-    meta:[["Task","Flow redesign"],["My role","UX/UI Designer"],["Team","To fill"],["Methods","CJM"],["Timeline","2021"]],
-    goals:["To fill"],
-    subs:[
-      {ti:"Problems", cards:[{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."}]},
-      {ti:"Solutions", cards:[{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."},{h:"To fill",p:"Describe."}],
-       shots:[["Screen: CJM","Screen: new flow"]], caption:"To fill."},
-      {ti:"Results", results:[{n:"—",l:"Metric",d:"to fill"},{n:"—",l:"Metric",d:"to fill"}]}
-    ]
-  },
-  {
-    a:"screens", num:"Gallery",
-    title:"Screens",
-    lead:"Product interfaces: web and mobile, 2021–2022.",
-    gallery:8
-  }
-  ],
 
-  next:"Next project", nextName:"Medsi Digital", nextHref:"case-medsi.html"
+  {
+    a:"flow-research",
+    title:"Research",
+    lead:"",
+    subs:[
+      {ti:"", cards:[
+        {h:"", p:"I used Google Analytics data.<br>By that data, 66 of 1000 users reached the search for responses.<br>I reviewed session recordings of 20 users and got an average time of 50 seconds"},
+        {h:"", p:"I talked to 5 users who hadn’t seen the service before.<br>I asked them to find a specific service in the catalog and move on to finding a professional.<br>We discussed the difficulties they had going through the flow"}
+      ],
+       imgs:[{src:IMG.research, cap:"Research"}]},
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"You have to read a lot before choosing a service"},
+        {h:"", p:"You need many switches to find and set up a service"},
+        {h:"", p:"You have to go through a long path before starting the search for responses"}
+      ]}
+    ]
+  },
+
+  {
+    a:"flow-design",
+    title:"Design solutions",
+    lead:"",
+    subs:[
+      {ti:"Put category selection on one screen instead of two — to simplify the interface visually", steps:[
+        {icon:"route", p:"First- and second-level menus on one screen, which reduces page transitions and loss of user attention", img:IMG.sol1a},
+        {icon:"text", p:"No extra text about the service type that took time to read and distracted the user. A detailed description is available at the final step", img:IMG.sol1b},
+        {icon:"layers", p:"Now services and situations are on one page, so you don’t have to go through the whole path again to explore situations within the same category", img:IMG.sol1c}
+      ]},
+      {ti:"Removed the service filter and used tabs instead — to speed up the flow", solution:true, plain:true, cards:[
+        {h:"", p:"Now you don’t have to go through a long parameter-selection path to see a service"},
+        {h:"", p:"It became easier to compare services by price and delivery time"},
+        {h:"", p:"Reviewing the database, I found that a category can have from 2 to 8 services. So I used tabs as the simplest possible way to filter"}
+      ], imgs:[{src:IMG.sol2, cap:""}]},
+      {ti:"Made service preview a bottom sheet, not a separate page — to lift conversion into «Find»", solution:true, plain:true, cards:[
+        {h:"", p:"A detailed service description opens in a bottom sheet on the same page, which simplifies navigation and understanding of which services you’ve already reviewed and which not"},
+        {h:"", p:"Due to constraints, the client can’t pick a service without going to the description screen"}
+      ], imgs:[{src:IMG.sol3, cap:""}]}
+    ]
+  },
+
+  {
+    a:"flow-abtest",
+    title:"A/B test",
+    lead:"Several design variants were made. Some were dropped after discussion within the team. Two variants were kept for the A/B test.",
+    subs:[
+      {ti:"Variant A", cards:[
+        {h:"", p:"161 of 1000 users completed the flow"},
+        {h:"", p:"27 seconds needed to go through the flow"}
+      ], imgs:[{src:IMG.abtesta, cap:"Variant A"}]},
+      {ti:"Variant B", cards:[
+        {h:"", p:"155 of 1000 users completed the flow"},
+        {h:"", p:"30 seconds needed to go through the flow"},
+        {h:"", p:"Users found it harder to compare price and time, and the large amount of text on one page was distracting"}
+      ], imgs:[{src:IMG.abtestb, cap:"Variant B"}]},
+      {ti:"Design: before and after", big:true, full:true, imgs:[{src:IMG.beforeafter, cap:"Old flow on the left, new flow on the right"}]}
+    ]
+  },
+
+  {
+    a:"flow-result",
+    title:"Result",
+    lead:"I ran a follow-up study of the finished design and got these results",
+    subs:[
+      {ti:"", results:[
+        {from:"5", n:"5/5", l:"Users who took part in the first interview rated the design changes positively"},
+        {from:"6.6", n:"16.1", suf:"%", l:"161 of 1000 users reached the search for responses after the design change"},
+        {from:"50", n:"27", suf:" sec", l:"On average it now takes a user this long to go through the flow and start searching for a professional"}
+      ]}
+    ]
+  },
+
+  {
+    a:"menu", group:true,
+    title:"Menu & Orders",
+    lead:"To fill: case description.",
+    subs:[]
+  },
+
+  {
+    a:"menu-research",
+    title:"Research",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"menu-problems",
+    title:"Problems & goals",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"menu-design",
+    title:"Design solutions",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"menu-abtest",
+    title:"A/B test",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"menu-result",
+    title:"Result",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"landing", group:true,
+    title:"Landing",
+    lead:"To fill: case description.",
+    subs:[]
+  },
+
+  {
+    a:"landing-research",
+    title:"Research",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"landing-problems",
+    title:"Problems & goals",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"landing-design",
+    title:"Design solutions",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"landing-abtest",
+    title:"A/B test",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"landing-result",
+    title:"Result",
+    lead:"",
+    subs:[
+      {ti:"", cards:[{h:"", p:"To fill"}]}
+    ]
+  },
+
+  {
+    a:"screens", group:true,
+    title:"Screens",
+    lead:"To fill.",
+    subs:[]
+  }
+  ]
 }
 };
 
@@ -565,46 +899,105 @@ function renderNav(){
     const active = p.id===CURRENT;
     const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
       <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
-    if(!active) return row;
-    // подменю открытого проекта: обзор + достижения + разделы
-    const items = [
-      {a:"overview", ti:d().navOverview},
-      ...p.sections.map(s=>({a:s.a, ti:s.ti[L]}))
-    ];
-    return row + `<div class="subnav">${items.map(s=>`<a href="#${s.a}">${s.ti}</a>`).join("")}</div>`;
+    if(!active || !p.sections.length) return row;
+
+    // подменю: на этой странице номера у РАЗДЕЛОВ, кейсы без номера
+    const items = [{a:"overview", ov:true, ti:d().navOverview}, ...p.sections];
+    let g = 0;
+    const links = items.map(s=>{
+      const label = typeof s.ti === "string" ? s.ti : s.ti[L];
+      if(s.ov) return `<a class="grp" href="#${s.a}">${label}</a>`;
+      if(s.group){ g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
+      return `<a class="cs" href="#${s.a}">${label}</a>`;
+    }).join("");
+    return row + `<div class="subnav">${links}</div>`;
   }).join("");
 }
 
-function renderBlock(b){
+
+// линейные иконки для под-пунктов решений
+const ICONS = {
+  route: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h2M18 7v8a4 4 0 0 1-4 4h-2"/><path d="m9 8-2-3 3-1"/></svg>`,
+  text: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>`,
+  layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>`
+};
+
+function renderBlock(b, num){
   const meta = b.meta ? `<div class="meta">
     ${b.meta.map(([h,v])=>`<div><h4>${h}</h4><p class="dim">${v}</p></div>`).join("")}
     ${b.goals?`<div><h4>${L==="ru"?"Цели":"Goals"}</h4>${b.goals.map(g=>`<span class="goal">✓ ${g}</span><br>`).join("")}</div>`:""}
   </div>` : "";
 
   const subs = (b.subs||[]).map(s=>{
-    const cards = s.cards ? `<div class="cols">${s.cards.map(c=>
-      `<div class="card"><h3>${c.h}</h3><p>${c.p}</p></div>`).join("")}</div>` : "";
+    // пункты кейса — список, карточки только если явно указано card:true
+    const cards = s.cards ? (s.card
+      ? `<div class="cols">${s.cards.map(c=>
+          `<div class="card">${c.h?`<h3>${c.h}</h3>`:""}${c.p?`<p>${c.p}</p>`:""}</div>`).join("")}</div>`
+      : `<ul class="points${s.row?" inline":""}${s.wide?" wide":""}${s.plain?" plain":""}${s.mark?" "+s.mark:""}">${s.cards.map(c=>
+          `<li>${c.h?`<b>${c.h}</b>`:""}${c.h&&c.p?" — ":""}${c.p||""}</li>`).join("")}</ul>`) : "";
     const shots = (s.shots||[]).map(row=>
       `<div class="shots">${row.map(x=>`<div class="shot">${x}</div>`).join("")}</div>`).join("");
+
+    // реальные изображения — горизонтальный ряд, клик открывает во весь экран
+    const imgs = s.imgs
+      ? `<div class="figs${s.full?" figs-full":""}">${s.imgs.map(im=>
+          `<figure class="fig">
+             <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
+               <img src="${im.src}" alt="${im.cap}" loading="lazy">
+             </button>
+             ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
+           </figure>`).join("")}</div>`
+      : "";
+    // под-пункты решения: текст + картинка под каждым
+    const steps = s.steps ? `<div class="steps">${s.steps.map(st=>
+      `<div class="step">
+         ${st.icon&&ICONS[st.icon]?`<div class="step-icon">${ICONS[st.icon]}</div>`:""}
+         <p class="step-text">${st.p}</p>
+         ${st.img?`<figure class="fig"><button class="fig-btn" data-full="${st.img}" aria-label="Открыть"><img src="${st.img}" alt="" loading="lazy"></button></figure>`:""}
+       </div>`).join("")}</div>` : "";
+
+    const arrow = `<svg class="num-arr" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h27M22 5l7 7-7 7"/></svg>`;
     const results = s.results ? `<div class="cols">${s.results.map(r=>
-      `<div class="card metric"><div class="num">${r.n}</div><div class="lbl">${r.l}</div><div class="desc">${r.d}</div></div>`).join("")}</div>` : "";
+      `<div class="card metric-big">
+         <div class="num">${r.from?`<span class="num-from">${r.from}</span>${arrow}`:""}<span class="num-to">${r.n}</span>${r.suf?`<span class="num-suf">${r.suf}</span>`:""}</div>
+         <div class="lbl">${r.l}</div>
+       </div>`).join("")}</div>` : "";
     return `<div class="sub">
-      <h3 class="sub-title">${s.ti}</h3>
+      ${s.ti ? ((s.steps||s.solution) ? `<p class="sub-solution"><span class="step-star">✦</span>${s.ti}</p>` : `<h3 class="sub-title${s.big?" sub-title-lg":""}">${s.ti}</h3>`) : ""}
       ${s.note?`<p class="sub-note">${s.note}</p>`:""}
-      ${cards}${results}${shots}
+      ${cards}${steps}${results}${imgs}${shots}
       ${s.caption?`<p class="caption">${s.caption}</p>`:""}
     </div>`;
   }).join("");
+
+  const tags = b.tags
+    ? `<div class="chips" style="margin-top:16px">${b.tags.map(x=>`<span class="chip">${x}</span>`).join("")}</div>`
+    : "";
+
+  // Task + зачем — крупная подпись под описанием
+  const task = b.task ? `<div class="task"><h4>Task</h4><p>${b.task}</p></div>` : "";
+  const why = b.why ? `<p class="block-why">${b.why}</p>` : "";
+
+  // флоу-лента: Research → Outcomes → ...
+  const flowline = b.flow ? `<div class="flowline">${b.flow.map((s,i)=>
+    `<span class="fl-step">${s}</span>${i<b.flow.length-1?'<span class="fl-arr">→</span>':''}`).join("")}</div>` : "";
+
+  // одна картинка в шапке кейса
+  const headImg = b.img ? `<div class="figs"><figure class="fig">
+      <button class="fig-btn" data-full="${b.img}" aria-label="Открыть"><img src="${b.img}" alt="${b.title}" loading="lazy"></button>
+    </figure></div>` : "";
+
+  // блочные результаты (не в subs) — как достижения
 
   const gallery = b.gallery
     ? `<div class="gallery">${Array.from({length:b.gallery},(_,i)=>
         `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
 
-  return `<section class="block" id="${b.a}">
-    <div class="block-num">${b.num}</div>
+  return `<section class="block${b.group?" group":""}" id="${b.a}">
+    ${num ? `<div class="block-num">${num}</div>` : ""}
     <h2 class="block-title">${b.title}</h2>
-    <p class="block-lead">${b.lead}</p>
-    ${meta}${subs}${gallery}
+    ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
+    ${why}${task}${meta}${headImg}${subs}${flowline}${tags}${gallery}
   </section>`;
 }
 
@@ -612,7 +1005,7 @@ function render(){
   const t=d();
   $("#content").innerHTML = `
     <div id="overview" style="scroll-margin-top:20px"></div>
-    <div class="exp-eyebrow">${t.date}</div>
+        <div class="exp-eyebrow">${t.date}</div>
     <h1 class="exp-role">${t.position} · <span class="exp-company">${t.title}</span></h1>
     <p class="exp-summary">${t.desc}</p>
     <div class="duties" id="duties">
@@ -622,12 +1015,16 @@ function render(){
 
     <div class="achievements" id="achievements" style="scroll-margin-top:20px">
       <div class="cols">${t.achievements.map(a=>
-        `<div class="card metric"><div class="num">${a.n}</div><div class="lbl">${a.l}</div><div class="desc">${a.d}</div></div>`).join("")}</div>
+        `<div class="card metric">${a.n?`<span class="num">${a.n}</span> `:""}<span class="lbl">${a.l}</span></div>`).join("")}</div>
     </div>
 
     <div class="head-sep"></div>
 
-    ${t.blocks.map(renderBlock).join("")}
+
+    ${(()=>{ let g=0; return t.blocks.map(b=>{
+        if(b.group){ g++; return renderBlock(b, `${L==="ru"?"Раздел":"Chapter"} ${String(g).padStart(2,"0")}`); }
+        return renderBlock(b, "");
+      }).join(""); })()}
     <div class="foot">
       <a href="index.html">← ${t.back}</a>
       <a href="${t.nextHref}">${t.next}: ${t.nextName} →</a>
@@ -642,6 +1039,7 @@ function render(){
   btn.addEventListener("click",()=>{ dv.classList.add("open"); btn.classList.add("hidden"); });
   fixOrphans(document.querySelector(".main"));
   fixOrphans(document.querySelector(".sidebar"));
+  justifyFigs();
   initSpy();
 }
 
@@ -678,6 +1076,66 @@ function setMode(m){
 document.querySelectorAll("[data-mode-btn]").forEach(b=>
   b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));
 setMode((()=>{try{const m=localStorage.getItem("mode");return m==="life"?"life":"work"}catch(e){return "work"}})());
+
+/* лайтбокс с листанием */
+const lb=$("#lightbox"), lbImg=lb.querySelector("img"),
+      lbCap=lb.querySelector(".cap"), lbCount=lb.querySelector(".count");
+let gallery=[], idx=0;
+
+function showImg(i){
+  if(!gallery.length) return;
+  idx=(i+gallery.length)%gallery.length;          // зацикливаем
+  const g=gallery[idx];
+  lbImg.src=g.src; lbImg.alt=g.cap||"";
+  lbCap.textContent=g.cap||"";
+  lbCount.textContent=gallery.length>1 ? `${idx+1} / ${gallery.length}` : "";
+  lb.querySelectorAll(".lightbox-nav").forEach(b=>b.style.display=gallery.length>1?"flex":"none");
+}
+/* justified-ряд: ширина пропорциональна картинке → высота одинаковая */
+function justifyFigs(){
+  document.querySelectorAll(".figs:not(.figs-full)").forEach(row=>{
+    row.querySelectorAll(".fig").forEach(fig=>{
+      const img=fig.querySelector("img");
+      const set=()=>{ if(img.naturalHeight) fig.style.flexGrow = img.naturalWidth/img.naturalHeight; };
+      img.complete ? set() : img.addEventListener("load", set, {once:true});
+    });
+  });
+}
+
+function openLb(btn){
+  // собираем всю группу картинок этого ряда
+  const row=btn.closest(".figs");
+  gallery=[...row.querySelectorAll(".fig-btn")].map(b=>({
+    src:b.getAttribute("data-full"),
+    cap:b.closest(".fig").querySelector("figcaption")?.textContent||""
+  }));
+  showImg([...row.querySelectorAll(".fig-btn")].indexOf(btn));
+  lb.classList.add("open");
+}
+function closeLb(){ lb.classList.remove("open"); }
+
+document.addEventListener("click", e=>{
+  const btn=e.target.closest(".fig-btn");
+  if(btn){ openLb(btn); return; }
+  if(e.target.closest(".lightbox-nav.prev")){ showImg(idx-1); return; }
+  if(e.target.closest(".lightbox-nav.next")){ showImg(idx+1); return; }
+  if(e.target.closest(".lightbox-close")){ closeLb(); return; }
+  // клик по фону (не по картинке) — закрыть
+  if(e.target===lb) closeLb();
+});
+document.addEventListener("keydown", e=>{
+  if(!lb.classList.contains("open")) return;
+  if(e.key==="Escape") closeLb();
+  if(e.key==="ArrowLeft") showImg(idx-1);
+  if(e.key==="ArrowRight") showImg(idx+1);
+});
+// свайп на мобиле
+let tx=0;
+lb.addEventListener("touchstart",e=>{tx=e.changedTouches[0].clientX},{passive:true});
+lb.addEventListener("touchend",e=>{
+  const d=e.changedTouches[0].clientX-tx;
+  if(Math.abs(d)>50) showImg(d>0 ? idx-1 : idx+1);
+},{passive:true});
 
 $("#burger").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
 $("#scrim").addEventListener("click",()=>document.body.classList.remove("nav-open"));
