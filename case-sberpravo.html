@@ -27,7 +27,7 @@
      --small Вторичный текст:  чипы, подписи, навигация, мета
      --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
   --h1:clamp(2rem,3.4vw,2.9rem);
-  --h2:clamp(1.25rem,1.7vw,1.5rem);
+  --h2:clamp(1.6rem,2.2vw,2rem);
   --h3:1.02rem;
   --text:.98rem;
   --small:.88rem;
@@ -91,7 +91,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .card.metric-big .num-from{color:var(--ink)}
 .card.metric-big .num-to{color:var(--accent)}
 .card.metric-big .num-suf{color:var(--accent);font-size:.6em;font-weight:700;margin-left:1px}
-.card.metric-big .num-arr{width:1.1em;height:.8em;color:var(--accent);align-self:center;margin:0 10px;flex:0 0 auto}
+.card.metric-big .num-arr{color:var(--accent);font-weight:400;margin:0 8px}
 .card.metric-big .lbl{color:var(--ink);font-size:var(--text);margin-top:10px;line-height:1.5;max-width:30ch}
 .cols:has(.card.metric-big){grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px 40px;margin-top:24px}
 
@@ -102,9 +102,6 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .card.metric .lbl{display:inline;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5}
 .card.metric .desc{display:none}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
-/* решение с раскрытием: заголовок-решение + под-пункты */
-.sub-solution{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5;max-width:64ch;margin-top:16px}
-.sub-solution .step-star{position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;font-weight:400}
 .steps{margin-top:40px;display:flex;flex-direction:column;gap:64px}
 .step{display:flex;flex-direction:column}
 .step-icon{width:24px;height:24px;color:var(--ink);margin-bottom:14px}
@@ -206,7 +203,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .achievements{margin-top:clamp(36px,5vh,52px)}
 .section-head{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
 /* шапка отделена от кейсов */
-.head-sep{margin-top:clamp(120px,16vh,200px)}
+.head-sep{margin:100px 0;height:4px;background:var(--accent);border-radius:2px}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
 .duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
@@ -217,7 +214,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 
 .side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
-.side-links{display:flex;flex-direction:column;gap:2px;font-size:var(--text)}
+.side-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:14px;font-size:var(--text)}
 .side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
 .side-links a:hover{opacity:.65}
 .side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
@@ -354,7 +351,15 @@ const IMG = {
   sol2: "assets/sberpravo-sol2.webp",
   sol1c: "assets/sberpravo-sol1c.webp",
   research: "assets/sberpravo-research.png",
-  flow: "assets/sberpravo-flow.png"
+  flow: "assets/sberpravo-flow.png",
+  menuCards:   "assets/sberpravo-menu-cards.png",
+  menuOrder:   "assets/sberpravo-menu-order.png",
+  menuSidebar: "assets/sberpravo-menu-sidebar.png",
+  menuNav:     "assets/sberpravo-menu-nav.png",
+  menuDevices: "assets/sberpravo-menu-devices.png",
+  landingCards:   "assets/sberpravo-landing-cards.png",
+  landingSearch:  "assets/sberpravo-landing-search.png",
+  landingCatalog: "assets/sberpravo-landing-catalog.png"
 };
 
 const CURRENT = "sberpravo";
@@ -388,23 +393,19 @@ const PROJECTS = [
    ]},
   {id:"sberpravo", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
    sections:[
+     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
+     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"menu-result",      ti:{ru:"Результаты",en:"Results"}},
      {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
      {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
      {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
      {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
      {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
-     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
-     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"menu-problems",    ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
-     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"menu-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"menu-result",      ti:{ru:"Результат",en:"Result"}},
      {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
-     {a:"landing-research", ti:{ru:"Исследование",en:"Research"}},
-     {a:"landing-problems", ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"landing-hypo",     ti:{ru:"Гипотезы и цели",en:"Hypotheses & goals"}},
      {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"landing-abtest",   ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"landing-result",   ti:{ru:"Результат",en:"Result"}},
+     {a:"landing-result",   ti:{ru:"Результаты",en:"Results"}},
      {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
    ]},
   {id:"vtb", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
@@ -428,7 +429,7 @@ ru:{
   achievements:[
     {n:"10 000", l:"заказов после запуска продукта", d:""},
     {n:"+12%", l:"CTR «Заказы» при плановых +5%", d:""},
-    {n:"−90%", l:"обращений в поддержку, при цели −50%", d:""}
+    {n:"−60%", l:"обращений в поддержку", d:""}
   ],
   duties:[
     "Продукт представлен на платформах: веб-сайт с адаптивным дизайном и мобильные приложения для iOS и Android. Продукт включает несколько ролей: сторону заказчика, сторону исполнителя и сторону администратора.",
@@ -443,6 +444,80 @@ ru:{
   ],
 
   blocks:[
+  {
+    a:"menu", group:true,
+    title:"Меню и Заказы",
+    lead:"",
+    subs:[
+      {ti:"", note:"Юрист работает на экране заказа. Там он переписывается с клиентом, смотрит информацию по делу, документы и историю."}
+    ]
+  },
+
+  /* TODO(Максим) — Проблема: «Сюда просится живая цитата с интервью. Одна реальная фраза юриста про это переключение сделает раздел вдвое убедительнее.» */
+  {
+    a:"menu-research",
+    title:"Исследование",
+    lead:"После запуска пошли жалобы от юристов, а поддержка тратила много времени, объясняя, где что нажать. Я провёл пять интервью, чтобы понять, что не так, и увидел три частые проблемы.",
+    subs:[
+      {ti:"Проблемы", mark:"cross", cards:[
+        {h:"", p:"Меню состояло из одних иконок. Юристы не запоминали значки и каждый раз открывали меню, чтобы прочитать подписи."},
+        {h:"", p:"Чат нельзя было держать перед глазами вместе с информацией по делу. Чат был обычной вкладкой. Юрист открывал его, и информация о заказе пропадала. Он читал сообщение клиента, запоминал цифру или дату, шёл на другую вкладку сверять и возвращался. И так по много раз за разговор."},
+        {h:"", p:"До «Моих заказов» и обратно надо было пройти несколько кликов. Даже то, чем пользуются постоянно, приходилось искать. Часть людей вместо этого шла в поддержку."}
+      ]},
+      {ti:"", note:"При этом было одно условие. Что бы я ни менял, оформление заказа не должно просесть. На нём держатся деньги."},
+      {ti:"Проверил структуру", note:"Прежде чем менять меню, хотел понять, где у людей в голове лежат разделы. Выписал все пункты и действия на карточки, перемешал и попросил коллег разложить их по важности.<br><br>Это были коллеги, а не юристы, поэтому относился к результату как к быстрой проверке, а не как к истине.",
+       imgs:[{src:IMG.menuCards, cap:"Фото карточек"}]}
+    ]
+  },
+
+  {
+    a:"menu-design",
+    title:"Дизайн-решения",
+    lead:"",
+    subs:[
+      {ti:"Чат всегда на экране", cards:[
+        {h:"", p:"Убрал чат из вкладок и закрепил его отдельной панелью справа"},
+        {h:"", p:"Информацию, документы и историю оставил вкладками слева"},
+        {h:"", p:"Теперь переписка и детали заказа видны одновременно, и ничего не нужно запоминать"}
+      ],
+       full:true, imgs:[{src:IMG.menuOrder, cap:"Экран заказа. До и после."}]},
+      {ti:"Меню наверх, а не слева", cards:[
+        {h:"", p:"Сначала хотел просто оставить меню слева и раскрыть его, чтобы подписи было видно всегда. Собрал этот вариант, и он не сработал. Свёрнутое меню: снова одни иконки. Раскрытое либо наезжало на рабочую область, либо сдвигало её вбок. А ширина на этом экране важна, её хочет чат"},
+        {h:"", p:"С верхним меню этой проблемы нет. Оно не занимает ширину и не двигает контент. До любого раздела один клик, подписи видно всегда. Плюс оно одинаково подходит и юристу, и клиенту, поэтому разработка сделала один компонент вместо двух"}
+      ],
+       imgs:[{src:IMG.menuSidebar, cap:"Боковое меню в трёх состояниях."}]},
+      {ti:"", cards:[
+        {h:"", p:"Теперь про минус. Верхнее меню занимает место сверху, а оно нужно и чату. Выбрал так специально. На этом экране ширина важнее высоты, а полоса меню тонкая и не двигается, в отличие от чата"},
+        {h:"", p:"На узких экранах пункты прячутся под кнопку меню, как это обычно и делают. Юристы всё равно работают в основном с компьютера"}
+      ],
+       full:true, imgs:[{src:IMG.menuNav, cap:"Меню. До и после, и карта, куда переехал каждый пункт."}]},
+      /* TODO(Максим) — Тест на юристах: «Здесь очень к месту один конкретный факт: что в тесте пошло не так и что ты из-за этого поменял. Такой момент читается как настоящий опыт.» */
+      {ti:"Проверил на настоящих юристах", cards:[
+        {h:"", p:"Card sorting был на коллегах, поэтому перед релизом я проверил новый экран на живых юристах"},
+        {h:"", p:"Давал им обычные задачи. Найти заказ, открыть документ, ответить клиенту"},
+        {h:"", p:"Смотрел, где они спотыкаются, и правил до запуска, а не по жалобам после"}
+      ]},
+      {ti:"Одна навигация на всех устройствах", cards:[
+        {h:"", p:"Навигацию делал как систему: Web, iPad и iOS, для юриста и клиента, на одной модели и общих компонентах"},
+        {h:"", p:"Так стороны меньше расходятся и дешевле поддерживаются"}
+      ],
+       full:true, imgs:[{src:IMG.menuDevices, cap:"Навигация на разных устройствах."}]}
+    ]
+  },
+
+  /* TODO(Максим) — Результаты: «Если есть абсолютные числа и период, было и стало обращений за сколько недель, их стоит подставить. Тогда к процентам не будет вопроса „а от чего это“.» */
+  {
+    a:"menu-result",
+    title:"Результаты",
+    lead:"",
+    subs:[
+      {ti:"", results:[
+        {from:"", n:"−60%", suf:"", l:"обращений в поддержку по навигации"},
+        {from:"", n:"5/5", suf:"", l:"юзеров оценили изменения положительно"}
+      ]}
+    ]
+  },
+
   {
     a:"flow", group:true,
     title:"Путь юзера",
@@ -473,17 +548,17 @@ ru:{
     title:"Дизайн-решения",
     lead:"",
     subs:[
-      {ti:"Выбор категорий сделал на одном экране вместо двух, чтобы визуально упростить интерфейс", steps:[
-        {icon:"route", p:"Меню первого и второго уровня на одном экране, что уменьшает переходы между страницами и потерю внимания юзера", img:IMG.sol1a},
-        {icon:"text", p:"Нет лишнего текста о типе услуги, который занимал время на прочтение и отвлекал внимание юзера. Подробное описание услуги есть на заключительном шаге", img:IMG.sol1b},
-        {icon:"layers", p:"Теперь услуги и ситуации на одной странице и не надо проходить весь путь занового, чтобы ознакомится с ситуациями в одной и той же категории", img:IMG.sol1c}
-      ]},
-      {ti:"Убрал фильтр услуг, альтернативой сделал табы, чтобы ускорить флоу", solution:true, plain:true, cards:[
+      {ti:"Выбор категорий сделал на одном экране вместо двух, чтобы визуально упростить интерфейс", cards:[
+        {h:"", p:"Меню первого и второго уровня на одном экране, что уменьшает переходы между страницами и потерю внимания юзера"},
+        {h:"", p:"Нет лишнего текста о типе услуги, который занимал время на прочтение и отвлекал внимание юзера. Подробное описание услуги есть на заключительном шаге"},
+        {h:"", p:"Теперь услуги и ситуации на одной странице и не надо проходить весь путь занового, чтобы ознакомится с ситуациями в одной и той же категории"}
+      ], imgs:[{src:IMG.sol1a, cap:""}]},
+      {ti:"Убрал фильтр услуг, альтернативой сделал табы, чтобы ускорить флоу", cards:[
         {h:"", p:"Теперь не надо проходить долгий путь выбора параметров, чтобы увидеть услугу"},
         {h:"", p:"Стало проще сравнивать усулуги по цене и временю исполнения"},
         {h:"", p:"Просмотрев базу данных, я обнаружил, что в одной категории может быть от 2 до 8 услуг. Поэтому сделал табы, как минимально простой способ фильтрации"}
       ], imgs:[{src:IMG.sol2, cap:""}]},
-      {ti:"Просмотр услуги сделал шторкой, а не отдельной страницей, чтобы поднять конверсию в «Find»", solution:true, plain:true, cards:[
+      {ti:"Просмотр услуги сделал шторкой, а не отдельной страницей, чтобы поднять конверсию в «Find»", cards:[
         {h:"", p:"Подробное описание услуги открывается в шторке на этой же странице, что упрощяет навигацию и понимание с какой услугой уже ознакомились, а с какой еще нет"},
         {h:"", p:"Из-за ограничений, заказчик не может выбрать услугу без перехода на экран описания"}
       ], imgs:[{src:IMG.sol3, cap:""}]}
@@ -522,79 +597,26 @@ ru:{
   },
 
   {
-    a:"menu", group:true,
-    title:"Меню и Заказы",
-    lead:"Заполнить: описание кейса.",
-    subs:[]
-  },
-
-  {
-    a:"menu-research",
-    title:"Исследование",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"menu-problems",
-    title:"Проблемы и цели",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"menu-design",
-    title:"Дизайн-решения",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"menu-abtest",
-    title:"A/B-тест",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"menu-result",
-    title:"Результат",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
     a:"landing", group:true,
     title:"Лендинг",
-    lead:"Заполнить: описание кейса.",
+    lead:"Оптимизация поиска и навигации на лендинге",
     subs:[]
   },
 
   {
-    a:"landing-research",
-    title:"Исследование",
+    a:"landing-hypo",
+    title:"Гипотезы и цели",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"landing-problems",
-    title:"Проблемы и цели",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+      {ti:"Гипотезы", cards:[
+        {h:"", p:"<b>Каталог на первом экране.</b> Основная цель пользователя: быстро решить проблему. Блок должен быть виден сразу, для мгновенного доступа к услугам"},
+        {h:"", p:"<b>Привычный поиск.</b> Поле ввода должно соответствовать ментальным моделям, с динамическими подсказками и возможностью прямой отправки запроса"}
+      ]},
+      {ti:"Цели", cards:[
+        {h:"", p:"Модернизировать интерфейс для снижения когнитивной нагрузки"},
+        {h:"", p:"Увеличить вовлечённость, долю пользователей, начинающих поиск прямо с лендинга"},
+        {h:"", p:"Сохранить конверсию по всей воронке как страховку от просадок"}
+      ]}
     ]
   },
 
@@ -603,32 +625,41 @@ ru:{
     title:"Дизайн-решения",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
-    ]
-  },
-
-  {
-    a:"landing-abtest",
-    title:"A/B-тест",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+      {ti:"Карточная архитектура", cards:[
+        {h:"", p:"Внедрил формат плашек. Это улучшает сканируемость страницы, логически группирует контент и чётко разделяет смысловые блоки"}
+      ], imgs:[{src:IMG.landingCards, cap:"Карточная архитектура"}]},
+      {ti:"Оптимизация поисковой строки", cards:[
+        {h:"", p:"На основе анализа конкурентов сделал поиск визуальной доминантой, очистив блок от информационного шума"},
+        {h:"", p:"Добавил подсказки с примерами: один клик заполняет строку и сокращает время до целевого действия"},
+        {h:"", p:"Приблизил дизайн поля к стандартным шаблонам поиска, снизив порог входа"}
+      ], imgs:[{src:IMG.landingSearch, cap:"Поисковая строка"}]},
+      {ti:"Улучшение находимости каталога", cards:[
+        {h:"", p:"Тепловые карты показали приоритет каталога над подписками. Это стало обоснованием на данных для поднятия блока наверх: улучшена видимость критического пути"},
+        {h:"", p:"Увеличил иконки и области клика карточек: согласно закону Фиттса, это упрощает навигацию"},
+        {h:"", p:"Вывел в топ самые востребованные, новые и акционные категории для продвижения"}
+      ], imgs:[{src:IMG.landingCatalog, cap:"Каталог"}]}
     ]
   },
 
   {
     a:"landing-result",
-    title:"Результат",
+    title:"Результаты",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"Заполнить"}]}
+      {ti:"", results:[
+        {from:"24", n:"33", suf:"%", l:"Вовлечённость: доля пользователей, начинающих поиск прямо с лендинга"}
+      ]},
+      {ti:"", cards:[
+        {h:"", p:"Максимальный рост показали переходы в каталог за счёт более удачного расположения"},
+        {h:"", p:"Конверсия на следующих этапах воронки не просела: новый опыт успешно интегрирован без разрушения привычных сценариев"}
+      ]}
     ]
   },
 
   {
     a:"screens", group:true,
     title:"Макеты",
-    lead:"Заполнить: описание.",
+    lead:"",
     subs:[]
   }
   ]
@@ -646,7 +677,7 @@ en:{
   achievements:[
     {n:"10,000", l:"orders after product launch", d:""},
     {n:"+12%", l:"CTR “Orders” vs +5% target", d:""},
-    {n:"−90%", l:"support requests, vs −50% target", d:""}
+    {n:"−60%", l:"support requests", d:""}
   ],
   duties:[
     "<b>Platforms:</b> responsive web plus iOS and Android apps. Three roles: client, professional, admin.",
@@ -659,6 +690,77 @@ en:{
   ],
 
   blocks:[
+  {
+    a:"menu", group:true,
+    title:"Menu & Orders",
+    lead:"",
+    subs:[
+      {ti:"", note:"The lawyer works on the order screen. There they chat with the client and view case information, documents and history."}
+    ]
+  },
+
+  {
+    a:"menu-research",
+    title:"Research",
+    lead:"After launch, complaints started coming in from lawyers, and support spent a lot of time explaining where to click. I ran five interviews to understand what was wrong and saw three common problems.",
+    subs:[
+      {ti:"Problems", mark:"cross", cards:[
+        {h:"", p:"The menu was icons only. Lawyers didn't memorise the icons and opened the menu every time to read the labels."},
+        {h:"", p:"The chat couldn't be kept in view together with the case information. The chat was an ordinary tab. The lawyer would open it and the order information would disappear. They'd read the client's message, memorise a number or a date, go to another tab to check, and come back. And so on, many times per conversation."},
+        {h:"", p:"Getting to 'My orders' and back took several clicks. Even the things people use all the time had to be hunted for. Some people went to support instead."}
+      ]},
+      {ti:"", note:"There was one condition, though. Whatever I changed, order placement must not dip. The money rests on it."},
+      {ti:"I checked the structure", note:"Before changing the menu, I wanted to understand where people keep the sections in their heads. I wrote every item and action on cards, shuffled them and asked colleagues to sort them by importance.<br><br>These were colleagues, not lawyers, so I treated the result as a quick check, not the truth.",
+       imgs:[{src:IMG.menuCards, cap:"Photo of the cards"}]}
+    ]
+  },
+
+  {
+    a:"menu-design",
+    title:"Design solutions",
+    lead:"",
+    subs:[
+      {ti:"Chat always on screen", cards:[
+        {h:"", p:"I took the chat out of the tabs and pinned it as a separate panel on the right"},
+        {h:"", p:"Information, documents and history I kept as tabs on the left"},
+        {h:"", p:"Now the conversation and the order details are visible at the same time, and there's nothing to memorise"}
+      ],
+       full:true, imgs:[{src:IMG.menuOrder, cap:"Order screen. Before and after."}]},
+      {ti:"Menu on top, not on the side", cards:[
+        {h:"", p:"At first I just wanted to keep the menu on the left and expand it so the labels were always visible. I built that variant and it didn't work. Collapsed, the menu was icons only again. Expanded, it either overlapped the work area or pushed it aside. And width matters on this screen — the chat wants it"},
+        {h:"", p:"The top menu doesn't have this problem. It doesn't take up width and doesn't move the content. Any section is one click away, and the labels are always visible. Plus it fits both the lawyer and the client equally, so engineering built one component instead of two"}
+      ],
+       imgs:[{src:IMG.menuSidebar, cap:"The side menu in three states."}]},
+      {ti:"", cards:[
+        {h:"", p:"Now the downside. The top menu takes up space at the top, and the chat needs that too. I chose it deliberately. On this screen width matters more than height, and the menu bar is thin and doesn't move, unlike the chat"},
+        {h:"", p:"On narrow screens the items hide under a menu button, the way it's usually done. Lawyers mostly work from a computer anyway"}
+      ],
+       full:true, imgs:[{src:IMG.menuNav, cap:"Menu. Before and after, and a map of where each item moved."}]},
+      {ti:"I tested it with real lawyers", cards:[
+        {h:"", p:"Card sorting was on colleagues, so before release I tested the new screen with real lawyers"},
+        {h:"", p:"I gave them ordinary tasks. Find an order, open a document, reply to the client"},
+        {h:"", p:"I watched where they stumbled and fixed it before launch, not from complaints afterwards"}
+      ]},
+      {ti:"One navigation across all devices", cards:[
+        {h:"", p:"I designed the navigation as a system: Web, iPad and iOS, for the lawyer and the client — on one model and shared components"},
+        {h:"", p:"This way the two sides diverge less and are cheaper to maintain"}
+      ],
+       full:true, imgs:[{src:IMG.menuDevices, cap:"Navigation across different devices."}]}
+    ]
+  },
+
+  {
+    a:"menu-result",
+    title:"Results",
+    lead:"",
+    subs:[
+      {ti:"", results:[
+        {from:"", n:"−60%", suf:"", l:"navigation-related support requests"},
+        {from:"", n:"5/5", suf:"", l:"users rated the changes positively"}
+      ]}
+    ]
+  },
+
   {
     a:"flow", group:true,
     title:"User flow",
@@ -689,17 +791,17 @@ en:{
     title:"Design solutions",
     lead:"",
     subs:[
-      {ti:"Put category selection on one screen instead of two — to simplify the interface visually", steps:[
-        {icon:"route", p:"First- and second-level menus on one screen, which reduces page transitions and loss of user attention", img:IMG.sol1a},
-        {icon:"text", p:"No extra text about the service type that took time to read and distracted the user. A detailed description is available at the final step", img:IMG.sol1b},
-        {icon:"layers", p:"Now services and situations are on one page, so you don’t have to go through the whole path again to explore situations within the same category", img:IMG.sol1c}
-      ]},
-      {ti:"Removed the service filter and used tabs instead — to speed up the flow", solution:true, plain:true, cards:[
+      {ti:"Put category selection on one screen instead of two — to simplify the interface visually", cards:[
+        {h:"", p:"First- and second-level menus on one screen, which reduces page transitions and loss of user attention"},
+        {h:"", p:"No extra text about the service type that took time to read and distracted the user. A detailed description is available at the final step"},
+        {h:"", p:"Now services and situations are on one page, so you don’t have to go through the whole path again to explore situations within the same category"}
+      ], imgs:[{src:IMG.sol1a, cap:""}]},
+      {ti:"Removed the service filter and used tabs instead — to speed up the flow", cards:[
         {h:"", p:"Now you don’t have to go through a long parameter-selection path to see a service"},
         {h:"", p:"It became easier to compare services by price and delivery time"},
         {h:"", p:"Reviewing the database, I found that a category can have from 2 to 8 services. So I used tabs as the simplest possible way to filter"}
       ], imgs:[{src:IMG.sol2, cap:""}]},
-      {ti:"Made service preview a bottom sheet, not a separate page — to lift conversion into «Find»", solution:true, plain:true, cards:[
+      {ti:"Made service preview a bottom sheet, not a separate page — to lift conversion into «Find»", cards:[
         {h:"", p:"A detailed service description opens in a bottom sheet on the same page, which simplifies navigation and understanding of which services you’ve already reviewed and which not"},
         {h:"", p:"Due to constraints, the client can’t pick a service without going to the description screen"}
       ], imgs:[{src:IMG.sol3, cap:""}]}
@@ -738,79 +840,26 @@ en:{
   },
 
   {
-    a:"menu", group:true,
-    title:"Menu & Orders",
-    lead:"To fill: case description.",
-    subs:[]
-  },
-
-  {
-    a:"menu-research",
-    title:"Research",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"menu-problems",
-    title:"Problems & goals",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"menu-design",
-    title:"Design solutions",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"menu-abtest",
-    title:"A/B test",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"menu-result",
-    title:"Result",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
     a:"landing", group:true,
     title:"Landing",
-    lead:"To fill: case description.",
+    lead:"Optimising search and navigation on the landing page",
     subs:[]
   },
 
   {
-    a:"landing-research",
-    title:"Research",
+    a:"landing-hypo",
+    title:"Hypotheses & goals",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"landing-problems",
-    title:"Problems & goals",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
+      {ti:"Hypotheses", cards:[
+        {h:"Catalogue above the fold", p:"The user's main goal is to solve their problem quickly. The block should be visible right away, for instant access to services"},
+        {h:"Familiar search", p:"The input field should match users' mental models — with dynamic suggestions and the option to submit the query directly"}
+      ]},
+      {ti:"Goals", cards:[
+        {h:"", p:"Modernise the UI to reduce cognitive load"},
+        {h:"", p:"Increase the engagement rate — the share of users who start searching right from the landing page"},
+        {h:"", p:"Keep conversion across the whole funnel — a safeguard against drops"}
+      ]}
     ]
   },
 
@@ -819,32 +868,41 @@ en:{
     title:"Design solutions",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
-    ]
-  },
-
-  {
-    a:"landing-abtest",
-    title:"A/B test",
-    lead:"",
-    subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
+      {ti:"Card-based layout", cards:[
+        {h:"", p:"I introduced a card format. It improves page scannability, groups content logically and clearly separates meaning blocks"}
+      ], imgs:[{src:IMG.landingCards, cap:"Card-based layout"}]},
+      {ti:"Search bar optimisation", cards:[
+        {h:"", p:"Based on competitor benchmarks, I made search the visual dominant, clearing the block of informational noise"},
+        {h:"", p:"I added example chips — one click fills the field and cuts time-to-task"},
+        {h:"", p:"I brought the field design closer to standard search patterns, lowering the entry barrier"}
+      ], imgs:[{src:IMG.landingSearch, cap:"Search bar"}]},
+      {ti:"Improving catalogue discoverability", cards:[
+        {h:"", p:"Heatmaps showed the catalogue took priority over subscriptions. This became the data-driven rationale for moving the block up — improving the visibility of the critical path"},
+        {h:"", p:"I enlarged the cards' icons and hitboxes: per Fitts's law, this simplifies navigation"},
+        {h:"", p:"I surfaced the most popular, new and promotional categories at the top"}
+      ], imgs:[{src:IMG.landingCatalog, cap:"Catalogue"}]}
     ]
   },
 
   {
     a:"landing-result",
-    title:"Result",
+    title:"Results",
     lead:"",
     subs:[
-      {ti:"", cards:[{h:"", p:"To fill"}]}
+      {ti:"", results:[
+        {from:"24", n:"33", suf:"%", l:"Engagement rate — the share of users who start searching right from the landing page"}
+      ]},
+      {ti:"", cards:[
+        {h:"", p:"The biggest growth was in click-through to the catalogue thanks to better placement"},
+        {h:"", p:"Conversion at the next funnel stages didn't drop — the new UX was integrated successfully without breaking familiar scenarios"}
+      ]}
     ]
   },
 
   {
     a:"screens", group:true,
     title:"Screens",
-    lead:"To fill.",
+    lead:"",
     subs:[]
   }
   ]
@@ -907,7 +965,7 @@ function renderNav(){
     const links = items.map(s=>{
       const label = typeof s.ti === "string" ? s.ti : s.ti[L];
       if(s.ov) return `<a class="grp" href="#${s.a}">${label}</a>`;
-      if(s.group){ g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
+      if(s.group){ if(s.a==="screens") return `<a class="grp" href="#${s.a}">${label}</a>`; g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
       return `<a class="cs" href="#${s.a}">${label}</a>`;
     }).join("");
     return row + `<div class="subnav">${links}</div>`;
@@ -956,14 +1014,13 @@ function renderBlock(b, num){
          ${st.img?`<figure class="fig"><button class="fig-btn" data-full="${st.img}" aria-label="Открыть"><img src="${st.img}" alt="" loading="lazy"></button></figure>`:""}
        </div>`).join("")}</div>` : "";
 
-    const arrow = `<svg class="num-arr" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h27M22 5l7 7-7 7"/></svg>`;
     const results = s.results ? `<div class="cols">${s.results.map(r=>
       `<div class="card metric-big">
-         <div class="num">${r.from?`<span class="num-from">${r.from}</span>${arrow}`:""}<span class="num-to">${r.n}</span>${r.suf?`<span class="num-suf">${r.suf}</span>`:""}</div>
+         <div class="num">${r.from?`<span class="num-from">${r.from}</span><span class="num-arr">→</span>`:""}<span class="num-to">${r.n}</span>${r.suf?`<span class="num-suf">${r.suf}</span>`:""}</div>
          <div class="lbl">${r.l}</div>
        </div>`).join("")}</div>` : "";
     return `<div class="sub">
-      ${s.ti ? ((s.steps||s.solution) ? `<p class="sub-solution"><span class="step-star">✦</span>${s.ti}</p>` : `<h3 class="sub-title${s.big?" sub-title-lg":""}">${s.ti}</h3>`) : ""}
+      ${s.ti ? `<h3 class="sub-title${s.big?" sub-title-lg":""}">${s.ti}</h3>` : ""}
       ${s.note?`<p class="sub-note">${s.note}</p>`:""}
       ${cards}${steps}${results}${imgs}${shots}
       ${s.caption?`<p class="caption">${s.caption}</p>`:""}
@@ -1022,7 +1079,7 @@ function render(){
 
 
     ${(()=>{ let g=0; return t.blocks.map(b=>{
-        if(b.group){ g++; return renderBlock(b, `${L==="ru"?"Раздел":"Chapter"} ${String(g).padStart(2,"0")}`); }
+        if(b.group){ if(b.a==="screens") return renderBlock(b, ""); g++; return renderBlock(b, `${L==="ru"?"Раздел":"Chapter"} ${String(g).padStart(2,"0")}`); }
         return renderBlock(b, "");
       }).join(""); })()}
     <div class="foot">

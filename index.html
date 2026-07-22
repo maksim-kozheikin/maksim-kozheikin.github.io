@@ -28,7 +28,7 @@
      --small Вторичный текст:  чипы, подписи, навигация, мета
      --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
   --h1:clamp(2rem,3.4vw,2.9rem);
-  --h2:clamp(1.25rem,1.7vw,1.5rem);
+  --h2:clamp(1.6rem,2.2vw,2rem);
   --h3:1.02rem;
   --text:.98rem;
   --small:.88rem;
@@ -117,7 +117,7 @@ a.row .chip-tag + .row-arr{margin-left:10px}
 
 
 .side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
-.side-links{display:flex;flex-direction:column;gap:2px;font-size:var(--text)}
+.side-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:14px;font-size:var(--text)}
 .side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
 .side-links a:hover{opacity:.65}
 .side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
@@ -318,23 +318,19 @@ const PROJECTS = [
 
   {id:"sberpravo", tag:"work", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
    sections:[
+     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
+     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
+     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
+     {a:"menu-result",      ti:{ru:"Результаты",en:"Results"}},
      {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
      {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
      {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
      {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
      {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
-     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
-     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"menu-problems",    ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
-     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"menu-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"menu-result",      ti:{ru:"Результат",en:"Result"}},
      {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
-     {a:"landing-research", ti:{ru:"Исследование",en:"Research"}},
-     {a:"landing-problems", ti:{ru:"Проблемы и цели",en:"Problems & goals"}},
+     {a:"landing-hypo",     ti:{ru:"Гипотезы и цели",en:"Hypotheses & goals"}},
      {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"landing-abtest",   ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"landing-result",   ti:{ru:"Результат",en:"Result"}},
+     {a:"landing-result",   ti:{ru:"Результаты",en:"Results"}},
      {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
    ]},
 
