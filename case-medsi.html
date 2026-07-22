@@ -267,6 +267,40 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 }
 @media (min-width:901px){.scrim{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== CRM editor ===== */
+#crmToggle{position:fixed;right:16px;bottom:16px;z-index:9998;background:var(--accent,#f0523c);color:#fff;border:none;border-radius:24px;padding:11px 17px;font:600 14px/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#crmToggle:hover{opacity:.92}
+#crmPanel{position:fixed;top:0;right:0;width:min(430px,94vw);height:100vh;z-index:9999;background:#fff;border-left:1px solid #e4e4e8;box-shadow:-10px 0 40px rgba(0,0,0,.14);display:flex;flex-direction:column;transform:translateX(101%);transition:transform .22s ease;font:14px/1.45 system-ui,-apple-system,sans-serif;color:#1b1b1f}
+#crmPanel.open{transform:none}
+#crmPanel *{box-sizing:border-box}
+.crm-head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid #eee;flex:0 0 auto}
+.crm-head b{font-size:15px}
+.crm-badge{font-size:11px;background:#f1f1f3;border-radius:6px;padding:3px 7px;color:#666}
+.crm-head .sp{margin-left:auto}
+.crm-btn{border:1px solid #d8d8dd;background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px;color:#1b1b1f}
+.crm-btn:hover{background:#f6f6f8}
+.crm-btn.primary{background:var(--accent,#f0523c);color:#fff;border-color:transparent}
+.crm-btn.mini{padding:2px 7px;font-size:12px;line-height:1.7}
+.crm-body{overflow:auto;padding:12px;flex:1 1 auto}
+.crm-block{border:1px solid #e6e6ea;border-radius:10px;padding:10px 10px 8px;margin-bottom:12px;background:#fafafb}
+.crm-block.group{border-color:var(--accent,#f0523c);background:#fff7f5}
+.crm-row{display:flex;gap:6px;align-items:center;margin-bottom:4px}
+.crm-row .tag{font-size:10px;color:#9a9aa2;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.crm-row .sp{margin-left:auto;display:flex;gap:4px}
+#crmPanel label{display:block;font-size:11px;color:#8a8a92;margin:8px 0 3px}
+#crmPanel input[type=text],#crmPanel textarea{width:100%;border:1px solid #d8d8dd;border-radius:7px;padding:7px 8px;font:inherit;font-size:13px;background:#fff;color:#1b1b1f}
+#crmPanel input[type=text]:focus,#crmPanel textarea:focus{outline:none;border-color:var(--accent,#f0523c)}
+#crmPanel textarea{resize:vertical;min-height:54px}
+.crm-sub{border:1px dashed #d5d5db;border-radius:8px;padding:8px;margin:8px 0;background:#fff}
+.crm-item{border:1px solid #ececf0;border-radius:7px;padding:6px 7px;margin:5px 0;background:#fafafb}
+.crm-chk{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#555;margin:2px 12px 2px 0}
+.crm-add{border:1px dashed #c9c9d0;background:#fff;border-radius:8px;padding:7px;width:100%;cursor:pointer;color:#666;font:inherit;font-size:13px;margin-top:6px}
+.crm-add:hover{border-color:var(--accent,#f0523c);color:var(--accent,#f0523c)}
+.crm-foot{border-top:1px solid #eee;padding:10px 14px;display:flex;flex-direction:column;gap:8px;flex:0 0 auto}
+.crm-foot .r{display:flex;gap:8px}
+.crm-hint{font-size:11px;color:#9a9aa2;line-height:1.35}
+.crm-thumb{max-width:100%;max-height:120px;border-radius:6px;border:1px solid #eee;margin-top:6px;display:block;object-fit:contain;background:#f4f4f6}
 </style>
 </head>
 <body data-mode="work" data-lang="ru">
@@ -313,7 +347,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 </div>
 
 <script>
-const IMG = {
+/*CRM_IMG_S*/const IMG = {
   marketing: "assets/medsi-marketing.png",
   diagnosis: "assets/medsi-diagnosis.png",
   emk: "assets/medsi-emk.png",
@@ -333,7 +367,7 @@ const IMG = {
   style: "assets/medsi-style.png",
   research: "assets/medsi-research.webp",
   team: "assets/medsi-team.webp"
-};
+};/*CRM_IMG_E*/
 
 const CURRENT = "medsi";
 
@@ -389,7 +423,7 @@ const PROJECTS = [
 /* ============================================================
    КОНТЕНТ СТРАНИЦЫ — редактируй тут
 ============================================================ */
-const T = {
+/*CRM_T_S*/const T = {
 ru:{
   back:"Максим Кожейкин",
   cv:"cv", modeWork:"Work", modeLife:"Work + Life",
@@ -1186,7 +1220,7 @@ en:{
 
   next:"Next project", nextName:"SberPravo", nextHref:"case-sberpravo.html"
 }
-};
+};/*CRM_T_E*/
 
 
 /* ============================================================
@@ -1447,6 +1481,251 @@ $("#sidebar").addEventListener("click",e=>{if(e.target.closest("a"))document.bod
 
 setLang(L);
 if(location.hash) setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView(),60);
+
+/* ===== CRM ===== */
+/* ================= CRM: visual content editor ================= */
+(function(){
+  if (window.__CRM__) return; window.__CRM__ = true;
+  const LS = "crm:" + CURRENT;
+  let ORIGINAL_HTML = null;
+
+  /* ---------- persistence ---------- */
+  function save(){ try{ localStorage.setItem(LS, JSON.stringify({IMG,T})); }catch(e){} }
+  function loadSaved(){
+    try{
+      const s = localStorage.getItem(LS); if(!s) return;
+      const o = JSON.parse(s);
+      if(o.T) ["ru","en"].forEach(l=>{ if(o.T[l]) T[l] = o.T[l]; });
+      if(o.IMG) Object.assign(IMG, o.IMG);
+    }catch(e){}
+  }
+  function resetAll(){ try{ localStorage.removeItem(LS); }catch(e){} location.reload(); }
+
+  /* ---------- helpers ---------- */
+  const B = () => T[L].blocks;
+  function preview(){ try{ render(); }catch(e){ console.error(e); } }
+  let _t;
+  function touchSoft(){ clearTimeout(_t); _t = setTimeout(()=>{ save(); preview(); }, 250); }
+  function touchNow(){ save(); preview(); buildPanel(); }
+  const esc = s => (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const brToNl = s => (s==null?"":String(s)).replace(/<br\s*\/?>/gi,"\n");
+  const nlToBr = s => (s==null?"":String(s)).replace(/\n/g,"<br>");
+
+  /* ---------- export ---------- */
+  function ser(obj){ return JSON.stringify(obj, null, 2).replace(/<\//g,"<\\/"); }
+  function exportFile(){
+    try{
+      let html = ORIGINAL_HTML;
+      html = html.replace(/\/\*CRM_IMG_S\*\/[\s\S]*?\/\*CRM_IMG_E\*\//, "/*CRM_IMG_S*/const IMG = "+ser(IMG)+";/*CRM_IMG_E*/");
+      html = html.replace(/\/\*CRM_T_S\*\/[\s\S]*?\/\*CRM_T_E\*\//, "/*CRM_T_S*/const T = "+ser(T)+";/*CRM_T_E*/");
+      const blob = new Blob([html], {type:"text/html"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "case-" + CURRENT + ".html";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
+    }catch(e){ alert("Не удалось экспортировать: "+e.message); }
+  }
+
+  /* ---------- field builders ---------- */
+  function inp(field, val, bi, si, ci, kind){
+    const a = `data-bi="${bi}"` + (si!=null?` data-si="${si}"`:"") + (ci!=null?` data-ci="${ci}"`:"") + ` data-field="${field}" data-kind="${kind||""}"`;
+    return `<input type="text" ${a} value="${esc(val)}">`;
+  }
+  function ta(field, val, bi, si){
+    const a = `data-bi="${bi}"` + (si!=null?` data-si="${si}"`:"") + ` data-field="${field}" data-kind="ta"`;
+    return `<textarea ${a}>${esc(val)}</textarea>`;
+  }
+
+  function subHtml(s, bi, si){
+    let h = `<div class="crm-sub"><div class="crm-row"><span class="tag">подблок ${si+1}</span><span class="sp">`
+      + `<button class="crm-btn mini" data-act="sub-up" data-bi="${bi}" data-si="${si}">↑</button>`
+      + `<button class="crm-btn mini" data-act="sub-down" data-bi="${bi}" data-si="${si}">↓</button>`
+      + `<button class="crm-btn mini" data-act="sub-del" data-bi="${bi}" data-si="${si}">🗑</button></span></div>`;
+    h += `<label>Подзаголовок</label>${inp("ti", s.ti||"", bi, si)}`;
+    h += `<label>Текст (Enter — перенос строки; можно &lt;b&gt;, &lt;i&gt;)</label>`
+      + `<textarea data-bi="${bi}" data-si="${si}" data-field="note" data-kind="note">${esc(brToNl(s.note||""))}</textarea>`;
+    h += `<div style="margin-top:6px">`
+      + `<label class="crm-chk"><input type="checkbox" data-act="chk-full" data-bi="${bi}" data-si="${si}" ${s.full?"checked":""}> картинка на всю ширину</label>`
+      + `<label class="crm-chk"><input type="checkbox" data-act="chk-mark" data-bi="${bi}" data-si="${si}" ${s.mark==="cross"?"checked":""}> список с маркерами</label></div>`;
+    // cards
+    h += `<label>Пункты списка</label>`;
+    (s.cards||[]).forEach((c,ci)=>{
+      h += `<div class="crm-item"><div class="crm-row"><span class="tag">пункт ${ci+1}</span><span class="sp">`
+        + `<button class="crm-btn mini" data-act="card-del" data-bi="${bi}" data-si="${si}" data-ci="${ci}">🗑</button></span></div>`
+        + `<label>Жирный зачин (необяз.)</label>${inp("h", c.h||"", bi, si, ci, "card")}`
+        + `<label>Текст пункта</label>${inp("p", c.p||"", bi, si, ci, "card")}</div>`;
+    });
+    h += `<button class="crm-add" data-act="card-add" data-bi="${bi}" data-si="${si}">+ пункт</button>`;
+    // results
+    h += `<label>Метрики (крупные цифры)</label>`;
+    (s.results||[]).forEach((r,ci)=>{
+      h += `<div class="crm-item"><div class="crm-row"><span class="tag">метрика ${ci+1}</span><span class="sp">`
+        + `<button class="crm-btn mini" data-act="res-del" data-bi="${bi}" data-si="${si}" data-ci="${ci}">🗑</button></span></div>`
+        + `<label>Было (необяз.)</label>${inp("from", r.from||"", bi, si, ci, "res")}`
+        + `<label>Стало</label>${inp("n", r.n||"", bi, si, ci, "res")}`
+        + `<label>Суффикс (напр. %)</label>${inp("suf", r.suf||"", bi, si, ci, "res")}`
+        + `<label>Подпись</label>${inp("l", r.l||"", bi, si, ci, "res")}</div>`;
+    });
+    h += `<button class="crm-add" data-act="res-add" data-bi="${bi}" data-si="${si}">+ метрика</button>`;
+    // images
+    h += `<label>Картинки</label>`;
+    (s.imgs||[]).forEach((im,ci)=>{
+      h += `<div class="crm-item"><div class="crm-row"><span class="tag">картинка ${ci+1}</span><span class="sp">`
+        + `<button class="crm-btn mini" data-act="img-up" data-bi="${bi}" data-si="${si}" data-ci="${ci}">загрузить</button>`
+        + `<button class="crm-btn mini" data-act="img-del" data-bi="${bi}" data-si="${si}" data-ci="${ci}">🗑</button></span></div>`
+        + `<label>Путь или URL</label>${inp("src", im.src||"", bi, si, ci, "img")}`
+        + `<label>Подпись</label>${inp("cap", im.cap||"", bi, si, ci, "img")}`
+        + `<img class="crm-thumb" src="${esc(im.src||"")}" alt="" onerror="this.style.opacity=.3">`+`</div>`;
+    });
+    h += `<button class="crm-add" data-act="img-add" data-bi="${bi}" data-si="${si}">+ картинка</button>`;
+    h += `</div>`;
+    return h;
+  }
+
+  function blockHtml(b, bi){
+    let h = `<div class="crm-block${b.group?" group":""}"><div class="crm-row"><span class="tag">${b.group?"раздел":"блок"} ${bi+1}</span><span class="sp">`
+      + `<button class="crm-btn mini" data-act="blk-up" data-bi="${bi}">↑</button>`
+      + `<button class="crm-btn mini" data-act="blk-down" data-bi="${bi}">↓</button>`
+      + `<button class="crm-btn mini" data-act="blk-dup" data-bi="${bi}">⧉</button>`
+      + `<button class="crm-btn mini" data-act="blk-del" data-bi="${bi}">🗑</button></span></div>`;
+    h += `<label class="crm-chk"><input type="checkbox" data-act="chk-group" data-bi="${bi}" ${b.group?"checked":""}> это раздел (с номером и чертой)</label>`;
+    h += `<label>Заголовок</label>${inp("title", b.title||"", bi)}`;
+    h += `<label>Лид</label>${ta("lead", b.lead||"", bi, null)}`;
+    if(b.group) h += `<label>Пояснение (why)</label>${ta("why", b.why||"", bi, null)}`;
+    (b.subs||[]).forEach((s,si)=> h += subHtml(s, bi, si));
+    h += `<button class="crm-add" data-act="sub-add" data-bi="${bi}">+ подблок</button></div>`;
+    return h;
+  }
+
+  function buildPanel(){
+    const body = document.getElementById("crmBody");
+    if(!body) return;
+    const sc = body.scrollTop;
+    body.innerHTML = B().map((b,i)=>blockHtml(b,i)).join("") + `<button class="crm-add" data-act="blk-add">+ блок</button>`;
+    body.scrollTop = sc;
+    const loc = document.getElementById("crmLoc"); if(loc) loc.textContent = "язык: "+L.toUpperCase();
+  }
+
+  /* ---------- text input ---------- */
+  function onInput(e){
+    const el = e.target;
+    if(el.tagName!=="INPUT" && el.tagName!=="TEXTAREA") return;
+    if(el.type==="checkbox") return;
+    const bi = +el.dataset.bi; if(isNaN(bi)) return;
+    const field = el.dataset.field; if(!field) return;
+    const kind = el.dataset.kind;
+    let val = el.value;
+    if(kind==="note") val = nlToBr(val);
+    const b = B()[bi];
+    const si = el.dataset.si!=null && el.dataset.si!=="" ? +el.dataset.si : null;
+    const ci = el.dataset.ci!=null && el.dataset.ci!=="" ? +el.dataset.ci : null;
+    if(si==null){ b[field]=val; }
+    else {
+      const s = b.subs[si];
+      if(kind==="card") s.cards[ci][field]=val;
+      else if(kind==="res") s.results[ci][field]=val;
+      else if(kind==="img"){ s.imgs[ci][field]=val; if(field==="src"){ const t=el.parentElement.querySelector(".crm-thumb"); if(t){ t.src=val; t.style.opacity=1; } } }
+      else s[field]=val;
+    }
+    touchSoft();
+  }
+
+  /* ---------- structural actions ---------- */
+  function onClick(e){
+    const el = e.target.closest("[data-act]"); if(!el) return;
+    const act = el.dataset.act;
+    const bi = el.dataset.bi!=null && el.dataset.bi!=="" ? +el.dataset.bi : null;
+    const si = el.dataset.si!=null && el.dataset.si!=="" ? +el.dataset.si : null;
+    const ci = el.dataset.ci!=null && el.dataset.ci!=="" ? +el.dataset.ci : null;
+    const arr = B();
+    const b = bi!=null ? arr[bi] : null;
+    const s = (b && si!=null) ? b.subs[si] : null;
+    const swap=(a,i,j)=>{ if(j<0||j>=a.length)return; const t=a[i];a[i]=a[j];a[j]=t; };
+    switch(act){
+      case "blk-up": swap(arr,bi,bi-1); break;
+      case "blk-down": swap(arr,bi,bi+1); break;
+      case "blk-del": if(!confirm("Удалить блок целиком?"))return; arr.splice(bi,1); break;
+      case "blk-dup": arr.splice(bi+1,0,JSON.parse(JSON.stringify(b))); break;
+      case "blk-add": arr.push({title:"Новый блок",lead:"",subs:[{ti:"",note:"Текст…"}]}); break;
+      case "chk-group": b.group=el.checked; break;
+      case "sub-up": swap(b.subs,si,si-1); break;
+      case "sub-down": swap(b.subs,si,si+1); break;
+      case "sub-del": if(!confirm("Удалить подблок?"))return; b.subs.splice(si,1); break;
+      case "sub-add": (b.subs=b.subs||[]).push({ti:"",note:"Текст…"}); break;
+      case "chk-full": s.full=el.checked; break;
+      case "chk-mark": if(el.checked)s.mark="cross"; else delete s.mark; break;
+      case "card-add": (s.cards=s.cards||[]).push({h:"",p:"Новый пункт"}); break;
+      case "card-del": s.cards.splice(ci,1); break;
+      case "res-add": (s.results=s.results||[]).push({from:"",n:"0",suf:"",l:"Подпись"}); break;
+      case "res-del": s.results.splice(ci,1); break;
+      case "img-add": (s.imgs=s.imgs||[]).push({src:"",cap:""}); break;
+      case "img-del": s.imgs.splice(ci,1); break;
+      case "img-up": uploadImg(bi,si,ci); return;
+      default: return;
+    }
+    touchNow();
+  }
+
+  /* ---------- image upload ---------- */
+  let fileInput;
+  function uploadImg(bi,si,ci){
+    if(!fileInput){ fileInput=document.createElement("input"); fileInput.type="file"; fileInput.accept="image/*"; fileInput.style.display="none"; document.body.appendChild(fileInput); }
+    fileInput.onchange=()=>{
+      const f=fileInput.files[0]; if(!f){return;}
+      const r=new FileReader();
+      r.onload=()=>{ B()[bi].subs[si].imgs[ci].src=r.result; touchNow(); };
+      r.readAsDataURL(f);
+      fileInput.value="";
+    };
+    fileInput.click();
+  }
+
+  /* ---------- panel + toggle ---------- */
+  function openPanel(){ buildPanel(); document.getElementById("crmPanel").classList.add("open"); }
+  function closePanel(){ document.getElementById("crmPanel").classList.remove("open"); }
+
+  function build(){
+    const tgl=document.createElement("button"); tgl.id="crmToggle"; tgl.textContent="✎ Редактор";
+    tgl.addEventListener("click", openPanel); document.body.appendChild(tgl);
+
+    const p=document.createElement("div"); p.id="crmPanel";
+    p.innerHTML =
+      `<div class="crm-head"><b>Редактор</b> <span class="crm-badge" id="crmLoc"></span>`
+      + `<span class="sp"></span><button class="crm-btn mini" id="crmClose">✕</button></div>`
+      + `<div class="crm-body" id="crmBody"></div>`
+      + `<div class="crm-foot"><div class="r">`
+      + `<button class="crm-btn primary" id="crmExport">⬇ Экспорт HTML</button>`
+      + `<button class="crm-btn" id="crmReset">Сброс</button></div>`
+      + `<div class="crm-hint">Правки сохраняются в браузере. «Экспорт HTML» скачает готовый файл — положи его вместо текущего и запушь. Загруженные картинки встраиваются в файл (лучше класть в assets/ и указывать путь).</div></div>`;
+    document.body.appendChild(p);
+
+    document.getElementById("crmClose").addEventListener("click", closePanel);
+    document.getElementById("crmExport").addEventListener("click", exportFile);
+    document.getElementById("crmReset").addEventListener("click", ()=>{ if(confirm("Сбросить все правки к исходным?")) resetAll(); });
+    const body=document.getElementById("crmBody");
+    body.addEventListener("input", onInput);
+    body.addEventListener("click", onClick);
+    // refresh panel when language toggled
+    document.querySelectorAll("[data-lang-btn]").forEach(bn=>bn.addEventListener("click", ()=>{
+      if(document.getElementById("crmPanel").classList.contains("open")) setTimeout(buildPanel,0);
+    }));
+  }
+
+  /* ---------- init ---------- */
+  const REQ = location.search.indexOf("crm")>=0 || location.hash==="#crm";
+  if(!REQ) return;
+  loadSaved();
+  try{
+    const cEl=document.getElementById("content"), nEl=document.getElementById("projects");
+    const c=cEl?cEl.innerHTML:"", n=nEl?nEl.innerHTML:"";
+    if(cEl)cEl.innerHTML=""; if(nEl)nEl.innerHTML="";
+    ORIGINAL_HTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    if(cEl)cEl.innerHTML=c; if(nEl)nEl.innerHTML=n;
+  }catch(e){ ORIGINAL_HTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML; }
+  preview();
+  build();
+})();
 </script>
 </body>
 </html>
