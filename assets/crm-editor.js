@@ -165,14 +165,28 @@ function pack(shared) {
 
 function save() {
   try {
-    localStorage.setItem(LS, JSON.stringify({ v: 2, roots: pack(false) }));
-    if (SHARED.length) localStorage.setItem(SITE_LS, JSON.stringify({ v: 2, roots: pack(true) }));
+    localStorage.setItem(LS, JSON.stringify({ v: 3, base: FILE_STAMP.page, roots: pack(false) }));
+    if (SHARED.length) {
+      localStorage.setItem(SITE_LS, JSON.stringify({ v: 3, base: FILE_STAMP.site, roots: pack(true) }));
+    }
     setSaveState("Сохранено");
   } catch (e) {
     setSaveState("Не сохранилось");
   }
 }
 function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 500); }
+
+/* Отпечаток данных, зашитых в файл страницы. Черновик помнит, от какой
+   версии файла он отпочковался: если файл потом обновили, старый
+   черновик молча перекрыл бы новые правки — поэтому мы это замечаем
+   и спрашиваем, что оставить. */
+function stamp(obj) {
+  var s = JSON.stringify(obj), h = 5381;
+  for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36) + "-" + s.length;
+}
+var FILE_STAMP = { page: "", site: "" };
+var staleDrafts = [];          /* черновики старше файла — ждут решения */
 
 function applyDraft(raw) {
   if (!raw) return false;
@@ -186,12 +200,59 @@ function applyDraft(raw) {
   if (o.IMG && ROOTS.IMG) syncInto(ROOTS.IMG, o.IMG);
   return true;
 }
-function loadDraft() {
-  var any = false;
-  try { any = applyDraft(localStorage.getItem(SITE_LS)) || any; } catch (e) { }
-  try { any = applyDraft(localStorage.getItem(LS)) || any; } catch (e) { }
-  return any;
+
+function readDraft(key, kind) {
+  var raw = null;
+  try { raw = localStorage.getItem(key); } catch (e) { return; }
+  if (!raw) return;
+  var o;
+  try { o = JSON.parse(raw); } catch (e) { return; }
+  if (o.base && o.base === FILE_STAMP[kind]) { applyDraft(raw); return; }
+  /* файл изменился с тех пор, как сохранили черновик (или черновик
+     старого формата, без отметки) — сразу не применяем */
+  staleDrafts.push({ key: key, kind: kind, raw: raw });
 }
+
+function loadDraft() {
+  FILE_STAMP.page = stamp(pack(false));
+  FILE_STAMP.site = stamp(pack(true));
+  if (SHARED.length) readDraft(SITE_LS, "site");
+  readDraft(LS, "page");
+  if (PREVIEW) staleDrafts.length = 0;   /* в просмотре ничего не спрашиваем */
+}
+
+/* черновик старше файла: спрашиваем, что оставить */
+function askAboutDrafts() {
+  if (!staleDrafts.length) return;
+  var list = staleDrafts.slice();
+  staleDrafts.length = 0;
+  var what = list.map(function (d) {
+    return d.kind === "site" ? "названия проектов в меню" : "содержимое страницы";
+  }).join(" и ");
+
+  sheet("Файл страницы обновился",
+    "<p>В браузере лежит черновик прошлой правки, а файл страницы с тех пор изменился " +
+    "(" + esc(what) + ").</p>" +
+    "<p class=\"crm-hint\">Обычно это значит, что вы выложили новую версию в проект. " +
+    "Тогда берите данные из файла — иначе старый черновик перекроет свежие правки.</p>" +
+    "<div class=\"crm-actions\">" +
+    "<button class=\"crm-primary\" data-a=\"file\">Взять из файла</button>" +
+    "<button data-a=\"draft\">Оставить черновик</button></div>",
+    function (e, close) {
+      var a = e.target.closest("[data-a]");
+      if (!a) return;
+      if (a.getAttribute("data-a") === "draft") {
+        list.forEach(function (d) { try { applyDraft(d.raw); } catch (err) { } });
+      } else {
+        list.forEach(function (d) { try { localStorage.removeItem(d.key); } catch (err) { } });
+      }
+      close();
+      HIST.init();
+      save();
+      rerender();
+    });
+}
+
 function snap() {
   var o = {};
   Object.keys(ROOTS).forEach(function (k) { o[k] = ROOTS[k]; });
@@ -1496,7 +1557,7 @@ function buildBar() {
     "<button data-a=\"translate\">Перевод</button>" +
     "<button class=\"crm-primary\" data-a=\"export\">Экспорт</button>" +
     "<button data-a=\"help\">?</button>" +
-    "<button data-a=\"reset\">Сброс</button>" +
+    "<button data-a=\"reset\" title=\"Показать то, что лежит в файлах проекта\">Взять из файлов</button>" +
     "<a class=\"crm-exit\" href=\"" + location.pathname + "\">Выйти</a>";
   document.body.appendChild(bar);
 
@@ -1511,8 +1572,12 @@ function buildBar() {
     else if (a === "translate") { commitEditing(); openTranslate(); }
     else if (a === "help") openHelp();
     else if (a === "reset") {
-      if (confirm("Вернуть страницу к последней выгруженной версии? Черновик в браузере будет удалён.")) {
+      /* чистим и страничный черновик, и общий список проектов —
+         иначе меню осталось бы от прошлой правки */
+      if (confirm("Показать страницу так, как она лежит в файлах проекта?\n" +
+        "Все правки, сохранённые только в браузере, будут удалены.")) {
         try { localStorage.removeItem(LS); } catch (err) { }
+        try { localStorage.removeItem(SITE_LS); } catch (err) { }
         location.reload();
       }
     }
@@ -2102,6 +2167,7 @@ function boot() {
   HIST.init();
   wire();
   paintBar();
+  askAboutDrafts();
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
