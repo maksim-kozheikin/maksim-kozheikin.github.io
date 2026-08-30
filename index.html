@@ -282,64 +282,15 @@ body[data-mode="life"] [data-view="personal"]{display:block}
   </main>
 </div>
 
+<script src="assets/site.js"></script>
 <script>
 /* ============================================================
    СПИСОК ПРОЕКТОВ = навигация слева.
    Тот же массив есть в каждом case-*.html — при добавлении
    проекта допиши строку сюда и в файлы кейсов.
 ============================================================ */
-const PROJECTS = [
-  {id:"rwb", tag:"work", yr:"2024 — н.в.", href:"case-rwb.html", ti:{ru:"RWB. Маркетплейс",en:"RWB. Marketplace"}, sections:[]},
 
-  {id:"medsi", tag:"work", yr:"2022–2024", href:"case-medsi.html", ti:{ru:"Medsi Digital",en:"Medsi Digital"},
-   sections:[
-     {a:"team",      group:true, ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
-     {a:"research",  group:true, ti:{ru:"Исследования",en:"Research"}},
-     {a:"mobile",    group:true, ti:{ru:"Приложение SmartMed",en:"SmartMed app"}},
-     {a:"style",     ti:{ru:"Единый стиль приложения",en:"One visual style"}},
-     {a:"main",      ti:{ru:"Главный экран",en:"Home screen"}},
-     {a:"booking",   ti:{ru:"Запись",en:"Booking"}},
-     {a:"flow",      ti:{ru:"Флоу записи",en:"Booking flow"}},
-     {a:"doctor",    ti:{ru:"Выбор врача",en:"Choosing a doctor"}},
-     {a:"doctorcard",ti:{ru:"Карточка врача",en:"Doctor card"}},
-     {a:"statuses",  ti:{ru:"Статусы записи",en:"Booking statuses"}},
-     {a:"pharmacy",  ti:{ru:"Аптека",en:"Pharmacy"}},
-     {a:"map",       ti:{ru:"Выбор на карте",en:"Choosing on the map"}},
-     {a:"product",   ti:{ru:"Карточка товара",en:"Product card"}},
-     {a:"cart",      ti:{ru:"Корзина",en:"Cart"}},
-     {a:"bonuses",   ti:{ru:"Бонусы",en:"Loyalty points"}},
-     {a:"cabinet",   group:true, ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
-     {a:"schedule",  ti:{ru:"Расписание",en:"Schedule"}},
-     {a:"newbooking",ti:{ru:"Создание записи",en:"Creating an appointment"}},
-     {a:"emk",       ti:{ru:"Резюме ЭМК",en:"EMR summary"}},
-     {a:"diagnosis", ti:{ru:"Диагноз",en:"Diagnosis"}},
-     {a:"marketing", group:true, ti:{ru:"Маркетинг",en:"Marketing"}}
-   ]},
-
-  {id:"sberpravo", tag:"work", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
-   sections:[
-     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
-     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"menu-result",      ti:{ru:"Результаты",en:"Results"}},
-     {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
-     {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
-     {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
-     {a:"landing-hypo",     ti:{ru:"Гипотезы и цели",en:"Hypotheses & goals"}},
-     {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"landing-result",   ti:{ru:"Результаты",en:"Results"}},
-     {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
-   ]},
-
-  {id:"vtb", tag:"work", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
-  {id:"loko", tag:"work", yr:"2019", href:"case-loko.html", ti:{ru:"Локо Банк",en:"Loko Bank"}, sections:[]},
-  {id:"zephyr", tag:"work", yr:"2017–2018", href:"case-zephyr.html", ti:{ru:"ZephyrLab",en:"ZephyrLab"}, sections:[]}
-];
-
-const STR = {
+/*CRM_STR_S*/const STR = {
   ru:{
     name:"Максим Кожейкин", role:"Продукт-дизайнер", roleFull:"Senior/Lead UX/UI Designer",
     lead:'Проектирую продукты в <b>FinTech и MedTech</b> — и выстраиваю дизайн-команды, которые их делают',
@@ -358,9 +309,9 @@ const STR = {
     personalHead:"Personal", personalIntro:"Pet projects, photography, paintings and notes. In progress.",
     duties:"Responsibilities", back:"← Back home", download:"Download PDF"
   }
-};
+};/*CRM_STR_E*/
 
-const EXPERIENCE = [
+/*CRM_EXP_S*/const EXPERIENCE = [
   {date:{ru:"Июль 2024 — наст. время",en:"Jul 2024 — present"},
    role:{ru:"Senior UX/UI Designer",en:"Senior UX/UI Designer"},
    company:{ru:"RWB",en:"RWB"},
@@ -489,17 +440,17 @@ const EXPERIENCE = [
    grad:"linear-gradient(135deg,#5b6470,#98a2ad)",
    bullets:{ru:[],en:[]},
    case:{href:"https://www.behance.net/maksimdesigner", label:{ru:"2016. Проекты на Behance",en:"2016. Projects on Behance"}}}
-];
+];/*CRM_EXP_E*/
 
-const EDUCATION = [
+/*CRM_EDU_S*/const EDUCATION = [
   {yr:"2020", ti:{ru:"Бюро Горбунова — «Пользовательский интерфейс и представление информации»",en:"Gorbunov Bureau — Interface & information design"}},
   {yr:"2017", ti:{ru:"Moscow Digital Academy — «Digital, UX/UI»",en:"Moscow Digital Academy — Digital, UX/UI"}},
   {yr:"2016", ti:{ru:"Онлайн-курс Данилы Фимушина — «Design:GYM 3.0»",en:"Design:GYM 3.0"}},
   {yr:"2016", ti:{ru:"Школа веб-дизайна М. Солдатчина — «Веб-дизайн. Исследование»",en:"Web design school — Research"}},
   {yr:"2014", ti:{ru:"Курский госуниверситет — «Бакалавр технологического образования»",en:"Kursk State University — B.Sc."}}
-];
+];/*CRM_EDU_E*/
 
-const SKILLS = {
+/*CRM_SKL_S*/const SKILLS = {
   tools:["Figma","Miro","Sketch","Photoshop","Illustrator","Principle","InVision","Jira","YouTrack"],
   methods:["Research","Prototyping","CJM","JTBD","Design Thinking","GMD","HIG"],
   langs:{ru:["Русский — родной","Английский — B2"],en:["Russian — native","English — B2"]},
@@ -508,20 +459,20 @@ const SKILLS = {
     ru:["Горные лыжи","Граффити","Керамика","Фотография","Живопись","Вайбкодинг","Путешествия"],
     en:["Skiing","Graffiti","Ceramics","Photography","Painting","Vibecoding","Travel"]
   }
-};
+};/*CRM_SKL_E*/
 
 /* Личные разделы — появляются в режиме Work + Life */
-const PERSONAL_PROJECTS = [
+/*CRM_PP_S*/const PERSONAL_PROJECTS = [
   {id:"pets",     tag:"pet",      yr:"2023 — н.в.", href:"#personal-sec", ti:{ru:"Пет-проекты",en:"Pet projects"}},
   {id:"graffiti", tag:"graffiti", yr:"—",           href:"#personal-sec", ti:{ru:"Граффити",en:"Graffiti"}},
   {id:"photo",    tag:"photo",    yr:"—",           href:"#personal-sec", ti:{ru:"Фотография",en:"Photography"}},
   {id:"ceramics", tag:"ceramics", yr:"—",           href:"#personal-sec", ti:{ru:"Керамика",en:"Ceramics"}},
   {id:"paint",    tag:"paint",    yr:"—",           href:"#personal-sec", ti:{ru:"Картины",en:"Paintings"}},
   {id:"blog",     tag:"blog",     yr:"—",           href:"#personal-sec", ti:{ru:"Блог",en:"Blog"}}
-];
+];/*CRM_PP_E*/
 
 /* Подписи тегов */
-const TAGS = {
+/*CRM_TAGS_S*/const TAGS = {
   work:     {ru:"Работа",     en:"Work"},
   pet:      {ru:"Пет-проекты",en:"Pet projects"},
   graffiti: {ru:"Граффити",   en:"Graffiti"},
@@ -529,14 +480,14 @@ const TAGS = {
   ceramics: {ru:"Керамика",   en:"Ceramics"},
   paint:    {ru:"Картины",    en:"Paintings"},
   blog:     {ru:"Блог",       en:"Blog"}
-};
+};/*CRM_TAGS_E*/
 
-const PERSONAL = [
+/*CRM_PRS_S*/const PERSONAL = [
   {t:{ru:"Пет-проекты",en:"Pet projects"}, d:{ru:"Продукты, которые делаю для себя.",en:"Products I build for myself."}},
   {t:{ru:"Фотография",en:"Photography"}, d:{ru:"Снимки из поездок и повседневности.",en:"Shots from travels and daily life."}},
   {t:{ru:"Картины",en:"Paintings"}, d:{ru:"То, что рисую вне экрана.",en:"What I paint away from the screen."}},
   {t:{ru:"Блог",en:"Blog"}, d:{ru:"Заметки о дизайне и не только.",en:"Notes on design and beyond."}}
-];
+];/*CRM_PRS_E*/
 
 
 /* ============================================================
@@ -665,7 +616,7 @@ function renderCV(){
       <p style="color:var(--muted)">${[...SKILLS.tools,...SKILLS.methods].join(" · ")}</p>
       <p style="color:var(--muted);margin-top:8px">${SKILLS.langs[LANG].join(" · ")}</p></div>`;
 }
-function renderAll(){fillI18n();renderProjects();renderExperience();renderEducation();renderSkills();renderPersonal();renderCV();fixOrphans(document.querySelector(".main"));fixOrphans(document.querySelector(".sidebar"));}
+let renderAll = function(){fillI18n();renderProjects();renderExperience();renderEducation();renderSkills();renderPersonal();renderCV();fixOrphans(document.querySelector(".main"));fixOrphans(document.querySelector(".sidebar"));};
 
 function setMode(m){
   document.body.setAttribute("data-mode",m);
@@ -703,6 +654,40 @@ $("#sidebar").addEventListener("click",e=>{if(e.target.closest("a"))document.bod
 setLang(LANG);
 setMode((()=>{try{return localStorage.getItem("mode")||"work"}catch(e){return "work"}})());
 route();
+/* ===== CRM: мост к визуальному редактору ===== */
+window.CRM_HOST = {
+  id: "home",
+  file: "index.html",
+  pageType: "home",
+  pageName: "Главная",
+  langs: ["ru","en"],
+  roots: {
+    STR: STR,
+    EXPERIENCE:        { list: EXPERIENCE },
+    EDUCATION:         { list: EDUCATION },
+    SKILLS:            SKILLS,
+    PERSONAL:          { list: PERSONAL },
+    PERSONAL_PROJECTS: { list: PERSONAL_PROJECTS },
+    TAGS:              TAGS,
+    PROJECTS:          { list: PROJECTS }
+  },
+  dataPath: [],
+  shared: ["PROJECTS"],
+  markers: [
+    { m:"CRM_STR",  decl:"const STR",               root:"STR" },
+    { m:"CRM_EXP",  decl:"const EXPERIENCE",        root:"EXPERIENCE",        key:"list" },
+    { m:"CRM_EDU",  decl:"const EDUCATION",         root:"EDUCATION",         key:"list" },
+    { m:"CRM_SKL",  decl:"const SKILLS",            root:"SKILLS" },
+    { m:"CRM_PP",   decl:"const PERSONAL_PROJECTS", root:"PERSONAL_PROJECTS", key:"list" },
+    { m:"CRM_TAGS", decl:"const TAGS",              root:"TAGS" },
+    { m:"CRM_PRS",  decl:"const PERSONAL",          root:"PERSONAL",          key:"list" }
+  ],
+  get L(){ return LANG; },
+  get render(){ return renderAll; },
+  set render(f){ renderAll = f; },
+  caps: {}
+};
 </script>
+<script src="assets/crm-editor.js" defer></script>
 </body>
 </html>

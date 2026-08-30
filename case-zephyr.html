@@ -288,57 +288,10 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
+<script src="assets/site.js"></script>
 <script>
 const CURRENT = "zephyr";
 
-/* СПИСОК ПРОЕКТОВ — синхронизирован с index.html */
-const PROJECTS = [
-  {id:"rwb", yr:"2024 — н.в.", href:"case-rwb.html", ti:{ru:"RWB. Маркетплейс",en:"RWB. Marketplace"}, sections:[]},
-  {id:"medsi", yr:"2022–2024", href:"case-medsi.html", ti:{ru:"Medsi Digital",en:"Medsi Digital"},
-   sections:[
-     {a:"team",      group:true, ti:{ru:"Создание команды дизайна",en:"Building the design team"}},
-     {a:"research",  group:true, ti:{ru:"Исследования",en:"Research"}},
-     {a:"mobile",    group:true, ti:{ru:"Приложение SmartMed",en:"SmartMed app"}},
-     {a:"style",     ti:{ru:"Единый стиль приложения",en:"One visual style"}},
-     {a:"main",      ti:{ru:"Главный экран",en:"Home screen"}},
-     {a:"booking",   ti:{ru:"Запись",en:"Booking"}},
-     {a:"flow",      ti:{ru:"Флоу записи",en:"Booking flow"}},
-     {a:"doctor",    ti:{ru:"Выбор врача",en:"Choosing a doctor"}},
-     {a:"doctorcard",ti:{ru:"Карточка врача",en:"Doctor card"}},
-     {a:"statuses",  ti:{ru:"Статусы записи",en:"Booking statuses"}},
-     {a:"pharmacy",  ti:{ru:"Аптека",en:"Pharmacy"}},
-     {a:"map",       ti:{ru:"Выбор на карте",en:"Choosing on the map"}},
-     {a:"product",   ti:{ru:"Карточка товара",en:"Product card"}},
-     {a:"cart",      ti:{ru:"Корзина",en:"Cart"}},
-     {a:"bonuses",   ti:{ru:"Бонусы",en:"Loyalty points"}},
-     {a:"cabinet",   group:true, ti:{ru:"Кабинет врача",en:"Doctor’s workspace"}},
-     {a:"schedule",  ti:{ru:"Расписание",en:"Schedule"}},
-     {a:"newbooking",ti:{ru:"Создание записи",en:"Creating an appointment"}},
-     {a:"emk",       ti:{ru:"Резюме ЭМК",en:"EMR summary"}},
-     {a:"diagnosis", ti:{ru:"Диагноз",en:"Diagnosis"}},
-     {a:"marketing", group:true, ti:{ru:"Маркетинг",en:"Marketing"}}
-   ]},
-  {id:"sberpravo", yr:"2021–2022", href:"case-sberpravo.html", ti:{ru:"СберПраво",en:"SberPravo"},
-   sections:[
-     {a:"menu",         group:true, ti:{ru:"Меню и Заказы",en:"Menu & Orders"}},
-     {a:"menu-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"menu-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"menu-result",      ti:{ru:"Результаты",en:"Results"}},
-     {a:"flow",         group:true, ti:{ru:"Путь юзера",en:"User flow"}},
-     {a:"flow-research",    ti:{ru:"Исследование",en:"Research"}},
-     {a:"flow-design",      ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"flow-abtest",      ti:{ru:"A/B-тест",en:"A/B test"}},
-     {a:"flow-result",      ti:{ru:"Результат",en:"Result"}},
-     {a:"landing",      group:true, ti:{ru:"Лендинг",en:"Landing"}},
-     {a:"landing-hypo",     ti:{ru:"Гипотезы и цели",en:"Hypotheses & goals"}},
-     {a:"landing-design",   ti:{ru:"Дизайн-решения",en:"Design solutions"}},
-     {a:"landing-result",   ti:{ru:"Результаты",en:"Results"}},
-     {a:"screens",      group:true, ti:{ru:"Макеты",en:"Screens"}}
-   ]},
-  {id:"vtb", yr:"2020", href:"case-vtb.html", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, sections:[]},
-  {id:"loko", yr:"2019", href:"case-loko.html", ti:{ru:"Локо Банк",en:"Loko Bank"}, sections:[]},
-  {id:"zephyr", yr:"2017–2018", href:"case-zephyr.html", ti:{ru:"ZephyrLab",en:"ZephyrLab"}, sections:[]}
-];
 
 /* ============================================================
    КОНТЕНТ СТРАНИЦЫ — редактируй тут
@@ -457,10 +410,17 @@ function renderNav(){
     const active = p.id===CURRENT;
     const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
       <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
-    if(!active || !p.sections.length) return row;
+    if(!active) return row;
+
+    /* Подменю собирается из блоков самой страницы: заголовок блока
+       и пункт меню — одно и то же, править нужно в одном месте.
+       Страница с единственным блоком обходится без подменю. */
+    const sections = (d().blocks||[]).filter(b=>b.a)
+      .map(b=>({a:b.a, group:!!b.group, ti:String(b.title||"").replace(/<[^>]+>/g,"")}));
+    if(sections.length < 2) return row;
 
     // подменю: разделы без номера, кейсы — с автонумерацией
-    const items = [{a:"overview", group:true, ti:d().navOverview}, ...p.sections];
+    const items = [{a:"overview", group:true, ti:d().navOverview}, ...sections];
     let n = 0;
     const links = items.map(s=>{
       const label = typeof s.ti === "string" ? s.ti : s.ti[L];
@@ -496,7 +456,7 @@ function renderBlock(b, num){
       : "";
     const results = s.results ? `<div class="cols">${s.results.map(r=>
       `<div class="card metric"><div class="num">${r.n}</div><div class="lbl">${r.l}</div><div class="desc">${r.d}</div></div>`).join("")}</div>` : "";
-    return `<div class="sub">
+    return `<div class="sub"${s.gap!=null?` style="margin-top:${s.gap}px"`:""}>
       <h3 class="sub-title">${s.ti}</h3>
       ${s.note?`<p class="sub-note">${s.note}</p>`:""}
       ${cards}${results}${imgs}${shots}
@@ -508,7 +468,7 @@ function renderBlock(b, num){
     ? `<div class="gallery">${Array.from({length:b.gallery},(_,i)=>
         `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
 
-  return `<section class="block" id="${b.a}">
+  return `<section class="block" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
     <div class="block-num">${b.num}</div>
     <h2 class="block-title">${b.title}</h2>
     <p class="block-lead">${b.lead}</p>
@@ -657,15 +617,23 @@ setLang(L);
 if(location.hash) setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView(),60);
 
 /* ===== CRM: мост к визуальному редактору ===== */
-/* Редактор лежит в assets/crm-editor.js и включается адресом ?crm.
-   Здесь мы только даём ему доступ к данным и рендеру этой страницы. */
+/* Редактор лежит в assets/crm-editor.js и включается адресом ?crm. */
 window.CRM_HOST = {
   id: CURRENT,
-  get T(){ return T; },
-  get IMG(){ return IMG; },
+  file: "case-zephyr.html",
+  pageType: "case",
+  langs: ["ru","en"],
+  roots: { T: T, IMG: IMG, PROJECTS: { list: PROJECTS } },
+  dataPath: ["T", "$L"],
+  shared: ["PROJECTS"],
+  markers: [
+    { m:"CRM_T",   decl:"const T",   root:"T" },
+    { m:"CRM_IMG", decl:"const IMG", root:"IMG" }
+  ],
   get L(){ return L; },
   get render(){ return render; },
   set render(f){ render = f; },
+  get renderNav(){ return renderNav; },
   caps: {list:false, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:false, blockImg:false, flow:false}
 };
 </script>
