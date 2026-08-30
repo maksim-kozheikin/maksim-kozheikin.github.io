@@ -149,7 +149,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .exp-company{color:var(--accent)}
 .exp-summary{margin-top:10px;color:var(--muted)}
 /* обязанности: видны сразу, подрезаны, раскрываются кнопкой */
-.duties{position:relative;overflow:hidden;max-height:170px;transition:max-height .35s ease;margin-top:16px}
+.duties{position:relative;overflow:hidden;max-height:340px;transition:max-height .35s ease;margin-top:16px}
 .duties.open{max-height:none}
 .duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
   background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
@@ -298,68 +298,118 @@ const CURRENT = "zephyr";
 ============================================================ */
 /*CRM_IMG_S*/const IMG = {};/*CRM_IMG_E*/
 /*CRM_T_S*/const T = {
-ru:{
-  back:"Максим Кожейкин",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Апрель 2017 - Декабрь 2018",
-  position:"Junior → Middle UX/UI Designer",
-  title:"ZephyrLAB",
-  desc:"ZephyrLAB — Дизайн студия.",
-  dutiesLabel:"Обязанности на рабочем месте", dutiesMore:"Посмотреть ещё",
-  achLabel:"Ключевые достижения", navOverview:"Обязанности и достижения",
-  achievements:[
-    {n:"", l:"Заполнить: ключевой результат", d:""}
-  ],
-  duties:[
-"В роли начинающего дизайнера мои обязанности включали быстрый поиск референсов, создание первичных дизайн-концепций, прототипирование и поддержка существующих проектов. Мобильные приложения, сайты, адаптивы, crm-системы, интернет магазины, лендинги и тд.",
-     "Работая в условиях жестких сроков и находясь в окружении более опытных коллег, я научился эффективно распределять свое время и значительно улучшил свои навыки в дизайне.",
-     "С течением времени лид дизайнер начал доверять мне выполнение более сложных задач, которые я успешно завершал — от этапа работы с аналитиком до этапа дизайн-ревью готового продукта.",
-     "Работа в команде показала мне ценность дружелюбной атмосферы для достижения лучших результатов. Также я понял, что обратная связь от лид дизайнера и коллег представляет собой не критику меня, а инструмент для развития и совершенствования моих профессиональных качеств)"
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"Заполнить: название кейса",
-    lead:"",
-    subs:[
-      {ti:"Проблемы", mark:"cross", cards:[{h:"", p:"Заполнить"}]},
-      {ti:"Результат", mark:"star", cards:[{h:"", p:"Заполнить"}]}
+  "ru": {
+    "back": "Максим Кожейкин",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "Апрель 2017 - Декабрь 2018",
+    "position": "Junior → Middle UX/UI Designer",
+    "title": "ZephyrLAB",
+    "desc": "ZephyrLAB — Дизайн студия.",
+    "dutiesLabel": "Обязанности на рабочем месте",
+    "dutiesMore": "Посмотреть ещё",
+    "achLabel": "Ключевые достижения",
+    "navOverview": "Обязанности и достижения",
+    "achievements": [
+      {
+        "n": "",
+        "l": "Заполнить: ключевой результат",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "В роли начинающего дизайнера мои обязанности включали быстрый поиск референсов, создание первичных дизайн-концепций, прототипирование и поддержка существующих проектов. Мобильные приложения, сайты, адаптивы, crm-системы, интернет магазины, лендинги и тд.",
+      "Работая в условиях жестких сроков и находясь в окружении более опытных коллег, я научился эффективно распределять свое время и значительно улучшил свои навыки в дизайне.",
+      "С течением времени лид дизайнер начал доверять мне выполнение более сложных задач, которые я успешно завершал — от этапа работы с аналитиком до этапа дизайн-ревью готового продукта.",
+      "Работа в команде показала мне ценность дружелюбной атмосферы для достижения лучших результатов. Также я понял, что обратная связь от лид дизайнера и коллег представляет собой не критику меня, а инструмент для развития и совершенствования моих профессиональных качеств)"
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "Заполнить: название кейса",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "en": {
+    "back": "Maksim Kozheikin",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "April 2017 — December 2018",
+    "position": "Junior → Middle UX/UI Designer",
+    "title": "ZephyrLAB",
+    "desc": "ZephyrLAB — design studio.",
+    "dutiesLabel": "Responsibilities",
+    "dutiesMore": "Show more",
+    "achLabel": "Key achievements",
+    "navOverview": "Responsibilities",
+    "achievements": [
+      {
+        "n": "",
+        "l": "To fill: key result",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "As a junior designer my duties included quickly finding references, creating first design concepts, prototyping and supporting existing projects. Mobile apps, websites, responsive layouts, CRM systems, online stores, landing pages and so on.",
+      "Working under tight deadlines surrounded by more experienced colleagues, I learned to manage my time effectively and significantly improved my design skills.",
+      "Over time the design lead began trusting me with more complex tasks, which I completed successfully — from working with the analyst to the design review of the finished product.",
+      "Working in a team showed me the value of a friendly atmosphere for achieving better results. I also realised that feedback from the lead and colleagues is not criticism of me, but a tool for growth."
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "To fill: case title",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
-  ]
-},
-en:{
-  back:"Maksim Kozheikin",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Апрель 2017 - Декабрь 2018",
-  position:"Junior → Middle UX/UI Designer",
-  title:"ZephyrLAB",
-  desc:"ZephyrLAB — design studio.",
-  dutiesLabel:"Responsibilities", dutiesMore:"Show more",
-  achLabel:"Key achievements", navOverview:"Responsibilities & impact",
-  achievements:[
-    {n:"", l:"To fill: key result", d:""}
-  ],
-  duties:[
-"As a junior designer my duties included quickly finding references, creating first design concepts, prototyping and supporting existing projects. Mobile apps, websites, responsive layouts, CRM systems, online stores, landing pages and so on.",
-     "Working under tight deadlines surrounded by more experienced colleagues, I learned to manage my time effectively and significantly improved my design skills.",
-     "Over time the design lead began trusting me with more complex tasks, which I completed successfully — from working with the analyst to the design review of the finished product.",
-     "Working in a team showed me the value of a friendly atmosphere for achieving better results. I also realised that feedback from the lead and colleagues is not criticism of me, but a tool for growth."
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"To fill: case title",
-    lead:"",
-    subs:[
-      {ti:"Problems", mark:"cross", cards:[{h:"", p:"To fill"}]},
-      {ti:"Result", mark:"star", cards:[{h:"", p:"To fill"}]}
-    ]
-  }
-  ]
-}
 };/*CRM_T_E*/
 
 
@@ -488,11 +538,6 @@ function render(){
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
-    <div class="achievements" id="achievements" style="scroll-margin-top:20px">
-      <div class="cols">${t.achievements.map(a=>
-        `<div class="card metric">${a.n?`<span class="num">${a.n}</span> `:""}<span class="lbl">${a.l}</span></div>`).join("")}</div>
-    </div>
-
     <div class="head-sep"></div>
 
     ${(()=>{ let n=0; return t.blocks.map(b=>{
@@ -501,8 +546,14 @@ function render(){
         return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
       }).join(""); })()}
     <div class="foot">
-      <a href="index.html">← ${t.back}</a>
-      <a href="${t.nextHref}">${t.next}: ${t.nextName} →</a>
+      <a href="index.html">← <span>${t.back}</span></a>
+      ${(()=>{
+        /* следующий проект берём из общего списка — руками дублировать нечего */
+        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
+        if(!n) return "";
+        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
+        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
+      })()}
     </div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");

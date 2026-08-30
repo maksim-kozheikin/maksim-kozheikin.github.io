@@ -565,7 +565,7 @@ function renderProjects(){
 }
 function renderExperience(){
   $("#experience").innerHTML = EXPERIENCE.map((e,i)=>`
-    <article class="exp">
+    <article class="exp"${e.gap!=null?` style="margin-top:${e.gap}px"`:""}>
       <div class="exp-eyebrow">${e.date[LANG]}</div>
       <h3 class="exp-role">${e.role[LANG]} · <span class="exp-company">${e.company[LANG]}</span></h3>
       <p class="exp-summary">${e.summary[LANG]}</p>
@@ -602,7 +602,7 @@ function renderSkills(){
 }
 function renderPersonal(){
   $("#personal").innerHTML = PERSONAL.map(p=>
-    `<div class="card"><h3>${p.t[LANG]}</h3><p>${p.d[LANG]}</p></div>`).join("");
+    `<div class="card"${p.gap!=null?` style="margin-top:${p.gap}px"`:""}><h3>${p.t[LANG]}</h3><p>${p.d[LANG]}</p></div>`).join("");
 }
 function renderCV(){
   const exp=EXPERIENCE.map(e=>`<div class="cv-item"><div class="r">${e.role[LANG]} — ${e.company[LANG]}</div>

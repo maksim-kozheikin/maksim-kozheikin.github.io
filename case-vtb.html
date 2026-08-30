@@ -149,7 +149,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .exp-company{color:var(--accent)}
 .exp-summary{margin-top:10px;color:var(--muted)}
 /* обязанности: видны сразу, подрезаны, раскрываются кнопкой */
-.duties{position:relative;overflow:hidden;max-height:170px;transition:max-height .35s ease;margin-top:16px}
+.duties{position:relative;overflow:hidden;max-height:340px;transition:max-height .35s ease;margin-top:16px}
 .duties.open{max-height:none}
 .duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
   background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
@@ -298,64 +298,114 @@ const CURRENT = "vtb";
 ============================================================ */
 /*CRM_IMG_S*/const IMG = {};/*CRM_IMG_E*/
 /*CRM_T_S*/const T = {
-ru:{
-  back:"Максим Кожейкин",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Февраль 2020 - Февраль 2021",
-  position:"Senior UX/UI Designer",
-  title:"ВТБ Банк",
-  desc:"Банк ВТБ — Платформа онлайн-банкинга для юридических лиц.",
-  dutiesLabel:"Обязанности на рабочем месте", dutiesMore:"Посмотреть ещё",
-  achLabel:"Ключевые достижения", navOverview:"Обязанности и достижения",
-  achievements:[
-    {n:"", l:"Заполнить: ключевой результат", d:""}
-  ],
-  duties:[
-"Разрабатывал веб-интерфейсы платформы онлайн-банкинга для юридических лиц. Совместно с аналитиками и продактами участвовал в создании пользовательских сценариев. Осуществлял контроль за реализацией дизайна командой из 8 разработчиков.",
-     "В процессе работы над продуктом коллеги отметили ускорение и предсказуемость сроков поставки дизайна. Внедрение новых функций и исправление логических ошибок в текущих сценариях повысили лояльность существующих пользователей. Упрощение авторизации и открытия счетов увеличило число новых пользователей на 15%."
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"Заполнить: название кейса",
-    lead:"",
-    subs:[
-      {ti:"Проблемы", mark:"cross", cards:[{h:"", p:"Заполнить"}]},
-      {ti:"Результат", mark:"star", cards:[{h:"", p:"Заполнить"}]}
+  "ru": {
+    "back": "Максим Кожейкин",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "Февраль 2020 - Февраль 2021",
+    "position": "Senior UX/UI Designer",
+    "title": "ВТБ Банк",
+    "desc": "Банк ВТБ — Платформа онлайн-банкинга для юридических лиц.",
+    "dutiesLabel": "Обязанности на рабочем месте",
+    "dutiesMore": "Посмотреть ещё",
+    "achLabel": "Ключевые достижения",
+    "navOverview": "Обязанности и достижения",
+    "achievements": [
+      {
+        "n": "",
+        "l": "Заполнить: ключевой результат",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "Разрабатывал веб-интерфейсы платформы онлайн-банкинга для юридических лиц. Совместно с аналитиками и продактами участвовал в создании пользовательских сценариев. Осуществлял контроль за реализацией дизайна командой из 8 разработчиков.",
+      "В процессе работы над продуктом коллеги отметили ускорение и предсказуемость сроков поставки дизайна. Внедрение новых функций и исправление логических ошибок в текущих сценариях повысили лояльность существующих пользователей. Упрощение авторизации и открытия счетов увеличило число новых пользователей на 15%."
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "Заполнить: название кейса",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "en": {
+    "back": "Maksim Kozheikin",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "February 2020 — February 2021",
+    "position": "Senior UX/UI Designer",
+    "title": "VTB Bank",
+    "desc": "VTB Bank — online banking platform for businesses.",
+    "dutiesLabel": "Responsibilities",
+    "dutiesMore": "Show more",
+    "achLabel": "Key achievements",
+    "navOverview": "Responsibilities",
+    "achievements": [
+      {
+        "n": "",
+        "l": "To fill: key result",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "Designed web interfaces for the business online-banking platform. Created user scenarios together with analysts and PMs. Oversaw design implementation by a team of 8 developers.",
+      "Colleagues noted faster and more predictable design delivery. New features and fixes to logical errors in existing scenarios improved loyalty among existing users. Simplifying sign-in and account opening increased new users by 15%."
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "To fill: case title",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
-  ]
-},
-en:{
-  back:"Maksim Kozheikin",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Февраль 2020 - Февраль 2021",
-  position:"Senior UX/UI Designer",
-  title:"VTB Bank",
-  desc:"VTB Bank — online banking platform for businesses.",
-  dutiesLabel:"Responsibilities", dutiesMore:"Show more",
-  achLabel:"Key achievements", navOverview:"Responsibilities & impact",
-  achievements:[
-    {n:"", l:"To fill: key result", d:""}
-  ],
-  duties:[
-"Designed web interfaces for the business online-banking platform. Created user scenarios together with analysts and PMs. Oversaw design implementation by a team of 8 developers.",
-     "Colleagues noted faster and more predictable design delivery. New features and fixes to logical errors in existing scenarios improved loyalty among existing users. Simplifying sign-in and account opening increased new users by 15%."
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"To fill: case title",
-    lead:"",
-    subs:[
-      {ti:"Problems", mark:"cross", cards:[{h:"", p:"To fill"}]},
-      {ti:"Result", mark:"star", cards:[{h:"", p:"To fill"}]}
-    ]
-  }
-  ]
-}
 };/*CRM_T_E*/
 
 
@@ -484,11 +534,6 @@ function render(){
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
-    <div class="achievements" id="achievements" style="scroll-margin-top:20px">
-      <div class="cols">${t.achievements.map(a=>
-        `<div class="card metric">${a.n?`<span class="num">${a.n}</span> `:""}<span class="lbl">${a.l}</span></div>`).join("")}</div>
-    </div>
-
     <div class="head-sep"></div>
 
     ${(()=>{ let n=0; return t.blocks.map(b=>{
@@ -497,8 +542,14 @@ function render(){
         return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
       }).join(""); })()}
     <div class="foot">
-      <a href="index.html">← ${t.back}</a>
-      <a href="${t.nextHref}">${t.next}: ${t.nextName} →</a>
+      <a href="index.html">← <span>${t.back}</span></a>
+      ${(()=>{
+        /* следующий проект берём из общего списка — руками дублировать нечего */
+        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
+        if(!n) return "";
+        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
+        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
+      })()}
     </div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");

@@ -149,7 +149,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .exp-company{color:var(--accent)}
 .exp-summary{margin-top:10px;color:var(--muted)}
 /* обязанности: видны сразу, подрезаны, раскрываются кнопкой */
-.duties{position:relative;overflow:hidden;max-height:170px;transition:max-height .35s ease;margin-top:16px}
+.duties{position:relative;overflow:hidden;max-height:340px;transition:max-height .35s ease;margin-top:16px}
 .duties.open{max-height:none}
 .duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
   background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
@@ -298,62 +298,112 @@ const CURRENT = "rwb";
 ============================================================ */
 /*CRM_IMG_S*/const IMG = {};/*CRM_IMG_E*/
 /*CRM_T_S*/const T = {
-ru:{
-  back:"Максим Кожейкин",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Июль 2024 — наст. время",
-  position:"Senior UX/UI Designer",
-  title:"RWB",
-  desc:"RWB — крупнейший маркетплейс в России.",
-  dutiesLabel:"Обязанности на рабочем месте", dutiesMore:"Посмотреть ещё",
-  achLabel:"Ключевые достижения", navOverview:"Обязанности и достижения",
-  achievements:[
-    {n:"", l:"Заполнить: ключевой результат", d:""}
-  ],
-  duties:[
-"Заполнить."
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"Заполнить: название кейса",
-    lead:"",
-    subs:[
-      {ti:"Проблемы", mark:"cross", cards:[{h:"", p:"Заполнить"}]},
-      {ti:"Результат", mark:"star", cards:[{h:"", p:"Заполнить"}]}
+  "ru": {
+    "back": "Максим Кожейкин",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "Июль 2024 — наст. время",
+    "position": "Senior UX/UI Designer",
+    "title": "RWB",
+    "desc": "RWB — крупнейший маркетплейс в России.",
+    "dutiesLabel": "Обязанности на рабочем месте",
+    "dutiesMore": "Посмотреть ещё",
+    "achLabel": "Ключевые достижения",
+    "navOverview": "Обязанности и достижения",
+    "achievements": [
+      {
+        "n": "",
+        "l": "Заполнить: ключевой результат",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "Заполнить."
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "Заполнить: название кейса",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "en": {
+    "back": "Maksim Kozheikin",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "July 2024 — present",
+    "position": "Senior UX/UI Designer",
+    "title": "RWB",
+    "desc": "RWB — the largest marketplace in Russia.",
+    "dutiesLabel": "Responsibilities",
+    "dutiesMore": "Show more",
+    "achLabel": "Key achievements",
+    "navOverview": "Responsibilities",
+    "achievements": [
+      {
+        "n": "",
+        "l": "To fill: key result",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "To fill."
+    ],
+    "blocks": [
+      {
+        "a": "case1",
+        "title": "To fill: case title",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
-  ]
-},
-en:{
-  back:"Maksim Kozheikin",
-  cv:"cv", modeWork:"Work", modeLife:"Work + Life",
-  date:"Июль 2024 — наст. время",
-  position:"Senior UX/UI Designer",
-  title:"RWB",
-  desc:"RWB — the largest marketplace in Russia.",
-  dutiesLabel:"Responsibilities", dutiesMore:"Show more",
-  achLabel:"Key achievements", navOverview:"Responsibilities & impact",
-  achievements:[
-    {n:"", l:"To fill: key result", d:""}
-  ],
-  duties:[
-"To fill."
-  ],
-
-  blocks:[
-  {
-    a:"case1",
-    title:"To fill: case title",
-    lead:"",
-    subs:[
-      {ti:"Problems", mark:"cross", cards:[{h:"", p:"To fill"}]},
-      {ti:"Result", mark:"star", cards:[{h:"", p:"To fill"}]}
-    ]
-  }
-  ]
-}
 };/*CRM_T_E*/
 
 
@@ -482,11 +532,6 @@ function render(){
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
-    <div class="achievements" id="achievements" style="scroll-margin-top:20px">
-      <div class="cols">${t.achievements.map(a=>
-        `<div class="card metric">${a.n?`<span class="num">${a.n}</span> `:""}<span class="lbl">${a.l}</span></div>`).join("")}</div>
-    </div>
-
     <div class="head-sep"></div>
 
     ${(()=>{ let n=0; return t.blocks.map(b=>{
@@ -495,8 +540,14 @@ function render(){
         return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
       }).join(""); })()}
     <div class="foot">
-      <a href="index.html">← ${t.back}</a>
-      <a href="${t.nextHref}">${t.next}: ${t.nextName} →</a>
+      <a href="index.html">← <span>${t.back}</span></a>
+      ${(()=>{
+        /* следующий проект берём из общего списка — руками дублировать нечего */
+        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
+        if(!n) return "";
+        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
+        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
+      })()}
     </div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");

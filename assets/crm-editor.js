@@ -359,6 +359,13 @@ function annotateHome() {
 function annotateCase() {
   var root = content(); if (!root) return;
 
+  /* подписи интерфейса — те же поля данных, что и весь остальной текст */
+  $$("[data-i18n]").forEach(function (el) {
+    markText(el, [el.getAttribute("data-i18n")], { line: 1, ph: "Надпись" });
+  });
+  markText(root.querySelector("#dutiesBtn span:first-child"), ["dutiesMore"], { line: 1, ph: "Надпись" });
+  markText(root.querySelector(".foot a span"), ["back"], { line: 1, ph: "Надпись" });
+
   markText(root.querySelector(".exp-eyebrow"), ["date"], { line: 1 });
   splitRole(root.querySelector(".exp-role"), ["position"], ["title"]);
   markText(root.querySelector(".exp-summary"), ["desc"]);
@@ -667,6 +674,18 @@ function crumbsHtml() {
   }).join("");
 }
 
+/* ближайший блок или секция — им и задаётся отступ, с любого уровня */
+function gapHost() {
+  if (!sel) return null;
+  if (sel.kind === "block" || sel.kind === "sub") return sel.path;
+  var el = sel.el.closest("[data-crm-sub],[data-crm-block]");
+  if (el) return pathOf(el);
+  /* на главной блоков нет — отступ задаём самому элементу списка */
+  var it = sel.el.closest("[data-crm-item]");
+  if (it && /^(exp|personal)$/.test(it.getAttribute("data-crm-item"))) return pathOf(it);
+  return null;
+}
+
 /* отступы берём из ритма, который уже есть в вёрстке */
 var GAPS = [["", "По умолчанию"], ["0", "Без отступа"], ["16", "Малый"],
 ["40", "Средний"], ["80", "Большой"], ["120", "Как между кейсами"]];
@@ -677,6 +696,7 @@ function actionsHtml() {
     h += btn("<b>B</b>", "b", { title: "Жирный" }) + btn("<i>I</i>", "i", { title: "Курсив" }) +
       btn("<u>U</u>", "u", { title: "Подчёркнутый" }) + btn("Ссылка", "link");
     h += SEPV + btn("Размер ▾", "size") + btn("Выравнивание ▾", "align") + btn("Убрать формат", "plain");
+    if (gapHost()) h += SEPV + btn("Отступ блока ▾", "gap");
   } else if (k === "img") {
     h += btn("Заменить", "img-src") + btn("Медиатека", "img-lib") + btn("Подпись", "img-cap");
     h += SEPV + btn("−", "img-narrow", { title: "Уже" }) + btn("+", "img-wide", { title: "Шире" }) +
@@ -691,6 +711,7 @@ function actionsHtml() {
     } else {
       h += btn("↑", "it-up") + btn("↓", "it-down") + btn("⧉", "it-dup", { title: "Дублировать" }) +
         btn("Удалить", "it-del") + SEPV + btn("+ ещё такой же", "it-add");
+      if (gapHost()) h += btn("Отступ блока ▾", "gap");
     }
   } else if (k === "sub") {
     var s = get(sel.path) || {};
@@ -952,6 +973,18 @@ function presetSheet(title, list, cb) {
    те, где английского ещё нет или он совпал с русским.
 ============================================================ */
 var RU_RE = /[А-Яа-яЁё]/;
+/* поля, в которых лежит не текст, а адреса, якоря и настройки —
+   переводить там нечего */
+var NOT_TEXT = {
+  src: 1, img: 1, href: 1, nextHref: 1, a: 1, grad: 1, id: 1, tag: 1,
+  w: 1, gap: 1, mark: 1, card: 1, full: 1, row: 1, sep: 1, group: 1
+};
+function translatable(key, value) {
+  if (NOT_TEXT[key]) return false;
+  if (typeof value !== "string") return false;
+  if (/^(data:|https?:|#|assets\/|[\w.-]+\.(html|png|jpe?g|webp|svg|gif))/i.test(value.trim())) return false;
+  return true;
+}
 
 /* обходим данные и находим все места вида {ru:…, en:…} и T.ru/T.en */
 function pairs() {
@@ -964,7 +997,10 @@ function pairs() {
     }
     var isPair = typeof node.ru === "string" && "en" in node;
     if (isPair) {
-      if (node.ru.trim()) out.push({ path: path, ru: node.ru, en: node.en });
+      var key = path[path.length - 1];
+      if (node.ru.trim() && translatable(key, node.ru)) {
+        out.push({ path: path, ru: node.ru, en: node.en });
+      }
       return;
     }
     Object.keys(node).forEach(function (k) { walk(node[k], path.concat(k)); });
@@ -973,7 +1009,10 @@ function pairs() {
   if (ROOTS.T && ROOTS.T.ru) {
     (function walkT(ru, en, path) {
       if (typeof ru === "string") {
-        if (ru.trim()) out.push({ path: ["T", "ru"].concat(path), ru: ru, en: typeof en === "string" ? en : "" });
+        var k = path[path.length - 1];
+        if (ru.trim() && translatable(k, ru)) {
+          out.push({ path: ["T", "ru"].concat(path), ru: ru, en: typeof en === "string" ? en : "" });
+        }
         return;
       }
       if (!ru || typeof ru !== "object") return;
@@ -1648,8 +1687,7 @@ function actOn(a, srcBtn) {
   /* отступ сверху — из шага, который уже есть в вёрстке */
   if (a === "gap") {
     return menu(GAPS.map(function (g) { return { id: g[0], ti: g[1] }; }), function (o) {
-      var host = sel.kind === "block" || sel.kind === "sub" ? sel.path :
-        pathOf(sel.el.closest("[data-crm-sub],[data-crm-block]"));
+      var host = gapHost();
       if (!host) return;
       var obj = get(host);
       if (o.id === "") delete obj.gap; else obj.gap = +o.id;
