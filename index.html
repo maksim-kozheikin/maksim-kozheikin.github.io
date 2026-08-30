@@ -147,7 +147,7 @@ a.row .chip-tag + .row-arr{margin-left:10px}
 .duties-inner{padding-top:14px}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
 .duties li{position:relative;padding-left:18px;color:var(--muted);font-size:var(--text)}
-.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}

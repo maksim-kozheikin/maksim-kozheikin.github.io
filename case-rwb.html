@@ -91,7 +91,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* пункты внутри кейса */
 .points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
 .points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
-.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 .points li b{color:var(--ink);font-weight:600}
 
 .shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
@@ -166,7 +166,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
 .duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
-.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}

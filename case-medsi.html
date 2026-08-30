@@ -91,11 +91,11 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* пункты внутри кейса */
 .points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
 .points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
-.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 .points li b{color:var(--ink);font-weight:600}
 
 /* маркер по умолчанию ✦; в «Проблемах» — точка */
-.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55;display:inline-block;transform:rotate(45deg)}
+.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6);transform:rotate(45deg)}
 
 
 /* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
@@ -104,7 +104,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
 .points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
 .points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
-  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55}
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.45)}
 
 .shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
   display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
@@ -180,7 +180,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
 .duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
-.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}
@@ -380,12 +380,7 @@ const CURRENT = "medsi";
       }
     ],
     "duties": [
-      "<b>Сервисы, над которыми я работал:<\/b>",
-      "SmartMed — это веб-сайт и приложение на iOS и Android для пациентов. Включает в себя продукты: аптека, запись в клинику, телемедицина, анализы, медкарта с документами и динамикой показателей, личный кабинет, бонусы лояльности и прочее.",
-      "Кабинет врача — это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
-      "Контроль качества — это веб-сервис для «супер-врачей», чтобы отслеживать корректность выполнения работ другими врачами. Включает продукты: медицинский контроль, аудит, экспертный контроль.",
-      "Админка — это веб-сервис для управления всеми другими сервисами.",
-      "<b>Как Lead UX/UI Designer<\/b>",
+      "<b>Обязанности и достижения как Lead UX/UI Designer<\/b>",
       "Одна из основных задач — создание команды дизайна в компании. Сформировал команду из пяти дизайнеров, менторил джунов. Ввел скрам-практики: онбординг, ретро, демо, дэйли и прочее. Создал базу знаний для команды в YouTrack.",
       "Осуществлял поддержку и развитие всех вышеупомянутых продуктов и сервисов.",
       "В сотрудничестве с продактами и CPO накидывали идеи для развития сервисов, помогал с разработкой концепций и новых фичей, основываясь на потребностях бизнеса и обратной связи от пользователей.",
@@ -394,7 +389,12 @@ const CURRENT = "medsi";
       "Благодаря быстрым качественным UX-исследованиям, улучшил процесс записи, что значительно уменьшило нагрузку на колл-центр, тем самым экономя деньги для компании.",
       "Принимая участие в процессе найма, помог отделу HR с описанием и оформлением вакансий с точки зрения дизайнеров, которые могут рассматривать нашу компанию как потенциального работодателя.",
       "Содействовал созданию и визуализации маркетинговых кампаний: рассылки, строиз, лендинги с интерактивами к большим праздникам, что привлекло новых клиентов и укрепило лояльность уже существующих пользователей.",
-      "Регулярно выступал с отчетными презентациями перед руководством компании и коллегами из различных команд."
+      "Регулярно выступал с отчетными презентациями перед руководством компании и коллегами из различных команд.",
+      "<b>Сервисы, над которыми я работал:<\/b>",
+      "SmartMed — это веб-сайт и приложение на iOS и Android для пациентов. Включает в себя продукты: аптека, запись в клинику, телемедицина, анализы, медкарта с документами и динамикой показателей, личный кабинет, бонусы лояльности и прочее.",
+      "Кабинет врача — это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
+      "Контроль качества — это веб-сервис для «супер-врачей», чтобы отслеживать корректность выполнения работ другими врачами. Включает продукты: медицинский контроль, аудит, экспертный контроль.",
+      "Админка — это веб-сервис для управления всеми другими сервисами."
     ],
     "blocks": [
       {
@@ -1352,6 +1352,7 @@ const CURRENT = "medsi";
       }
     ],
     "duties": [
+      "<b>Responsibilities and achievements as Lead UX/UI Designer<\/b>",
       "Built the design team from scratch: five designers, mentored juniors, introduced scrum rituals and a YouTrack knowledge base.",
       "Supported and grew all products and services.",
       "Shaped new features with PMs and the CPO, based on business needs and user feedback.",
@@ -1361,12 +1362,11 @@ const CURRENT = "medsi";
       "Supported hiring: helped HR write designer-facing job posts.",
       "Contributed to marketing campaigns: newsletters, stories, holiday landings.",
       "Regularly presented results to leadership and peers.",
-      "Built the app’s design concept that pulled separate products into one visual system and made the interface consistent.",
-      "Created and maintained the design system together with front-end developers, which sped up release cycles.",
-      "Ran fast, focused UX research and improved the booking flow, which cut the number of failed appointments.",
-      "Took part in hiring: helped HR write and shape job descriptions from a design point of view.",
-      "Supported marketing campaigns and their visuals: newsletters, stories, landing pages with interactive elements.",
-      "Presented results regularly to company leadership and to colleagues from other teams."
+      "<b>Services I worked on:<\/b>",
+      "SmartMed — a website and an iOS/Android app for patients. It covers the pharmacy, clinic booking, telemedicine, lab tests, a medical record with documents and health trends, a personal account, loyalty points and more.",
+      "Doctor’s workspace — a web service for call-centre staff and for doctors seeing patients. It covers the schedule, reports, the appointment flow and more.",
+      "Quality control — a web service for senior doctors to check how other doctors do their work. It covers medical control, audit and expert review.",
+      "Admin — a web service for managing all the other services."
     ],
     "blocks": [
       {

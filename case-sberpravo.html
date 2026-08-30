@@ -111,12 +111,12 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* пункты внутри кейса */
 .points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
 .points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
-.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 .points li b{color:var(--ink);font-weight:600}
 .points li br{content:"";display:block;margin-bottom:6px}
 
 /* маркер по умолчанию ✦; в «Проблемах» — точка */
-.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55;display:inline-block;transform:rotate(45deg)}
+.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6);transform:rotate(45deg)}
 .points.plain li{padding-left:0}
 .points.plain li::before{display:none}
 
@@ -127,7 +127,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
 .points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
 .points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
-  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1.55}
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.45)}
 
 .shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
   display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
@@ -206,7 +206,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .duties-inner{padding-top:0}
 .duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
 .duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
-.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1.55}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
 /* пункт-подзаголовок (целиком жирный) — без маркера */
 .duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
 .duties li:has(> b:only-child)::before{display:none}
@@ -378,7 +378,7 @@ const CURRENT = "sberpravo";
     "date": "Февраль 2021 — Апрель 2022",
     "position": "Senior → Lead UX/UI Designer",
     "title": "СберПраво",
-    "desc": "СберПраво — Онлайн-сервис юридической помощи.",
+    "desc": "СберПраво — онлайн-сервис юридической помощи. Продукт представлен на платформах: веб-сайт с адаптивным дизайном и мобильные приложения для iOS и Android. В нём несколько ролей: сторона заказчика, сторона исполнителя и сторона администратора.",
     "dutiesLabel": "Обязанности на рабочем месте",
     "dutiesMore": "Посмотреть ещё",
     "achLabel": "Ключевые достижения",
@@ -401,15 +401,14 @@ const CURRENT = "sberpravo";
       }
     ],
     "duties": [
-      "Продукт представлен на платформах: веб-сайт с адаптивным дизайном и мобильные приложения для iOS и Android. Продукт включает несколько ролей: сторону заказчика, сторону исполнителя и сторону администратора.",
-      "<b>Как Senior UX/UI Designer<\/b>",
-      "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
-      "Создал дизайн-систему для дальнейшего масштабирования продукта.",
-      "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы.",
-      "<b>Как Lead UX/UI Designer<\/b>",
+      "<b>Обязанности и достижения как Lead UX/UI Designer<\/b>",
       "К моим обязанностям добавилось проведение исследований, результаты которых я представил в портфолио в виде кейсов. Занимался менторством одного дизайнера, распределял задачи и проводил ревью выполненных работ.",
       "Активно участвовал в планировании продукта, определении ключевых потребностей пользователей и бизнес-целей. Настроил тесное взаимодействие между дизайном и разработкой для корректной реализации дизайна. Подготавливал презентации с результатами работы для бизнеса и коллег по команде.",
-      "Во время работы нам успешно удалось запустить продукт, получив 10 тысяч заказов. Мы также собрали обратную связь и приступили к исправлению ошибок."
+      "Во время работы нам успешно удалось запустить продукт, получив 10 тысяч заказов. Мы также собрали обратную связь и приступили к исправлению ошибок.",
+      "<b>Обязанности и достижения как Senior UX/UI Designer<\/b>",
+      "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
+      "Создал дизайн-систему для дальнейшего масштабирования продукта.",
+      "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы."
     ],
     "blocks": [
       {
@@ -1082,7 +1081,7 @@ const CURRENT = "sberpravo";
     "date": "Feb 2021 — Apr 2022",
     "position": "Senior → Lead UX/UI Designer",
     "title": "SberPravo",
-    "desc": "An online legal service where people find a lawyer and solve their problem online.",
+    "desc": "An online legal service where people find a lawyer and solve their problem online. It runs on responsive web plus iOS and Android apps, and has three roles: client, professional and admin.",
     "dutiesLabel": "Responsibilities",
     "dutiesMore": "Show more",
     "achLabel": "Key achievements",
@@ -1105,15 +1104,14 @@ const CURRENT = "sberpravo";
       }
     ],
     "duties": [
-      "<b>Platforms:<\/b> responsive web plus iOS and Android apps. Three roles: client, professional, admin.",
-      "<b>As Senior:<\/b> grew the product across platforms, designed solutions with the design lead.",
-      "Built a design system for further scaling.",
-      "Created a user flow map: analysts found bugs faster, new colleagues understood the system, developers could estimate work.",
-      "<b>As Lead:<\/b> added research — presented as the cases below. Mentored a designer, distributed tasks, ran design reviews.",
-      "Took part in product planning, user needs and business goals. Set up design–development collaboration.",
-      "We launched the product and reached 10,000 orders.",
-      "Took an active part in product planning — defining key user needs and business goals, and turning them into design work.",
-      "During my time on the product we launched it and reached 10,000 orders, and collected a body of user feedback along the way."
+      "<b>Responsibilities and achievements as Lead UX/UI Designer<\/b>",
+      "Research was added to my duties — the results are presented below as cases. I mentored a designer, distributed tasks and ran reviews of finished work.",
+      "Took an active part in product planning — defining key user needs and business goals. Set up close collaboration between design and development so designs shipped as intended, and prepared result presentations for the business and the team.",
+      "During my time on the product we launched it and reached 10,000 orders. We also collected user feedback and started fixing the issues it surfaced.",
+      "<b>Responsibilities and achievements as Senior UX/UI Designer<\/b>",
+      "Grew the product across all platforms and shaped design solutions together with the design lead.",
+      "Built a design system so the product could scale further.",
+      "Created a user flow map: analysts found errors faster, new colleagues understood the logic of the system, and developers could estimate upcoming work more easily."
     ],
     "blocks": [
       {
