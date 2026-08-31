@@ -958,28 +958,99 @@ function sheet(title, html, onClick) {
   return { el: wrap, close: close };
 }
 
+/* Папку assets браузер сам прочитать не может, поэтому спрашиваем
+   список файлов у GitHub. Работает на опубликованном сайте; локально
+   (file://) список остаётся из тех картинок, что уже стоят на страницах. */
+var ASSETS_LS = "crm:assets";
+function assetsApiUrl() {
+  var m = location.hostname.match(/^([\w.-]+)\.github\.io$/i);
+  if (!m) return null;
+  var owner = m[1];
+  var parts = location.pathname.split("/").filter(Boolean);
+  /* сайт проекта лежит в подпапке, личный сайт — в корне */
+  var repo = parts.length > 1 ? parts[0] : location.hostname;
+  return "https://api.github.com/repos/" + owner + "/" + repo + "/contents/assets";
+}
+var IMG_EXT = /\.(png|jpe?g|webp|gif|svg|avif)$/i;
+
+function cachedAssets() {
+  try {
+    var o = JSON.parse(localStorage.getItem(ASSETS_LS) || "null");
+    return o && Array.isArray(o.files) ? o : null;
+  } catch (e) { return null; }
+}
+function fetchAssets(force) {
+  var url = assetsApiUrl();
+  if (!url) return Promise.resolve(null);
+  var cached = cachedAssets();
+  /* список файлов меняется редко — час держим в кэше */
+  if (!force && cached && Date.now() - cached.at < 3600000) return Promise.resolve(cached.files);
+  return fetch(url)
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (arr) {
+      var files = arr
+        .filter(function (x) { return x.type === "file" && IMG_EXT.test(x.name); })
+        .map(function (x) { return "assets/" + x.name; })
+        .sort();
+      try { localStorage.setItem(ASSETS_LS, JSON.stringify({ at: Date.now(), files: files })); } catch (e) { }
+      return files;
+    })
+    .catch(function () { return cached ? cached.files : null; });
+}
+
+function tileHtml(src) {
+  var label = src.slice(0, 5) === "data:" ? "загруженное" : src.replace(/^assets\//, "");
+  return "<button class=\"crm-tile\" data-src=\"" + esc(src) + "\">" +
+    "<img src=\"" + esc(src) + "\" alt=\"\" loading=\"lazy\">" +
+    "<span>" + esc(label) + "</span></button>";
+}
+
 function openMedia() {
-  var list = mediaList();
-  var html = "<div class=\"crm-media\">" + list.map(function (s) {
-    return "<button class=\"crm-tile\" data-src=\"" + esc(s) + "\">" +
-      "<img src=\"" + esc(s) + "\" alt=\"\" loading=\"lazy\">" +
-      "<span>" + esc(s.slice(0, 5) === "data:" ? "загруженное" : s.replace(/^assets\//, "")) + "</span></button>";
-  }).join("") + "</div>" +
+  var used = mediaList();
+  var html = "<div class=\"crm-media\" data-grid>" + used.map(tileHtml).join("") + "</div>" +
+    "<p class=\"crm-hint\" data-status style=\"margin:0 0 14px\">Ищу остальные картинки в папке assets…</p>" +
     "<div class=\"crm-field\"><label>Путь в проекте или адрес картинки</label>" +
     "<input type=\"text\" data-src-input placeholder=\"assets/medsi-main.png\"></div>" +
-    "<div class=\"crm-actions\"><button class=\"crm-primary\" data-a=\"upload\">Загрузить файл</button>" +
-    "<button data-a=\"use\">Использовать адрес</button></div>" +
-    "<p class=\"crm-hint\">Загруженный файл встраивается прямо в страницу. Для готового сайта лучше положить картинку в папку assets и указать путь.</p>";
+    "<div class=\"crm-actions\">" +
+    "<button data-a=\"use\">Использовать адрес</button>" +
+    "<button data-a=\"refresh\">Обновить список</button>" +
+    "<button data-a=\"upload\">Загрузить файл с диска</button></div>" +
+    "<p class=\"crm-hint\">Лучший путь: положите картинку в папку <b>assets</b> в проекте, " +
+    "и она сама появится в этом списке. Файл, загруженный с диска, встраивается прямо " +
+    "в страницу и сильно её утяжеляет.</p>";
 
   var m = sheet("Картинка", html, function (e, close) {
     var tile = e.target.closest(".crm-tile");
     if (tile) { setImg({ src: tile.getAttribute("data-src") }); return close(); }
     if (e.target.closest("[data-a=upload]")) { pickFile(function (src) { setImg({ src: src }); close(); }); return; }
+    if (e.target.closest("[data-a=refresh]")) { load(true); return; }
     if (e.target.closest("[data-a=use]")) {
       var v = m.el.querySelector("[data-src-input]").value.trim();
       if (v) { setImg({ src: v }); close(); }
     }
   });
+
+  function load(force) {
+    var status = m.el.querySelector("[data-status]");
+    var grid = m.el.querySelector("[data-grid]");
+    if (force) status.textContent = "Обновляю список…";
+    fetchAssets(force).then(function (files) {
+      if (!m.el.isConnected) return;
+      if (!files) {
+        status.textContent = assetsApiUrl()
+          ? "Список файлов из assets получить не удалось. Впишите путь вручную."
+          : "Список файлов из assets доступен на опубликованном сайте. Здесь впишите путь вручную.";
+        return;
+      }
+      var seen = {};
+      used.forEach(function (s) { seen[s] = 1; });
+      var extra = files.filter(function (s) { return !seen[s]; });
+      if (extra.length) grid.insertAdjacentHTML("beforeend", extra.map(tileHtml).join(""));
+      status.textContent = "В папке assets: " + files.length +
+        (extra.length ? " (новых: " + extra.length + ")" : "");
+    });
+  }
+  load(false);
 }
 
 /* ============================================================
