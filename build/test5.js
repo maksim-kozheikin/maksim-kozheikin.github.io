@@ -4,7 +4,7 @@ const path = require("path");
 const { JSDOM } = require("jsdom");
 
 const ORIG = "/home/claude/work/v4/maksim-kozheikin.github.io-main";
-const SITE = "/home/claude/work/v4/out";
+const SITE = "/home/claude/work/v4/out2";
 const EDITOR = fs.readFileSync(SITE + "/assets/crm-editor.js", "utf8");
 const SITEJS = (()=>{try{return fs.readFileSync(SITE + "/assets/site.js","utf8")}catch(e){return ""}})();
 

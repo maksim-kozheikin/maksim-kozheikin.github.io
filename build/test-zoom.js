@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM, VirtualConsole } = require("jsdom");
 
-const SITE = "/home/claude/work/v4/out";
+const SITE = "/home/claude/work/v4/out2";
 const PAGES = ["case-loko.html", "case-medsi.html", "case-rwb.html",
   "case-sberpravo.html", "case-vtb.html", "case-zephyr.html"];
 
@@ -82,9 +82,12 @@ async function main() {
   const key = k => doc.dispatchEvent(new w.KeyboardEvent("keydown", { key: k, bubbles: true, cancelable: true }));
 
   /* картинке нужен реальный размер — в jsdom его нет */
+  const stage = doc.querySelector(".lightbox-stage");
   Object.defineProperty(img, "offsetWidth", { get: () => 1000, configurable: true });
   Object.defineProperty(img, "offsetHeight", { get: () => 600, configurable: true });
-  img.getBoundingClientRect = () => ({ left: 100, top: 50, width: 1000, height: 600, right: 1100, bottom: 650 });
+  Object.defineProperty(stage, "clientWidth", { get: () => 1024, configurable: true });
+  Object.defineProperty(stage, "clientHeight", { get: () => 620, configurable: true });
+  img.getBoundingClientRect = () => ({ left: 100, top: 90, width: 1000, height: 600, right: 1100, bottom: 690 });
 
   /* сейчас в каждом ряду по одной картинке, поэтому для проверки
      листания собираем ряд из двух — так же, как получится у человека,
@@ -111,7 +114,7 @@ async function main() {
   ok("класс zoomed снят", !lb.classList.contains("zoomed"));
 
   /* колесо */
-  const wheel = (dy, x, y) => lb.dispatchEvent(new w.WheelEvent("wheel",
+  const wheel = (dy, x, y) => stage.dispatchEvent(new w.WheelEvent("wheel",
     { deltaY: dy, clientX: x, clientY: y, bubbles: true, cancelable: true }));
   wheel(-100, 600, 350);
   ok("колесо приближает", scaleOf(img) > 1, scaleOf(img));
@@ -162,11 +165,12 @@ async function main() {
   const pd = (type, x, y) => img.dispatchEvent(new w.MouseEvent(type,
     { bubbles: true, cancelable: true, clientX: x, clientY: y }));
   /* pointer-события в jsdom эмулируем через MouseEvent с нужными полями */
-  const pe = (type, x, y) => {
+  const pe = (type, x, y, id) => {
     const ev = new w.MouseEvent(type, { bubbles: true, cancelable: true, clientX: x, clientY: y });
-    Object.defineProperty(ev, "pointerId", { value: 1 });
+    Object.defineProperty(ev, "pointerId", { value: id === undefined ? 1 : id });
     Object.defineProperty(ev, "pointerType", { value: "mouse" });
-    img.dispatchEvent(ev);
+    Object.defineProperty(ev, "target", { value: stage });
+    stage.dispatchEvent(ev);
   };
   pe("pointerdown", 500, 300);
   pe("pointermove", 560, 340);
@@ -179,7 +183,7 @@ async function main() {
   key("0"); key("+");
   for (let i = 0; i < 20; i++) { pe("pointerdown", 500, 300); pe("pointermove", 5000, 5000); pe("pointerup", 5000, 5000); }
   const far = panOf(img);
-  const maxX = (1000 * scaleOf(img) - w.innerWidth) / 2;
+  const maxX = (1000 * scaleOf(img) - 1024) / 2;
   ok("картинку нельзя утащить за край", far.x <= Math.max(0, maxX) + 1,
     far.x + " при пределе " + Math.round(Math.max(0, maxX)));
 
@@ -191,27 +195,23 @@ async function main() {
   /* свайп на телефоне */
   console.log("\n4. Касания");
   click(row.querySelector(".fig-btn"));
-  const touch = (type, list) => {
-    const ev = new w.Event(type, { bubbles: true, cancelable: true });
-    ev.touches = list; ev.changedTouches = list;
-    lb.dispatchEvent(ev);
-  };
   const n0 = img.getAttribute("src");
-  touch("touchstart", [{ clientX: 300, clientY: 300 }]);
-  touch("touchmove", [{ clientX: 300, clientY: 300 }]);
-  touch("touchend", [{ clientX: 100, clientY: 300 }]);
+  pe("pointerdown", 300, 300); pe("pointermove", 200, 300); pe("pointerup", 100, 300);
   ok("свайп листает картинки", img.getAttribute("src") !== n0,
     n0 + " → " + img.getAttribute("src"));
 
-  touch("touchstart", [{ clientX: 300, clientY: 300 }, { clientX: 500, clientY: 300 }]);
-  touch("touchmove", [{ clientX: 250, clientY: 300 }, { clientX: 650, clientY: 300 }]);
+  /* щипок двумя пальцами */
+  pe("pointerdown", 300, 300, 1);
+  pe("pointerdown", 500, 300, 2);
+  pe("pointermove", 250, 300, 1);
+  pe("pointermove", 650, 300, 2);
   ok("щипок приближает", scaleOf(img) > 1, scaleOf(img));
-  touch("touchend", []);
+  pe("pointerup", 250, 300, 1); pe("pointerup", 650, 300, 2);
 
   const n1 = img.getAttribute("src");
-  touch("touchstart", [{ clientX: 300, clientY: 300 }]);
-  touch("touchend", [{ clientX: 100, clientY: 300 }]);
+  pe("pointerdown", 300, 300); pe("pointermove", 200, 300); pe("pointerup", 100, 300);
   ok("приближённую картинку свайп не листает", img.getAttribute("src") === n1);
+  ok("зато она подвинулась", panOf(img).x !== 0, JSON.stringify(panOf(img)));
 
   d.window.close();
 
