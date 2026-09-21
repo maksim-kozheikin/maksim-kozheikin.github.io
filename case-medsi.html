@@ -2623,14 +2623,23 @@ document.addEventListener("click", e=>{
   if(e.target.closest(".zoom-in")){  setZoom(z*ZSTEP, null, null, true); return; }
   if(e.target.closest(".zoom-out")){ setZoom(z/ZSTEP, null, null, true); return; }
   if(e.target.closest(".zoom-fit")){ resetZoom(true); return; }
-  if(e.target===lbImg){                            // щелчок по картинке приближает
-    if(!dragged && z===ZMIN) setZoom(2.5, e.clientX, e.clientY, true);
+  if(e.target.closest(".lightbox-bar, .lightbox-nav")) return;
+  if(dragged) return;                              // это было перетаскивание, а не щелчок
+
+  /* Попали ли по картинке, решаем по координатам, а не по e.target:
+     во время перетаскивания браузер переадресует щелчок на область
+     показа, и тогда по цели не отличить картинку от фона. */
+  if(onImage(e.clientX, e.clientY)){
+    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
     return;
   }
-  // мимо картинки и мимо кнопок — закрыть
-  if(!dragged && !e.target.closest(".lightbox-bar, .lightbox-nav")) closeLb();
+  // щелчок мимо картинки закрывает — но только пока не приближено
+  if(z===ZMIN) closeLb();
 });
-lbImg.addEventListener("dblclick", e=>{ e.preventDefault(); if(z>ZMIN) resetZoom(true); });
+function onImage(x, y){
+  const r=lbImg.getBoundingClientRect();
+  return x>=r.left && x<=r.right && y>=r.top && y<=r.bottom;
+}
 
 document.addEventListener("keydown", e=>{
   if(!lb.classList.contains("open")) return;
@@ -2672,8 +2681,10 @@ lbStage.addEventListener("pointerdown", e=>{
   dragged=false;
   if(pts.size===1){
     panStart={x:e.clientX, y:e.clientY, tx:tx, ty:ty};
-    try{ lbStage.setPointerCapture(e.pointerId); }catch(err){}
-    if(z>ZMIN) lbStage.classList.add("grabbing");
+    if(z>ZMIN){                                    // захват нужен только для перетаскивания
+      try{ lbStage.setPointerCapture(e.pointerId); }catch(err){}
+      lbStage.classList.add("grabbing");
+    }
   } else if(pts.size===2){
     const m=midOf();
     pinchStart={d:m.d, z:z};

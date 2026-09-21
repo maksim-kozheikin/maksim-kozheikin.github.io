@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { JSDOM, VirtualConsole } = require("jsdom");
 
-const SITE = "/home/claude/work/v4/out2";
+const SITE = "/home/claude/w/out";
 const PAGES = ["case-loko.html", "case-medsi.html", "case-rwb.html",
   "case-sberpravo.html", "case-vtb.html", "case-zephyr.html"];
 
@@ -42,6 +42,7 @@ function open(file) {
   });
 }
 
+function tick() { return new Promise(r => setTimeout(r, 5)); }
 function scaleOf(img) {
   const m = /scale\(([\d.]+)\)/.exec(img.style.transform || "");
   return m ? +m[1] : 1;
@@ -133,11 +134,25 @@ async function main() {
   click(resetBtn);
   ok("«Вписать» возвращает 100% и сдвиг", scaleOf(img) === 1 && panOf(img).x === 0);
 
-  /* щелчок по картинке */
-  img.dispatchEvent(new w.MouseEvent("click", { bubbles: true, cancelable: true, clientX: 600, clientY: 350 }));
-  ok("щелчок по картинке приближает", scaleOf(img) === 2.5, scaleOf(img));
-  img.dispatchEvent(new w.MouseEvent("dblclick", { bubbles: true, cancelable: true }));
-  ok("двойной щелчок возвращает к 100%", scaleOf(img) === 1);
+  /* щелчок по картинке — ровно то, на что жаловались:
+     браузер может отдать щелчок области показа, а не самой картинке */
+  const clickAt = (target, x, y) => target.dispatchEvent(new w.MouseEvent("click",
+    { bubbles: true, cancelable: true, clientX: x, clientY: y }));
+
+  clickAt(stage, 600, 350);           // цель — область, но точка внутри картинки
+  ok("щелчок по картинке НЕ закрывает просмотр", lb.classList.contains("open"));
+  ok("щелчок по картинке немного приближает", Math.abs(scaleOf(img) - 1.4) < .01, scaleOf(img));
+
+  clickAt(img, 600, 350);
+  ok("повторный щелчок по приближённой не дёргает масштаб", Math.abs(scaleOf(img) - 1.4) < .01, scaleOf(img));
+  clickAt(stage, 20, 20);             // мимо картинки, но приближено
+  ok("щелчок мимо приближённой картинки не закрывает", lb.classList.contains("open"));
+
+  click(resetBtn);
+  clickAt(img, 600, 350);
+  ok("щелчок, адресованный самой картинке, тоже приближает", Math.abs(scaleOf(img) - 1.4) < .01);
+  click(resetBtn);
+  ok("«Вписать» возвращает 100%", scaleOf(img) === 1);
 
   /* клавиши */
   key("+"); ok("клавиша + приближает", scaleOf(img) > 1, scaleOf(img));
@@ -186,6 +201,14 @@ async function main() {
   const maxX = (1000 * scaleOf(img) - 1024) / 2;
   ok("картинку нельзя утащить за край", far.x <= Math.max(0, maxX) + 1,
     far.x + " при пределе " + Math.round(Math.max(0, maxX)));
+
+  /* фон рядом с картинкой по-прежнему закрывает */
+  key("0");
+  await tick();                       // настоящий щелчок приходит не в тот же миг, что и перетаскивание
+  clickAt(stage, 20, 20);
+  ok("щелчок по фону на 100% закрывает", !lb.classList.contains("open"));
+  click(row.querySelector(".fig-btn"));
+  key("+"); key("+");
 
   /* закрытие сбрасывает масштаб */
   click(doc.querySelector(".lightbox-close"));
