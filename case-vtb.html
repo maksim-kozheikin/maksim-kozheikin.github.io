@@ -641,7 +641,7 @@ const lb=$("#lightbox"), lbImg=lb.querySelector("img"),
       lbStage=lb.querySelector(".lightbox-stage"),
       lbCap=lb.querySelector(".cap"), lbCount=lb.querySelector(".count"),
       lbLvl=lb.querySelector(".lightbox-zoom .lvl");
-let gallery=[], idx=0;
+let gallery=[], idx=0, dir=1;                   // dir — куда листали в последний раз
 
 /* ——— масштаб ———
    z=1 — картинка вписана в свободную область целиком.
@@ -696,6 +696,7 @@ function showImg(i){
   lb.querySelectorAll(".lightbox-nav").forEach(b=>b.style.display=gallery.length>1?"flex":"none");
   resetZoom(false);                                // новая картинка — снова вписана
 }
+function go(step){ dir=step; showImg(idx+step); }
 /* justified-ряд: ширина пропорциональна картинке → высота одинаковая */
 function justifyFigs(){
   document.querySelectorAll(".figs").forEach(row=>{
@@ -709,13 +710,21 @@ function justifyFigs(){
 }
 
 function openLb(btn){
-  // собираем всю группу картинок этого ряда
-  const row=btn.closest(".figs");
-  gallery=[...row.querySelectorAll(".fig-btn")].map(b=>({
+  /* Листаем все картинки страницы подряд, а не только соседние в блоке.
+     Пустые места и картинки, файл которых не загрузился, пропускаем. */
+  const all=[...document.querySelectorAll("#content .fig-btn")].filter(b=>{
+    if(!b.getAttribute("data-full")) return false;
+    const im=b.querySelector("img");
+    return !(im && im.complete && im.naturalWidth===0);
+  });
+  gallery=all.map(b=>({
     src:b.getAttribute("data-full"),
-    cap:b.closest(".fig").querySelector("figcaption")?.textContent||""
+    cap:b.closest(".fig")?.querySelector("figcaption")?.textContent||""
   }));
-  showImg([...row.querySelectorAll(".fig-btn")].indexOf(btn));
+  const at=all.indexOf(btn);
+  if(at<0) return;                                 // файла этой картинки нет — открывать нечего
+  dir=1;
+  showImg(at);
   lb.classList.add("open");
 }
 function closeLb(){ lb.classList.remove("open"); resetZoom(false); }
@@ -724,20 +733,29 @@ document.addEventListener("click", e=>{
   const btn=e.target.closest(".fig-btn");
   if(btn){ openLb(btn); return; }
   if(!lb.classList.contains("open")) return;
-  if(e.target.closest(".lightbox-nav.prev")){ showImg(idx-1); return; }
-  if(e.target.closest(".lightbox-nav.next")){ showImg(idx+1); return; }
+  if(e.target.closest(".lightbox-nav.prev")){ if(z===ZMIN) go(-1); return; }
+  if(e.target.closest(".lightbox-nav.next")){ if(z===ZMIN) go(1); return; }
   if(e.target.closest(".lightbox-close")){ closeLb(); return; }
   if(e.target.closest(".zoom-in")){  setZoom(z*ZSTEP, null, null, true); return; }
   if(e.target.closest(".zoom-out")){ setZoom(z/ZSTEP, null, null, true); return; }
   if(e.target.closest(".zoom-fit")){ resetZoom(true); return; }
-  if(e.target===lbImg){                            // щелчок по картинке приближает
-    if(!dragged && z===ZMIN) setZoom(2.5, e.clientX, e.clientY, true);
+  if(e.target.closest(".lightbox-bar, .lightbox-nav")) return;
+  if(dragged) return;                              // это было перетаскивание, а не щелчок
+
+  /* Попали ли по картинке, решаем по координатам, а не по e.target:
+     во время перетаскивания браузер переадресует щелчок на область
+     показа, и тогда по цели не отличить картинку от фона. */
+  if(onImage(e.clientX, e.clientY)){
+    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
     return;
   }
-  // мимо картинки и мимо кнопок — закрыть
-  if(!dragged && !e.target.closest(".lightbox-bar, .lightbox-nav")) closeLb();
+  // щелчок мимо картинки закрывает — но только пока не приближено
+  if(z===ZMIN) closeLb();
 });
-lbImg.addEventListener("dblclick", e=>{ e.preventDefault(); if(z>ZMIN) resetZoom(true); });
+function onImage(x, y){
+  const r=lbImg.getBoundingClientRect();
+  return x>=r.left && x<=r.right && y>=r.top && y<=r.bottom;
+}
 
 document.addEventListener("keydown", e=>{
   if(!lb.classList.contains("open")) return;
@@ -748,7 +766,7 @@ document.addEventListener("keydown", e=>{
   if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
     const back=e.key==="ArrowLeft";
     if(z>ZMIN){ e.preventDefault(); tx+=back?60:-60; clampPan(); paintZoom(true); }
-    else showImg(back ? idx-1 : idx+1);
+    else go(back ? -1 : 1);
   }
   if(z>ZMIN && (e.key==="ArrowUp"||e.key==="ArrowDown")){
     e.preventDefault();
@@ -779,8 +797,10 @@ lbStage.addEventListener("pointerdown", e=>{
   dragged=false;
   if(pts.size===1){
     panStart={x:e.clientX, y:e.clientY, tx:tx, ty:ty};
-    try{ lbStage.setPointerCapture(e.pointerId); }catch(err){}
-    if(z>ZMIN) lbStage.classList.add("grabbing");
+    if(z>ZMIN){                                    // захват нужен только для перетаскивания
+      try{ lbStage.setPointerCapture(e.pointerId); }catch(err){}
+      lbStage.classList.add("grabbing");
+    }
   } else if(pts.size===2){
     const m=midOf();
     pinchStart={d:m.d, z:z};
@@ -816,7 +836,7 @@ function endPointer(e){
     // не приближено и был заметный горизонтальный жест — листаем
     if(start && z===ZMIN && gallery.length>1){
       const dx=e.clientX-start.x, dy=e.clientY-start.y;
-      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) showImg(dx>0 ? idx-1 : idx+1);
+      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) go(dx>0 ? -1 : 1);
     }
     setTimeout(()=>{ dragged=false; }, 0);         // чтобы клик после перетаскивания не сработал
   }
@@ -824,6 +844,15 @@ function endPointer(e){
 ["pointerup","pointercancel"].forEach(t=>lbStage.addEventListener(t, endPointer));
 
 addEventListener("resize", ()=>{ if(lb.classList.contains("open")){ clampPan(); paintZoom(false); } });
+
+/* файла нет (например, его удалили из assets) — убираем из листания
+   и сразу показываем следующую картинку в ту же сторону */
+lbImg.addEventListener("error", ()=>{
+  if(!lb.classList.contains("open") || !gallery.length || !lbImg.getAttribute("src")) return;
+  gallery.splice(idx, 1);
+  if(!gallery.length) return closeLb();
+  showImg(dir>0 ? idx : idx-1);
+});
 
 $("#burger").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
 $("#scrim").addEventListener("click",()=>document.body.classList.remove("nav-open"));
