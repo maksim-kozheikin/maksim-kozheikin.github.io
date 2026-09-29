@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@view-transition{navigation:auto}
+
 ::view-transition-old(main-col){animation:fOut .16s ease both}
 ::view-transition-new(main-col){animation:fIn .22s ease both}
 @keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
@@ -275,9 +275,37 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (min-width:901px){.scrim{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
+
+/* === правила разделов и кейсов из Medsi (v4.32) === */
+/* маркер по умолчанию ✦; в «Проблемах» — точка */
+.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6);transform:rotate(45deg)}
+/* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
+.points.inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;max-width:none;margin-top:20px}
+/* длинные пункты — шире колонка, чтобы не превращались в лапшу */
+.points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
+.points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
+.points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.45)}
+/* блок = один раздел */
+/* кейс — без подложки, разделение воздухом */
+/* новый раздел (группа) — большой отступ */
+.block.group{margin-top:200px;position:relative}
+/* цветная полоска-разделитель между разделами */
+.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group:first-of-type::before{display:none}
+.block.group:first-of-type{margin-top:0}
+.block.group .block-title{font-size:var(--h1);letter-spacing:-.03em}
+/* кейс внутри раздела — средний отступ */
+.block{margin-top:140px;scroll-margin-top:20px}
+/* первый кейс сразу под своим разделом — ближе */
+.block.group + .block:not(.group){margin-top:88px}
+/* первый кейс под разделом; группа после группы сохраняет 200px */
+.block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 </style>
+<link rel="stylesheet" href="assets/v4.css">
 </head>
 <body data-mode="work" data-lang="ru">
+<a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
 
 <div class="topbar">
   <a class="back" href="index.html">← <span data-i18n="back"></span></a>
@@ -287,24 +315,27 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <a class="back" href="index.html">← <span data-i18n="back"></span></a>
+    <div class="side-mode">
+      <div class="segmented" role="group" aria-label="Mode">
+          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork"></button>
+          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife"></button>
+        </div>
+      <div class="lang" role="group" aria-label="Language">
+          <button data-lang-btn="en" aria-pressed="false">En</button>
+          <button data-lang-btn="ru" aria-pressed="true">Ру</button>
+        </div>
+    </div>
+    <div class="side-top">
+      <div class="side-name"><a href="index.html" data-v4="name"></a></div>
+      <p class="side-lead" data-v4="lead"></p>
+    </div>
     <nav class="list" id="projects"></nav>
     <div class="side-bottom">
       <div class="side-links">
         <a href="index.html#cv" data-i18n="cv"></a>
         <a href="mailto:maksim.kozheikin@gmail.com">email</a>
-        <a href="https://t.me/" target="_blank" rel="noopener">telegram</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
-      </div>
-      <div class="side-tabs">
-        <div class="segmented" role="group" aria-label="Mode">
-          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork"></button>
-          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife"></button>
-        </div>
-        <div class="lang" role="group" aria-label="Language">
-          <button data-lang-btn="ru" aria-pressed="true">RU</button>
-          <button data-lang-btn="en" aria-pressed="false">EN</button>
-        </div>
+        <a href="https://t.me/maksimdesigner" target="_blank" rel="noopener">tg</a>
+        <a href="https://www.linkedin.com/in/maksim-kozheikin/" target="_blank" rel="noopener">linkedin</a>
       </div>
     </div>
   </aside>
@@ -331,6 +362,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 </div>
 
 <script src="assets/site.js"></script>
+<script src="assets/v4.js"></script>
 <script>
 const CURRENT = "zephyr";
 
@@ -343,12 +375,12 @@ const CURRENT = "zephyr";
   "ru": {
     "back": "Максим Кожейкин",
     "cv": "cv",
-    "modeWork": "Work",
-    "modeLife": "Work + Life",
-    "date": "Апрель 2017 - Декабрь 2018",
+    "modeWork": "Работа",
+    "modeLife": "Работа + Жизнь",
+    "date": "Апрель 2017 — Декабрь 2018",
     "position": "Junior → Middle UX/UI Designer",
     "title": "ZephyrLAB",
-    "desc": "ZephyrLAB — Дизайн студия.",
+    "desc": "ZephyrLAB — Дизайн студия",
     "dutiesLabel": "Обязанности на рабочем месте",
     "dutiesMore": "Посмотреть ещё",
     "achLabel": "Ключевые достижения",
@@ -364,12 +396,14 @@ const CURRENT = "zephyr";
       "В роли начинающего дизайнера мои обязанности включали быстрый поиск референсов, создание первичных дизайн-концепций, прототипирование и поддержка существующих проектов. Мобильные приложения, сайты, адаптивы, crm-системы, интернет магазины, лендинги и тд.",
       "Работая в условиях жестких сроков и находясь в окружении более опытных коллег, я научился эффективно распределять свое время и значительно улучшил свои навыки в дизайне.",
       "С течением времени лид дизайнер начал доверять мне выполнение более сложных задач, которые я успешно завершал — от этапа работы с аналитиком до этапа дизайн-ревью готового продукта.",
-      "Работа в команде показала мне ценность дружелюбной атмосферы для достижения лучших результатов. Также я понял, что обратная связь от лид дизайнера и коллег представляет собой не критику меня, а инструмент для развития и совершенствования моих профессиональных качеств)"
+      "Работа в команде показала мне ценность дружелюбной атмосферы для достижения лучших результатов. Также я понял, что обратная связь от лид дизайнера и коллег представляет собой не критику меня, а инструмент для развития и совершенствования моих профессиональных качеств)",
+      "<b>Сервисы, над которыми я работал</b>",
+      "Мобильные приложения, сайты, админки и лендинги."
     ],
     "blocks": [
       {
         "a": "case1",
-        "title": "Заполнить: название кейса",
+        "title": "Заполнить. Название кейса",
         "lead": "",
         "subs": [
           {
@@ -404,7 +438,7 @@ const CURRENT = "zephyr";
     "date": "April 2017 — December 2018",
     "position": "Junior → Middle UX/UI Designer",
     "title": "ZephyrLAB",
-    "desc": "ZephyrLAB — design studio.",
+    "desc": "ZephyrLAB — design studio",
     "dutiesLabel": "Responsibilities",
     "dutiesMore": "Show more",
     "achLabel": "Key achievements",
@@ -420,12 +454,14 @@ const CURRENT = "zephyr";
       "As a junior designer my duties included quickly finding references, creating first design concepts, prototyping and supporting existing projects. Mobile apps, websites, responsive layouts, CRM systems, online stores, landing pages and so on.",
       "Working under tight deadlines surrounded by more experienced colleagues, I learned to manage my time effectively and significantly improved my design skills.",
       "Over time the design lead began trusting me with more complex tasks, which I completed successfully — from working with the analyst to the design review of the finished product.",
-      "Working in a team showed me the value of a friendly atmosphere for achieving better results. I also realised that feedback from the lead and colleagues is not criticism of me, but a tool for growth."
+      "Working in a team showed me the value of a friendly atmosphere for achieving better results. I also realised that feedback from the lead and colleagues is not criticism of me, but a tool for growth.",
+      "<b>Services I worked on</b>",
+      "Mobile apps, websites, admin panels and landing pages."
     ],
     "blocks": [
       {
         "a": "case1",
-        "title": "To fill: case title",
+        "title": "To fill in. Case title",
         "lead": "",
         "subs": [
           {
@@ -474,7 +510,7 @@ const SHORT_WORDS = [
 
 function fixOrphans(root){
   if(!root) return;
-  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")\\s+", "gi");
+  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")[ \\t\\r\\n]+", "gi");   // после короткого слова — только обычный пробел, иначе цепочки «и по этим» не склеиваются
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
   const nodes = [];
   while(walker.nextNode()) nodes.push(walker.currentNode);
@@ -498,10 +534,10 @@ const d=()=>T[L];
 const $=s=>document.querySelector(s);
 
 function renderNav(){
-  $("#projects").innerHTML = PROJECTS.map(p=>{
+  v4Side(L);
+  $("#projects").innerHTML = v4List(L, p=>{
     const active = p.id===CURRENT;
-    const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
-      <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
+    const row = v4Row(p, L, active);
     if(!active) return row;
 
     /* Подменю собирается из блоков самой страницы: заголовок блока
@@ -521,7 +557,7 @@ function renderNav(){
       return `<a class="cs" href="#${s.a}"><span class="n">${String(n).padStart(2,"0")}</span>${label}</a>`;
     }).join("");
     return row + `<div class="subnav">${links}</div>`;
-  }).join("");
+  });
 }
 
 function renderBlock(b, num){
@@ -532,16 +568,21 @@ function renderBlock(b, num){
 
   const subs = (b.subs||[]).map(s=>{
     if(s.sep) return `<div class="sub"><div class="head-sep"></div></div>`;
-    const cards = s.cards ? `<div class="cols">${s.cards.map(c=>
-      `<div class="card"><h3>${c.h}</h3><p>${c.p}</p></div>`).join("")}</div>` : "";
+    // пункты кейса — список, карточки только если явно указано card:true
+    const cards = s.cards ? (s.card
+      ? `<div class="cols">${s.cards.map(c=>
+          `<div class="card">${c.h?`<h3>${c.h}</h3>`:""}${c.p?`<p>${c.p}</p>`:""}</div>`).join("")}</div>`
+      : `<ul class="points${s.row?" inline":""}${s.wide?" wide":""}${s.mark?" "+s.mark:""}">${s.cards.map(c=>
+          `<li>${c.h?`<b>${c.h}</b>`:""}${c.h&&c.p?" — ":""}${c.p||""}</li>`).join("")}</ul>`) : "";
     const shots = (s.shots||[]).map(row=>
       `<div class="shots">${row.map(x=>`<div class="shot">${x}</div>`).join("")}</div>`).join("");
+
     // реальные изображения — горизонтальный ряд, клик открывает во весь экран
     const imgs = s.imgs
       ? `<div class="figs">${s.imgs.map(im=>
           `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
              <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
-               <img src="${im.src}" alt="${im.cap||""}" loading="lazy">
+               <img src="${im.src}" alt="${im.cap}" loading="lazy">
              </button>
              ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
            </figure>`).join("")}</div>`
@@ -549,22 +590,26 @@ function renderBlock(b, num){
     const results = s.results ? `<div class="cols">${s.results.map(r=>
       `<div class="card metric"><div class="num">${r.n}</div><div class="lbl">${r.l}</div><div class="desc">${r.d}</div></div>`).join("")}</div>` : "";
     return `<div class="sub"${s.gap!=null?` style="margin-top:${s.gap}px"`:""}>
-      <h3 class="sub-title">${s.ti}</h3>
+      ${s.ti ? `<h3 class="sub-title">${s.ti}</h3>` : ""}
       ${s.note?`<p class="sub-note">${s.note}</p>`:""}
       ${cards}${results}${imgs}${shots}
       ${s.caption?`<p class="caption">${s.caption}</p>`:""}
     </div>`;
   }).join("");
 
+  const tags = b.tags
+    ? `<div class="chips" style="margin-top:16px">${b.tags.map(x=>`<span class="chip">${x}</span>`).join("")}</div>`
+    : "";
+
   const gallery = b.gallery
     ? `<div class="gallery">${Array.from({length:b.gallery},(_,i)=>
         `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
 
-  return `<section class="block" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
-    <div class="block-num">${b.num}</div>
+  return `<section class="block${b.group?" group":""}" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
+    ${num ? `<div class="block-num">${num}</div>` : ""}
     <h2 class="block-title">${b.title}</h2>
-    <p class="block-lead">${b.lead}</p>
-    ${meta}${subs}${gallery}
+    ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
+    ${tags}${meta}${subs}${gallery}
   </section>`;
 }
 
@@ -572,11 +617,13 @@ function render(){
   const t=d();
   $("#content").innerHTML = `
     <div id="overview" style="scroll-margin-top:20px"></div>
-    <div class="exp-eyebrow">${t.date}</div>
-    <h1 class="exp-role">${t.position} · <span class="exp-company">${t.title}</span></h1>
-    <p class="exp-summary">${t.desc}</p>
+    ${v4Up(CURRENT, L)}
+    <h1 class="exp-role">${v4Title(t.title, t.position)}</h1>
+    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
+    ${v4HeadChips(v4Entry(CURRENT), L, t.date)}
+    ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
     <div class="duties" id="duties">
-      <div class="duties-inner"><ul>${t.duties.map(b=>`<li>${b}</li>`).join("")}</ul></div>
+      <div class="duties-inner"><ul>${t.duties.map((b,i)=>`<li${i===0 && v4SameText(b, t.navOverview) ? ' class="v4-dup"' : ''}>${b}</li>`).join("")}</ul></div>
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
@@ -587,23 +634,14 @@ function render(){
         n++;
         return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
       }).join(""); })()}
-    <div class="foot">
-      <a href="index.html">← <span>${t.back}</span></a>
-      ${(()=>{
-        /* следующий проект берём из общего списка — руками дублировать нечего */
-        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
-        if(!n) return "";
-        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
-        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
-      })()}
-    </div>`;
+    <div class="foot">${v4Down(CURRENT, L)}</div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");
     if(t[k]!==undefined) el.textContent=t[k];
   });
   const btn=$("#dutiesBtn"), dv=$("#duties");
-  // если текст короткий — кнопка не нужна
-  if(dv.scrollHeight <= 170){ dv.classList.add("open"); btn.classList.add("hidden"); }
+  // кнопка нужна, только если под сгибом прячется заметная часть текста (больше ~120px)
+  if(dv.scrollHeight <= dv.clientHeight + 120){ dv.classList.add("open"); btn.classList.add("hidden"); }
   btn.addEventListener("click",()=>{ dv.classList.add("open"); btn.classList.add("hidden"); });
   fixOrphans(document.querySelector(".main"));
   fixOrphans(document.querySelector(".sidebar"));
@@ -640,6 +678,7 @@ function setMode(m){
   try{localStorage.setItem("mode",m)}catch(e){}
   document.querySelectorAll("[data-mode-btn]").forEach(b=>
     b.setAttribute("aria-pressed",String(b.getAttribute("data-mode-btn")===m)));
+  if(document.getElementById("content") && document.getElementById("content").innerHTML){ renderNav(); initSpy(); }
 }
 document.querySelectorAll("[data-mode-btn]").forEach(b=>
   b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));

@@ -22,7 +22,7 @@ var H = window.CRM_HOST;
 if (!H) return;
 
 var q = new URLSearchParams(location.search);
-var mode = q.has("crm") ? (q.get("crm") || "edit") : (location.hash === "#crm" ? "edit" : "");
+var mode = window.__V4CRM ? "edit" : (q.has("crm") ? (q.get("crm") || "edit") : (location.hash === "#crm" ? "edit" : ""));   /* __V4CRM — только для превью-сборки */
 if (!mode) return;                       /* публичная страница — выходим */
 var PREVIEW = mode === "preview";        /* режим устройства: только показ */
 
@@ -321,6 +321,13 @@ function markItem(el, arrPath, i, type) {
    Повторный проход разделитель «·» уже не трогает. */
 function splitRole(role, pathRole, pathCompany) {
   if (!role) return;
+  /* v4: «Компания · Должность» — должность в своём span */
+  var pt = role.querySelector(".exp-pos-t");
+  if (pt) {
+    markText(pt, pathRole, { line: 1 });
+    markText(role.querySelector(".exp-company"), pathCompany, { line: 1, ph: PH.company });
+    return;
+  }
   var tn = role.querySelector("span[data-crm-t]") ? null :
     [].slice.call(role.childNodes).filter(function (n) {
       return n.nodeType === 3 && n.textContent.trim();
@@ -341,6 +348,7 @@ function annotateNav() {
   var P = ROOTS.PROJECTS && ROOTS.PROJECTS.list;
   if (!list || !P || PREVIEW) return;
   $$(":scope > a.row", list).forEach(function (a) {
+    if (a.classList.contains("v4row")) return;   /* v4: строки строятся из таймлайна */
     var href = a.getAttribute("href");
     var ti = a.querySelector(".row-ti");
     var label = ti ? ti.textContent.replace(/\u00A0/g, " ").trim() : "";
@@ -361,7 +369,35 @@ function annotate() {
   if (PREVIEW) return;
   try { annotateNav(); } catch (e) { console.error("CRM nav:", e); }
   if (H.pageType === "home") return annotateHome();
+  if (H.pageType === "life") return annotateLife();
   return annotateCase();
+}
+
+/* ---------- страница «Работа + Жизнь» (life.html) ---------- */
+function annotateLife() {
+  var root = content(); if (!root) return;
+  markText(root.querySelector(".exp-pos-t"), ["role"], { line: 1, ph: "Должность" });
+  markText(root.querySelector(".v4chips .exp-eyebrow"), ["when"], { line: 1, ph: "Даты" });
+  markText(root.querySelector(".exp-summary"), ["desc"]);
+  $$(":scope > .life-part", root).forEach(function (sec, i) {
+    var P = ["parts", i], kind = sec.getAttribute("data-kind");
+    sec.setAttribute("data-crm-p", JSON.stringify(P));
+    markText(sec.querySelector(".life-h"), P.concat("h"), { line: 1, ph: "Заголовок раздела" });
+    if (kind === "list") $$(":scope > ul.points > li", sec).forEach(function (li, k) {
+      markText(li, P.concat("list", k), { kind: "point", ph: "Пункт" });
+      markItem(li, P.concat("list"), k, "card");
+    });
+    if (kind === "paras") $$(":scope > p.life-text", sec).forEach(function (p, k) {
+      markText(p, P.concat("paras", k), { ph: "Абзац" });
+      markItem(p, P.concat("paras"), k, "card");
+    });
+    if (kind === "text") markText(sec.querySelector("p.life-text"), P.concat("text"));
+    if (kind === "ph") markText(sec.querySelector(".life-ph .ph-t"), P.concat("ph"), { line: 1, ph: "Что заполнить" });
+    if (kind === "links") $$(":scope > ul.life-links > li", sec).forEach(function (li, k) {
+      markText(li.querySelector("a"), P.concat("links", k, "t"), { line: 1, ph: "Ссылка" });
+      markItem(li, P.concat("links"), k, "card");
+    });
+  });
 }
 
 /* ---------- главная страница ---------- */

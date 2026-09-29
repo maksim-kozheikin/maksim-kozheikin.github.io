@@ -11,8 +11,8 @@
     "yr": "2024 — н.в.",
     "href": "case-rwb.html",
     "ti": {
-      "ru": "RWB. Маркетплейс",
-      "en": "RWB. Marketplace"
+      "ru": "Wildberries",
+      "en": "Wildberries"
     }
   },
   {

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
-@view-transition{navigation:auto}
+
 ::view-transition-old(main-col){animation:fOut .16s ease both}
 ::view-transition-new(main-col){animation:fIn .22s ease both}
 @keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
@@ -328,8 +328,10 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
+<link rel="stylesheet" href="assets/v4.css">
 </head>
 <body data-mode="work" data-lang="ru">
+<a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
 
 <div class="topbar">
   <a class="back" href="index.html">← <span data-i18n="back">Максим Кожейкин</span></a>
@@ -339,24 +341,27 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <a class="back" href="index.html">← <span data-i18n="back">Максим Кожейкин</span></a>
+    <div class="side-mode">
+      <div class="segmented" role="group" aria-label="Mode">
+          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork">Work</button>
+          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife">Work + Life</button>
+        </div>
+      <div class="lang" role="group" aria-label="Language">
+          <button data-lang-btn="en" aria-pressed="false">En</button>
+          <button data-lang-btn="ru" aria-pressed="true">Ру</button>
+        </div>
+    </div>
+    <div class="side-top">
+      <div class="side-name"><a href="index.html" data-v4="name"></a></div>
+      <p class="side-lead" data-v4="lead"></p>
+    </div>
     <nav class="list" id="projects"></nav>
     <div class="side-bottom">
       <div class="side-links">
         <a href="index.html#cv" data-i18n="cv">cv</a>
         <a href="mailto:maksim.kozheikin@gmail.com">email</a>
-        <a href="https://t.me/" target="_blank" rel="noopener">telegram</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
-      </div>
-      <div class="side-tabs">
-        <div class="segmented" role="group" aria-label="Mode">
-          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork">Work</button>
-          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife">Work + Life</button>
-        </div>
-        <div class="lang" role="group" aria-label="Language">
-          <button data-lang-btn="ru" aria-pressed="true">RU</button>
-          <button data-lang-btn="en" aria-pressed="false">EN</button>
-        </div>
+        <a href="https://t.me/maksimdesigner" target="_blank" rel="noopener">tg</a>
+        <a href="https://www.linkedin.com/in/maksim-kozheikin/" target="_blank" rel="noopener">linkedin</a>
       </div>
     </div>
   </aside>
@@ -383,6 +388,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 </div>
 
 <script src="assets/site.js"></script>
+<script src="assets/v4.js"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "sol1a": "assets/sberpravo-sol1a.webp",
@@ -415,12 +421,12 @@ const CURRENT = "sberpravo";
   "ru": {
     "back": "Максим Кожейкин",
     "cv": "cv",
-    "modeWork": "Work",
-    "modeLife": "Work + Life",
+    "modeWork": "Работа",
+    "modeLife": "Работа + Жизнь",
     "date": "Февраль 2021 — Апрель 2022",
-    "position": "Senior → Lead UX/UI Designer",
+    "position": "Lead UX/UI Designer",
     "title": "СберПраво",
-    "desc": "СберПраво — онлайн-сервис юридической помощи. Продукт представлен на платформах: веб-сайт с адаптивным дизайном и мобильные приложения для iOS и Android. В нём несколько ролей: сторона заказчика, сторона исполнителя и сторона администратора.",
+    "desc": "СберПраво — онлайн-сервис юридической помощи",
     "dutiesLabel": "Обязанности на рабочем месте",
     "dutiesMore": "Посмотреть ещё",
     "achLabel": "Ключевые достижения",
@@ -443,14 +449,16 @@ const CURRENT = "sberpravo";
       }
     ],
     "duties": [
-      "<b>Обязанности и достижения как Lead UX/UI Designer<\/b>",
+      "<b>Обязанности и достижения как Senior UX/UI Designer</b>",
+      "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
+      "Создал дизайн-систему для дальнейшего масштабирования продукта.",
+      "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы.",
+      "<b>Обязанности и достижения как Lead UX/UI Designer</b>",
       "К моим обязанностям добавилось проведение исследований, результаты которых я представил в портфолио в виде кейсов. Занимался менторством одного дизайнера, распределял задачи и проводил ревью выполненных работ.",
       "Активно участвовал в планировании продукта, определении ключевых потребностей пользователей и бизнес-целей. Настроил тесное взаимодействие между дизайном и разработкой для корректной реализации дизайна. Подготавливал презентации с результатами работы для бизнеса и коллег по команде.",
       "Во время работы нам успешно удалось запустить продукт, получив 10 тысяч заказов. Мы также собрали обратную связь и приступили к исправлению ошибок.",
-      "<b>Обязанности и достижения как Senior UX/UI Designer<\/b>",
-      "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
-      "Создал дизайн-систему для дальнейшего масштабирования продукта.",
-      "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы."
+      "<b>Сервисы, над которыми я работал</b>",
+      "Веб, iOS и Android. Профиль заказчика, исполнителя и админа."
     ],
     "blocks": [
       {
@@ -490,7 +498,7 @@ const CURRENT = "sberpravo";
             "card": false
           },
           {
-            "note": "<span style=\"font-size:16.32px;\"><b>Цели<\/b><\/span>",
+            "note": "<b>Цели</b>",
             "cards": [
               {
                 "h": "",
@@ -507,7 +515,7 @@ const CURRENT = "sberpravo";
             ]
           },
           {
-            "note": "<span style=\"font-size:16.32px;\"><b>Гипотезы<\/b><\/span>",
+            "note": "<b>Гипотезы</b>",
             "cards": [
               {
                 "h": "",
@@ -525,7 +533,7 @@ const CURRENT = "sberpravo";
           },
           {
             "ti": "Исследование",
-            "note": "Прежде чем менять меню, хотел понять, где у людей в голове лежат разделы. Выписал все пункты и действия на карточки, перемешал и попросил коллег разложить их по важности.<br><br>Это были коллеги, а не юристы, поэтому относился к результату как к быстрой проверке, а не как к истине.",
+            "note": "Прежде чем менять меню, я хотел понять, какие разделы и действия важнее оставить на виду. Выписал все пункты на карточки, перемешал и попросил коллег разложить их по важности",
             "imgs": [
               {
                 "src": "assets/sberpravo-menu-cards.png",
@@ -569,11 +577,15 @@ const CURRENT = "sberpravo";
             "cards": [
               {
                 "h": "",
-                "p": "Сначала хотел просто оставить меню слева и раскрыть его, чтобы подписи было видно всегда. Собрал этот вариант, и он не сработал. Свёрнутое меню: снова одни иконки. Раскрытое либо наезжало на рабочую область, либо сдвигало её вбок. А ширина на этом экране важна, её хочет чат"
+                "p": "В интерфейсе юриста меню находилось слева. В свёрнутом виде были видны только иконки, по которым сложно было понять, где нужный раздел. Приходилось сначала открывать меню и читать подписи. Раскрытая панель при этом закрывала часть рабочего экрана"
               },
               {
                 "h": "",
-                "p": "С верхним меню этой проблемы нет. Оно не занимает ширину и не двигает контент. До любого раздела один клик, подписи видно всегда. Плюс оно одинаково подходит и юристу, и клиенту, поэтому разработка сделала один компонент вместо двух"
+                "p": "Я попробовал сделать так, чтобы меню сдвигало содержимое, а не перекрывало его. Текст оставался виден, но чат становился слишком узким. Постоянно держать меню открытым тоже не получалось"
+              },
+              {
+                "h": "",
+                "p": "В итоге я перенёс меню наверх. Названия разделов теперь видны сразу, а чат сохраняет всю ширину экрана. В интерфейсе клиента бокового меню не было, поэтому верхнее расположение позволило использовать одинаковую сетку и один компонент навигации для обеих ролей. На узких экранах пункты собираются под кнопку меню"
               }
             ],
             "imgs": [
@@ -585,16 +597,7 @@ const CURRENT = "sberpravo";
           },
           {
             "ti": "",
-            "cards": [
-              {
-                "h": "",
-                "p": "Верхнее меню занимает место сверху, а оно нужно и чату. Выбрал так специально. На этом экране ширина важнее высоты, а полоса меню тонкая и не двигается, в отличие от чата"
-              },
-              {
-                "h": "",
-                "p": "На узких экранах пункты прячутся под кнопку меню, как это обычно и делают"
-              }
-            ],
+            "cards": [],
             "full": true,
             "imgs": [
               {
@@ -604,19 +607,11 @@ const CURRENT = "sberpravo";
             ]
           },
           {
-            "ti": "Проверил на настоящих юристах",
+            "ti": "Перед запуском я показал новый экран юристам",
             "cards": [
               {
                 "h": "",
-                "p": "Card sorting был на коллегах, поэтому перед релизом я проверил новый экран на живых юристах"
-              },
-              {
-                "h": "",
-                "p": "Давал им обычные задачи. Найти заказ, открыть документ, ответить клиенту"
-              },
-              {
-                "h": "",
-                "p": "Смотрел, где они спотыкаются, и правил до запуска, а не по жалобам после"
+                "p": "Попросил их найти заказ, открыть документ и ответить клиенту. Смотрел, где они останавливаются или ищут нужное действие, и по этим наблюдениям внёс правки до запуска"
               }
             ]
           },
@@ -625,11 +620,7 @@ const CURRENT = "sberpravo";
             "cards": [
               {
                 "h": "",
-                "p": "Навигацию делал как систему: Web, iPad и iOS, для юриста и клиента, на одной модели и общих компонентах"
-              },
-              {
-                "h": "",
-                "p": "Так стороны меньше расходятся и дешевле поддерживаются"
+                "p": "Для веба, iPad и iOS я использовал общую модель навигации и компоненты для юриста и клиента. Так интерфейсы остаются согласованными, а изменения проще вносить и поддерживать"
               }
             ],
             "full": true,
@@ -680,7 +671,7 @@ const CURRENT = "sberpravo";
         "subs": [
           {
             "ti": "Контекст",
-            "note": "SberPravo это сервис, где человек находит юриста онлайн. Клиент ищет услугу в каталоге и доходит до поиска исполнителя. Путь был длинным, и люди терялись по дороге."
+            "note": "СберПраво это сервис, где человек находит юриста онлайн. Клиент ищет услугу в каталоге и доходит до поиска исполнителя. Путь был длинным, и люди терялись по дороге."
           },
           {
             "ti": "Проблемы",
@@ -751,7 +742,7 @@ const CURRENT = "sberpravo";
                 "cap": "Исследование"
               }
             ],
-            "note": "<b>Исследование<\/b>"
+            "note": "<b>Исследование</b>"
           }
         ]
       },
@@ -875,7 +866,7 @@ const CURRENT = "sberpravo";
             ]
           },
           {
-            "ti": "Дизайн: до и после",
+            "ti": "Дизайн до и после",
             "big": true,
             "full": true,
             "imgs": [
@@ -930,7 +921,7 @@ const CURRENT = "sberpravo";
         "subs": [
           {
             "ti": "Контекст",
-            "note": "Лендинг это вход в SberPravo. Отсюда человек попадает в каталог и дальше к поиску исполнителя. Часть людей терялась уже на входе."
+            "note": "Лендинг это вход в СберПраво. Отсюда человек попадает в каталог и дальше к поиску исполнителя. Часть людей терялась уже на входе."
           },
           {
             "ti": "Проблема",
@@ -1025,7 +1016,7 @@ const CURRENT = "sberpravo";
               },
               {
                 "h": "",
-                "p": "Добавил подсказки с примерами: один клик заполняет строку и сокращает время до целевого действия"
+                "p": "Добавил подсказки с примерами. Один клик заполняет строку и сокращает время до целевого действия"
               },
               {
                 "h": "",
@@ -1044,11 +1035,11 @@ const CURRENT = "sberpravo";
             "cards": [
               {
                 "h": "",
-                "p": "Тепловые карты показали приоритет каталога над подписками. Это стало обоснованием на данных для поднятия блока наверх: улучшена видимость критического пути"
+                "p": "Тепловые карты показали приоритет каталога над подписками. Это стало обоснованием на данных, чтобы поднять блок наверх. Так критический путь стал заметнее"
               },
               {
                 "h": "",
-                "p": "Увеличил иконки и области клика карточек: согласно закону Фиттса, это упрощает навигацию"
+                "p": "Увеличил иконки и области клика карточек. По закону Фиттса это упрощает навигацию"
               },
               {
                 "h": "",
@@ -1089,8 +1080,80 @@ const CURRENT = "sberpravo";
               },
               {
                 "h": "",
-                "p": "Конверсия на следующих этапах воронки не просела: новый опыт успешно интегрирован без разрушения привычных сценариев"
+                "p": "Конверсия на следующих этапах воронки не просела, значит, новый опыт встроился и не сломал привычные сценарии"
               }
+            ]
+          }
+        ]
+      },
+      {
+        "a": "app",
+        "group": true,
+        "title": "Приложение",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "shots": [
+              [
+                "Макет"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "a": "account",
+        "group": true,
+        "title": "Личный кабинет",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "Заполнить"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "shots": [
+              [
+                "Макет"
+              ]
             ]
           }
         ]
@@ -1104,12 +1167,7 @@ const CURRENT = "sberpravo";
           {
             "ti": "",
             "note": "",
-            "imgs": [
-              {
-                "src": "",
-                "cap": ""
-              }
-            ]
+            "imgs": []
           }
         ]
       }
@@ -1121,9 +1179,9 @@ const CURRENT = "sberpravo";
     "modeWork": "Work",
     "modeLife": "Work + Life",
     "date": "Feb 2021 — Apr 2022",
-    "position": "Senior → Lead UX/UI Designer",
+    "position": "Lead UX/UI Designer",
     "title": "SberPravo",
-    "desc": "An online legal service where people find a lawyer and solve their problem online. It runs on responsive web plus iOS and Android apps, and has three roles: client, professional and admin.",
+    "desc": "SberPravo — an online legal service",
     "dutiesLabel": "Responsibilities",
     "dutiesMore": "Show more",
     "achLabel": "Key achievements",
@@ -1146,14 +1204,16 @@ const CURRENT = "sberpravo";
       }
     ],
     "duties": [
-      "<b>Responsibilities and achievements as Lead UX/UI Designer<\/b>",
+      "<b>Responsibilities and achievements as Senior UX/UI Designer</b>",
+      "Grew the product across all platforms and shaped design solutions together with the design lead.",
+      "Built a design system so the product could scale further.",
+      "Created a user flow map. Analysts found errors faster, new colleagues understood the logic of the system, and developers could estimate upcoming work more easily.",
+      "<b>Responsibilities and achievements as Lead UX/UI Designer</b>",
       "Research was added to my duties — the results are presented below as cases. I mentored a designer, distributed tasks and ran reviews of finished work.",
       "Took an active part in product planning — defining key user needs and business goals. Set up close collaboration between design and development so designs shipped as intended, and prepared result presentations for the business and the team.",
       "During my time on the product we launched it and reached 10,000 orders. We also collected user feedback and started fixing the issues it surfaced.",
-      "<b>Responsibilities and achievements as Senior UX/UI Designer<\/b>",
-      "Grew the product across all platforms and shaped design solutions together with the design lead.",
-      "Built a design system so the product could scale further.",
-      "Created a user flow map: analysts found errors faster, new colleagues understood the logic of the system, and developers could estimate upcoming work more easily."
+      "<b>Services I worked on</b>",
+      "Web, iOS and Android. Client, contractor and admin profiles."
     ],
     "blocks": [
       {
@@ -1193,42 +1253,42 @@ const CURRENT = "sberpravo";
             "note": "I ran five interviews to understand what was going wrong, and saw three recurring problems."
           },
           {
-            "note": "Текст",
+            "note": "<b>Goals</b>",
             "cards": [
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "Reduce support requests about navigation"
               },
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "Speed up access to frequent sections"
               },
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "Keep checkout intact, it is where the money is. This is a safeguard"
               }
             ]
           },
           {
-            "note": "Текст",
+            "note": "<b>Hypotheses</b>",
             "cards": [
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "If the chat stays on screen next to the order details, there will be fewer switches"
               },
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "If menu labels are always visible, the lawyer will stop opening the menu to decode icons"
               },
               {
                 "h": "",
-                "p": "Пункт"
+                "p": "A top menu beats a side one, it does not take the width the chat needs"
               }
             ]
           },
           {
             "ti": "I checked the structure",
-            "note": "Before changing the menu, I wanted to understand where people keep the sections in their heads. I wrote every item and action on cards, shuffled them and asked colleagues to sort them by importance.<br><br>These were colleagues, not lawyers, so I treated the result as a quick check, not the truth.",
+            "note": "Before changing the menu, I wanted to understand which sections and actions matter most to keep in view. I wrote every item on cards, shuffled them and asked colleagues to sort them by importance",
             "imgs": [
               {
                 "src": "assets/sberpravo-menu-cards.png",
@@ -1272,11 +1332,15 @@ const CURRENT = "sberpravo";
             "cards": [
               {
                 "h": "",
-                "p": "At first I just wanted to keep the menu on the left and expand it so the labels were always visible. I built that variant and it didn't work. Collapsed, the menu was icons only again. Expanded, it either overlapped the work area or pushed it aside. And width matters on this screen — the chat wants it"
+                "p": "In the lawyer’s interface the menu was on the left. Collapsed, it showed only icons, which made it hard to tell where the needed section was. You had to open the menu first and read the labels, and the expanded panel covered part of the workspace"
               },
               {
                 "h": "",
-                "p": "The top menu doesn't have this problem. It doesn't take up width and doesn't move the content. Any section is one click away, and the labels are always visible. Plus it fits both the lawyer and the client equally, so engineering built one component instead of two"
+                "p": "I tried making the menu push the content instead of covering it. The text stayed visible, but the chat became too narrow. Keeping the menu permanently open didn’t work either"
+              },
+              {
+                "h": "",
+                "p": "In the end I moved the menu to the top. Section names are now visible at once, and the chat keeps the full screen width. The client’s interface had no side menu, so the top position let both roles share the same grid and a single navigation component. On narrow screens the items collapse under a menu button"
               }
             ],
             "imgs": [
@@ -1288,16 +1352,7 @@ const CURRENT = "sberpravo";
           },
           {
             "ti": "",
-            "cards": [
-              {
-                "h": "",
-                "p": "Now the downside. The top menu takes up space at the top, and the chat needs that too. I chose it deliberately. On this screen width matters more than height, and the menu bar is thin and doesn't move, unlike the chat"
-              },
-              {
-                "h": "",
-                "p": "On narrow screens the items hide under a menu button, the way it's usually done. Lawyers mostly work from a computer anyway"
-              }
-            ],
+            "cards": [],
             "full": true,
             "imgs": [
               {
@@ -1307,19 +1362,11 @@ const CURRENT = "sberpravo";
             ]
           },
           {
-            "ti": "I tested it with real lawyers",
+            "ti": "Before launch I showed the new screen to lawyers",
             "cards": [
               {
                 "h": "",
-                "p": "Card sorting was on colleagues, so before release I tested the new screen with real lawyers"
-              },
-              {
-                "h": "",
-                "p": "I gave them ordinary tasks. Find an order, open a document, reply to the client"
-              },
-              {
-                "h": "",
-                "p": "I watched where they stumbled and fixed it before launch, not from complaints afterwards"
+                "p": "I asked them to find an order, open a document and reply to a client. I watched where they paused or searched for the right action, and made changes based on these observations before launch"
               }
             ]
           },
@@ -1328,11 +1375,7 @@ const CURRENT = "sberpravo";
             "cards": [
               {
                 "h": "",
-                "p": "I designed the navigation as a system: Web, iPad and iOS, for the lawyer and the client — on one model and shared components"
-              },
-              {
-                "h": "",
-                "p": "This way the two sides diverge less and are cheaper to maintain"
+                "p": "For web, iPad and iOS I used a shared navigation model and components for both the lawyer and the client. This keeps the interfaces consistent and makes changes easier to ship and maintain"
               }
             ],
             "full": true,
@@ -1382,8 +1425,8 @@ const CURRENT = "sberpravo";
         "lead": "",
         "subs": [
           {
-            "ti": "Подзаголовок",
-            "note": "Текст"
+            "ti": "Context",
+            "note": "SberPravo is a service where people find a lawyer online. A client looks for a service in the catalogue and gets to choosing a lawyer. The path was long, and people got lost along the way."
           },
           {
             "ti": "Problems",
@@ -1457,7 +1500,7 @@ const CURRENT = "sberpravo";
                 "cap": "Research"
               }
             ],
-            "note": "<b>Research<\/b>"
+            "note": "<b>Research</b>"
           }
         ]
       },
@@ -1581,7 +1624,7 @@ const CURRENT = "sberpravo";
             ]
           },
           {
-            "ti": "Design: before and after",
+            "ti": "Design before and after",
             "big": true,
             "full": true,
             "imgs": [
@@ -1635,8 +1678,8 @@ const CURRENT = "sberpravo";
         "lead": "",
         "subs": [
           {
-            "ti": "Подзаголовок",
-            "note": "Текст"
+            "ti": "Context",
+            "note": "The landing page is the entry point to SberPravo. From here people go to the catalogue and on to choosing a lawyer. Some got lost right at the entrance."
           },
           {
             "ti": "Hypotheses",
@@ -1693,12 +1736,7 @@ const CURRENT = "sberpravo";
                 "p": "The input field should match users' mental models — with dynamic suggestions and the option to submit the query directly"
               }
             ],
-            "imgs": [
-              {
-                "src": "",
-                "cap": ""
-              }
-            ]
+            "imgs": []
           }
         ]
       },
@@ -1754,7 +1792,7 @@ const CURRENT = "sberpravo";
               },
               {
                 "h": "",
-                "p": "I enlarged the cards' icons and hitboxes: per Fitts's law, this simplifies navigation"
+                "p": "I enlarged the cards' icons and hitboxes. Per Fitts's law, this simplifies navigation"
               },
               {
                 "h": "",
@@ -1802,6 +1840,78 @@ const CURRENT = "sberpravo";
         ]
       },
       {
+        "a": "app",
+        "group": true,
+        "title": "App",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill in"
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill in"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "shots": [
+              [
+                "Screen"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "a": "account",
+        "group": true,
+        "title": "Account",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill in"
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "",
+                "p": "To fill in"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "shots": [
+              [
+                "Screen"
+              ]
+            ]
+          }
+        ]
+      },
+      {
         "a": "screens",
         "group": true,
         "title": "Screens",
@@ -1810,12 +1920,7 @@ const CURRENT = "sberpravo";
           {
             "ti": "",
             "note": "",
-            "imgs": [
-              {
-                "src": "",
-                "cap": ""
-              }
-            ]
+            "imgs": []
           }
         ]
       }
@@ -1843,7 +1948,7 @@ const SHORT_WORDS = [
 
 function fixOrphans(root){
   if(!root) return;
-  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")\\s+", "gi");
+  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")[ \\t\\r\\n]+", "gi");   // после короткого слова — только обычный пробел, иначе цепочки «и по этим» не склеиваются
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
   const nodes = [];
   while(walker.nextNode()) nodes.push(walker.currentNode);
@@ -1867,10 +1972,10 @@ const d=()=>T[L];
 const $=s=>document.querySelector(s);
 
 function renderNav(){
-  $("#projects").innerHTML = PROJECTS.map(p=>{
+  v4Side(L);
+  $("#projects").innerHTML = v4List(L, p=>{
     const active = p.id===CURRENT;
-    const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
-      <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
+    const row = v4Row(p, L, active);
     if(!active) return row;
 
     /* Подменю собирается из блоков самой страницы: заголовок блока
@@ -1886,11 +1991,11 @@ function renderNav(){
     const links = items.map(s=>{
       const label = typeof s.ti === "string" ? s.ti : s.ti[L];
       if(s.ov) return `<a class="grp" href="#${s.a}">${label}</a>`;
-      if(s.group){ if(s.a==="screens") return `<a class="grp" href="#${s.a}">${label}</a>`; g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
+      if(s.group){ g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
       return `<a class="cs" href="#${s.a}">${label}</a>`;
     }).join("");
     return row + `<div class="subnav">${links}</div>`;
-  }).join("");
+  });
 }
 
 
@@ -1984,11 +2089,13 @@ function render(){
   const t=d();
   $("#content").innerHTML = `
     <div id="overview" style="scroll-margin-top:20px"></div>
-        <div class="exp-eyebrow">${t.date}</div>
-    <h1 class="exp-role">${t.position} · <span class="exp-company">${t.title}</span></h1>
-    <p class="exp-summary">${t.desc}</p>
+    ${v4Up(CURRENT, L)}
+    <h1 class="exp-role">${v4Title(t.title, t.position)}</h1>
+    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
+    ${v4HeadChips(v4Entry(CURRENT), L, t.date)}
+    ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
     <div class="duties" id="duties">
-      <div class="duties-inner"><ul>${t.duties.map(b=>`<li>${b}</li>`).join("")}</ul></div>
+      <div class="duties-inner"><ul>${t.duties.map((b,i)=>`<li${i===0 && v4SameText(b, t.navOverview) ? ' class="v4-dup"' : ''}>${b}</li>`).join("")}</ul></div>
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
@@ -1996,26 +2103,17 @@ function render(){
 
 
     ${(()=>{ let g=0; return t.blocks.map(b=>{
-        if(b.group){ if(b.a==="screens") return renderBlock(b, ""); g++; return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(g).padStart(2,"0")}`); }
+        if(b.group){ g++; return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(g).padStart(2,"0")}`); }
         return renderBlock(b, "");
       }).join(""); })()}
-    <div class="foot">
-      <a href="index.html">← <span>${t.back}</span></a>
-      ${(()=>{
-        /* следующий проект берём из общего списка — руками дублировать нечего */
-        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
-        if(!n) return "";
-        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
-        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
-      })()}
-    </div>`;
+    <div class="foot">${v4Down(CURRENT, L)}</div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");
     if(t[k]!==undefined) el.textContent=t[k];
   });
   const btn=$("#dutiesBtn"), dv=$("#duties");
-  // если текст короткий — кнопка не нужна
-  if(dv.scrollHeight <= 170){ dv.classList.add("open"); btn.classList.add("hidden"); }
+  // кнопка нужна, только если под сгибом прячется заметная часть текста (больше ~120px)
+  if(dv.scrollHeight <= dv.clientHeight + 120){ dv.classList.add("open"); btn.classList.add("hidden"); }
   btn.addEventListener("click",()=>{ dv.classList.add("open"); btn.classList.add("hidden"); });
   fixOrphans(document.querySelector(".main"));
   fixOrphans(document.querySelector(".sidebar"));
@@ -2052,6 +2150,7 @@ function setMode(m){
   try{localStorage.setItem("mode",m)}catch(e){}
   document.querySelectorAll("[data-mode-btn]").forEach(b=>
     b.setAttribute("aria-pressed",String(b.getAttribute("data-mode-btn")===m)));
+  if(document.getElementById("content") && document.getElementById("content").innerHTML){ renderNav(); initSpy(); }
 }
 document.querySelectorAll("[data-mode-btn]").forEach(b=>
   b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));
