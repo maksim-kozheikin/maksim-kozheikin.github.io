@@ -1,0 +1,587 @@
+/* ============================================================
+   v4 — общая левая панель и кнопки (подключается после стилей страницы)
+============================================================ */
+:root{--sidebar-w:clamp(360px,36vw,580px)}
+.sidebar{padding-right:clamp(24px,3vw,48px);gap:22px}
+
+/* кто я */
+.side-top{display:flex;flex-direction:column;gap:14px}
+.side-id{display:flex;align-items:center;gap:14px;width:fit-content}
+.side-id .avatar{width:48px;height:48px;border-radius:50%;background:var(--sel);color:var(--ink);font-size:15px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
+.side-name{font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:-.02em;white-space:nowrap}
+.side-role{margin-top:2px;color:var(--muted);font-weight:500;font-size:var(--small)}
+.side-lead{font-weight:500;font-size:1.05rem;line-height:1.45;letter-spacing:-.005em;max-width:32ch;color:var(--ink)}
+.side-lead b{font-weight:inherit;color:inherit}
+
+/* строки проектов: годы · название + иконка · должность · стрелка */
+.list > a.v4row{align-items:center;padding:11px 2px;gap:10px}
+.v4row .row-yr{flex:0 0 auto;min-width:88px;white-space:nowrap;line-height:1.4;text-align:right}
+.v4row .row-main{display:flex;flex-direction:column;min-width:0;flex:1 1 auto}
+.v4row .row-head{display:flex;align-items:center;gap:8px}
+.v4row .row-ti{font-weight:500;color:var(--ink)}
+.v4row .row-role{color:var(--muted);font-size:var(--small);line-height:1.35;margin-top:2px}
+.row-ico{width:22px;height:22px;border-radius:50%;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  color:#fff;font-size:11px;font-weight:700;line-height:1;overflow:hidden;box-shadow:0 0 0 2px var(--bg)}
+.row-ico img{width:100%;height:100%;object-fit:cover}
+.v4row .row-arr{margin-left:auto;font-size:1.1rem;order:0}
+/* оранжевый только на кнопках — в панели открытый проект выделяется жирным */
+.sidebar a.row:hover .row-ti,.sidebar a.row:hover .row-arr,.sidebar a.row[aria-current="page"] .row-ti,.sidebar a.row[aria-current="page"] .row-arr{color:var(--accent)}
+.sidebar a.row[aria-current="page"] .row-ti{font-weight:600}
+.subnav a:hover,.subnav a.grp:hover,.subnav a.cs:hover{color:var(--accent)}
+.subnav a.active{color:var(--accent);font-weight:600}
+.back:hover{color:var(--ink)}
+
+/* ============================================================
+   КНОПКИ — одна форма на весь сайт (как cv / email / telegram / linkedin)
+============================================================ */
+.side-links a,.segmented button,.lang button,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;width:auto;
+  background:var(--sel);color:var(--accent);border:none;border-radius:999px;box-shadow:none;
+  padding:8px 16px;margin:0;font-family:var(--sans);font-size:var(--text);font-weight:400;line-height:1.3;white-space:nowrap;
+  opacity:1;transition:background .15s,color .15s}
+.side-links a:hover,.segmented button:hover,.lang button:hover,.chip-btn:hover,.duties-more:hover,.dl-btn:hover,
+.foot a:hover,.case-link:hover,.toggle:hover,.back:hover,.v4close:hover{background:var(--accent);color:#fff;opacity:1}
+.segmented button[aria-pressed="true"],.lang button[aria-pressed="true"],.chip-btn[aria-pressed="true"]{background:var(--accent);color:#fff;box-shadow:none}
+.segmented,.lang{display:flex;flex-wrap:wrap;gap:8px;background:none;padding:0;border-radius:0}
+.side-links{display:flex;flex-wrap:wrap;gap:8px}
+.side-tabs{gap:8px}
+/* отступы, которые у этих кнопок были в тексте */
+.duties-more,.case-link,.toggle{margin-top:14px}
+.back{margin-bottom:28px}
+.toggle .chev,.duties-more .chev,.case-link .arr{color:inherit}
+.chips#filters{gap:8px}
+
+/* крестик — выход из кейса на главную */
+.v4close{position:fixed;top:var(--pad);right:var(--pad);z-index:30;width:44px;height:44px;padding:0}
+@media (max-width:900px){.v4close{top:14px;right:calc(var(--pad) + 50px);z-index:41;width:40px;height:40px}}
+
+@view-transition{navigation:none}
+/* ширина скроллбара не меняет раскладку между страницами */
+html{scrollbar-gutter:stable}
+.sidebar{scrollbar-gutter:stable}
+.side-mode{margin-top:-4px}
+.side-bottom{margin-top:auto;gap:14px}
+.sidebar .subnav{padding-left:2px}
+
+/* оранжевый — только на кнопках: в тексте кейсов заменяем на нейтральный */
+.block-num{color:var(--faint)}
+.exp-company{color:inherit}
+.goal{background:var(--sel);color:var(--ink)}
+.case-link{display:flex;width:fit-content}
+@media print{.v4close,.v4step{display:none!important}}
+
+/* ============================================================
+   СВИТЧИ (Work / Work + Life, RU / EN): серая капсула,
+   выбранное — белая капсула внутри. Не оранжевые.
+============================================================ */
+.segmented,.lang{display:inline-flex;flex-wrap:nowrap;gap:0;background:var(--sel);padding:4px;border-radius:999px}
+.segmented button,.lang button,
+.segmented button:hover,.lang button:hover{background:transparent;color:var(--muted);padding:6px 14px;border-radius:999px;font-size:var(--text);box-shadow:none}
+.segmented button:hover,.lang button:hover{color:var(--ink)}
+.segmented button[aria-pressed="true"],.lang button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(20,20,25,.08)}
+
+/* фильтры-табы над плитками пока убраны */
+#filters{display:none!important}
+
+/* контакты и RU/EN — в один ряд */
+.side-bottom{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px}
+.side-bottom .side-links,.side-bottom .side-tabs{display:contents}
+.side-bottom .side-links a{padding:8px 13px}
+.side-bottom .lang button{padding:5px 11px}
+.side-bottom .lang{padding:3px}
+.side-bottom{gap:6px}
+.side-bottom .side-links a{padding:8px 12px}
+.side-bottom .lang{margin-left:auto}
+
+/* ============================================================
+   v4.3
+============================================================ */
+/* имя и текст — без кругляша и должности */
+.side-name{display:block;margin:0}
+.side-name a{color:inherit}
+.side-name a:hover{color:var(--accent)}
+.side-lead{font-weight:400;font-size:var(--text);line-height:1.55;max-width:40ch;color:var(--muted)}
+
+/* строка: стрелка · название · годы */
+.v4row .row-arr{margin-left:0;flex:0 0 auto;width:10px}
+.v4row .row-ti{flex:1 1 auto;min-width:0}
+.v4row .row-yr{margin-left:auto;min-width:0}
+.sidebar .subnav{padding-left:22px}
+
+/* свитчи — оранжевые */
+.segmented button,.lang button,.segmented button:hover,.lang button:hover{color:var(--accent)}
+.segmented button:not([aria-pressed="true"]),.lang button:not([aria-pressed="true"]){opacity:.7}
+.segmented button:not([aria-pressed="true"]):hover,.lang button:not([aria-pressed="true"]):hover{opacity:1}
+.segmented button[aria-pressed="true"],.lang button[aria-pressed="true"]{color:var(--accent)}
+.side-bottom .lang{margin-left:0}
+
+/* шапка кейса: должность · компания / даты · описание */
+.company-logo{display:none}
+.exp-meta{margin-top:10px;color:var(--muted);font-size:var(--text);max-width:62ch}
+.exp-meta .exp-eyebrow,.exp-meta .exp-summary{display:inline;margin:0;font-size:inherit;color:inherit}
+
+/* вверх — к проекту выше, вниз — к следующему */
+.v4step{display:inline-flex;align-items:center;gap:8px;background:var(--sel);color:var(--accent);border-radius:999px;
+  padding:8px 16px;font-size:var(--text);line-height:1.3;transition:background .15s,color .15s}
+.v4step:hover{background:var(--accent);color:#fff}
+.v4up{margin-bottom:28px}
+.foot{justify-content:flex-start}
+
+/* ============================================================
+   v4.4 — текст во всю ширину; свитчи и кнопки одного размера
+============================================================ */
+.side-lead{max-width:none}
+/* одна высота 36px, один шрифт, одни боковые отступы */
+.side-links a,.side-bottom .side-links a{height:36px;padding:0 13px;font-size:var(--text);line-height:1}
+.segmented,.lang,.side-bottom .lang{height:36px;padding:3px;box-sizing:border-box}
+.segmented button,.lang button,.side-bottom .lang button,
+.segmented button:hover,.lang button:hover{height:30px;padding:0 10px;font-size:var(--text);line-height:1}
+
+/* ============================================================
+   v4.5 — таймлайн Work + Life
+============================================================ */
+.v4row .row-main{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;flex:1 1 auto;min-width:0}
+.v4row .row-ti{flex:0 1 auto}
+.v4row .row-yr{align-self:flex-start;padding-top:1px}
+.v4row .row-arr{align-self:flex-start;padding-top:2px}
+.row-tags{display:inline-flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:var(--eyebrow);line-height:1;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.tag-kind{background:var(--sel);color:var(--muted)}
+.tag-tech{box-shadow:inset 0 0 0 1px var(--line);color:var(--muted)}
+.tag-ai{background:var(--ink);color:#fff;font-weight:600;letter-spacing:.02em}
+.list > .v4life{display:flex;gap:10px;padding:11px 2px;border-top:1px solid var(--line)}
+.v4life .row-ti{color:var(--ink)}
+
+/* v4.6 — название, метки и годы в одну строку; длинное название обрезается многоточием */
+.v4row,.list > .v4life{align-items:center}
+.v4row .row-main{flex-wrap:nowrap;align-items:center}
+.v4row .row-ti{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v4row .row-tags{flex:0 0 auto;flex-wrap:nowrap}
+.v4row .row-yr,.v4row .row-arr{align-self:center;padding-top:0}
+.v4row .row-main{flex-direction:row;justify-content:flex-start;gap:8px}
+
+/* v4.7 — «· профиль» текстом, тип — чипсом */
+.row-prof{flex:0 0 auto;color:var(--muted);white-space:nowrap}
+.v4row .row-main{gap:6px}
+.v4row .row-tags{margin-left:4px}
+.v4row .row-ti,.row-prof{line-height:1.35}
+.list > a.v4row,.list > .v4life{min-height:46px;padding-top:9px;padding-bottom:9px}
+
+/* v4.8 — AI серым, ховер на каждой строке (название, год, стрелка) */
+.tag-ai{background:var(--sel);color:var(--muted);font-weight:600}
+.sidebar .v4row:hover .row-ti,.sidebar .v4row:hover .row-yr,.sidebar .v4row:hover .row-arr{color:var(--accent)}
+.sidebar a.row[aria-current="page"] .row-yr{color:var(--accent)}
+.row-yr{transition:color .15s}
+
+/* v4.9 — AI не жирный */
+.tag-ai{font-weight:400;letter-spacing:0}
+
+/* ============================================================
+   v4.10 — строка по варианту 22
+   год (колонка) · название · Профиль … чипсы · стрелка
+============================================================ */
+.list > a.v4row,.list > .v4life{gap:10px;align-items:center}
+.v4row .row-yr{flex:0 0 40px;min-width:0;margin:0;text-align:left;align-self:center;padding:0}
+.v4row .row-main{flex:1 1 auto;min-width:0;display:flex;flex-wrap:nowrap;align-items:center;gap:6px}
+.v4row .row-tags{flex:0 0 auto;margin-left:0}
+.v4row .row-arr{flex:0 0 10px;width:10px;margin:0;text-align:center;align-self:center}
+.v4life .row-arr{opacity:.35;transition:opacity .15s,color .15s}
+.v4life:hover .row-arr{opacity:1}
+.sidebar .subnav{padding-left:52px}
+
+/* v4.11 — шапка кейса: должность · компания / дата / Профиль · что за компания */
+.exp-meta.exp-when{margin-top:10px;color:var(--faint)}
+.exp-when + .exp-meta{margin-top:2px}
+.exp-prof{color:var(--ink)}
+
+/* ============================================================
+   v4.12 — один серый (--muted) для всего второстепенного текста:
+   левая панель (годы, профиль, чипсы, стрелки, структура)
+   и шапка кейса (дата, профиль, описание)
+============================================================ */
+.sidebar .row-yr,.sidebar .row-prof,.sidebar .row-arr,
+.sidebar .tag-kind,.sidebar .tag-ai,.sidebar .side-lead,
+.subnav a,.subnav a.grp,.subnav a.cs,.subnav a.cs .n,
+.exp-meta,.exp-meta.exp-when,.exp-prof,.exp-meta .exp-eyebrow,.exp-meta .exp-summary{color:var(--muted)}
+.v4life .row-arr{opacity:1}
+/* ховер и открытый пункт остаются оранжевыми */
+.sidebar .v4row:hover .row-ti,.sidebar .v4row:hover .row-yr,.sidebar .v4row:hover .row-arr,
+.sidebar a.row[aria-current="page"] .row-ti,.sidebar a.row[aria-current="page"] .row-yr,.sidebar a.row[aria-current="page"] .row-arr,
+.subnav a:hover,.subnav a.grp:hover,.subnav a.cs:hover,.subnav a.active{color:var(--accent)}
+
+/* v4.13 — выбранная строка целиком оранжевая: год, название, профиль, чипсы, стрелка */
+.sidebar a.row[aria-current="page"] .row-prof,
+.sidebar a.row[aria-current="page"] .tag-kind,
+.sidebar a.row[aria-current="page"] .tag-ai{color:var(--accent)}
+
+/* v4.14 — при наведении строка тоже целиком оранжевая */
+.sidebar .v4row:hover .row-prof,
+.sidebar .v4row:hover .tag-kind,
+.sidebar .v4row:hover .tag-ai{color:var(--accent)}
+.row-prof,.tag{transition:color .15s}
+
+/* ============================================================
+   v4.15 — кнопка следующего проекта внизу экрана,
+   на одной линии с кнопками контактов (прилипает к низу)
+============================================================ */
+.v4step{height:36px;padding:0 13px;line-height:1}
+.foot{position:sticky;bottom:var(--pad);z-index:5;margin-top:80px;padding:0;border-top:none;pointer-events:none}
+.foot a{pointer-events:auto;box-shadow:0 0 0 6px var(--bg)}
+@media (max-width:900px){.foot{bottom:16px}}
+
+/* v4.16 — кнопка следующего проекта не прилипает: стоит в конце кейса,
+   а когда долистал до конца, оказывается на линии кнопок контактов */
+.foot{position:static;margin-top:80px;margin-bottom:0;padding:0}
+.foot a{box-shadow:none}
+
+/* v4.17 — крестик того же размера (36px), что кнопка ↑, и на той же высоте */
+.v4close{width:36px;height:36px;top:var(--pad)}
+.v4close svg{width:16px;height:16px}
+
+/* ============================================================
+   v4.18 — ссылки на сайт и Википедию после описания;
+   блоки опыта в cv оформлены как шапка кейса, тем же серым
+============================================================ */
+.v4links{display:inline-flex;align-items:center;gap:4px;margin-left:8px;vertical-align:-3px;white-space:nowrap}
+.v4link{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;color:var(--muted);transition:color .15s,background .15s}
+.v4link:hover{color:var(--accent);background:var(--sel)}
+.exp .exp-meta.exp-when{margin-top:10px}
+.exp .exp-meta{max-width:62ch}
+.v4ext .row-arr{font-size:.9rem}
+
+/* ============================================================
+   v4.19 — значки ссылок (вариант 2г): по линии текста + тултип
+   Значки стоят на базовой линии, как заглавные буквы, —
+   поэтому ровно по строке, в том числе в конце переноса.
+============================================================ */
+.v4links{display:inline;margin-left:6px;white-space:nowrap;vertical-align:baseline}
+.v4link{position:relative;display:inline-block;width:auto;height:auto;padding:0 3px;border-radius:0;background:none;color:var(--muted);line-height:1;vertical-align:baseline}
+.v4link:hover{background:none;color:var(--accent)}
+.v4link svg{display:inline-block;vertical-align:baseline;position:relative;top:1px}
+/* тултип */
+.v4link::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);
+  background:var(--ink);color:var(--bg);font-size:.78rem;line-height:1;white-space:nowrap;padding:6px 9px;border-radius:8px;
+  opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;z-index:10}
+.v4link:hover::after,.v4link:focus-visible::after{opacity:1;transform:translate(-50%,0)}
+@media print{.v4links{display:none}}
+/* точная подгонка: центр значка = центр заглавных букв */
+.v4link:first-child svg{top:.5px}
+
+/* v4.20 — у внешней строки (АссистПРО) та же стрелка ›, что у всех */
+.v4ext .row-arr{font-size:inherit}
+
+/* ============================================================
+   v4.21 — страницы таймлайна (life.html)
+============================================================ */
+.life-part{margin-top:56px}
+.life-h{font-weight:700;font-size:1.25rem;letter-spacing:-.01em;line-height:1.25;margin-bottom:14px}
+.life-text{max-width:62ch}
+.life-ph{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);max-width:62ch}
+.life-part .shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.life-part .shot{aspect-ratio:4/3;border-radius:14px;background:var(--sel);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:var(--small)}
+.life-ai{margin-left:12px;vertical-align:.35em;font-size:.8rem}
+@media (max-width:640px){.life-part .shots{grid-template-columns:1fr 1fr}}
+/* у открытой строки без подменю стрелка остаётся вправо */
+.sidebar a.v4life[aria-current="page"] .row-arr{transform:none}
+
+.v4glue{white-space:nowrap}
+
+/* ============================================================
+   v4.22 — шапка проекта: «Компания · Должность», описание, чипсы
+============================================================ */
+.exp-role{font-weight:500;margin-left:-.045em}          /* оптическая компенсация: крупные буквы стоят ровно по левому краю текста */
+.exp-role .exp-company{color:var(--ink);font-weight:inherit}
+.exp-role .exp-pos{color:var(--muted);font-weight:inherit}
+.exp-meta,.exp .exp-meta{max-width:none;margin-top:12px}
+.v4chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.v4chips .tag{font-size:.8rem;padding:6px 9px}
+.v4chips .exp-eyebrow{color:inherit;font-size:inherit;display:inline}
+/* текст во всю ширину колонки */
+.main-inner{max-width:none}
+.main-inner .section:not(.section-tiles){max-width:none}
+/* страница таймлайна: ссылки */
+.life-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.life-links a{color:var(--ink);border-bottom:1px solid var(--line);transition:color .15s,border-color .15s}
+.life-links a:hover{color:var(--accent);border-color:var(--accent)}
+.life-note{color:var(--muted)}
+.life-links .life-ph{padding:12px 16px}
+
+/* ============================================================
+   v4.23
+   — в левой панели жирность не меняется ни при ховере, ни у выбранного
+   — все заголовки одного размера и жирности с именем слева вверху
+   — подзаголовки внутри текста — того же размера, что текст
+============================================================ */
+.sidebar a.row[aria-current="page"] .row-ti,.sidebar .v4row:hover .row-ti,
+.subnav a.active,.subnav a:hover{font-weight:400}
+.subnav a:hover{padding-left:0}
+
+.exp-role,.exp h3.exp-role,.block-title,.sub-title.sub-title-lg,.life-h,.cv-title,.main-inner .section-head{
+  font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:-.02em;text-transform:none;color:var(--ink)}
+.exp-role{margin-left:-.03em}
+.exp-role .exp-pos{color:var(--muted)}
+
+.sub-title{font-size:var(--text);letter-spacing:0}
+.duties li:has(> b:only-child),.duties li > b:only-child{font-size:var(--text);font-weight:600}
+/* групповые заголовки кейсов тоже как имя */
+.block.group .block-title,.block .block-title{font-size:clamp(1.4rem,1.8vw,1.75rem);letter-spacing:-.02em;line-height:1.15}
+/* текст кейсов — во всю ширину колонки */
+.points,.duties ul,.block-lead,.sub-note,.step-text,.life-text,.life-ph{max-width:none}
+
+/* v4.24 — блоки текста уже на ~20% (80% ширины колонки); картинки — во всю ширину */
+.exp-meta,.duties,.points,.block-lead,.sub-note,.step-text,.life-text,.life-ph,.life-links,.sub-title{max-width:80%}
+@media (max-width:900px){.exp-meta,.duties,.points,.block-lead,.sub-note,.step-text,.life-text,.life-ph,.life-links,.sub-title{max-width:none}}
+
+/* v4.25 — шапка проекта снова как в выбранном варианте:
+   крупная (как раньше), «Компания · Должность» одной средней жирности (500) */
+.exp-role{font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:-.02em;margin-left:-.045em}
+.exp h3.exp-role{font-weight:500;font-size:var(--h2)}
+
+/* ============================================================
+   v4.26 — высокие и не жирные заголовки (как шапка проекта):
+   разделы кейсов (группы), «Обязанности и достижения», имя слева и в cv
+============================================================ */
+.v4-sec,.block.group .block-title,.side-name,.cv-title{
+  font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:-.02em;margin-left:-.045em;color:var(--ink)}
+.v4-sec{margin-top:56px}
+.v4-sec + .duties{margin-top:18px}
+.duties li.v4-dup{display:none}
+.side-name{white-space:nowrap}
+
+/* v4.27 — «Обязанности и достижения» размером с текст, чуть жирнее;
+   заголовки кейсов внутри групп («Единый стиль приложения», «Дискавери») — средней жирности */
+.v4-sec{font-size:var(--text);font-weight:600;line-height:1.5;letter-spacing:0;margin-left:0;margin-top:40px}
+.v4-sec + .duties{margin-top:12px}
+.block:not(.group) .block-title{font-weight:500}
+
+/* ============================================================
+   v4.28 — ТИПОГРАФИЧЕСКАЯ СИСТЕМА
+   6 стилей · 2 жирности (400, 500) · 3 цвета (основной, серый, оранжевый)
+   Display     46 / 500   имя, шапка проекта, заголовки разделов
+   Title       26 / 500   заголовки кейсов внутри раздела, блоки опыта в cv
+   Body        16 / 400   весь текст, панель, кнопки, описания
+   Body strong 16 / 500   подзаголовки внутри текста
+   Small       14 / 400   структура проекта в левой панели
+   Caption     13 / 400   чипсы, «Кейс 01»
+   Display и Title на узких экранах уменьшаются.
+============================================================ */
+:root{
+  --t-display:clamp(32px,3.2vw,46px);
+  --t-title:clamp(22px,1.81vw,26px);
+  --t-body:16px; --t-small:14px; --t-caption:13px;
+  /* старые переменные страниц — на новую шкалу */
+  --h1:var(--t-display); --h2:var(--t-title); --h3:var(--t-body);
+  --text:var(--t-body); --small:var(--t-small); --eyebrow:var(--t-caption);
+  --faint:var(--muted);                                   /* светло-серый убран */
+}
+body{font-size:var(--t-body)}
+
+/* Display */
+.side-name,.cv-title,.exp-role,.block.group .block-title,#cv-view .section-head,.main-inner .section-head{
+  font-size:var(--t-display);font-weight:500;line-height:1.15;letter-spacing:-.02em}
+/* Title */
+.block:not(.group) .block-title,.exp h3.exp-role,.life-h,.sub-title.sub-title-lg{
+  font-size:var(--t-title);font-weight:500;line-height:1.2;letter-spacing:-.01em;margin-left:0}
+/* Body */
+.sidebar .row-yr,.sidebar .row-ti,.sidebar .row-prof,.side-lead,
+.exp-meta,.duties li,.points li,.block-lead,.sub-note,.step-text,.life-text,
+.side-links a,.segmented button,.lang button,.v4step,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back{
+  font-size:var(--t-body)}
+.sidebar .row-ti{font-weight:400}
+/* Body strong */
+.v4-sec,.sub-title,.duties li:has(> b:only-child),.duties li > b,.points li > b{font-size:var(--t-body);font-weight:500;letter-spacing:0}
+/* Small */
+.subnav a,.subnav a.grp,.subnav a.cs,.subnav a.cs .n{font-size:var(--t-small)}
+/* Caption */
+.tag,.v4chips .tag,.block-num{font-size:var(--t-caption);font-weight:400}
+.block-num{color:var(--muted);text-transform:none;letter-spacing:0}
+/* жирности 600/700 больше нигде */
+.subnav a.active,a.row[aria-current="page"] .row-ti{font-weight:400}
+
+/* v4.28 — остатки жирностей 600/700/800 приводим к системе */
+.main-inner b,.main-inner strong,.duties ul li > b,.duties ul li:has(> b:only-child){font-weight:500}
+.metric .num,.metric .lbl{font-weight:500}
+.metric-big .num{font-size:var(--t-title);font-weight:500;letter-spacing:-.01em}
+.metric-big .num-suf{font-size:1em;font-weight:500}
+.metric-big .num-arr{font-weight:400}
+.cv-block h3{font-size:var(--t-body);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
+.tiles .row-ti{font-size:var(--t-title);font-weight:500;letter-spacing:-.01em}
+.tiles .row-yr{font-size:var(--t-small);font-weight:400}
+/* жирность — только 400 и 500: жёстко, поверх старых правил страниц */
+.main-inner b,.main-inner strong,.main-inner h3,.main-inner h4,
+.metric-big .num,.metric-big .num-from,.metric-big .num-to,.metric-big .num-suf{font-weight:500!important}
+.metric-big .num,.metric-big .num-from,.metric-big .num-to{font-size:var(--t-title)!important}
+.metric-big .num-suf{font-size:1em!important}
+.metric-big .num-arr{font-size:var(--t-title)!important;font-weight:400!important}
+.exp-media .cap,.exp-media .yrbig{font-weight:500}
+.sub-note span,.sub-note b{font-size:inherit!important}
+
+/* v4.29 — Work / Work + Life наверху; тексты под именем лежат друг на друге, высота блока не меняется */
+.side-lead{display:grid}
+.side-lead .v4l{grid-area:1/1;visibility:hidden}
+.side-lead .v4l.on{visibility:visible}
+.side-mode{margin-top:0}
+
+/* ============================================================
+   v4.30 — верхняя линия: Work / Work + Life и en / ru слева,
+   ↑ и ✕ справа — на одной высоте; имя слева и заголовок страницы
+   справа — на одной строке
+============================================================ */
+.side-mode{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}   /* 20 (gap панели) + 8 = 28, как под кнопкой ↑ */
+.sidebar{padding-top:var(--pad)}
+.main{padding-top:var(--pad)}
+.v4up{margin-bottom:28px}
+.exp-role{margin-top:0}
+.cv-view .back{margin-bottom:28px}
+.cv-title{margin-top:0}
+.back{height:36px;padding:0 13px}
+
+/* v4.31 — под текстом всегда заложено минимум три строки */
+.side-lead{min-height:calc(1.55em * 3)}
+
+/* v4.33 — «сейчас»: мигающий кружок в чипсе с датой текущей работы */
+.v4chips .tag.is-live{display:inline-flex;align-items:center;gap:6px}
+.v4live{position:relative;width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 7px}
+.v4live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--accent);animation:v4pulse 1.6s ease-out infinite}
+@keyframes v4pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.v4live::after{animation:none}}
+
+/* v4.34 — номер кейса в структуре слева тоже оранжевый: при наведении и у выбранного */
+.subnav a.cs:hover .n,.subnav a.cs.active .n,.subnav a.active .n{color:var(--accent)}
+
+.life-text + .life-text{margin-top:12px}
+
+/* v4.35 — cv: страница PDF и кнопка «Скачать PDF» */
+.cv-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.cv-top .back{margin-bottom:0}
+.cv-sheet{display:block;max-width:820px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(20,20,25,.04),0 8px 30px rgba(20,20,25,.06)}
+.cv-sheet img{display:block;width:100%;height:auto}
+.dl-btn{height:36px;padding:0 13px}
+
+/* v4.36 — призыв над кнопками контактов */
+.side-cta{flex:0 0 100%;color:var(--ink);font-size:var(--t-body);margin:0 0 4px}
+
+/* v4.46 — контакты снова обычные: не закреплены, без подложки */
+
+
+
+
+/* v4.41 — кружок «сейчас» у Wildberries:
+   Work — сразу после года, название сдвинуто на ширину кружка;
+   Work + Life — внутри чипса «Работа» */
+.v4dotcol{flex:0 0 7px;display:flex;align-items:center;justify-content:center;margin-right:-2px}
+.row-tags .tag.is-live{display:inline-flex;align-items:center;gap:5px}
+.row-tags .tag.is-live .v4live{width:6px;height:6px;flex-basis:6px}
+
+/* v4.42 — в Work кружок у стрелки; место под него есть у всех строк, стрелки в одну вертикаль */
+.v4enddot{flex:0 0 7px;width:7px;height:7px;display:flex;align-items:center;justify-content:center;align-self:center;margin-right:-2px}
+
+/* v4.43 — стрелка строки: векторная, ровно по центру строки */
+.v4row .row-arr{display:flex;align-items:center;justify-content:center;width:10px;height:10px;flex:0 0 10px;align-self:center;padding:0;font-size:0;line-height:0}
+.v4row .row-arr svg{display:block}
+.v4enddot{margin-right:2px}   /* зазор кружок — стрелка: 12px */
+
+/* v4.45 — плитки на главной: пока нет обложек, все плитки серые, без цветных градиентов */
+.tiles > a.row{background:var(--sel)!important;color:var(--ink)}
+.tiles > a.row .row-ti{color:var(--ink);text-shadow:none}
+.tiles > a.row .row-yr{color:var(--muted)}
+.tiles > a.row .row-arr{background:var(--surface);color:var(--ink)}
+.tiles > a.row .chip-tag{border-color:var(--line);color:var(--muted)}
+.tiles > a.row::after{display:none}
+
+
+/* ============================================================
+   v4.49 — мозаика «Работа + Жизнь»: 12 колонок, квадратные клетки,
+   размеры и картинки — assets/v4-tiles-data.js
+============================================================ */
+.section-tiles{container-type:inline-size}
+.tiles.mosaic{--mg:clamp(10px,1.2vw,16px);gap:var(--mg);grid-template-columns:repeat(12,minmax(0,1fr));
+  grid-auto-rows:calc((100cqw - 11 * var(--mg)) / 12);grid-auto-flow:dense}
+.m-tile{position:relative;display:block;border-radius:16px;overflow:hidden;background:var(--sel);color:var(--ink);isolation:isolate;
+  grid-column:span var(--w);grid-row:span var(--h)}
+.m-img{position:absolute;inset:0;z-index:-1}
+.m-img img{width:100%;height:100%;object-fit:cover;display:block}
+.m-img.m-contain{inset:6%}
+.m-img.m-contain img{object-fit:contain}
+.m-tile .row-ti{position:absolute;left:14px;right:52px;bottom:12px;font-size:var(--t-body);font-weight:500;line-height:1.25;color:var(--ink)}
+.m-tile .row-yr{position:absolute;top:12px;right:14px;font-size:var(--t-small);color:var(--muted)}
+.m-tile .row-arr{position:absolute;right:12px;bottom:10px;width:32px;height:32px;border-radius:50%;background:var(--surface);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-size:1rem}
+@media (hover:hover){
+  .m-tile .row-ti,.m-tile .row-yr,.m-tile .row-arr{opacity:0;transition:opacity .2s}
+  .m-tile:hover .row-ti,.m-tile:hover .row-yr,.m-tile:hover .row-arr{opacity:1}
+}
+@media (max-width:640px){
+  .tiles.mosaic{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:calc((100cqw - 5 * var(--mg)) / 6)}
+  .m-tile{grid-column:span var(--wm)}
+}
+/* правка размеров — в CRM (?crm) или по #tiles */
+.m-ed{position:absolute;left:6px;top:6px;right:6px;z-index:3;display:flex;flex-wrap:wrap;gap:3px;align-items:center;
+  background:rgba(255,255,255,.94);border-radius:12px;padding:4px;font-size:12px;color:var(--ink);box-shadow:0 1px 4px rgba(20,20,25,.12)}
+.m-ed .m-sz{padding:0 6px;font-variant-numeric:tabular-nums}
+.m-ed .m-sep{width:1px;height:16px;background:var(--line);margin:0 2px}
+.m-ed button{border:none;background:var(--sel);color:var(--accent);border-radius:8px;height:24px;min-width:26px;padding:0 6px;font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.m-ed button:hover,.m-ed button.on{background:var(--accent);color:#fff}
+#m-bar{position:fixed;right:16px;bottom:16px;z-index:9001;display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 16px;box-shadow:0 6px 24px rgba(20,20,25,.12);font-size:14px}
+#m-bar b{font-weight:500;margin-right:4px}
+#m-bar button,#m-out button{border:none;background:var(--sel);color:var(--accent);border-radius:999px;height:32px;padding:0 12px;font:inherit;cursor:pointer}
+#m-out{position:fixed;right:16px;bottom:70px;z-index:9002;width:min(560px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 10px 40px rgba(20,20,25,.16);font-size:14px}
+#m-out textarea{width:100%;height:240px;margin:8px 0;font:12px/1.4 ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:10px;padding:8px}
+
+/* v4.50 — резюме в две страницы: листы друг под другом */
+.cv-sheet{background:none;border:none;box-shadow:none;border-radius:0;display:flex;flex-direction:column;gap:16px}
+.cv-sheet img{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,20,25,.04),0 8px 30px rgba(20,20,25,.06)}
+
+/* v4.51 — cv: сам PDF с рабочими ссылками; «Скачать CV» — главная кнопка (оранжевая, белый текст) */
+.cv-pdf{display:block;width:100%;aspect-ratio:210/297;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,20,25,.04),0 8px 30px rgba(20,20,25,.06)}
+.cv-pdf a{display:block}
+.cv-pdf img{display:block;width:100%;height:auto;border:none;border-radius:0;box-shadow:none}
+.dl-btn,.dl-btn:hover{background:var(--accent);color:#fff}
+.dl-btn:hover{background:color-mix(in srgb,var(--accent) 86%,#000)}
+
+/* v4.52 — иконка скачивания в «Скачать CV» */
+.cv-top .dl-btn{gap:8px}
+.dl-btn .dl-ic{display:block;flex:0 0 auto}
+
+/* ============================================================
+   v4.53 — правка плиток в CRM: перетаскивание, уголок размера, панель снизу
+============================================================ */
+.m-tile[draggable="true"]{cursor:grab}
+.m-tile.m-dragging{opacity:.4}
+.m-tile.m-sel{box-shadow:0 0 0 2px var(--accent)}
+.m-tile.m-before{box-shadow:inset 4px 0 0 var(--accent)}
+.m-tile.m-after{box-shadow:inset -4px 0 0 var(--accent)}
+.m-lbl{position:absolute;left:8px;top:8px;z-index:3;font-size:12px;line-height:1;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--ink);font-variant-numeric:tabular-nums;pointer-events:none}
+.m-rs{position:absolute;right:4px;bottom:4px;z-index:4;width:22px;height:22px;border-radius:6px;cursor:nwse-resize;
+  background:rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M11 4 4 11M11 8 8 11' stroke='%23F0523C' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/12px no-repeat}
+#m-bar{left:50%;right:auto;transform:translateX(-50%);max-width:calc(100vw - 32px);flex-wrap:wrap;border-radius:18px;padding:8px 8px 8px 16px}
+#m-bar .m-hint{color:var(--muted);font-size:13px;margin-right:4px}
+#m-bar .m-sp{flex:1 1 12px}
+#m-bar .m-ic{width:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+#m-bar .m-ic.on,#m-bar button:hover{background:var(--accent);color:#fff}
+.m-ed{display:none!important}
+
+/* v4.54 — плашка вместо ненайденной картинки */
+.v4-miss{display:flex;align-items:center;justify-content:center;min-height:220px;width:100%;border-radius:14px;background:var(--sel);color:var(--muted);font-size:var(--t-small);text-align:center;padding:16px}
+
+/* v4.55 — длинные строки таймлайна не распирают панель на телефоне */
+.sidebar,.list,.v4row{min-width:0}
+.v4row .row-main{min-width:0;overflow:hidden}
+.v4row .row-ti{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v4row .row-prof{white-space:nowrap}
+@media (max-width:900px){.sidebar{max-width:100vw;width:100%}}
+
+/* ============================================================
+   v4.56
+   — «Кейс 07» — обычным текстом (16, серый)
+   — внутреннее меньше внешнего: заголовок кейса → первый подраздел
+     столько же, сколько между подразделами (40); внутри подраздела
+     (подзаголовок → пункты) — 12
+============================================================ */
+.block-num{font-size:var(--t-body);font-weight:400;color:var(--muted);letter-spacing:0;text-transform:none}
+.block > .sub{margin-top:40px}
+
+/* v4.57 — картинки держат пропорции по заранее известным размерам */
+.main img[width][height]{height:auto}

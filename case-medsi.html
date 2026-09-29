@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
-@view-transition{navigation:auto}
+
 ::view-transition-old(main-col){animation:fOut .16s ease both}
 ::view-transition-new(main-col){animation:fIn .22s ease both}
 @keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
@@ -300,8 +300,12 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
+<link rel="stylesheet" href="assets/v4.css">
+<style>/* Medsi: заголовки кейсов («Единый стиль приложения», «Главный экран») того же размера, что разделы («Приложение SmartMed», «Исследования») */
+.block:not(.group) .block-title{font-size:var(--t-display);line-height:1.15;letter-spacing:-.02em}</style>
 </head>
 <body data-mode="work" data-lang="ru">
+<a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
 
 <div class="topbar">
   <a class="back" href="index.html">← <span data-i18n="back">Максим Кожейкин</span></a>
@@ -311,24 +315,27 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 <div class="shell">
   <aside class="sidebar" id="sidebar">
-    <a class="back" href="index.html">← <span data-i18n="back">Максим Кожейкин</span></a>
+    <div class="side-mode">
+      <div class="segmented" role="group" aria-label="Mode">
+          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork">Work</button>
+          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife">Work + Life</button>
+        </div>
+      <div class="lang" role="group" aria-label="Language">
+          <button data-lang-btn="en" aria-pressed="false">En</button>
+          <button data-lang-btn="ru" aria-pressed="true">Ру</button>
+        </div>
+    </div>
+    <div class="side-top">
+      <div class="side-name"><a href="index.html" data-v4="name"></a></div>
+      <p class="side-lead" data-v4="lead"></p>
+    </div>
     <nav class="list" id="projects"></nav>
     <div class="side-bottom">
       <div class="side-links">
         <a href="index.html#cv" data-i18n="cv">cv</a>
         <a href="mailto:maksim.kozheikin@gmail.com">email</a>
-        <a href="https://t.me/" target="_blank" rel="noopener">telegram</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
-      </div>
-      <div class="side-tabs">
-        <div class="segmented" role="group" aria-label="Mode">
-          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork">Work</button>
-          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife">Work + Life</button>
-        </div>
-        <div class="lang" role="group" aria-label="Language">
-          <button data-lang-btn="ru" aria-pressed="true">RU</button>
-          <button data-lang-btn="en" aria-pressed="false">EN</button>
-        </div>
+        <a href="https://t.me/maksimdesigner" target="_blank" rel="noopener">tg</a>
+        <a href="https://www.linkedin.com/in/maksim-kozheikin/" target="_blank" rel="noopener">linkedin</a>
       </div>
     </div>
   </aside>
@@ -355,6 +362,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 </div>
 
 <script src="assets/site.js"></script>
+<script src="assets/v4.js"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "marketing": "assets/medsi-marketing.png",
@@ -388,12 +396,12 @@ const CURRENT = "medsi";
   "ru": {
     "back": "Максим Кожейкин",
     "cv": "cv",
-    "modeWork": "Work",
-    "modeLife": "Work + Life",
+    "modeWork": "Работа",
+    "modeLife": "Работа + Жизнь",
     "date": "Июнь 2022 — Март 2024",
     "position": "Lead UX/UI Designer",
     "title": "Medsi Digital",
-    "desc": "Medsi Digital — сервисы для сети клиник МЕДСИ и их пользователей.",
+    "desc": "Medsi Digital — сервисы для сети клиник МЕДСИ и их пользователей",
     "dutiesLabel": "Обязанности на рабочем месте",
     "dutiesMore": "Посмотреть ещё",
     "achLabel": "Ключевые достижения",
@@ -422,19 +430,19 @@ const CURRENT = "medsi";
     ],
     "duties": [
       "<b>Обязанности и достижения <\/b>",
-      "Одна из основных задач — создание команды дизайна в компании. Сформировал команду из пяти дизайнеров, менторил джунов. Ввел скрам-практики: онбординг, ретро, демо, дэйли и прочее. Создал базу знаний для команды в YouTrack.",
+      "Одна из основных задач — создание команды дизайна в компании. Сформировал команду из пяти дизайнеров, менторил джунов. Ввёл скрам-практики, в том числе онбординг, ретро, демо и дэйли. Создал базу знаний для команды в YouTrack.",
       "Осуществлял поддержку и развитие всех вышеупомянутых продуктов и сервисов.",
       "В сотрудничестве с продактами и CPO накидывали идеи для развития сервисов, помогал с разработкой концепций и новых фичей, основываясь на потребностях бизнеса и обратной связи от пользователей.",
       "Разработал концепцию дизайна приложения, которая объединила различные продукты в единую визуальную систему. Это позволило нашей платформе выглядеть консистентно и современно в глазах пользователей и положительно выделяться на фоне конкурентов.",
       "Создал и поддерживал дизайн-систему в тесном сотрудничестве с фронтенд-разработчиками, что ускорело процесс разработки. Позже нанял дизайнера, который занимался только дизайн-системой.",
       "Благодаря быстрым качественным UX-исследованиям, улучшил процесс записи, что значительно уменьшило нагрузку на колл-центр, тем самым экономя деньги для компании.",
       "Принимая участие в процессе найма, помог отделу HR с описанием и оформлением вакансий с точки зрения дизайнеров, которые могут рассматривать нашу компанию как потенциального работодателя.",
-      "Содействовал созданию и визуализации маркетинговых кампаний: рассылки, строиз, лендинги с интерактивами к большим праздникам, что привлекло новых клиентов и укрепило лояльность уже существующих пользователей.",
+      "Помогал создавать и оформлять маркетинговые кампании, в том числе рассылки, сторис и лендинги с интерактивами к большим праздникам, что привлекло новых клиентов и укрепило лояльность уже существующих пользователей.",
       "Регулярно выступал с отчетными презентациями перед руководством компании и коллегами из различных команд.",
-      "<b>Сервисы, над которыми я работал:<\/b>",
-      "SmartMed — это веб-сайт и приложение на iOS и Android для пациентов. Включает в себя продукты: аптека, запись в клинику, телемедицина, анализы, медкарта с документами и динамикой показателей, личный кабинет, бонусы лояльности и прочее.",
-      "Кабинет врача — это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
-      "Контроль качества — это веб-сервис для «супер-врачей», чтобы отслеживать корректность выполнения работ другими врачами. Включает продукты: медицинский контроль, аудит, экспертный контроль.",
+      "<b>Сервисы, над которыми я работал<\/b>",
+      "SmartMed — это веб-сайт и приложение на iOS и Android для пациентов. Включает аптеку, запись в клинику, телемедицину, анализы, медкарту с документами и динамикой показателей, личный кабинет и бонусы лояльности.",
+      "Кабинет врача — это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает расписание, отчёты, флоу приёма пациента и другое.",
+      "Контроль качества — это веб-сервис для «супер-врачей», чтобы отслеживать корректность выполнения работ другими врачами. Включает медицинский контроль, аудит и экспертный контроль.",
       "Админка — это веб-сервис для управления всеми другими сервисами."
     ],
     "blocks": [
@@ -457,7 +465,7 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "Ввел скрам-практики: онбординг, ретро, демо, дэйли"
+                "p": "Ввёл скрам-практики, в том числе онбординг, ретро, демо и дэйли"
               },
               {
                 "h": "",
@@ -473,10 +481,6 @@ const CURRENT = "medsi";
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-team.webp",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-team.webp",
                 "cap": "",
@@ -508,10 +512,6 @@ const CURRENT = "medsi";
             "ti": "",
             "note": "Основная задача — это объяснить командам, почему важно исследовать фичи и гипотезы до начала этапа дизайна и тестировать дизайн решения после, а также при планировании учитывать время на выполнения задач с учетом этапов исследования и тестирования",
             "imgs": [
-              {
-                "src": "assets/medsi-research.webp",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-research.webp",
                 "cap": "",
@@ -686,10 +686,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-booking.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-Appointment.webp",
                 "cap": "",
                 "w": 100
@@ -740,10 +736,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-flow.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-flow.webp",
                 "cap": "",
                 "w": 100
@@ -789,10 +781,6 @@ const CURRENT = "medsi";
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-doctor.png",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-choose.webp",
                 "cap": "",
@@ -848,10 +836,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-doctorcard.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-card.webp",
                 "cap": "",
                 "w": 100
@@ -889,14 +873,10 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "Выделил: Тип записи, Кабинет приёма, Информацие о враче. Добавил Информацию о подготовке. Все эти изменения позволяют пользователю получить больший объем информации о записи"
+                "p": "Выделил тип записи, кабинет приёма и информацию о враче, добавил информацию о подготовке. Так пользователь видит о записи больше"
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-statuses.png",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-status-Appointment.webp",
                 "cap": "",
@@ -960,10 +940,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-pharmacy.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-pharmacy.webp",
                 "cap": "",
                 "w": 100
@@ -1014,10 +990,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-map.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-map.webp",
                 "cap": "",
                 "w": 100
@@ -1060,10 +1032,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-product.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-doctorcard.webp",
                 "cap": "",
                 "w": 100
@@ -1105,10 +1073,6 @@ const CURRENT = "medsi";
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-cart.png",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-cart.webp",
                 "cap": "",
@@ -1156,10 +1120,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-bonuses.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-loyalty.webp",
                 "cap": "",
                 "w": 100
@@ -1172,7 +1132,7 @@ const CURRENT = "medsi";
         "a": "cabinet",
         "group": true,
         "title": "Кабинет врача",
-        "lead": "Это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает продукты: расписание, отчеты, флоу приема пациента и прочее.",
+        "lead": "Это веб-сервис для сотрудников колл-центра и для врачей, которые ведут прием пациентов. Включает расписание, отчёты, флоу приёма пациента и другое.",
         "subs": [
           {
             "ti": "",
@@ -1244,10 +1204,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-schedule.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-workspace-schedule.webp",
                 "cap": "",
                 "w": 100
@@ -1286,10 +1242,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-newbooking.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-workspace-create.webp",
                 "cap": "",
                 "w": 100
@@ -1327,7 +1279,7 @@ const CURRENT = "medsi";
             "cards": [
               {
                 "h": "",
-                "p": "Интерфейс стал предсказуймее. Все экраны поделены на три зоны: Навигационная сверху, Основная по центру, Вспомогательная панель справа."
+                "p": "Интерфейс стал предсказуемее. Каждый экран поделён на три зоны, навигация сверху, основная часть по центру и вспомогательная панель справа."
               },
               {
                 "h": "",
@@ -1335,10 +1287,6 @@ const CURRENT = "medsi";
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-emk.png",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-workspace-emk.webp",
                 "cap": "",
@@ -1386,10 +1334,6 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-diagnosis.png",
-                "cap": ""
-              },
-              {
                 "src": "assets/ru-medsi-workspace-diagnoz.webp",
                 "cap": "",
                 "w": 100
@@ -1412,7 +1356,7 @@ const CURRENT = "medsi";
             "cards": [
               {
                 "h": "",
-                "p": "Содействовал созданию и визуализации маркетинговых кампаний: рассылки, строиз, лендинги с интерактивами к большим праздникам. Всё это привлекло новых клиентов и укрепило лояльность уже существующих"
+                "p": "Помогал создавать и оформлять маркетинговые кампании, в том числе рассылки, сторис и лендинги с интерактивами к большим праздникам. Всё это привлекло новых клиентов и укрепило лояльность уже существующих"
               },
               {
                 "h": "",
@@ -1428,10 +1372,6 @@ const CURRENT = "medsi";
               }
             ],
             "imgs": [
-              {
-                "src": "assets/medsi-marketing.png",
-                "cap": ""
-              },
               {
                 "src": "assets/ru-medsi-market.webp",
                 "cap": "",
@@ -1454,7 +1394,7 @@ const CURRENT = "medsi";
     "date": "Jun 2022 — Mar 2024",
     "position": "Lead UX/UI Designer",
     "title": "Medsi Digital",
-    "desc": "Products for the MEDSI clinic network: SmartMed (patient web and app), Doctor’s workspace, Quality control, Admin.",
+    "desc": "Products for the MEDSI clinic network, including SmartMed (patient web and app), Doctor’s workspace, Quality control and Admin",
     "dutiesLabel": "Responsibilities",
     "dutiesMore": "Show more",
     "achLabel": "Key achievements",
@@ -1483,16 +1423,16 @@ const CURRENT = "medsi";
     ],
     "duties": [
       "<b>Responsibilities and achievements as Lead UX/UI Designer<\/b>",
-      "Built the design team from scratch: five designers, mentored juniors, introduced scrum rituals and a YouTrack knowledge base.",
+      "Built a design team of five from scratch, mentored juniors, introduced scrum rituals and a YouTrack knowledge base.",
       "Supported and grew all products and services.",
       "Shaped new features with PMs and the CPO, based on business needs and user feedback.",
       "Created a design concept that unified products into one visual system.",
       "Built and maintained the design system with front-end, speeding up delivery. Later hired a dedicated designer for it.",
       "Fast UX research improved the booking flow, cutting call-center load and saving costs.",
-      "Supported hiring: helped HR write designer-facing job posts.",
-      "Contributed to marketing campaigns: newsletters, stories, holiday landings.",
+      "Supported hiring and helped HR write designer-facing job posts.",
+      "Contributed to marketing campaigns, including newsletters, stories and holiday landings.",
       "Regularly presented results to leadership and peers.",
-      "<b>Services I worked on:<\/b>",
+      "<b>Services I worked on<\/b>",
       "SmartMed — a website and an iOS/Android app for patients. It covers the pharmacy, clinic booking, telemedicine, lab tests, a medical record with documents and health trends, a personal account, loyalty points and more.",
       "Doctor’s workspace — a web service for call-centre staff and for doctors seeing patients. It covers the schedule, reports, the appointment flow and more.",
       "Quality control — a web service for senior doctors to check how other doctors do their work. It covers medical control, audit and expert review.",
@@ -1518,7 +1458,7 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "Introduced scrum practices: onboarding, retro, demo, daily"
+                "p": "Introduced scrum practices, including onboarding, retro, demo and daily"
               },
               {
                 "h": "",
@@ -1535,11 +1475,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-team.webp",
-                "cap": "Team process: knowledge base, retro, design review"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-team.webp",
                 "cap": ""
               }
             ]
@@ -1569,11 +1505,7 @@ const CURRENT = "medsi";
             "note": "The main task is to explain to teams why it matters to research features and hypotheses before design starts and to test design solutions afterwards, and to account for research and testing time when planning.",
             "imgs": [
               {
-                "src": "assets/medsi-research.webp",
-                "cap": ""
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-research.webp",
                 "cap": ""
               }
             ]
@@ -1638,8 +1570,8 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-style.png",
-                "cap": "One visual style"
+                "src": "assets/en-medsi-One-visual-style.webp",
+                "cap": ""
               }
             ]
           }
@@ -1691,8 +1623,8 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-main.png",
-                "cap": "Home screen"
+                "src": "assets/en-medsi-main.webp",
+                "cap": ""
               }
             ]
           }
@@ -1744,11 +1676,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-booking.png",
-                "cap": "Booking"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-Appointment.webp",
                 "cap": ""
               }
             ]
@@ -1784,7 +1712,7 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "I noticed users lacked a sense of control: they didn’t know which booking step they were on, how much was left, or what the appointment was about. So while heavy back-end requests run, I proposed not to use a separate screen but to show the state inside the button"
+                "p": "I noticed users lacked a sense of control. They didn’t know which booking step they were on, how much was left, or what the appointment was about. So while heavy back-end requests run, I proposed not to use a separate screen but to show the state inside the button"
               },
               {
                 "h": "",
@@ -1797,11 +1725,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-flow.png",
-                "cap": "Booking flow"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-flow.webp",
                 "cap": ""
               }
             ]
@@ -1846,11 +1770,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-doctor.png",
-                "cap": "Choosing a doctor"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-choose.webp",
                 "cap": ""
               }
             ]
@@ -1903,11 +1823,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-doctorcard.png",
-                "cap": "Doctor card"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-card.webp",
                 "cap": ""
               }
             ]
@@ -1935,7 +1851,7 @@ const CURRENT = "medsi";
             "cards": [
               {
                 "h": "",
-                "p": "Among the reviews we found cases where a booking was cancelled due to system errors, but users didn’t notice, because the successful booking screen looked like the failed one. To fix this I made screens with distinct status designs: a green background for a successful booking, grey for completed appointments and red for failed ones. I also separated the payment status from the booking status, to give users a greater sense of control"
+                "p": "Among the reviews we found cases where a booking was cancelled due to system errors, but users didn’t notice, because the successful booking screen looked like the failed one. To fix this I made screens with distinct status designs, with a green background for a successful booking, grey for completed appointments and red for failed ones. I also separated the payment status from the booking status, to give users a greater sense of control"
               },
               {
                 "h": "",
@@ -1943,16 +1859,12 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "Highlighted: appointment type, consulting room, doctor info. Added preparation info. All of this gives the user much more information about the appointment"
+                "p": "Highlighted the appointment type, consulting room and doctor info, and added preparation info. Users now see more about their appointment"
               }
             ],
             "imgs": [
               {
-                "src": "assets/medsi-statuses.png",
-                "cap": "Booking statuses"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-status-Appointmentt.webp",
                 "cap": ""
               }
             ]
@@ -2013,11 +1925,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-pharmacy.png",
-                "cap": "Pharmacy"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-pharmacy.webp",
                 "cap": ""
               }
             ]
@@ -2066,11 +1974,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-map.png",
-                "cap": "Choosing on the map"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-map.webp",
                 "cap": ""
               }
             ]
@@ -2111,11 +2015,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-product.png",
-                "cap": "Product card"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-doctorcard.webp",
                 "cap": ""
               }
             ]
@@ -2151,16 +2051,12 @@ const CURRENT = "medsi";
               },
               {
                 "h": "",
-                "p": "Highlighted the “Required services” block to reduce frustration: users previously couldn’t tell what the extra charges were for and why the final price changed"
+                "p": "Highlighted the “Required services” block to reduce frustration. Users previously couldn’t tell what the extra charges were for and why the final price changed"
               }
             ],
             "imgs": [
               {
-                "src": "assets/medsi-cart.png",
-                "cap": "Cart"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-cart.webp",
                 "cap": ""
               }
             ]
@@ -2205,11 +2101,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-bonuses.png",
-                "cap": "Loyalty points"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-loyalty.webp",
                 "cap": ""
               }
             ]
@@ -2220,7 +2112,7 @@ const CURRENT = "medsi";
         "a": "cabinet",
         "group": true,
         "title": "Doctor’s workspace",
-        "lead": "A web service for call-center staff and for doctors seeing patients. Includes: schedule, reports, patient appointment flow and more.",
+        "lead": "A web service for call-center staff and for doctors seeing patients. It includes the schedule, reports, patient appointment flow and more.",
         "subs": [
           {
             "ti": "",
@@ -2292,11 +2184,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-schedule.png",
-                "cap": "Schedule"
-              },
-              {
-                "src": "",
+                "src": "assets/en-medsi-workspace-schedule.webp",
                 "cap": ""
               }
             ]
@@ -2333,11 +2221,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-newbooking.png",
-                "cap": "Creating an appointment"
-              },
-              {
-                "src": "",
+                "src": "assets/ru-medsi-workspace-create.webp",
                 "cap": ""
               }
             ]
@@ -2373,7 +2257,7 @@ const CURRENT = "medsi";
             "cards": [
               {
                 "h": "",
-                "p": "The interface became more predictable. Every screen is split into three zones: navigation on top, main area in the centre, supporting panel on the right."
+                "p": "The interface became more predictable. Every screen is split into three zones, with navigation on top, the main area in the centre and a supporting panel on the right."
               },
               {
                 "h": "",
@@ -2382,11 +2266,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-emk.png",
-                "cap": "EMR summary"
-              },
-              {
-                "src": "",
+                "src": "assets/ru-medsi-workspace-emk.webp",
                 "cap": ""
               }
             ]
@@ -2431,11 +2311,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-diagnosis.png",
-                "cap": "Diagnosis"
-              },
-              {
-                "src": "",
+                "src": "assets/ru-medsi-workspace-diagnoz.webp",
                 "cap": ""
               }
             ]
@@ -2456,7 +2332,7 @@ const CURRENT = "medsi";
             "cards": [
               {
                 "h": "",
-                "p": "Contributed to creating and visualising marketing campaigns: newsletters, stories, interactive holiday landing pages. All of this attracted new clients and strengthened loyalty of existing ones"
+                "p": "Helped create and design marketing campaigns, including newsletters, stories and interactive holiday landing pages. All of this attracted new clients and strengthened loyalty of existing ones"
               },
               {
                 "h": "",
@@ -2473,11 +2349,7 @@ const CURRENT = "medsi";
             ],
             "imgs": [
               {
-                "src": "assets/medsi-marketing.png",
-                "cap": "Marketing"
-              },
-              {
-                "src": "",
+                "src": "assets/ru-medsi-market.webp",
                 "cap": ""
               }
             ]
@@ -2511,7 +2383,7 @@ const SHORT_WORDS = [
 
 function fixOrphans(root){
   if(!root) return;
-  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")\\s+", "gi");
+  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")[ \\t\\r\\n]+", "gi");   // после короткого слова — только обычный пробел, иначе цепочки «и по этим» не склеиваются
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
   const nodes = [];
   while(walker.nextNode()) nodes.push(walker.currentNode);
@@ -2535,10 +2407,10 @@ const d=()=>T[L];
 const $=s=>document.querySelector(s);
 
 function renderNav(){
-  $("#projects").innerHTML = PROJECTS.map(p=>{
+  v4Side(L);
+  $("#projects").innerHTML = v4List(L, p=>{
     const active = p.id===CURRENT;
-    const row = `<a class="row" href="${p.href}"${active?' aria-current="page"':''}>
-      <span class="row-yr">${p.yr}</span><span class="row-ti">${p.ti[L]}</span><span class="row-arr">›</span></a>`;
+    const row = v4Row(p, L, active);
     if(!active) return row;
 
     /* Подменю собирается из блоков самой страницы: заголовок блока
@@ -2558,7 +2430,7 @@ function renderNav(){
       return `<a class="cs" href="#${s.a}"><span class="n">${String(n).padStart(2,"0")}</span>${label}</a>`;
     }).join("");
     return row + `<div class="subnav">${links}</div>`;
-  }).join("");
+  });
 }
 
 function renderBlock(b, num){
@@ -2618,12 +2490,13 @@ function render(){
   const t=d();
   $("#content").innerHTML = `
     <div id="overview" style="scroll-margin-top:20px"></div>
-    <img class="company-logo" src="assets/medsi-logo.png" alt="Medsi">
-    <div class="exp-eyebrow">${t.date}</div>
-    <h1 class="exp-role">${t.position} · <span class="exp-company">${t.title}</span></h1>
-    <p class="exp-summary">${t.desc}</p>
+    ${v4Up(CURRENT, L)}
+    <h1 class="exp-role">${v4Title(t.title, t.position)}</h1>
+    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
+    ${v4HeadChips(v4Entry(CURRENT), L, t.date)}
+    ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
     <div class="duties" id="duties">
-      <div class="duties-inner"><ul>${t.duties.map(b=>`<li>${b}</li>`).join("")}</ul></div>
+      <div class="duties-inner"><ul>${t.duties.map((b,i)=>`<li${i===0 && v4SameText(b, t.navOverview) ? ' class="v4-dup"' : ''}>${b}</li>`).join("")}</ul></div>
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
@@ -2635,23 +2508,14 @@ function render(){
         n++;
         return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(n).padStart(2,"0")}`);
       }).join(""); })()}
-    <div class="foot">
-      <a href="index.html">← <span>${t.back}</span></a>
-      ${(()=>{
-        /* следующий проект берём из общего списка — руками дублировать нечего */
-        const i = PROJECTS.findIndex(p=>p.id===CURRENT), n = PROJECTS[i+1];
-        if(!n) return "";
-        const label = t.next || (L==="ru" ? "Следующий проект" : "Next project");
-        return `<a href="${n.href}">${label}: ${n.ti[L]} →</a>`;
-      })()}
-    </div>`;
+    <div class="foot">${v4Down(CURRENT, L)}</div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");
     if(t[k]!==undefined) el.textContent=t[k];
   });
   const btn=$("#dutiesBtn"), dv=$("#duties");
-  // если текст короткий — кнопка не нужна
-  if(dv.scrollHeight <= 170){ dv.classList.add("open"); btn.classList.add("hidden"); }
+  // кнопка нужна, только если под сгибом прячется заметная часть текста (больше ~120px)
+  if(dv.scrollHeight <= dv.clientHeight + 120){ dv.classList.add("open"); btn.classList.add("hidden"); }
   btn.addEventListener("click",()=>{ dv.classList.add("open"); btn.classList.add("hidden"); });
   fixOrphans(document.querySelector(".main"));
   fixOrphans(document.querySelector(".sidebar"));
@@ -2688,6 +2552,7 @@ function setMode(m){
   try{localStorage.setItem("mode",m)}catch(e){}
   document.querySelectorAll("[data-mode-btn]").forEach(b=>
     b.setAttribute("aria-pressed",String(b.getAttribute("data-mode-btn")===m)));
+  if(document.getElementById("content") && document.getElementById("content").innerHTML){ renderNav(); initSpy(); }
 }
 document.querySelectorAll("[data-mode-btn]").forEach(b=>
   b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));
