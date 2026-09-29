@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Превью: Каталог СберПраво</title>
+<meta name="description" content="Medsi Digital: сборка дизайн-команды, мобильное приложение SmartMed, кабинет врача, маркетинг. Кейсы Lead UX/UI дизайнера.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+
+::view-transition-old(main-col){animation:fOut .16s ease both}
+::view-transition-new(main-col){animation:fIn .22s ease both}
+@keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
+@keyframes fIn{from{opacity:0;transform:translateY(6px)}}
+
+:root{
+  --bg:#FCFCFD; --surface:#FFFFFF; --ink:#131316; --muted:#6C6C74; --faint:#9A9AA2;
+  --line:#EBEBEF; --panel:#F4F4F7; --accent:#F0523C; --sel:#F1F1F4;
+  /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
+     --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
+     --h2  Заголовок кейса:    «Расписание», «Главный экран»
+           Заголовок страницы: «Lead UX/UI Designer · Medsi Digital»
+     --h3  Подзаголовок:       «Проблемы», «Результат»
+     --text  Основной текст:   пункты списков, описания, обязанности
+     --small Вторичный текст:  чипы, подписи, навигация, мета
+     --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
+  --h1:clamp(2rem,3.4vw,2.9rem);
+  --h2:clamp(1.6rem,2.2vw,2rem);
+  --h3:1.02rem;
+  --text:.98rem;
+  --small:.88rem;
+  --eyebrow:.72rem;
+  --sans:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --sidebar-w:clamp(300px,40vw,560px);
+  --pad:clamp(20px,3vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+/* ============================================================
+   КОМПОНЕНТЫ — переиспользуются везде. Новых не заводим.
+   .row   — строка списка (проекты, образование, портфолио)
+   .card  — карточка (проблемы, решения, цели, результаты)
+   .shot  — плейсхолдер изображения
+   .chip  — тег
+============================================================ */
+.list{display:flex;flex-direction:column}
+.row{display:flex;gap:12px;align-items:baseline;padding:11px 2px;border-top:1px solid var(--line);
+  transition:padding-left .18s,color .18s}
+.list > .row:last-child,.list > a.row:last-of-type{border-bottom:1px solid var(--line)}
+a.row:hover{padding-left:7px}
+a.row:hover .row-ti{color:var(--accent)}
+.row-yr{flex:0 0 82px;font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.row-ti{font-size:var(--text);line-height:1.4}
+.row-arr{margin-left:auto;color:var(--faint);font-size:var(--text);line-height:1;align-self:center;transition:transform .2s,color .2s}
+a.row:hover .row-arr{transform:translateX(3px)}
+a.row[aria-current="page"] .row-arr{transform:rotate(90deg)}
+a.row[aria-current="page"] .row-ti{color:var(--accent);font-weight:600}
+a.row[aria-current="page"] .row-arr{color:var(--accent)}
+
+.subnav{display:flex;flex-direction:column;padding:4px 0 10px 94px;gap:2px}
+.subnav a{color:var(--muted);font-size:var(--small);transition:color .15s,padding-left .15s}
+.subnav a:hover{color:var(--accent);padding-left:4px}
+.subnav a.active{color:var(--accent);font-weight:600}
+
+/* разделы — тихие рубрики (eyebrow, уже есть в системе), кейсы — основной текст */
+.subnav a.grp{display:flex;gap:8px;align-items:baseline;color:var(--muted);font-size:var(--small)}
+.subnav a.grp .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums}
+.subnav a.grp:hover{color:var(--accent)}
+.subnav a.cs{display:flex;gap:8px;align-items:baseline;color:var(--faint);font-size:var(--small)}
+.subnav a.cs:hover{color:var(--accent)}
+.subnav a.cs .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums;font-size:var(--small)}
+.subnav a.active{color:var(--accent)}
+
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h3{font-weight:600;font-size:var(--h3);margin-bottom:9px}
+.card p{color:var(--muted);font-size:var(--text)}
+
+
+
+/* крупная метрика (Outcomes) — большая цифра + подпись под ней */
+.card.metric-big{background:none;border:none;padding:0;text-align:left}
+.card.metric-big .num{display:flex;align-items:baseline;flex-wrap:nowrap;gap:2px;font-weight:800;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.05;letter-spacing:-.02em}
+.card.metric-big .num-from{color:var(--ink)}
+.card.metric-big .num-to{color:var(--accent)}
+.card.metric-big .num-suf{color:var(--accent);font-size:.6em;font-weight:700;margin-left:1px}
+.card.metric-big .num-arr{color:var(--accent);font-weight:400;margin:0 8px}
+.card.metric-big .lbl{color:var(--ink);font-size:var(--text);margin-top:10px;line-height:1.5;max-width:30ch}
+.cols:has(.card.metric-big){grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px 40px;margin-top:24px}
+
+/* метрика — только цифра и подпись, разделение воздухом */
+.card.metric{background:none;border:none;border-radius:0;padding:0;text-align:left}
+.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 40px;margin-top:20px}
+.card.metric .num{display:inline;font-weight:600;font-size:var(--text);color:var(--ink)}
+.card.metric .lbl{display:inline;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5}
+.card.metric .desc{display:none}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
+.steps{margin-top:40px;display:flex;flex-direction:column;gap:64px}
+.step{display:flex;flex-direction:column}
+.step-icon{width:24px;height:24px;color:var(--ink);margin-bottom:14px}
+.step-icon svg{width:100%;height:100%}
+.step-text{color:var(--ink);font-size:var(--text);line-height:1.5;max-width:60ch}
+.step .fig{margin-top:24px}
+
+/* пункты внутри кейса */
+.points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
+.points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
+.points li b{color:var(--ink);font-weight:600}
+.points li br{content:"";display:block;margin-bottom:6px}
+
+/* маркер по умолчанию ✦; в «Проблемах» — точка */
+.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6);transform:rotate(45deg)}
+.points.plain li{padding-left:0}
+.points.plain li::before{display:none}
+
+
+/* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
+.points.inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;max-width:none;margin-top:20px}
+/* длинные пункты — шире колонка, чтобы не превращались в лапшу */
+.points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
+.points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
+.points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.45)}
+
+.shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+.caption{color:var(--muted);font-size:var(--small);margin-top:10px}
+/* изображения в ряд: одинаковая высота, ширина по пропорции, без обрезки */
+.figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
+.figs.figs-full{display:block}
+.figs.figs-full .fig{width:100%;margin:0}
+.figs.figs-full .fig img{width:100%;height:auto;display:block}
+.fig{margin:0;min-width:0;flex:1 1 0}
+.fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
+  transition:transform .2s,filter .2s}
+.fig-btn:hover{transform:translateY(-2px);filter:brightness(.97)}
+.fig-btn img{width:100%;height:auto;display:block}
+.fig figcaption{display:none}
+@media (max-width:640px){.fig{flex:1 1 100%!important}}
+
+/* лайтбокс */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(19,19,22,.94);
+  display:none;flex-direction:column}
+.lightbox.open{display:flex}
+
+/* верхняя полоса: масштаб слева, закрытие справа. Картинка сюда не заходит */
+.lightbox-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px 20px}
+.lightbox-close{width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+  background:rgba(255,255,255,.14);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-close:hover{background:rgba(255,255,255,.26)}
+
+.lightbox-zoom{display:flex;align-items:center;gap:2px;
+  background:rgba(255,255,255,.14);border-radius:20px;padding:4px;color:#fff}
+.lightbox-zoom button{width:32px;height:32px;border-radius:50%;background:none;color:#fff;
+  font-size:1.15rem;line-height:1;cursor:pointer;transition:background .18s;
+  display:flex;align-items:center;justify-content:center}
+.lightbox-zoom button:hover{background:rgba(255,255,255,.24)}
+.lightbox-zoom button:disabled{opacity:.35;cursor:default;background:none}
+.lightbox-zoom .lvl{min-width:52px;text-align:center;font-size:.8rem;
+  color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums}
+.lightbox-zoom .zoom-fit{width:auto;padding:0 12px;font-size:.8rem;border-radius:16px}
+
+/* середина: только картинка, всё лишнее обрезается по краям области */
+.lightbox-stage{flex:1 1 auto;min-height:0;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;padding:0 80px;touch-action:none}
+/* листать нечего — поля под стрелки не нужны */
+.lightbox.single .lightbox-stage{padding:0 20px}
+.lightbox-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;
+  cursor:zoom-in;will-change:transform;user-select:none;-webkit-user-drag:none}
+.lightbox.zoomed .lightbox-stage img{border-radius:0;cursor:grab}
+.lightbox.zoomed .lightbox-stage.grabbing img{cursor:grabbing}
+.lightbox.zoomed .lightbox-nav{display:none!important}
+
+/* листание */
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.14);color:#fff;font-size:1.8rem;line-height:1;z-index:2;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-nav:hover{background:rgba(255,255,255,.26)}
+.lightbox-nav.prev{left:16px}
+.lightbox-nav.next{right:16px}
+.lightbox-nav svg{display:block;flex:0 0 auto}
+
+.lightbox-meta{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:14px 20px;color:rgba(255,255,255,.85);font-size:.9rem;min-height:20px}
+.lightbox-meta .count{color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .lightbox-bar{padding:10px 12px}
+  .lightbox-stage{padding:0 48px}
+  .lightbox.single .lightbox-stage{padding:0 8px}
+  .lightbox-nav{width:38px;height:38px}
+  .lightbox-nav svg{width:18px;height:18px}
+  .lightbox-nav.prev{left:5px}
+  .lightbox-nav.next{right:5px}
+  .lightbox-zoom .zoom-fit{padding:0 10px}
+}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:var(--small);color:var(--muted)}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
+.jtbd b{color:var(--ink);font-weight:600}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:24px}
+.gallery .shot{aspect-ratio:3/4}
+
+
+/* логотип компании */
+.company-logo{width:56px;height:56px;border-radius:14px;display:block;margin-bottom:20px}
+
+/* шапка страницы = блок опыта с главной (переиспользуем) */
+.exp-eyebrow{font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.exp-role{font-weight:700;font-size:var(--h1);line-height:1.2;margin-top:6px;letter-spacing:-.02em}
+.exp-company{color:var(--accent)}
+.exp-summary{margin-top:10px;color:var(--muted)}
+/* обязанности: видны сразу, подрезаны, раскрываются кнопкой */
+.duties{position:relative;overflow:hidden;max-height:340px;transition:max-height .35s ease;margin-top:16px}
+.duties.open{max-height:none}
+.duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
+  background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
+.duties.open::after{opacity:0}
+.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:var(--small)}
+.duties-more .chev{transition:transform .2s}
+.duties-more:hover .chev{transform:translateY(2px)}
+.duties-more.hidden{display:none}
+/* дайджест достижений */
+.achievements{margin-top:clamp(36px,5vh,52px)}
+.section-head{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+/* шапка отделена от кейсов */
+.head-sep{margin:100px 0;height:4px;background:var(--accent);border-radius:2px}
+.duties-inner{padding-top:0}
+.duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
+/* пункт-подзаголовок (целиком жирный) — без маркера */
+.duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
+.duties li:has(> b:only-child)::before{display:none}
+
+
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
+.side-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:14px;font-size:var(--text)}
+.side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
+.side-links a:hover{opacity:.65}
+.side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.segmented{display:flex;gap:2px;background:var(--sel);padding:3px;border-radius:10px}
+.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:var(--eyebrow);color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.segmented button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.06)}
+.lang{display:inline-flex;gap:2px;font-size:var(--eyebrow);font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
+.lang button{padding:6px 11px;border-radius:7px;color:var(--faint)}
+.lang button[aria-pressed="true"]{color:var(--ink);background:var(--surface);box-shadow:0 1px 2px rgba(20,20,25,.06)}
+
+.shell{display:flex;min-height:100vh}
+.sidebar{view-transition-name:side-col;width:var(--sidebar-w);flex:0 0 var(--sidebar-w);position:sticky;top:0;align-self:flex-start;
+  height:100vh;overflow-y:auto;padding:var(--pad);padding-right:clamp(48px,9vw,170px);display:flex;flex-direction:column;gap:24px;background:var(--bg)}
+.main{view-transition-name:main-col;flex:1 1 auto;min-width:0;padding:var(--pad);padding-left:clamp(32px,4vw,80px)}
+.main-inner{max-width:820px}
+
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:var(--small)}
+.back:hover{color:var(--accent)}
+
+
+
+
+/* блок = один раздел */
+/* кейс — без подложки, разделение воздухом */
+/* новый раздел (группа) — большой отступ */
+.block.group{margin-top:200px;position:relative}
+/* цветная полоска-разделитель между разделами */
+.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group:first-of-type::before{display:none}
+.block.group:first-of-type{margin-top:0}
+.block.group .block-title{font-size:var(--h1);letter-spacing:-.03em}
+
+/* кейс внутри раздела — средний отступ */
+.block{margin-top:140px;scroll-margin-top:20px}
+
+/* первый кейс сразу под своим разделом — ближе */
+.block.group + .block:not(.group){margin-top:88px}   /* первый кейс под разделом; группа после группы сохраняет 200px */
+.block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.block-title{font-weight:700;font-size:var(--h2);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
+.block-lead{color:var(--ink);margin-top:10px;max-width:60ch}
+
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 26px;margin-top:24px;padding:22px 0;border-top:1px solid rgba(19,19,22,.08);border-bottom:1px solid rgba(19,19,22,.08)}
+.meta h4{font-size:var(--eyebrow);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
+.meta p{font-size:var(--small)}
+.meta .dim{color:var(--muted)}
+.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:var(--small);padding:3px 9px;border-radius:20px;margin-top:4px}
+
+.sub{margin-top:16px}                 /* внутреннее: подсекция под заголовком */
+.sub + .sub{margin-top:40px}          /* внешнее: между подсекциями */
+.sub > *:first-child{margin-top:0}    /* первый элемент подсекции не отрывается */
+.sub > .points:first-child{margin-top:0}  /* список сразу под заголовком блока */
+.sub-title{font-weight:700;font-size:var(--h3);letter-spacing:-.01em}
+.sub-title.sub-title-lg{font-size:var(--h2);letter-spacing:-.02em}
+.sub-title ~ .points,.sub-title ~ .sub-note{margin-top:12px}
+.sub-note{color:var(--ink);margin-top:0;max-width:56ch;font-size:var(--text)}
+
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
+.jtbd b{color:var(--ink);font-weight:600}
+
+
+
+
+.foot{margin-top:80px;padding:32px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot a{color:var(--accent);font-weight:500;font-size:var(--small)}
+
+
+
+.topbar{display:none}
+@media (max-width:900px){
+  .shell{flex-direction:column}
+  .topbar{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;padding:14px var(--pad);background:var(--bg);border-bottom:1px solid var(--line)}
+  .burger{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+  .burger span{width:18px;height:2px;background:var(--ink);border-radius:2px}
+  .sidebar{position:fixed;inset:0 0 0 auto;width:min(88vw,340px);z-index:50;transform:translateX(100%);transition:transform .28s ease;box-shadow:-20px 0 60px rgba(20,20,25,.08)}
+  body.nav-open .sidebar{transform:translateX(0)}
+  .scrim{position:fixed;inset:0;background:rgba(20,20,25,.3);opacity:0;pointer-events:none;transition:.28s;z-index:45}
+  body.nav-open .scrim{opacity:1;pointer-events:auto}
+}
+@media (min-width:901px){.scrim{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+<link rel="stylesheet" href="assets/v4.css">
+</head>
+<body data-mode="work" data-lang="ru">
+<a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+
+<div class="topbar">
+  <a class="back" href="index.html">← <span data-i18n="back">Максим Кожейкин</span></a>
+  <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-mode">
+      <div class="segmented" role="group" aria-label="Mode">
+          <button data-mode-btn="work" aria-pressed="true" data-i18n="modeWork">Work</button>
+          <button data-mode-btn="life" aria-pressed="false" data-i18n="modeLife">Work + Life</button>
+        </div>
+      <div class="lang" role="group" aria-label="Language">
+          <button data-lang-btn="en" aria-pressed="false">En</button>
+          <button data-lang-btn="ru" aria-pressed="true">Ру</button>
+        </div>
+    </div>
+    <div class="side-top">
+      <div class="side-name"><a href="index.html" data-v4="name"></a></div>
+      <p class="side-lead" data-v4="lead"></p>
+    </div>
+    <nav class="list" id="projects"></nav>
+    <div class="side-bottom">
+      <div class="side-links">
+        <a href="index.html#cv" data-i18n="cv">cv</a>
+        <a href="mailto:maksim.kozheikin@gmail.com">email</a>
+        <a href="https://t.me/maksimdesigner" target="_blank" rel="noopener">tg</a>
+        <a href="https://www.linkedin.com/in/maksim-kozheikin/" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main"><div class="main-inner" id="content"></div></main>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-bar">
+    <div class="lightbox-zoom">
+      <button class="zoom-out" aria-label="Отдалить">−</button>
+      <span class="lvl">100%</span>
+      <button class="zoom-in" aria-label="Приблизить">+</button>
+      <button class="zoom-fit" aria-label="Вписать в экран">Вписать</button>
+    </div>
+    <button class="lightbox-close" aria-label="Закрыть">✕</button>
+  </div>
+  <div class="lightbox-stage">
+    <button class="lightbox-nav prev" aria-label="Предыдущее"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M15.25 5.5 8.75 12 15.25 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <img src="" alt="">
+    <button class="lightbox-nav next" aria-label="Следующее"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M8.75 5.5 15.25 12 8.75 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+  <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
+</div>
+
+<script src="assets/site.js"></script>
+<script src="assets/v4.js"></script>
+<script>
+/*CRM_IMG_S*/const IMG = {
+  "sol1a": "assets/sberpravo-sol1a.webp",
+  "sol1b": "assets/sberpravo-sol1b.webp",
+  "abtesta": "assets/sberpravo-abtest-a.webp",
+  "abtestb": "assets/sberpravo-abtest-b.webp",
+  "beforeafter": "assets/sberpravo-beforeafter.webp",
+  "sol3": "assets/sberpravo-sol3.webp",
+  "sol2": "assets/sberpravo-sol2.webp",
+  "sol1c": "assets/sberpravo-sol1c.webp",
+  "research": "assets/sberpravo-research.png",
+  "flow": "assets/sberpravo-flow.png",
+  "menuCards": "assets/sberpravo-menu-cards.png",
+  "menuOrder": "assets/sberpravo-menu-order.png",
+  "menuSidebar": "assets/sberpravo-menu-sidebar.png",
+  "menuNav": "assets/sberpravo-menu-nav.png",
+  "menuDevices": "assets/sberpravo-menu-devices.png",
+  "landingCards": "assets/sberpravo-landing-cards.png",
+  "landingSearch": "assets/sberpravo-landing-search.png",
+  "landingCatalog": "assets/sberpravo-landing-catalog.png"
+};/*CRM_IMG_E*/
+
+const CURRENT = "sberpravo";
+
+
+/* ============================================================
+   КОНТЕНТ СТРАНИЦЫ — редактируй тут
+============================================================ */
+/*CRM_T_S*/const T = {
+  "ru": {
+    "back": "Максим Кожейкин",
+    "cv": "cv",
+    "modeWork": "Работа",
+    "modeLife": "Работа + Жизнь",
+    "date": "Февраль 2021 — Апрель 2022",
+    "position": "Lead UX/UI Designer",
+    "title": "СберПраво",
+    "desc": "СберПраво — онлайн-сервис юридической помощи",
+    "dutiesLabel": "Обязанности на рабочем месте",
+    "dutiesMore": "Посмотреть ещё",
+    "achLabel": "Ключевые достижения",
+    "navOverview": "Обязанности и достижения",
+    "achievements": [
+      {
+        "n": "10 000",
+        "l": "заказов после запуска продукта",
+        "d": ""
+      },
+      {
+        "n": "+12%",
+        "l": "CTR «Заказы» при плановых +5%",
+        "d": ""
+      },
+      {
+        "n": "−60%",
+        "l": "обращений в поддержку",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "<b>Обязанности и достижения как Senior UX/UI Designer</b>",
+      "Задачей было развитие продукта на всех платформах. Участвовал в создании дизайнерских решений задач вместе с лидом дизайна.",
+      "Создал дизайн-систему для дальнейшего масштабирования продукта.",
+      "Создал карту путей пользователей (user flow), что помогло аналитикам проще находить ошибки, новым коллегам в понимать логику системы, а разработчикам облегчило оценку предстоящей работы.",
+      "<b>Обязанности и достижения как Lead UX/UI Designer</b>",
+      "К моим обязанностям добавилось проведение исследований, результаты которых я представил в портфолио в виде кейсов. Занимался менторством одного дизайнера, распределял задачи и проводил ревью выполненных работ.",
+      "Активно участвовал в планировании продукта, определении ключевых потребностей пользователей и бизнес-целей. Настроил тесное взаимодействие между дизайном и разработкой для корректной реализации дизайна. Подготавливал презентации с результатами работы для бизнеса и коллег по команде.",
+      "Во время работы нам успешно удалось запустить продукт, получив 10 тысяч заказов. Мы также собрали обратную связь и приступили к исправлению ошибок.",
+      "<b>Сервисы, над которыми я работал</b>",
+      "Веб, iOS и Android. Профиль заказчика, исполнителя и админа."
+    ],
+    "blocks": [
+      {
+        "a": "catalog",
+        "title": "Каталог (просмотр)",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "ru-sber-catalog 1",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 1.png",
+                "cap": "ru-sber-catalog 1"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 2",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 2.png",
+                "cap": "ru-sber-catalog 2"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 3",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 3.png",
+                "cap": "ru-sber-catalog 3"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 4",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 4.png",
+                "cap": "ru-sber-catalog 4"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 5",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 5.png",
+                "cap": "ru-sber-catalog 5"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 6",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 6.png",
+                "cap": "ru-sber-catalog 6"
+              }
+            ]
+          },
+          {
+            "ti": "ru-sber-catalog 7",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/ru-sber-catalog 7.png",
+                "cap": "ru-sber-catalog 7"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "en": {
+    "back": "Maksim Kozheikin",
+    "cv": "cv",
+    "modeWork": "Work",
+    "modeLife": "Work + Life",
+    "date": "Feb 2021 — Apr 2022",
+    "position": "Lead UX/UI Designer",
+    "title": "SberPravo",
+    "desc": "SberPravo — an online legal service",
+    "dutiesLabel": "Responsibilities",
+    "dutiesMore": "Show more",
+    "achLabel": "Key achievements",
+    "navOverview": "Responsibilities",
+    "achievements": [
+      {
+        "n": "10,000",
+        "l": "orders after product launch",
+        "d": ""
+      },
+      {
+        "n": "+12%",
+        "l": "CTR “Orders” vs +5% target",
+        "d": ""
+      },
+      {
+        "n": "−60%",
+        "l": "support requests",
+        "d": ""
+      }
+    ],
+    "duties": [
+      "<b>Responsibilities and achievements as Senior UX/UI Designer</b>",
+      "Grew the product across all platforms and shaped design solutions together with the design lead.",
+      "Built a design system so the product could scale further.",
+      "Created a user flow map. Analysts found errors faster, new colleagues understood the logic of the system, and developers could estimate upcoming work more easily.",
+      "<b>Responsibilities and achievements as Lead UX/UI Designer</b>",
+      "Research was added to my duties — the results are presented below as cases. I mentored a designer, distributed tasks and ran reviews of finished work.",
+      "Took an active part in product planning — defining key user needs and business goals. Set up close collaboration between design and development so designs shipped as intended, and prepared result presentations for the business and the team.",
+      "During my time on the product we launched it and reached 10,000 orders. We also collected user feedback and started fixing the issues it surfaced.",
+      "<b>Services I worked on</b>",
+      "Web, iOS and Android. Client, contractor and admin profiles."
+    ],
+    "blocks": [
+      {
+        "a": "catalog",
+        "title": "Каталог (просмотр)",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "en-sber-catalog 1",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 1.png",
+                "cap": "en-sber-catalog 1"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 2",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 2.png",
+                "cap": "en-sber-catalog 2"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 3",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 3.png",
+                "cap": "en-sber-catalog 3"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 4",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 4.png",
+                "cap": "en-sber-catalog 4"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 5",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 5.png",
+                "cap": "en-sber-catalog 5"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 6",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 6.png",
+                "cap": "en-sber-catalog 6"
+              }
+            ]
+          },
+          {
+            "ti": "en-sber-catalog 7",
+            "imgs": [
+              {
+                "src": "assets/sber-catalog/en-sber-catalog 7.png",
+                "cap": "en-sber-catalog 7"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};/*CRM_T_E*/
+
+
+/* ============================================================
+   ТИПОГРАФИКА: убираем висячие предлоги.
+   Текст не меняется — только пробел после коротких слов
+   становится неразрывным, чтобы они не висели в конце строки.
+============================================================ */
+const SHORT_WORDS = [
+  // предлоги
+  "в","во","на","за","к","ко","с","со","о","об","обо","от","ото","по","до","из","изо",
+  "у","для","при","про","над","под","без","перед","через","между","около","среди","после",
+  // союзы и частицы
+  "и","а","но","ни","не","же","ли","бы","то","что","как","чтобы","или","либо","если","так",
+  // местоимения
+  "я","мы","он","она","оно","они","их","его","её","мой","моя","моё","наш","эта","это","этот","все","всё",
+  // англ.
+  "a","an","the","in","on","at","to","of","for","and","or","with","by","from","as","is","are","was","we","i","it","my","our"
+];
+
+function fixOrphans(root){
+  if(!root) return;
+  const re = new RegExp("(^|[\\s(«\"„—–-])(" + SHORT_WORDS.join("|") + ")[ \\t\\r\\n]+", "gi");   // после короткого слова — только обычный пробел, иначе цепочки «и по этим» не склеиваются
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    let t = n.nodeValue;
+    if(!t || !t.trim()) return;
+    // короткие слова склеиваем со следующим
+    let prev;
+    do { prev = t; t = t.replace(re, (m,a,w)=> a + w + "\u00A0"); } while(t !== prev);
+    // тире не должно начинать строку
+    t = t.replace(/\s+([—–])\s/g, "\u00A0$1 ");
+    // разряды в числах не рвутся: 10 000
+    t = t.replace(/(\d)\s(?=\d{3}\b)/g, "$1\u00A0");
+    if(t !== n.nodeValue) n.nodeValue = t;
+  });
+}
+
+/* ---------- рендер ---------- */
+let L=(()=>{try{return localStorage.getItem("lang")||"ru"}catch(e){return "ru"}})();
+const d=()=>T[L];
+const $=s=>document.querySelector(s);
+
+function renderNav(){
+  v4Side(L);
+  $("#projects").innerHTML = v4List(L, p=>{
+    const active = p.id===CURRENT;
+    const row = v4Row(p, L, active);
+    if(!active) return row;
+
+    /* Подменю собирается из блоков самой страницы: заголовок блока
+       и пункт меню — одно и то же, править нужно в одном месте.
+       Страница с единственным блоком обходится без подменю. */
+    const sections = (d().blocks||[]).filter(b=>b.a)
+      .map(b=>({a:b.a, group:!!b.group, ti:String(b.title||"").replace(/<[^>]+>/g,"")}));
+    if(sections.length < 2) return row;
+
+    // подменю: на этой странице номера у РАЗДЕЛОВ, кейсы без номера
+    const items = [{a:"overview", ov:true, ti:d().navOverview}, ...sections];
+    let g = 0;
+    const links = items.map(s=>{
+      const label = typeof s.ti === "string" ? s.ti : s.ti[L];
+      if(s.ov) return `<a class="grp" href="#${s.a}">${label}</a>`;
+      if(s.group){ g++; return `<a class="grp" href="#${s.a}"><span class="n">${String(g).padStart(2,"0")}</span>${label}</a>`; }
+      return `<a class="cs" href="#${s.a}">${label}</a>`;
+    }).join("");
+    return row + `<div class="subnav">${links}</div>`;
+  });
+}
+
+
+// линейные иконки для под-пунктов решений
+const ICONS = {
+  route: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 17V9a4 4 0 0 1 4-4h2M18 7v8a4 4 0 0 1-4 4h-2"/><path d="m9 8-2-3 3-1"/></svg>`,
+  text: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>`,
+  layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>`
+};
+
+function renderBlock(b, num){
+  const meta = b.meta ? `<div class="meta">
+    ${b.meta.map(([h,v])=>`<div><h4>${h}</h4><p class="dim">${v}</p></div>`).join("")}
+    ${b.goals?`<div><h4>${L==="ru"?"Цели":"Goals"}</h4>${b.goals.map(g=>`<span class="goal">✓ ${g}</span><br>`).join("")}</div>`:""}
+  </div>` : "";
+
+  const subs = (b.subs||[]).map(s=>{
+    if(s.sep) return `<div class="sub"><div class="head-sep"></div></div>`;
+    // пункты кейса — список, карточки только если явно указано card:true
+    const cards = s.cards ? (s.card
+      ? `<div class="cols">${s.cards.map(c=>
+          `<div class="card">${c.h?`<h3>${c.h}</h3>`:""}${c.p?`<p>${c.p}</p>`:""}</div>`).join("")}</div>`
+      : `<ul class="points${s.row?" inline":""}${s.wide?" wide":""}${s.plain?" plain":""}${s.mark?" "+s.mark:""}">${s.cards.map(c=>
+          `<li>${c.h?`<b>${c.h}</b>`:""}${c.h&&c.p?" — ":""}${c.p||""}</li>`).join("")}</ul>`) : "";
+    const shots = (s.shots||[]).map(row=>
+      `<div class="shots">${row.map(x=>`<div class="shot">${x}</div>`).join("")}</div>`).join("");
+
+    // реальные изображения — горизонтальный ряд, клик открывает во весь экран
+    const imgs = s.imgs
+      ? `<div class="figs${s.full?" figs-full":""}">${s.imgs.map(im=>
+          `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
+             <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
+               <img src="${im.src}" alt="${im.cap}" loading="lazy">
+             </button>
+             ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
+           </figure>`).join("")}</div>`
+      : "";
+    // под-пункты решения: текст + картинка под каждым
+    const steps = s.steps ? `<div class="steps">${s.steps.map(st=>
+      `<div class="step">
+         ${st.icon&&ICONS[st.icon]?`<div class="step-icon">${ICONS[st.icon]}</div>`:""}
+         <p class="step-text">${st.p}</p>
+         ${st.img?`<figure class="fig"><button class="fig-btn" data-full="${st.img}" aria-label="Открыть"><img src="${st.img}" alt="" loading="lazy"></button></figure>`:""}
+       </div>`).join("")}</div>` : "";
+
+    const results = s.results ? `<div class="cols">${s.results.map(r=>
+      `<div class="card metric-big">
+         <div class="num">${r.from?`<span class="num-from">${r.from}</span><span class="num-arr">→</span>`:""}<span class="num-to">${r.n}</span>${r.suf?`<span class="num-suf">${r.suf}</span>`:""}</div>
+         <div class="lbl">${r.l}</div>
+       </div>`).join("")}</div>` : "";
+    return `<div class="sub"${s.gap!=null?` style="margin-top:${s.gap}px"`:""}>
+      ${s.ti ? `<h3 class="sub-title${s.big?" sub-title-lg":""}">${s.ti}</h3>` : ""}
+      ${s.note?`<p class="sub-note">${s.note}</p>`:""}
+      ${cards}${steps}${results}${imgs}${shots}
+      ${s.caption?`<p class="caption">${s.caption}</p>`:""}
+    </div>`;
+  }).join("");
+
+  const tags = b.tags
+    ? `<div class="chips" style="margin-top:16px">${b.tags.map(x=>`<span class="chip">${x}</span>`).join("")}</div>`
+    : "";
+
+  // Task + зачем — крупная подпись под описанием
+  const task = b.task ? `<div class="task"><h4>Task</h4><p>${b.task}</p></div>` : "";
+  const why = b.why ? `<p class="block-why">${b.why}</p>` : "";
+
+  // флоу-лента: Research → Outcomes → ...
+  const flowline = b.flow ? `<div class="flowline">${b.flow.map((s,i)=>
+    `<span class="fl-step">${s}</span>${i<b.flow.length-1?'<span class="fl-arr">→</span>':''}`).join("")}</div>` : "";
+
+  // одна картинка в шапке кейса
+  const headImg = b.img ? `<div class="figs"><figure class="fig">
+      <button class="fig-btn" data-full="${b.img}" aria-label="Открыть"><img src="${b.img}" alt="${b.title}" loading="lazy"></button>
+    </figure></div>` : "";
+
+  // блочные результаты (не в subs) — как достижения
+
+  const gallery = b.gallery
+    ? `<div class="gallery">${Array.from({length:b.gallery},(_,i)=>
+        `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
+
+  return `<section class="block${b.group?" group":""}" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
+    ${num ? `<div class="block-num">${num}</div>` : ""}
+    <h2 class="block-title">${b.title}</h2>
+    ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
+    ${why}${task}${meta}${headImg}${subs}${flowline}${tags}${gallery}
+  </section>`;
+}
+
+function render(){
+  const t=d();
+  $("#content").innerHTML = `
+    <div id="overview" style="scroll-margin-top:20px"></div>
+    ${v4Up(CURRENT, L)}
+    <h1 class="exp-role">${v4Title(t.title, t.position)}</h1>
+    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
+    ${v4HeadChips(v4Entry(CURRENT), L, t.date)}
+    ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
+    <div class="duties" id="duties">
+      <div class="duties-inner"><ul>${t.duties.map((b,i)=>`<li${i===0 && v4SameText(b, t.navOverview) ? ' class="v4-dup"' : ''}>${b}</li>`).join("")}</ul></div>
+    </div>
+    <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
+
+    <div class="head-sep"></div>
+
+
+    ${(()=>{ let g=0; return t.blocks.map(b=>{
+        if(b.group){ g++; return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(g).padStart(2,"0")}`); }
+        return renderBlock(b, "");
+      }).join(""); })()}
+    <div class="foot">${v4Down(CURRENT, L)}</div>`;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n");
+    if(t[k]!==undefined) el.textContent=t[k];
+  });
+  const btn=$("#dutiesBtn"), dv=$("#duties");
+  // кнопка нужна, только если под сгибом прячется заметная часть текста (больше ~120px)
+  if(dv.scrollHeight <= dv.clientHeight + 120){ dv.classList.add("open"); btn.classList.add("hidden"); }
+  btn.addEventListener("click",()=>{ dv.classList.add("open"); btn.classList.add("hidden"); });
+  fixOrphans(document.querySelector(".main"));
+  fixOrphans(document.querySelector(".sidebar"));
+  justifyFigs();
+  initSpy();
+}
+
+let spy;
+function initSpy(){
+  if(spy) spy.disconnect();
+  const links=[...document.querySelectorAll('.projects a[aria-current="page"] ~ .subnav a, .subnav a')];
+  spy=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting)
+        links.forEach(l=>l.classList.toggle("active", l.getAttribute("href")==="#"+e.target.id));
+    });
+  },{rootMargin:"-15% 0px -75% 0px"});
+  document.querySelectorAll("section.block, #overview").forEach(s=>spy.observe(s));
+}
+
+function setLang(l){
+  L=l; document.documentElement.lang=l;
+  document.querySelectorAll("[data-lang-btn]").forEach(b=>
+    b.setAttribute("aria-pressed",String(b.getAttribute("data-lang-btn")===l)));
+  try{localStorage.setItem("lang",l)}catch(e){}
+  renderNav(); render();
+}
+document.querySelectorAll("[data-lang-btn]").forEach(b=>
+  b.addEventListener("click",()=>setLang(b.getAttribute("data-lang-btn"))));
+
+/* режим — сквозной между страницами */
+function setMode(m){
+  document.body.setAttribute("data-mode",m);
+  try{localStorage.setItem("mode",m)}catch(e){}
+  document.querySelectorAll("[data-mode-btn]").forEach(b=>
+    b.setAttribute("aria-pressed",String(b.getAttribute("data-mode-btn")===m)));
+  if(document.getElementById("content") && document.getElementById("content").innerHTML){ renderNav(); initSpy(); }
+}
+document.querySelectorAll("[data-mode-btn]").forEach(b=>
+  b.addEventListener("click",()=>setMode(b.getAttribute("data-mode-btn"))));
+setMode((()=>{try{const m=localStorage.getItem("mode");return m==="life"?"life":"work"}catch(e){return "work"}})());
+
+/* лайтбокс с листанием */
+const lb=$("#lightbox"), lbImg=lb.querySelector("img"),
+      lbStage=lb.querySelector(".lightbox-stage"),
+      lbCap=lb.querySelector(".cap"), lbCount=lb.querySelector(".count"),
+      lbLvl=lb.querySelector(".lightbox-zoom .lvl");
+let gallery=[], idx=0, dir=1;                   // dir — куда листали в последний раз
+
+/* ——— масштаб ———
+   z=1 — картинка вписана в свободную область целиком.
+   tx/ty — сдвиг, чтобы рассмотреть край приближённой картинки.
+   Пределы сдвига считаем по области показа, а не по всему окну:
+   сверху и снизу полосы с кнопками, туда картинка заезжать не должна. */
+const ZMIN=1, ZMAX=8, ZSTEP=1.4;
+let z=1, tx=0, ty=0;
+
+function limits(){
+  const w=lbImg.offsetWidth*z, h=lbImg.offsetHeight*z;
+  return { mx:Math.max(0,(w-lbStage.clientWidth)/2),
+           my:Math.max(0,(h-lbStage.clientHeight)/2) };
+}
+function clampPan(){
+  const l=limits();
+  tx=Math.min(l.mx, Math.max(-l.mx, tx));
+  ty=Math.min(l.my, Math.max(-l.my, ty));
+}
+function paintZoom(animate){
+  lbImg.style.transition = animate ? "transform .2s ease" : "none";
+  lbImg.style.transform  = `translate(${tx}px, ${ty}px) scale(${z})`;
+  lb.classList.toggle("zoomed", z>ZMIN);
+  if(lbLvl) lbLvl.textContent = Math.round(z*100)+"%";
+  const out=lb.querySelector(".zoom-out"), inn=lb.querySelector(".zoom-in");
+  if(out) out.disabled = z<=ZMIN+.001;
+  if(inn) inn.disabled = z>=ZMAX-.001;
+}
+/* приближаем так, чтобы точка (cx,cy) осталась под курсором */
+function setZoom(next, cx, cy, animate){
+  next=Math.min(ZMAX, Math.max(ZMIN, next));
+  if(Math.abs(next-z)<.0001) return;
+  if(cx!=null){
+    const r=lbImg.getBoundingClientRect();
+    const k=next/z-1;
+    tx-=(cx-(r.left+r.width/2))*k;
+    ty-=(cy-(r.top+r.height/2))*k;
+  }
+  z=next;
+  if(z===ZMIN){ tx=0; ty=0; }
+  clampPan(); paintZoom(animate);
+}
+function resetZoom(animate){ z=ZMIN; tx=0; ty=0; paintZoom(animate); }
+
+function showImg(i){
+  if(!gallery.length) return;
+  idx=(i+gallery.length)%gallery.length;          // зацикливаем
+  const g=gallery[idx];
+  lbImg.src=g.src; lbImg.alt=g.cap||"";
+  lbCap.textContent=g.cap||"";
+  lbCount.textContent=gallery.length>1 ? `${idx+1} / ${gallery.length}` : "";
+  lb.querySelectorAll(".lightbox-nav").forEach(b=>b.style.display=gallery.length>1?"flex":"none");
+  lb.classList.toggle("single", gallery.length<=1);
+  resetZoom(false);                                // новая картинка — снова вписана
+}
+function go(step){ dir=step; showImg(idx+step); }
+/* justified-ряд: ширина пропорциональна картинке → высота одинаковая */
+function justifyFigs(){
+  document.querySelectorAll(".figs:not(.figs-full)").forEach(row=>{
+    row.querySelectorAll(".fig").forEach(fig=>{
+      if(fig.hasAttribute("data-w")) return;   // ширину задали в редакторе
+      const img=fig.querySelector("img");
+      const set=()=>{ if(img.naturalHeight) fig.style.flexGrow = img.naturalWidth/img.naturalHeight; };
+      img.complete ? set() : img.addEventListener("load", set, {once:true});
+    });
+  });
+}
+
+function openLb(btn){
+  /* Листаем все картинки страницы подряд, а не только соседние в блоке.
+     Пустые места и картинки, файл которых не загрузился, пропускаем. */
+  const all=[...document.querySelectorAll("#content .fig-btn")].filter(b=>{
+    if(!b.getAttribute("data-full")) return false;
+    const im=b.querySelector("img");
+    return !(im && im.complete && im.naturalWidth===0);
+  });
+  gallery=all.map(b=>({
+    src:b.getAttribute("data-full"),
+    cap:b.closest(".fig")?.querySelector("figcaption")?.textContent||""
+  }));
+  const at=all.indexOf(btn);
+  if(at<0) return;                                 // файла этой картинки нет — открывать нечего
+  dir=1;
+  showImg(at);
+  lb.classList.add("open");
+}
+function closeLb(){ lb.classList.remove("open"); resetZoom(false); }
+
+document.addEventListener("click", e=>{
+  const btn=e.target.closest(".fig-btn");
+  if(btn){ openLb(btn); return; }
+  if(!lb.classList.contains("open")) return;
+  if(e.target.closest(".lightbox-nav.prev")){ if(z===ZMIN) go(-1); return; }
+  if(e.target.closest(".lightbox-nav.next")){ if(z===ZMIN) go(1); return; }
+  if(e.target.closest(".lightbox-close")){ closeLb(); return; }
+  if(e.target.closest(".zoom-in")){  setZoom(z*ZSTEP, null, null, true); return; }
+  if(e.target.closest(".zoom-out")){ setZoom(z/ZSTEP, null, null, true); return; }
+  if(e.target.closest(".zoom-fit")){ resetZoom(true); return; }
+  if(e.target.closest(".lightbox-bar, .lightbox-nav")) return;
+  if(dragged) return;                              // это было перетаскивание, а не щелчок
+
+  /* Попали ли по картинке, решаем по координатам, а не по e.target:
+     во время перетаскивания браузер переадресует щелчок на область
+     показа, и тогда по цели не отличить картинку от фона. */
+  if(onImage(e.clientX, e.clientY)){
+    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
+    return;
+  }
+  // щелчок мимо картинки закрывает — но только пока не приближено
+  if(z===ZMIN) closeLb();
+});
+function onImage(x, y){
+  const r=lbImg.getBoundingClientRect();
+  return x>=r.left && x<=r.right && y>=r.top && y<=r.bottom;
+}
+
+document.addEventListener("keydown", e=>{
+  if(!lb.classList.contains("open")) return;
+  if(e.key==="Escape") return closeLb();
+  if(e.key==="+"||e.key==="="){ e.preventDefault(); return setZoom(z*ZSTEP,null,null,true); }
+  if(e.key==="-"||e.key==="_"){ e.preventDefault(); return setZoom(z/ZSTEP,null,null,true); }
+  if(e.key==="0"){ e.preventDefault(); return resetZoom(true); }
+  if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
+    const back=e.key==="ArrowLeft";
+    if(z>ZMIN){ e.preventDefault(); tx+=back?60:-60; clampPan(); paintZoom(true); }
+    else go(back ? -1 : 1);
+  }
+  if(z>ZMIN && (e.key==="ArrowUp"||e.key==="ArrowDown")){
+    e.preventDefault();
+    ty += e.key==="ArrowUp" ? 60 : -60; clampPan(); paintZoom(true);
+  }
+});
+
+/* колесо мыши и трекпад */
+lbStage.addEventListener("wheel", e=>{
+  if(!lb.classList.contains("open")) return;
+  e.preventDefault();
+  setZoom(z * (e.deltaY<0 ? 1.16 : 1/1.16), e.clientX, e.clientY, false);
+}, {passive:false});
+
+/* Мышь и пальцы — один код. Один указатель тянет картинку (или листает,
+   если не приближено), два указателя — щипок. */
+const pts=new Map();
+let panStart=null, pinchStart=null, dragged=false;
+
+function midOf(){
+  const a=[...pts.values()];
+  return { x:(a[0].x+a[1].x)/2, y:(a[0].y+a[1].y)/2,
+           d:Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y) };
+}
+lbStage.addEventListener("pointerdown", e=>{
+  if(e.target.closest(".lightbox-nav")) return;
+  pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  dragged=false;
+  if(pts.size===1){
+    panStart={x:e.clientX, y:e.clientY, tx:tx, ty:ty};
+    if(z>ZMIN){                                    // захват нужен только для перетаскивания
+      try{ lbStage.setPointerCapture(e.pointerId); }catch(err){}
+      lbStage.classList.add("grabbing");
+    }
+  } else if(pts.size===2){
+    const m=midOf();
+    pinchStart={d:m.d, z:z};
+    panStart=null;
+    lbStage.classList.remove("grabbing");
+  }
+});
+lbStage.addEventListener("pointermove", e=>{
+  if(!pts.has(e.pointerId)) return;
+  pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+
+  if(pts.size>=2 && pinchStart){
+    const m=midOf();
+    setZoom(pinchStart.z * m.d/pinchStart.d, m.x, m.y, false);
+    return;
+  }
+  if(!panStart) return;
+  const dx=e.clientX-panStart.x, dy=e.clientY-panStart.y;
+  if(Math.abs(dx)+Math.abs(dy)>4) dragged=true;
+  if(z>ZMIN){                                      // приближено — двигаем картинку
+    tx=panStart.tx+dx; ty=panStart.ty+dy;
+    clampPan(); paintZoom(false);
+  }
+});
+function endPointer(e){
+  if(!pts.has(e.pointerId)) return;
+  const start=panStart;
+  pts.delete(e.pointerId);
+  if(pts.size<2) pinchStart=null;
+  if(pts.size===0){
+    lbStage.classList.remove("grabbing");
+    panStart=null;
+    // не приближено и был заметный горизонтальный жест — листаем
+    if(start && z===ZMIN && gallery.length>1){
+      const dx=e.clientX-start.x, dy=e.clientY-start.y;
+      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) go(dx>0 ? -1 : 1);
+    }
+    setTimeout(()=>{ dragged=false; }, 0);         // чтобы клик после перетаскивания не сработал
+  }
+}
+["pointerup","pointercancel"].forEach(t=>lbStage.addEventListener(t, endPointer));
+
+addEventListener("resize", ()=>{ if(lb.classList.contains("open")){ clampPan(); paintZoom(false); } });
+
+/* файла нет (например, его удалили из assets) — убираем из листания
+   и сразу показываем следующую картинку в ту же сторону */
+lbImg.addEventListener("error", ()=>{
+  if(!lb.classList.contains("open") || !gallery.length || !lbImg.getAttribute("src")) return;
+  gallery.splice(idx, 1);
+  if(!gallery.length) return closeLb();
+  showImg(dir>0 ? idx : idx-1);
+});
+
+$("#burger").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
+$("#scrim").addEventListener("click",()=>document.body.classList.remove("nav-open"));
+$("#sidebar").addEventListener("click",e=>{if(e.target.closest("a"))document.body.classList.remove("nav-open")});
+
+setLang(L);
+if(location.hash) setTimeout(()=>document.querySelector(location.hash)?.scrollIntoView(),60);
+
+/* ===== CRM: мост к визуальному редактору ===== */
+/* Редактор лежит в assets/crm-editor.js и включается адресом ?crm. */
+window.CRM_HOST = {
+  id: CURRENT,
+  file: "case-sberpravo.html",
+  pageType: "case",
+  langs: ["ru","en"],
+  roots: { T: T, IMG: IMG, PROJECTS: { list: PROJECTS } },
+  dataPath: ["T", "$L"],
+  shared: ["PROJECTS"],
+  markers: [
+    { m:"CRM_T",   decl:"const T",   root:"T" },
+    { m:"CRM_IMG", decl:"const IMG", root:"IMG" }
+  ],
+  get L(){ return L; },
+  get render(){ return render; },
+  set render(f){ render = f; },
+  get renderNav(){ return renderNav; },
+  caps: {list:true, metricBig:true, figsFull:true, steps:true, why:true, task:true, tags:true, blockImg:true, flow:true}
+};
+</script>
+<script src="assets/crm-editor.js" defer></script>
+</body></html>
