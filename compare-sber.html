@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Сравнение картинок СберПраво</title>
+<style>
+:root{--bg:#FCFCFD;--ink:#131316;--muted:#6C6C74;--line:#E4E4E8;--accent:#F0512F;--card:#fff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card)}
+.bar h1{font-size:15px;margin:0;font-weight:600}
+.grp{display:flex;gap:4px;align-items:center}
+.grp span{color:var(--muted);margin-right:4px}
+button{font:inherit;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.hint{color:var(--muted);margin-left:auto}
+.cols{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);min-height:0}
+.side{background:var(--bg);display:flex;flex-direction:column;min-width:0;min-height:0}
+.cap{padding:8px 14px;border-bottom:1px solid var(--line);background:var(--card);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.cap b{font-weight:600}
+.cap em{font-style:normal;color:var(--muted)}
+.cap .w{color:var(--accent);font-weight:600}
+.view{flex:1;overflow:hidden;position:relative;min-height:0}
+iframe{position:absolute;left:0;top:0;border:0;background:var(--bg);transform-origin:0 0}
+@media (max-width:700px){.hint{display:none}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1>СберПраво: сравнение картинок</h1>
+  <div class="grp"><span>Язык</span><button data-lang="ru">Ру</button><button data-lang="en">En</button></div>
+  <div class="grp"><span>Масштаб</span><button data-z="fit">Вписать</button><button data-z="1">100%</button></div>
+  <div class="grp" id="status" style="color:var(--muted)"></div>
+  <div class="hint">Листайте любую из половин: вторая повторяет движение. Клик по картинке открывает её целиком.</div>
+</div>
+<div class="cols">
+  <section class="side">
+    <div class="cap"><span><b>Сейчас на сайте</b> <em>PNG и webp</em></span><span class="w" id="wl"></span></div>
+    <div class="view" id="vl"><iframe id="fl" title="Сейчас"></iframe></div>
+  </section>
+  <section class="side">
+    <div class="cap"><span><b>Новые картинки</b> <em>webp</em></span><span class="w" id="wr"></span></div>
+    <div class="view" id="vr"><iframe id="fr" title="Новые"></iframe></div>
+  </section>
+</div>
+<script>
+/* вес картинок на странице (все 33 картинки, сумма размеров файлов) */
+const W = {
+  ru: {cur: "33,2 МБ", nw: "19,1 МБ"},
+  en: {cur: "32,7 МБ", nw: "18,8 МБ"}
+};
+const FL = document.getElementById("fl"), FR = document.getElementById("fr");
+const VL = document.getElementById("vl");
+let lang = "ru", zoom = "fit";
+try { lang = localStorage.getItem("lang") === "en" ? "en" : "ru"; } catch (e) {}
+
+const DESIGN_W = 1280;                     // ширина «настольной» раскладки для режима «Вписать»
+
+function layout() {
+  const w = VL.clientWidth, h = VL.clientHeight;
+  const s = zoom === "fit" ? Math.min(1, w / DESIGN_W) : 1;
+  const iw = zoom === "fit" ? DESIGN_W : w;
+  [FL, FR].forEach(f => {
+    f.style.width = iw + "px";
+    f.style.height = (h / s) + "px";
+    f.style.transform = "scale(" + s + ")";
+  });
+}
+function labels() {
+  document.getElementById("wl").textContent = "картинки на странице: " + W[lang].cur;
+  document.getElementById("wr").textContent = "картинки на странице: " + W[lang].nw;
+  document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  document.querySelectorAll("[data-z]").forEach(b => b.classList.toggle("on", b.dataset.z === String(zoom)));
+}
+function load() {
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+  FL.src = "case-sberpravo.html";
+  FR.src = "case-sberpravo-new.html";
+}
+
+/* Синхронная прокрутка: повторяем положение в пикселях (раскладки одинаковы).
+   Эхо от собственной прокрутки узнаём по ожидаемому значению, таймеров нет.
+   У страницы включена плавная прокрутка, поэтому положение ставим мгновенно. */
+const exp = { l: -1, r: -1 };
+function hook(src, dst, me, other) {
+  try {
+    const w = src.contentWindow;
+    w.addEventListener("scroll", () => {
+      const y = w.scrollY;
+      if (Math.abs(y - exp[me]) < 2) return;      // это эхо нашей же прокрутки
+      exp[other] = y;
+      dst.contentWindow.scrollTo({ top: y, behavior: "instant" });
+    }, { passive: true });
+  } catch (e) {}
+}
+/* Чтобы обе страницы имели одинаковую высоту, сразу загружаем все картинки
+   (на сайте они подгружаются по мере прокрутки). */
+const ST = document.getElementById("status");
+let poll = null;
+function imgs(f) {
+  try { return [...f.contentDocument.images].filter(i => /sber-/.test(i.getAttribute("src") || "")); }
+  catch (e) { return []; }
+}
+function preload() {
+  [FL, FR].forEach(f => imgs(f).forEach(i => { i.loading = "eager"; }));
+  clearInterval(poll);
+  poll = setInterval(() => {
+    const a = imgs(FL), b = imgs(FR);
+    const da = a.filter(i => i.complete).length, db = b.filter(i => i.complete).length;
+    const done = a.length && da === a.length && db === b.length;
+    ST.textContent = done ? "Все картинки загружены, можно листать" : "Загружаю картинки: слева " + da + "/" + a.length + ", справа " + db + "/" + b.length;
+    if (done) clearInterval(poll);
+  }, 400);
+}
+let ready = 0;
+function onLoad() {
+  if (++ready === 2) { exp.l = exp.r = -1; hook(FL, FR, "l", "r"); hook(FR, FL, "r", "l"); preload(); }
+}
+FL.addEventListener("load", onLoad);
+FR.addEventListener("load", onLoad);
+
+document.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => {
+  lang = b.dataset.lang; ready = 0; labels(); load();
+});
+document.querySelectorAll("[data-z]").forEach(b => b.onclick = () => {
+  zoom = b.dataset.z === "fit" ? "fit" : 1; labels(); layout();
+});
+window.addEventListener("resize", layout);
+labels(); layout(); load();
+</script>
+</body>
+</html>
