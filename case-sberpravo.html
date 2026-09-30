@@ -138,6 +138,10 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .figs.figs-full{display:block}
 .figs.figs-full .fig{width:100%;margin:0}
 .figs.figs-full .fig img{width:100%;height:auto;display:block}
+.figs.figs-cols{display:block;column-count:var(--cols,3);column-gap:16px}
+.figs.figs-cols .fig{display:block;width:100%;margin:0 0 16px;break-inside:avoid}
+.figs.figs-cols .fig img{width:100%;height:auto;display:block}
+@media (max-width:640px){.figs.figs-cols{column-count:2}}
 .fig{margin:0;min-width:0;flex:1 1 0}
 .fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
   transition:transform .2s,filter .2s}
@@ -1128,6 +1132,28 @@ const CURRENT = "sberpravo";
                 "cap": ""
               }
             ],
+            "full": true,
+            "cards": [
+              {
+                "h": "",
+                "p": "Полностью с нуля нарисовал все состояния для приложения на iOS и Android"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "cards": [
+              {
+                "h": "",
+                "p": "Сделал CJM"
+              }
+            ],
+            "imgs": [
+              {
+                "src": "assets/sber-app/sber-app 2.png",
+                "cap": ""
+              }
+            ],
             "full": true
           }
         ]
@@ -1177,7 +1203,87 @@ const CURRENT = "sberpravo";
           {
             "ti": "",
             "note": "",
-            "imgs": []
+            "imgs": [
+              {
+                "src": "assets/sber-screens/01-client-catalog-1.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/02-client-catalog-2.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/03-client-catalog-3.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/04-client-catalog-4.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/05.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 7572
+              },
+              {
+                "src": "assets/sber-screens/06.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 7204
+              },
+              {
+                "src": "assets/sber-screens/07.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 5112
+              },
+              {
+                "src": "assets/sber-screens/08.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 5112
+              },
+              {
+                "src": "assets/sber-screens/09.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 12644
+              },
+              {
+                "src": "assets/sber-screens/10.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 4840
+              },
+              {
+                "src": "assets/sber-screens/11.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3808
+              },
+              {
+                "src": "assets/sber-screens/12-legaltech.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 10820
+              },
+              {
+                "src": "assets/sber-screens/13-partners.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 18720
+              }
+            ],
+            "cols": 3
           }
         ]
       }
@@ -1900,6 +2006,28 @@ const CURRENT = "sberpravo";
                 "cap": ""
               }
             ],
+            "full": true,
+            "cards": [
+              {
+                "h": "",
+                "p": "Designed every state of the iOS and Android app completely from scratch"
+              }
+            ]
+          },
+          {
+            "ti": "",
+            "cards": [
+              {
+                "h": "",
+                "p": "Created the CJM"
+              }
+            ],
+            "imgs": [
+              {
+                "src": "assets/sber-app/sber-app 2.png",
+                "cap": ""
+              }
+            ],
             "full": true
           }
         ]
@@ -1949,7 +2077,87 @@ const CURRENT = "sberpravo";
           {
             "ti": "",
             "note": "",
-            "imgs": []
+            "imgs": [
+              {
+                "src": "assets/sber-screens/01-client-catalog-1.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/02-client-catalog-2.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/03-client-catalog-3.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/04-client-catalog-4.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3920
+              },
+              {
+                "src": "assets/sber-screens/05.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 7572
+              },
+              {
+                "src": "assets/sber-screens/06.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 7204
+              },
+              {
+                "src": "assets/sber-screens/07.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 5112
+              },
+              {
+                "src": "assets/sber-screens/08.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 5112
+              },
+              {
+                "src": "assets/sber-screens/09.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 12644
+              },
+              {
+                "src": "assets/sber-screens/10.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 4840
+              },
+              {
+                "src": "assets/sber-screens/11.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 3808
+              },
+              {
+                "src": "assets/sber-screens/12-legaltech.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 10820
+              },
+              {
+                "src": "assets/sber-screens/13-partners.png",
+                "cap": "",
+                "iw": 5760,
+                "ih": 18720
+              }
+            ],
+            "cols": 3
           }
         ]
       }
@@ -2054,10 +2262,10 @@ function renderBlock(b, num){
 
     // реальные изображения — горизонтальный ряд, клик открывает во весь экран
     const imgs = s.imgs
-      ? `<div class="figs${s.full?" figs-full":""}">${s.imgs.map(im=>
+      ? `<div class="figs${s.full?" figs-full":""}${s.cols?" figs-cols":""}"${s.cols?` style="--cols:${s.cols}"`:""}>${s.imgs.map(im=>
           `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
              <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
-               <img src="${im.src}" alt="${im.cap}" loading="lazy">
+               <img src="${im.src}" alt="${im.cap}"${im.iw?` width="${im.iw}" height="${im.ih}"`:""} loading="lazy">
              </button>
              ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
            </figure>`).join("")}</div>`
@@ -2249,7 +2457,7 @@ function showImg(i){
 function go(step){ dir=step; showImg(idx+step); }
 /* justified-ряд: ширина пропорциональна картинке → высота одинаковая */
 function justifyFigs(){
-  document.querySelectorAll(".figs:not(.figs-full)").forEach(row=>{
+  document.querySelectorAll(".figs:not(.figs-full):not(.figs-cols)").forEach(row=>{
     row.querySelectorAll(".fig").forEach(fig=>{
       if(fig.hasAttribute("data-w")) return;   // ширину задали в редакторе
       const img=fig.querySelector("img");
