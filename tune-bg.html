@@ -2536,35 +2536,59 @@ window.CRM_HOST = {
 <script src="assets/crm-editor.js" defer></script>
 
 <style id="tune-css"></style>
-<div id="tune" style="position:fixed;right:14px;bottom:14px;z-index:9999;width:270px;padding:12px 14px;border-radius:14px;background:rgba(20,20,24,.92);color:#fff;font:13px/1.4 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35)">
-  <div style="font-weight:600;margin-bottom:8px">Подбор фона и тени</div>
-  <label style="display:block">Фон: <b id="t-bg-v"></b>
-    <input id="t-bg" type="range" min="0" max="100" value="0" style="width:100%"></label>
-  <div style="display:flex;align-items:center;gap:8px;margin:10px 0 4px">
-    <input id="t-on" type="checkbox" id="t-on"> <label for="t-on">Тень под картинками</label></div>
-  <label style="display:block">Сила: <b id="t-a-v"></b>
-    <input id="t-a" type="range" min="0" max="40" value="12" style="width:100%"></label>
-  <label style="display:block">Размер: <b id="t-s-v"></b>
-    <input id="t-s" type="range" min="4" max="48" value="18" style="width:100%"></label>
-  <div id="t-out" style="margin:8px 0;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap"></div>
-  <div style="display:flex;gap:6px"><button id="t-copy" style="flex:1;padding:6px;border-radius:8px;border:0;cursor:pointer">Копировать значения</button><button id="t-reset" style="padding:6px 10px;border-radius:8px;border:0;cursor:pointer">Сброс</button></div>
+<style>
+#tune{position:fixed;right:14px;bottom:14px;z-index:9999;width:300px;padding:12px 14px;border-radius:14px;background:rgba(20,20,24,.94);color:#fff;font:13px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+#tune h4{margin:0 0 8px;font-size:13px}
+#tune .row{display:flex;align-items:center;gap:6px}
+#tune input[type=range]{flex:1;width:100%;margin:6px 0 0}
+#tune .ticks{position:relative;height:26px;margin:0 8px}
+#tune .tick{position:absolute;top:0;transform:translateX(-50%);text-align:center;font-size:10px;color:#c9c9d0;white-space:nowrap;cursor:pointer}
+#tune .tick:before{content:"";display:block;width:2px;height:7px;margin:0 auto 1px;background:#F0512F}
+#tune .tick.w:before{background:#fff}
+#tune button{border:0;border-radius:8px;padding:5px 9px;cursor:pointer;background:#fff;color:#111;font:inherit}
+#tune .sw{display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid #888;vertical-align:-2px;margin-right:4px}
+#tune #t-out{margin:8px 0;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap}
+</style>
+<div id="tune">
+  <h4>Подбор фона и тени</h4>
+  <div>Фон: <span class="sw" id="t-sw"></span><b id="t-bg-v"></b></div>
+  <div class="row"><button id="t-bg-m" title="светлее на 1 уровень">−</button><input id="t-bg" type="range" min="0" max="15" step="0.25" value="3"><button id="t-bg-p" title="темнее на 1 уровень">+</button></div>
+  <div class="ticks" id="t-bg-ticks"></div>
+  <div class="row" style="margin-top:2px"><input id="t-on" type="checkbox" checked><label for="t-on">Тень под картинками</label></div>
+  <div>Сила: <b id="t-a-v"></b></div>
+  <input id="t-a" type="range" min="0" max="12" step="0.25" value="2">
+  <div class="ticks" id="t-a-ticks"></div>
+  <div>Размер: <b id="t-s-v"></b></div>
+  <input id="t-s" type="range" min="4" max="48" step="1" value="21">
+  <div class="ticks" id="t-s-ticks"></div>
+  <div id="t-out"></div>
+  <div class="row"><button id="t-mine" style="flex:1">Мой выбор</button><button id="t-copy" style="flex:1">Копировать</button><button id="t-white">Белый</button></div>
 </div>
 <script>
 (function(){
-  var A=[0xFC,0xFC,0xFD], B=[0xD2,0xD2,0xD8];               // от текущего фона к заметно серому
   var $=function(i){return document.getElementById(i)};
-  function hex(t){return "#"+A.map(function(a,i){var v=Math.round(a+(B[i]-a)*t);return (v<16?"0":"")+v.toString(16)}).join("").toUpperCase()}
+  var MINE={v:3,a:2,s:21};                                   // мой выбор: #FCFCFD, тень 2%, 21 px
+  function col(v){var L=Math.round(255-v),B=Math.min(255,L+1);return "#"+[L,L,B].map(function(x){return (x<16?"0":"")+x.toString(16)}).join("").toUpperCase()}
+  function ticks(id,rng,items){var c=$(id),mn=+rng.min,mx=+rng.max;c.innerHTML="";items.forEach(function(it){var d=document.createElement("div");d.className="tick"+(it.w?" w":"");d.style.left=((it.v-mn)/(mx-mn)*100)+"%";d.innerHTML=it.t;d.onclick=function(){rng.value=it.v;upd()};c.appendChild(d)})}
+  ticks("t-bg-ticks",$("t-bg"),[{v:0,t:"белый",w:1},{v:3,t:"мой выбор"}]);
+  ticks("t-a-ticks",$("t-a"),[{v:0,t:"0"},{v:2,t:"мой 2%"}]);
+  ticks("t-s-ticks",$("t-s"),[{v:21,t:"мой 21"}]);
   function upd(){
-    var bg=hex($("t-bg").value/100), on=$("t-on").checked, a=$("t-a").value/100, sz=+$("t-s").value, y=Math.round(sz/3);
-    var sh=on?"0 "+y+"px "+sz+"px rgba(0,0,0,"+a.toFixed(2)+")":"нет";
-    $("t-bg-v").textContent=bg; $("t-a-v").textContent=Math.round(a*100)+"%"; $("t-s-v").textContent=sz+" px";
+    var v=+$("t-bg").value,bg=col(v),on=$("t-on").checked,a=+$("t-a").value/100,sz=+$("t-s").value,y=Math.round(sz/3);
+    var as=(Math.round(a*1000)/1000).toString();
+    var sh=on?"0 "+y+"px "+sz+"px rgba(0,0,0,"+as+")":"нет";
+    $("t-bg-v").textContent=bg+(v===0?" (белый)":""); $("t-sw").style.background=bg;
+    $("t-a-v").textContent=(Math.round(a*1000)/10)+"%"; $("t-s-v").textContent=sz+" px";
     $("t-a").disabled=$("t-s").disabled=!on;
-    $("tune-css").textContent=":root{--bg:"+bg+"}"+(on?".fig-btn img{filter:drop-shadow(0 "+y+"px "+(sz/2)+"px rgba(0,0,0,"+a.toFixed(2)+"))}.fig-btn:hover{filter:none}":"");
+    $("tune-css").textContent=":root{--bg:"+bg+"}"+(on?".fig-btn img{filter:drop-shadow(0 "+y+"px "+(sz/2)+"px rgba(0,0,0,"+as+"))}.fig-btn:hover{filter:none}":"");
     $("t-out").textContent="Фон: "+bg+"\nТень: "+sh;
   }
   ["t-bg","t-on","t-a","t-s"].forEach(function(i){$(i).addEventListener("input",upd)});
-  $("t-reset").onclick=function(){$("t-bg").value=0;$("t-on").checked=false;$("t-a").value=12;$("t-s").value=18;upd()};
-  $("t-copy").onclick=function(){try{navigator.clipboard.writeText($("t-out").textContent)}catch(e){}; this.textContent="Скопировано"; var b=this; setTimeout(function(){b.textContent="Копировать значения"},1200)};
+  $("t-bg-m").onclick=function(){$("t-bg").value=Math.max(0,+$("t-bg").value-1);upd()};
+  $("t-bg-p").onclick=function(){$("t-bg").value=Math.min(15,+$("t-bg").value+1);upd()};
+  $("t-white").onclick=function(){$("t-bg").value=0;upd()};
+  $("t-mine").onclick=function(){$("t-bg").value=MINE.v;$("t-on").checked=true;$("t-a").value=MINE.a;$("t-s").value=MINE.s;upd()};
+  $("t-copy").onclick=function(){try{navigator.clipboard.writeText($("t-out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать"},1200)};
   upd();
 })();
 </script>
