@@ -36,7 +36,7 @@ V4.kinds = {
   edu:{ru:"обучение",en:"education"}, art:{ru:"творчество",en:"creative"}
 };
 V4.timeline = [
-  {id:"site", yr:"2026", kind:"project", ai:true, ti:{ru:"Этот сайт",en:"This website"}},
+  {id:"site", yr:"2026", kind:"project", ai:true, ti:{ru:"Сайт портфолио",en:"Portfolio site"}},
   {id:"assist", yr:"2026", kind:"project", ai:true, ti:{ru:"АссистПРО",en:"AssistPRO"}, prof:"B2B SaaS"},
   {id:"shtang", yr:"2026", kind:"edu", ti:{ru:"Игорь Штанг",en:"Igor Shtang"}, prof:{ru:"таблицы",en:"spreadsheets"}},
   {id:"ceramics", yr:"2025", kind:"art", ti:{ru:"Керамика",en:"Ceramics"}},
@@ -51,7 +51,6 @@ V4.timeline = [
   {id:"mda", yr:"2017", kind:"edu", ti:{ru:"Moscow Digital Academy",en:"Moscow Digital Academy"}, prof:"UX/UI"},
   {id:"freelance", yr:"2016", kind:"work", work:true, ti:{ru:"Фриланс",en:"Freelance"}},
   {id:"gym", yr:"2016", kind:"edu", ti:{ru:"Design:GYM",en:"Design:GYM"}},
-  {id:"soldatchin", yr:"2016", kind:"edu", ti:{ru:"Школа Солдатчина",en:"Soldatchin school"}, prof:{ru:"веб-дизайн",en:"web design"}},
   {id:"toys", yr:"2015", kind:"work", ti:{ru:"Магазин игрушек",en:"Toy store"}, prof:{ru:"консультант",en:"sales"}},
   {id:"photo", yr:"2015", kind:"art", ti:{ru:"Фотография",en:"Photography"}},
   {id:"print", yr:"2014", kind:"work", ti:{ru:"Полиграфия",en:"Print design"}, prof:{ru:"первая подработка",en:"first side job"}},
