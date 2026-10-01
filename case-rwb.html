@@ -103,9 +103,10 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
 .fig{margin:0;min-width:0;flex:1 1 0}
 .fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
-  transition:transform .2s,filter .2s}
-.fig-btn:hover{transform:translateY(-2px);filter:brightness(.97)}
-.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(0,0,0,.02))}
+  transition:transform .25s ease}
+.fig-btn:hover{transform:translateY(-3px)}
+.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(0,0,0,.02));transition:filter .25s ease}
+.fig-btn:hover img{filter:drop-shadow(0 14px 20px rgba(0,0,0,.10))}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
