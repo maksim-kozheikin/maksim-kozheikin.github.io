@@ -173,8 +173,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .life-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .points a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .life-text a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
-.life-tag{text-decoration:none;transition:color .2s,border-color .2s}
-.life-tag:hover{color:var(--accent);border-color:var(--accent)}
+.life-tag{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--sel);color:var(--muted);padding:6px 11px;border-radius:999px;font-size:var(--eyebrow);line-height:1.2;text-decoration:none;transition:color .15s}
+.life-tag svg{flex:none}
+.life-tag:hover{color:var(--accent)}
 .jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
 .jtbd b{color:var(--ink);font-weight:600}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:24px}
@@ -337,7 +338,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   site:{
     ru:{desc:"Сайт портфолио. Я спроектировал и собрал его вместе с нейросетью Claude",
       parts:[
-        {h:"Какой опыт я получил", paras:[
+        {h:"Какой опыт я получил", list:[
           "До этого я уже использовал нейросети, чтобы делать дизайн и писать тексты. А вот сайт с нейросетью я собрал впервые, и именно здесь. Claude писал код и вёрстку. Я ставил задачи, выбирал варианты и принимал решения.",
           "Чтобы сайт заработал, мне пришлось разобраться с GitHub. Раньше это не был мой инструмент. Теперь сайт живёт в репозитории, и я понимаю, как через него идут изменения и публикация.",
           "Для сайта нужны были десятки картинок. Я искал быстрый и бесплатный сервис, который сразу сжимает и обрабатывает много изображений. Перепробовал многие сервисы для редактирования картинок и выбрал <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>, потому что он умеет массовую обработку и стоит ноль.",
@@ -349,7 +350,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
           tags:[{t:"urzhanovaa.com", href:"https://urzhanovaa.com"}, {t:"olenkevich.com", href:"https://olenkevich.com/"}, {t:"ivanzviahin.com", href:"https://ivanzviahin.com/"}, {t:"readymag.website/u1964621708", href:"https://readymag.website/u1964621708/5730127/"}, {t:"garri.design", href:"https://garri.design/"}, {t:"steblina.com", href:"https://www.steblina.com/"}, {t:"gkvasnikov.com", href:"https://www.gkvasnikov.com/"}, {t:"elizque.framer.website", href:"https://elizque.framer.website/"}, {t:"morretrf.com", href:"https://morretrf.com/"}, {t:"kefiijrw.com", href:"https://kefiijrw.com/"}]}]},
     en:{desc:"Portfolio site. I designed and built it together with the Claude neural network",
       parts:[
-        {h:"What experience I gained", paras:[
+        {h:"What experience I gained", list:[
           "Before this I had already used neural networks to do design and write copy. But I built a site with a neural network for the first time, and here. Claude wrote the code and the layout. I set the tasks, chose the options and made the decisions.",
           "To make the site work I had to figure out GitHub. It had never been my tool. Now the site lives in a repository, and I understand how changes and publishing go through it.",
           "The site needed dozens of images. I was looking for a fast and free service that compresses and processes many images at once. I tried many image editing services and chose <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>, because it handles bulk processing and costs nothing.",
@@ -645,7 +646,7 @@ function part(p){
   if(p.links) body += `<ul class="life-links">${p.links.map(x=>x.href
       ? `<li><a href="${x.href}"${/^https?:/.test(x.href)?' target="_blank" rel="noopener"':''}>${x.t}</a>${x.note?` <span class="life-note">— ${x.note}</span>`:""}</li>`
       : `<li class="life-ph">${T[L].fill}: ${x.ph}</li>`).join("")}</ul>`;
-  if(p.tags)  body += `<div class="life-tags">${p.tags.map(x=>`<a class="chip life-tag" href="${x.href}" target="_blank" rel="noopener">${x.t}</a>`).join("")}</div>`;
+  if(p.tags)  body += `<div class="life-tags">${p.tags.map(x=>`<a class="chip life-tag" href="${x.href}" target="_blank" rel="noopener">${x.t}${V4_ICON_SITE}</a>`).join("")}</div>`;
   if(p.shots) body += `<div class="shots">${Array.from({length:p.shots},()=>`<div class="shot">${T[L].photo}</div>`).join("")}</div>`;
   const kind = p.list?"list":p.paras?"paras":p.text!==undefined?"text":p.ph!==undefined?"ph":p.links?"links":p.tags?"tags":p.shots?"shots":"";
   return `<section class="life-part" data-kind="${kind}"><h2 class="life-h">${p.h}</h2>${body}</section>`;
