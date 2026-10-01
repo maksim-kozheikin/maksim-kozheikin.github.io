@@ -172,6 +172,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:var(--small);color:var(--muted)}
 .life-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .points a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.life-text a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .life-tag{text-decoration:none;transition:color .2s,border-color .2s}
 .life-tag:hover{color:var(--accent);border-color:var(--accent)}
 .jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
@@ -336,70 +337,68 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   site:{
     ru:{desc:"Сайт портфолио. Я спроектировал и собрал его вместе с нейросетью Claude",
       parts:[
-        {h:"Что сделано", list:[
-          "Разбираюсь в нейросетях и использую их каждый день в работе",
-          "Спроектировал сайт целиком. Главная, кейсы, страницы с опытом и курсами, русская и английская версии",
-          "Собрал его вместе с Claude. Я ставил задачи, выбирал варианты и принимал решения, а Claude писал код и тексты"]},
-        {h:"Что делал Claude", list:[
-          "Вёрстка и все доработки по моим описаниям",
-          "Проверка страниц в браузере и исправление ошибок",
-          "Переводы на английский и редактура текстов",
-          "Публикация сайта на GitHub"]},
-        {h:"Что пришлось освоить", list:[
-          "Разобраться с GitHub. Сайт живёт в репозитории, и каждое изменение проходит через него",
-          "Научиться быстро подготавливать картинки. Я перепробовал много сервисов для редактирования изображений и остановился на <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>. Там можно обрабатывать много картинок сразу, и это бесплатно"]},
-        {h:"Кем вдохновлялся", tags:[{t:"urzhanovaa.com", href:"https://urzhanovaa.com"}, {t:"olenkevich.com", href:"https://olenkevich.com/"}, {t:"ivanzviahin.com", href:"https://ivanzviahin.com/"}, {t:"readymag.website/u1964621708", href:"https://readymag.website/u1964621708/5730127/"}, {t:"garri.design", href:"https://garri.design/"}, {t:"steblina.com", href:"https://www.steblina.com/"}, {t:"gkvasnikov.com", href:"https://www.gkvasnikov.com/"}, {t:"elizque.framer.website", href:"https://elizque.framer.website/"}, {t:"morretrf.com", href:"https://morretrf.com/"}, {t:"kefiijrw.com", href:"https://kefiijrw.com/"}]}]},
+        {h:"Какой опыт я получил", paras:[
+          "До этого я уже использовал нейросети, чтобы делать дизайн и писать тексты. А вот сайт с нейросетью я собрал впервые, и именно здесь. Claude писал код и вёрстку. Я ставил задачи, выбирал варианты и принимал решения.",
+          "Чтобы сайт заработал, мне пришлось разобраться с GitHub. Раньше это не был мой инструмент. Теперь сайт живёт в репозитории, и я понимаю, как через него идут изменения и публикация.",
+          "Для сайта нужны были десятки картинок. Я искал быстрый и бесплатный сервис, который сразу сжимает и обрабатывает много изображений. Перепробовал многие сервисы для редактирования картинок и выбрал <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>, потому что он умеет массовую обработку и стоит ноль.",
+          "Тексты кейсов я переводил на английский прямо в Figma, чтобы у сайта были две полные версии.",
+          "Портфолио я собирал из старых файлов. В части проектов в Figma слетели шрифты, и я искал их и устанавливал заново. Некоторые проекты были сделаны, когда в Figma ещё не было автолейаута. Там всё съехало, и я выравнивал это вручную. Ещё часть проектов я делал в Sketch и Photoshop, и от них остались только картинки.",
+          "Концепцию сайта я менял несколько раз. Я хотел сделать функциональную и простую вещь без наворотов, и менял подход, пока не добился именно этого."]},
+        {h:"Кем вдохновлялся", paras:[
+          "В каждом из этих дизайнеров мне что-то понравилось. У кого-то структура, у кого-то визуал, у кого-то подача, а у кого-то эмоции. Я благодарен им и восхищаюсь их сайтами."],
+          tags:[{t:"urzhanovaa.com", href:"https://urzhanovaa.com"}, {t:"olenkevich.com", href:"https://olenkevich.com/"}, {t:"ivanzviahin.com", href:"https://ivanzviahin.com/"}, {t:"readymag.website/u1964621708", href:"https://readymag.website/u1964621708/5730127/"}, {t:"garri.design", href:"https://garri.design/"}, {t:"steblina.com", href:"https://www.steblina.com/"}, {t:"gkvasnikov.com", href:"https://www.gkvasnikov.com/"}, {t:"elizque.framer.website", href:"https://elizque.framer.website/"}, {t:"morretrf.com", href:"https://morretrf.com/"}, {t:"kefiijrw.com", href:"https://kefiijrw.com/"}]}]},
     en:{desc:"Portfolio site. I designed and built it together with the Claude neural network",
       parts:[
-        {h:"What was done", list:[
-          "I understand neural networks and use them every day at work",
-          "I designed the whole site. The home page, case studies, pages about experience and courses, Russian and English versions",
-          "I built it together with Claude. I set the tasks, chose the options and made the decisions, and Claude wrote the code and the copy"]},
-        {h:"What Claude did", list:[
-          "Layout and every change from my descriptions",
-          "Checking pages in the browser and fixing errors",
-          "English translations and copy editing",
-          "Publishing the site on GitHub"]},
-        {h:"What I had to learn", list:[
-          "I had to figure out GitHub. The site lives in a repository, and every change goes through it",
-          "I had to learn to prepare images fast. I tried many image editing services and settled on <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>. It processes many images at once, and it is free"]},
-        {h:"Inspired by", tags:[{t:"urzhanovaa.com", href:"https://urzhanovaa.com"}, {t:"olenkevich.com", href:"https://olenkevich.com/"}, {t:"ivanzviahin.com", href:"https://ivanzviahin.com/"}, {t:"readymag.website/u1964621708", href:"https://readymag.website/u1964621708/5730127/"}, {t:"garri.design", href:"https://garri.design/"}, {t:"steblina.com", href:"https://www.steblina.com/"}, {t:"gkvasnikov.com", href:"https://www.gkvasnikov.com/"}, {t:"elizque.framer.website", href:"https://elizque.framer.website/"}, {t:"morretrf.com", href:"https://morretrf.com/"}, {t:"kefiijrw.com", href:"https://kefiijrw.com/"}]}]}
+        {h:"What experience I gained", paras:[
+          "Before this I had already used neural networks to do design and write copy. But I built a site with a neural network for the first time, and here. Claude wrote the code and the layout. I set the tasks, chose the options and made the decisions.",
+          "To make the site work I had to figure out GitHub. It had never been my tool. Now the site lives in a repository, and I understand how changes and publishing go through it.",
+          "The site needed dozens of images. I was looking for a fast and free service that compresses and processes many images at once. I tried many image editing services and chose <a href='https://to.imagestool.com/' target='_blank' rel='noopener'>to.imagestool.com</a>, because it handles bulk processing and costs nothing.",
+          "I translated the case texts into English right in Figma, so that the site has two full versions.",
+          "I put the portfolio together from old files. In some projects the fonts had broken in Figma, and I had to find and reinstall them. Some projects were made when Figma did not yet have auto layout. Everything shifted there, and I fixed it by hand. Other projects I made in Sketch and Photoshop, and only images are left of them.",
+          "I changed the concept of the site several times. I wanted to make something functional and simple, without frills, and I kept changing the approach until I got exactly that."]},
+        {h:"Inspired by", paras:[
+          "I liked something in each of these designers. In some it is the structure, in some the visuals, in some the way things are presented, and in some the emotions. I am grateful to them and I admire their sites."],
+          tags:[{t:"urzhanovaa.com", href:"https://urzhanovaa.com"}, {t:"olenkevich.com", href:"https://olenkevich.com/"}, {t:"ivanzviahin.com", href:"https://ivanzviahin.com/"}, {t:"readymag.website/u1964621708", href:"https://readymag.website/u1964621708/5730127/"}, {t:"garri.design", href:"https://garri.design/"}, {t:"steblina.com", href:"https://www.steblina.com/"}, {t:"gkvasnikov.com", href:"https://www.gkvasnikov.com/"}, {t:"elizque.framer.website", href:"https://elizque.framer.website/"}, {t:"morretrf.com", href:"https://morretrf.com/"}, {t:"kefiijrw.com", href:"https://kefiijrw.com/"}]}]}
   },
   assist:{
     links:{site:"https://digitalbase.ru/products"},
     ru:{when:"Январь 2026 — Сейчас", role:"Product Designer",
       desc:"АссистПРО — стартап. Система поиска, обоснования и защиты дополнительного бюджета проекта",
-      parts:[{h:"Задача", ph:"какую проблему решает продукт и для кого"},
-             {h:"Что я сделал", paras:["Я единственный дизайнер в продукте. Поэтому отвечаю за его дизайн целиком, от первых идей до проработки сложных сценариев."]},
-             {h:"Нейросеть и Figma", paras:["Сначала я использовал нейросеть, чтобы быстро набросать базу для дизайна. Так не пришлось начинать с чистого листа, и направление стало видно сразу.","Потом перешёл в Figma. Там я собрал дизайн-систему и вручную проработал сложные кейсы, потому что именно в них важны детали и логика."]},
-             {h:"Макеты", shots:3}]},
+      parts:[
+        {h:"О продукте", paras:["Продукт помогает найти дополнительный бюджет для проекта, обосновать его и защитить."]},
+        {h:"Что я сделал", paras:["Я единственный дизайнер в продукте. Поэтому дизайн целиком на мне, от первых идей до проработки сложных сценариев. Я сам решаю, что делать в первую очередь, и сам отвечаю за результат."]},
+        {h:"Нейросеть и Figma", paras:["Сначала я использовал нейросеть, чтобы быстро набросать базу для дизайна. Так не пришлось начинать с чистого листа, и направление стало видно сразу.","Потом я перешёл в Figma. Там я собрал дизайн-систему и вручную проработал сложные кейсы, потому что именно в них важны детали и логика. Нейросеть ускорила начало, а качество довёл я."]},
+        {h:"Макеты", shots:3}]},
     en:{when:"Jan 2026 — Now", role:"Product Designer",
       desc:"AssistPRO — a startup. A system to find, justify and defend additional project budget",
-      parts:[{h:"Problem", ph:"what the product solves and for whom"},
-             {h:"What I did", paras:["I am the only designer on the product. So I am responsible for its design as a whole, from the first ideas to the complex scenarios."]},
-             {h:"Neural network and Figma", paras:["At first I used a neural network to quickly sketch a base for the design. That way I did not have to start from a blank page, and the direction was clear right away.","Then I moved to Figma. There I built the design system and worked out the complex cases by hand, because details and logic matter most in them."]},
-             {h:"Screens", shots:3}]}
+      parts:[
+        {h:"About the product", paras:["The product helps to find additional budget for a project, justify it and defend it."]},
+        {h:"What I did", paras:["I am the only designer on the product. So the design is entirely on me, from the first ideas to the complex scenarios. I decide what to do first, and I am responsible for the result."]},
+        {h:"Neural network and Figma", paras:["At first I used a neural network to quickly sketch a base for the design. That way I did not have to start from a blank page, and the direction was clear right away.","Then I moved to Figma. There I built the design system and worked out the complex cases by hand, because details and logic matter most in them. The neural network sped up the start, and I brought the quality."]},
+        {h:"Screens", shots:3}]}
   },
   shtang:{
     ru:{desc:"Курс Игоря Штанга «Таблицы»",
       parts:[
         {h:"О курсе", paras:["Курс посвящён таблицам в интерфейсах. Это один из самых частых и самых сложных элементов в рабочих продуктах. В таблице много данных, много действий и много людей, которым с ней работать каждый день.","Курс разбирает, как спроектировать такую таблицу, чтобы она не превращалась в стену цифр."]},
-        {h:"Чем помог", list:[
+        {h:"Почему я его прошёл", paras:["Таблицы встречаются почти в каждом рабочем продукте, а хорошо сделать их непросто. Поэтому я решил разобраться в теме системно, а не решать задачу заново каждый раз."]},
+        {h:"Какой опыт я получил", list:[
           "Я стал смотреть на таблицу как на рабочий инструмент. Теперь начинаю с вопросов, что человек в ней ищет, что сравнивает и какие действия делает чаще всего",
-          "Появилась система. Я понимаю, из каких частей собирается таблица и как подбирать их под конкретную задачу",
-          "Мне стало проще объяснять решения команде и продакту, потому что за ними стоят понятные принципы",
+          "Появилась система. Я понимаю, из каких частей собирается таблица, и подбираю их под конкретную задачу",
+          "Мне проще объяснять решения команде и продакту, потому что за ними стоят понятные принципы",
           "Применяю это в B2B-продуктах, где таблицы и списки составляют основу интерфейса"]},
-        {h:"Что понравилось", paras:["Курс узкий и практичный. Одна тема разобрана до мелочей, поэтому знания можно сразу применять в работе, а не просто держать в голове."]},
+        {h:"Что понравилось", paras:["Курс узкий и практичный. Одна тема разобрана до мелочей, поэтому знания можно сразу применять в работе."]},
         {h:"Ссылка", tags:[{t:"igorshtang.ru/course/tables", href:"https://www.igorshtang.ru/course/tables"}]}]},
     en:{desc:"Igor Shtang’s course “Tables”",
       parts:[
         {h:"About the course", paras:["The course is about tables in interfaces. It is one of the most common and most complex elements in working products. A table holds a lot of data, a lot of actions and a lot of people who work with it every day.","The course shows how to design such a table so that it does not turn into a wall of numbers."]},
-        {h:"How it helped", list:[
+        {h:"Why I took it", paras:["Tables appear in almost every working product, and it is not easy to do them well. So I decided to understand the topic systematically, instead of solving the task from scratch each time."]},
+        {h:"What experience I gained", list:[
           "I started to see a table as a working tool. Now I begin with questions about what a person looks for in it, what they compare and which actions they do most often",
-          "I got a system. I understand what a table is made of and how to choose the parts for a specific task",
-          "It became easier to explain decisions to the team and the product manager, because clear principles stand behind them",
+          "I got a system. I understand what a table is made of, and I choose the parts for a specific task",
+          "It is easier for me to explain decisions to the team and the product manager, because clear principles stand behind them",
           "I use it in B2B products, where tables and lists are the core of the interface"]},
-        {h:"What I liked", paras:["The course is narrow and practical. One topic is covered in detail, so the knowledge can be used at work right away and not just kept in your head."]},
+        {h:"What I liked", paras:["The course is narrow and practical. One topic is covered in detail, so the knowledge can be used at work right away."]},
         {h:"Link", tags:[{t:"igorshtang.ru/course/tables", href:"https://www.igorshtang.ru/course/tables"}]}]}
   },
   ceramics:{
@@ -412,21 +411,23 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
     ru:{when:"2024", role:"Senior UX/UI Designer", desc:"Мобильное приложение «МТС Умный дом» для управления умным домом",
       parts:[
         {h:"О приложении", paras:["«МТС Умный дом» — приложение для управления домом. В нём человек подключает устройства, собирает их в одном месте и настраивает сценарии. Например, «ушёл из дома, и свет выключился».","Для дизайна это непростая задача. Устройств много, они разные, а пользователю нужно, чтобы всё работало просто и понятно."]},
-        {h:"Что я делал как Senior-дизайнер", list:[
+        {h:"Что я делал", list:[
           "Меня взяли в команду как Senior-дизайнера, и я сразу включился в работу над мобильным приложением",
           "Занимался сценариями управления устройствами и настройкой автоматизаций",
           "Разбирался в логике продукта вместе с продактом и разработкой, чтобы решения были понятны всей команде"]},
-        {h:"Чем всё закончилось", paras:["Меня взяли в команду, но через два месяца в компании начались массовые сокращения, и я попал под них. Я ушёл с компенсацией."]},
+        {h:"Чем всё закончилось", paras:["Через два месяца в компании начались массовые сокращения, и я попал под них. Я ушёл с компенсацией."]},
+        {h:"Какой опыт я получил", paras:["Я попал в крупную компанию на роль Senior-дизайнера и быстро вошёл в продукт с большим числом устройств и сценариев. Этот опыт показал мне, как устроена работа над сложным мобильным продуктом внутри большой команды."]},
         {h:"Ссылка", tags:[{t:"Приложение в App Store", href:"https://apps.apple.com/ru/app/%D0%BC%D1%82%D1%81-%D1%83%D0%BC%D0%BD%D1%8B%D0%B9-%D0%B4%D0%BE%D0%BC/id6444015366"}]},
         {h:"Макеты", shots:3}]},
     en:{when:"2024", role:"Senior UX/UI Designer", desc:"MTS Smart Home, a mobile app for controlling a smart home",
       parts:[
         {h:"About the app", paras:["MTS Smart Home is an app for running a home. In it a person connects devices, keeps them in one place and sets up scenarios. For example, “I left home, and the lights went off”.","This is not an easy task for design. There are many devices, they are all different, and the user needs everything to work simply and clearly."]},
-        {h:"What I did as a Senior designer", list:[
+        {h:"What I did", list:[
           "I was hired into the team as a Senior designer and got straight into work on the mobile app",
           "I worked on the flows for controlling devices and on setting up automations",
           "I worked through the product logic with the product manager and developers, so that the decisions were clear to the whole team"]},
-        {h:"How it ended", paras:["I was hired into the team, but two months later the company started mass layoffs and I was among those affected. I left with compensation."]},
+        {h:"How it ended", paras:["Two months later the company started mass layoffs and I was among those affected. I left with compensation."]},
+        {h:"What experience I gained", paras:["I joined a large company as a Senior designer and quickly got into a product with many devices and scenarios. This experience showed me how work on a complex mobile product goes inside a large team."]},
         {h:"Link", tags:[{t:"The app in the App Store", href:"https://apps.apple.com/ru/app/%D0%BC%D1%82%D1%81-%D1%83%D0%BC%D0%BD%D1%8B%D0%B9-%D0%B4%D0%BE%D0%BC/id6444015366"}]},
         {h:"Screens", shots:3}]}
   },
@@ -435,41 +436,43 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
       parts:[
         {h:"О курсе", paras:["Это курс Ильи Бирмана в Бюро Горбунова о том, как устроены интерфейсы и как правильно показывать информацию. В нём нет моды и случайных решений. Всё строится на понятных принципах, таких как иерархия, группировка и единый стиль."]},
         {h:"Почему я его прошёл", paras:["Илью Бирмана и Бюро я читал задолго до курса. Хотелось получить базу напрямую от автора и понять не просто как принято делать, а почему это работает."]},
-        {h:"Результат", list:[
-          "Я обосновываю решения принципами, а не вкусом, и могу объяснить, почему интерфейс сделан именно так",
+        {h:"Какой опыт я получил", list:[
+          "Я обосновываю решения принципами, а не вкусом, и могу объяснить команде, почему интерфейс сделан именно так",
           "Замечаю мелкие ошибки в подаче информации, в иерархии, подписях и типографике",
           "Это база, к которой я возвращаюсь в каждом проекте"]},
-        {h:"Читаю и советую", paras:["Я читаю Илью и Бюро давно и продолжаю читать до сих пор. Советую начать с этих материалов каждому, кто делает интерфейсы."]},
+        {h:"Читаю и советую", paras:["Я читаю Илью и Бюро давно и продолжаю читать до сих пор. Это для меня источник, из которого я учусь постоянно, а не один раз. Советую начать с этих материалов каждому, кто делает интерфейсы."]},
         {h:"Ссылка", tags:[{t:"bureau.ru/lectures/ui", href:"https://bureau.ru/lectures/ui/"}]}]},
     en:{desc:"Ilya Birman’s course on user interface and information design at Gorbunov Bureau",
       parts:[
         {h:"About the course", paras:["This is Ilya Birman’s course at Gorbunov Bureau about how interfaces work and how to present information properly. There is no fashion and no random decisions in it. Everything is built on clear principles, such as hierarchy, grouping and a consistent style."]},
         {h:"Why I took it", paras:["I had been reading Ilya Birman and the Bureau long before the course. I wanted the basics straight from the author, and to understand not just how things are usually done, but why they work."]},
-        {h:"Result", list:[
-          "I justify decisions with principles, not taste, and I can explain why an interface is built the way it is",
+        {h:"What experience I gained", list:[
+          "I justify decisions with principles, not taste, and I can explain to the team why an interface is built the way it is",
           "I notice small mistakes in how information is presented, in hierarchy, labels and typography",
           "It is the base I come back to in every project"]},
-        {h:"I read it and recommend it", paras:["I have been reading Ilya and the Bureau for a long time and I still do. I recommend starting with these materials to everyone who designs interfaces."]},
+        {h:"I read it and recommend it", paras:["I have been reading Ilya and the Bureau for a long time and I still do. For me it is a source I learn from all the time, not once. I recommend starting with these materials to everyone who designs interfaces."]},
         {h:"Link", tags:[{t:"bureau.ru/lectures/ui", href:"https://bureau.ru/lectures/ui/"}]}]}
   },
   mda:{
     ru:{desc:"Moscow Digital Academy, курс «Digital, UX/UI»",
       parts:[
         {h:"О курсе", paras:["Курс по digital-дизайну (UX/UI) в Moscow Digital Academy. Занятия проходили вживую, в группе дизайнеров, которые, как и я, только входили в профессию."]},
-        {h:"Защита проекта", paras:["В нашей группе я был главным по проекту. В конце курса я вышел перед всеми, представил наш проект и защищал его решения. Я рассказывал, почему мы сделали именно так, и отвечал на вопросы.","Выступать было волнительно, но именно на защите я понял, что умею удерживать внимание и отстаивать решения. Это был мой первый серьёзный опыт публичного выступления."]},
-        {h:"Что ещё было полезно", list:[
-          "Живые занятия. Вопросы можно было задать сразу, а задачи разобрать на месте",
-          "Группа таких же дизайнеров. Мы обсуждали работы друг друга и видели, как одну задачу решают по-разному",
-          "Работа над общим проектом от идеи до защиты"]},
+        {h:"Моя роль и защита проекта", paras:["В нашей группе я был главным по проекту. В конце курса я вышел перед всеми, представил наш проект и защищал его решения. Я рассказывал, почему мы сделали именно так, и отвечал на вопросы.","Выступать было волнительно, но именно на защите я понял, что умею удерживать внимание и отстаивать решения."]},
+        {h:"Какой опыт я получил", list:[
+          "Опыт публичного выступления и защиты своей работы перед группой",
+          "Опыт работы над общим проектом от идеи до защиты, где я отвечал за результат команды",
+          "Живые занятия, на которых можно было сразу задать вопрос и разобрать задачу на месте",
+          "Группа таких же дизайнеров. Мы обсуждали работы друг друга и видели, как одну задачу решают по-разному"]},
         {h:"Ссылка", tags:[{t:"m-d-a.ru/digital-design", href:"https://m-d-a.ru/digital-design"}]}]},
     en:{desc:"Moscow Digital Academy, Digital, UX/UI course",
       parts:[
         {h:"About the course", paras:["A course in digital design (UX/UI) at Moscow Digital Academy. Classes were live, in a group of designers who, like me, were just entering the profession."]},
-        {h:"Project defence", paras:["In our group I was the lead on the project. At the end of the course I stood up in front of everyone, presented our project and defended its decisions. I explained why we had done it this way and answered questions.","It was nerve-racking, but at the defence I realised that I can hold attention and stand up for decisions. It was my first serious public speaking experience."]},
-        {h:"What else was useful", list:[
-          "Live classes. Questions could be asked right away, and tasks worked through on the spot",
-          "A group of designers like me. We discussed each other’s work and saw how one task can be solved in different ways",
-          "Work on a shared project from the idea to the defence"]},
+        {h:"My role and the project defence", paras:["In our group I was the lead on the project. At the end of the course I stood up in front of everyone, presented our project and defended its decisions. I explained why we had done it this way and answered questions.","It was nerve-racking, but at the defence I realised that I can hold attention and stand up for decisions."]},
+        {h:"What experience I gained", list:[
+          "Experience of speaking in public and defending my work in front of a group",
+          "Experience of working on a shared project from the idea to the defence, where I was responsible for the team’s result",
+          "Live classes, where I could ask a question right away and work through a task on the spot",
+          "A group of designers like me. We discussed each other’s work and saw how one task can be solved in different ways"]},
         {h:"Link", tags:[{t:"m-d-a.ru/digital-design", href:"https://m-d-a.ru/digital-design"}]}]}
   },
   freelance:{
@@ -479,6 +482,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
         {h:"Фриланс", paras:["Параллельно я делал сайты на WordPress. Заказы приходили от знакомых и знакомых знакомых, а денег я брал совсем немного.","Для меня это была практика. Я проходил путь от разговора с заказчиком до работающего сайта и видел, как мои решения живут в реальном проекте."]},
         {h:"Дизайн-студия", paras:["Это тоже был классный опыт. Я познакомился с крутым человеком, который держал студию. Он вдохновлял меня тем, какой он умный и как много работает.","Мы иногда работали до утра и вместе ходили на обед. Внутри была классная команда. В молодом коллективе бывало и сложно, но это тоже опыт.","Было много интересных проектов. Я вспоминаю то время с теплотой."]},
         {h:"Ивент-агентство", paras:["Это было моё первое официальное трудоустройство как дизайнера. Я помню, как сильно нервничал. Собеседование проходило офлайн, с директором, и я долго к нему готовился.","В офисе я работал в паре с креативщиком, который давал мне задания. Я рисовал разные лендинги и картинки для соцсетей. Проработал там недолго, но опыт получился очень полезным."]},
+        {h:"Какой опыт я получил", paras:["За этот год я прошёл путь от сайтов для знакомых до работы в студии и в агентстве. Я попробовал свободную работу, команду, где иногда работали до утра, и первое официальное место. Это основа, на которой я потом вырос в Senior-дизайнера."]},
         {h:"Работы", tags:[{t:"2016. Проекты на Behance", href:"https://www.behance.net/maksimdesigner"}]}]},
     en:{when:"May 2016 — Mar 2017", role:"Junior UX/UI Designer",
       desc:"Freelance. Design studio. Event agency",
@@ -486,37 +490,40 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
         {h:"Freelance", paras:["At the same time I built WordPress websites. The orders came from friends and friends of friends, and I charged very little.","For me it was practice. I went the whole way from talking to a client to a working website and saw how my decisions live in a real project."]},
         {h:"Design studio", paras:["This was a great experience too. I met a remarkable person who ran the studio. He inspired me with how smart he was and how much he worked.","We sometimes worked until morning and went to lunch together. The team inside was great. In a young team it was sometimes hard, but that is experience too.","There were many interesting projects. I remember that time with warmth."]},
         {h:"Event agency", paras:["This was my first official job as a designer. I remember how nervous I was. The interview was offline, with the director, and I had prepared for it for a long time.","In the office I worked in a pair with a creative colleague who gave me tasks. I drew different landing pages and pictures for social media. I did not stay long, but the experience was very useful."]},
+        {h:"What experience I gained", paras:["Over this year I went from websites for friends to working in a studio and an agency. I tried freelance work, a team where we sometimes worked until morning, and a first official job. This is the base on which I later grew into a Senior designer."]},
         {h:"Works", tags:[{t:"2016. Projects on Behance", href:"https://www.behance.net/maksimdesigner"}]}]}
   },
   gym:{
     ru:{desc:"Онлайн-курс Данила Фимушкина «Design:GYM 3.0»",
       parts:[
         {h:"О курсе", paras:["Design:GYM — это онлайн-курс Данила Фимушкина по дизайну интерфейсов. У Данила есть свой YouTube-канал, ссылка на него ниже."]},
-        {h:"Как это было", paras:["После магазина игрушек я решил менять профессию и искать себя. Нужно было с чего-то начинать, и Design:GYM стал моим первым купленным курсом.","Он очень помог мне в своё время. Курс дал основу, на которую потом легло всё остальное обучение, и уверенность, что я иду в правильном направлении."]},
-        {h:"Почему это важно для меня", paras:["Первый курс запоминается на всю жизнь. Именно с него началась моя дорога в профессию, поэтому я до сих пор вспоминаю его с благодарностью."]},
+        {h:"Как это было", paras:["После магазина игрушек я решил менять профессию и искать себя. Нужно было с чего-то начинать, и Design:GYM стал моим первым купленным курсом. Я сам вложил в это деньги и время, потому что решил всерьёз заняться дизайном.","Курс очень помог мне в своё время. Он дал основу, на которую потом легло всё остальное обучение, и уверенность, что я иду в правильном направлении."]},
+        {h:"Какой опыт я получил", paras:["Это был мой первый шаг в профессию. Именно с него началась дорога, которая привела меня к работе дизайнером, поэтому я до сих пор вспоминаю этот курс с благодарностью."]},
         {h:"Ссылка", tags:[{t:"YouTube-канал Данила Фимушкина", href:"https://www.youtube.com/user/danilfimushkin"}]}]},
     en:{desc:"Danil Fimushkin’s online course Design:GYM 3.0",
       parts:[
         {h:"About the course", paras:["Design:GYM is an online course on interface design by Danil Fimushkin. Danil has his own YouTube channel, the link is below."]},
-        {h:"How it went", paras:["After the toy store I decided to change my profession and find myself. I needed somewhere to start, and Design:GYM became the first course I ever bought.","It helped me a lot at the time. The course gave me a foundation on which all my later learning was built, and the confidence that I was going in the right direction."]},
-        {h:"Why it matters to me", paras:["You remember your first course for life. My road into the profession started with it, so I still remember it with gratitude."]},
+        {h:"How it went", paras:["After the toy store I decided to change my profession and find myself. I needed somewhere to start, and Design:GYM became the first course I ever bought. I put my own money and time into it, because I decided to take design seriously.","It helped me a lot at the time. The course gave me a foundation on which all my later learning was built, and the confidence that I was going in the right direction."]},
+        {h:"What experience I gained", paras:["It was my first step into the profession. The road that led me to work as a designer started with it, so I still remember this course with gratitude."]},
         {h:"Link", tags:[{t:"Danil Fimushkin’s YouTube channel", href:"https://www.youtube.com/user/danilfimushkin"}]}]}
   },
   toys:{
     ru:{when:"2015, три месяца", desc:"Консультант в магазине детских игрушек «Имаджинариум»",
       parts:[
         {h:"Что было", paras:["Это были три месяца, когда мне нужны были деньги. Я работал консультантом в магазине детских игрушек «Имаджинариум»."]},
-        {h:"Что полезного я вынес", list:[
+        {h:"Какой опыт я получил", list:[
           "Классное обучение продажам и техникам. До сих пор помню, что вопрос и возражение это разные вещи, и на возражение нельзя отвечать как на вопрос",
+          "Опыт общения с людьми каждый день. Я учился слушать покупателя и понимать, что ему действительно нужно",
           "Памятка о том, какая игрушка подходит какому возрасту. Она пригодилась, когда я общался с племянницами и детьми"]},
-        {h:"Почему я ушёл в дизайн", paras:["Но продавать игрушки, особенно подороже, было не моё, ведь от этого зависела моя премия. После этой тяжёлой работы я понял, что так дальше нельзя. Надо менять профессию и искать себя.","Так я начал заниматься дизайном, тем, что мне нравилось."]}]},
+        {h:"Почему я ушёл в дизайн", paras:["Но продавать игрушки, особенно подороже, было не моё, ведь от этого зависела моя премия. После этой тяжёлой работы я понял, что так дальше нельзя. Надо менять профессию и искать себя.","Я не стал откладывать и начал заниматься дизайном, тем, что мне нравилось."]}]},
     en:{when:"2015, three months", desc:"Sales assistant at the children’s toy store Imaginarium",
       parts:[
         {h:"What it was", paras:["These were three months when I needed money. I worked as a sales assistant at the children’s toy store Imaginarium."]},
-        {h:"What I took from it", list:[
+        {h:"What experience I gained", list:[
           "Great training in sales and techniques. I still remember that a question and an objection are different things, and you do not answer an objection like a question",
+          "Experience of talking to people every day. I learned to listen to a customer and understand what they really need",
           "A cheat sheet on which toy suits which age. It came in handy when I talked to my nieces and kids"]},
-        {h:"Why I moved to design", paras:["But selling toys, especially pricier ones, was not for me, because my bonus depended on it. After this hard job I realised I could not go on like this. I had to change my profession and find myself.","So I started doing design, what I liked."]}]}
+        {h:"Why I moved to design", paras:["But selling toys, especially pricier ones, was not for me, because my bonus depended on it. After this hard job I realised I could not go on like this. I had to change my profession and find myself.","I did not put it off and started doing design, what I liked."]}]}
   },
   photo:{
     ru:{desc:"Снимки из поездок и повседневности", parts:[{h:"Фотографии", shots:3}]},
@@ -631,15 +638,15 @@ function renderNav(){
 
 function part(p){
   let body = "";
-  if(p.list)  body = `<ul class="points">${p.list.map(x=>`<li>${x}</li>`).join("")}</ul>`;
-  if(p.text)  body = `<p class="life-text">${p.text}</p>`;
-  if(p.paras) body = p.paras.map(x=>`<p class="life-text">${x}</p>`).join("");
-  if(p.ph)    body = `<div class="life-ph"><span class="ph-l">${T[L].fill}. </span><span class="ph-t">${p.ph}</span></div>`;
-  if(p.links) body = `<ul class="life-links">${p.links.map(x=>x.href
+  if(p.list)  body += `<ul class="points">${p.list.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  if(p.text)  body += `<p class="life-text">${p.text}</p>`;
+  if(p.paras) body += p.paras.map(x=>`<p class="life-text">${x}</p>`).join("");
+  if(p.ph)    body += `<div class="life-ph"><span class="ph-l">${T[L].fill}. </span><span class="ph-t">${p.ph}</span></div>`;
+  if(p.links) body += `<ul class="life-links">${p.links.map(x=>x.href
       ? `<li><a href="${x.href}"${/^https?:/.test(x.href)?' target="_blank" rel="noopener"':''}>${x.t}</a>${x.note?` <span class="life-note">— ${x.note}</span>`:""}</li>`
       : `<li class="life-ph">${T[L].fill}: ${x.ph}</li>`).join("")}</ul>`;
-  if(p.tags)  body = `<div class="life-tags">${p.tags.map(x=>`<a class="chip life-tag" href="${x.href}" target="_blank" rel="noopener">${x.t}</a>`).join("")}</div>`;
-  if(p.shots) body = `<div class="shots">${Array.from({length:p.shots},()=>`<div class="shot">${T[L].photo}</div>`).join("")}</div>`;
+  if(p.tags)  body += `<div class="life-tags">${p.tags.map(x=>`<a class="chip life-tag" href="${x.href}" target="_blank" rel="noopener">${x.t}</a>`).join("")}</div>`;
+  if(p.shots) body += `<div class="shots">${Array.from({length:p.shots},()=>`<div class="shot">${T[L].photo}</div>`).join("")}</div>`;
   const kind = p.list?"list":p.paras?"paras":p.text!==undefined?"text":p.ph!==undefined?"ph":p.links?"links":p.tags?"tags":p.shots?"shots":"";
   return `<section class="life-part" data-kind="${kind}"><h2 class="life-h">${p.h}</h2>${body}</section>`;
 }
