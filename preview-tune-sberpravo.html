@@ -3,7 +3,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>СберПраво: тёмная тема</title>
+<title>СберПраво: настройка вида</title>
 <meta name="description" content="Medsi Digital: сборка дизайн-команды, мобильное приложение SmartMed, кабинет врача, маркетинг. Кейсы Lead UX/UI дизайнера.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -2536,29 +2536,69 @@ window.CRM_HOST = {
 </script>
 <script src="assets/crm-editor.js" defer></script>
 
-<style id="dark-css"></style>
-<style>#dk{position:fixed;right:14px;bottom:14px;z-index:9999;width:250px;padding:12px 14px;border-radius:14px;background:rgba(10,10,12,.94);color:#fff;font:13px/1.4 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12)}
-#dk b{display:block;margin-bottom:8px}#dk .r{display:flex;gap:6px;margin-bottom:8px}
-#dk button{flex:1;padding:6px;border-radius:8px;border:0;cursor:pointer;background:#2a2a30;color:#fff;font:inherit}#dk button.on{background:#F0523C}
-#dk input[type=range]{width:100%}</style>
-<div id="dk"><b>Тема</b>
-  <div class="r"><button id="dk-l">Светлая</button><button id="dk-d" class="on">Тёмная</button></div>
-  <label>Тёмность фона: <span id="dk-v"></span></label>
-  <input id="dk-s" type="range" min="3" max="22" step="0.5" value="8">
+<style id="tn-css"></style>
+<style>
+#tn{position:fixed;right:14px;bottom:14px;z-index:9999;width:292px;max-height:calc(100vh - 28px);overflow:auto;padding:12px 14px;border-radius:14px;background:rgba(20,20,24,.95);color:#fff;font:13px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+#tn h4{margin:0;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+#tn .hd button{padding:2px 8px}
+#tn .sec{margin:10px 0 0;padding-top:8px;border-top:1px solid rgba(255,255,255,.15)}
+#tn .row{display:flex;align-items:center;gap:8px;margin-top:6px}
+#tn .row>span{flex:1}
+#tn input[type=color]{width:34px;height:26px;padding:0;border:1px solid #666;border-radius:6px;background:none;cursor:pointer}
+#tn input[type=text]{width:78px;padding:4px 6px;border-radius:6px;border:1px solid #555;background:#111;color:#fff;font:12px ui-monospace,monospace}
+#tn input[type=range]{width:100%;margin:4px 0 0}
+#tn button{padding:5px 9px;border:0;border-radius:8px;cursor:pointer;background:#fff;color:#111;font:inherit}
+#tn .out{margin-top:10px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap}
+#tn.min .body{display:none}
+</style>
+<div id="tn">
+  <h4 class="hd"><span>Настройка вида</span><button id="tn-min" title="Свернуть">—</button></h4>
+  <div class="body">
+    <div class="sec"><b>Сайт</b>
+      <div class="row"><span>Фон сайта</span><input id="tn-bg" type="color" value="#fcfcfd"><input id="tn-bg-t" type="text" value="#FCFCFD"></div>
+      <div class="row"><span>Цвет шрифта</span><input id="tn-ink" type="color" value="#131316"><input id="tn-ink-t" type="text" value="#131316"></div>
+    </div>
+    <div class="sec"><b>Плашки под картинками</b>
+      <div class="row"><input id="tn-on" type="checkbox"><label for="tn-on" style="flex:1">Показывать плашки</label></div>
+      <div class="row"><span>Фон плашек</span><input id="tn-pbg" type="color" value="#dddddd"><input id="tn-pbg-t" type="text" value="#DDDDDD"></div>
+      <div>Скругление плашек: <b id="tn-r-v"></b></div><input id="tn-r" type="range" min="0" max="40" step="1" value="14">
+      <div>Отступ внутри плашки: <b id="tn-p-v"></b></div><input id="tn-p" type="range" min="0" max="48" step="1" value="20">
+    </div>
+    <div class="out" id="tn-out"></div>
+    <div class="row"><button id="tn-copy" style="flex:1">Копировать значения</button><button id="tn-reset">Сброс</button></div>
+  </div>
 </div>
 <script>
 (function(){
-  var $=function(i){return document.getElementById(i)},dark=true;
-  function h(l,s,L){return "hsl(240,"+s+"%,"+L+"%)"}
-  function upd(){
-    var L=+$("dk-s").value;
-    $("dk-v").textContent=L+"%"; $("dk-l").classList.toggle("on",!dark); $("dk-d").classList.toggle("on",dark);
-    $("dk-s").disabled=!dark;
-    $("dark-css").textContent=dark?(":root{color-scheme:dark;--bg:"+h(0,8,L)+";--surface:"+h(0,8,L+4)+";--panel:"+h(0,8,L+3)+";--sel:"+h(0,8,L+6.5)+";--line:"+h(0,8,L+11)+";--ink:hsl(240,10%,94%);--muted:hsl(240,6%,66%);--faint:hsl(240,5%,50%)}"
-      +".fig-btn img{filter:drop-shadow(0 8px 14px rgba(0,0,0,.45))}.fig-btn:hover img{filter:drop-shadow(0 16px 24px rgba(0,0,0,.6))}"):"";
+  var $=function(i){return document.getElementById(i)};
+  var DEF={bg:"#FCFCFD",ink:"#131316",on:false,pbg:"#DDDDDD",r:14,p:20};
+  var S;try{S=JSON.parse(localStorage.getItem("tn-v1"))}catch(e){}; S=Object.assign({},DEF,S||{});
+  function ok(h){return /^#[0-9a-fA-F]{6}$/.test(h)}
+  function rgb(h){return [1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})}
+  function mix(a,b,t){var A=rgb(a),B=rgb(b);return "#"+A.map(function(v,i){var x=Math.round(v*t+B[i]*(1-t));return (x<16?"0":"")+x.toString(16)}).join("")}
+  function set(id,v){$(id).value=v}
+  function sync(){set("tn-bg",S.bg.toLowerCase());set("tn-bg-t",S.bg);set("tn-ink",S.ink.toLowerCase());set("tn-ink-t",S.ink);$("tn-on").checked=S.on;set("tn-pbg",S.pbg.toLowerCase());set("tn-pbg-t",S.pbg);set("tn-r",S.r);set("tn-p",S.p)}
+  function apply(){
+    var css=":root{--bg:"+S.bg+";--ink:"+S.ink+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
+    if(S.on) css+=".figs .fig .fig-btn{background:"+S.pbg+";padding:"+S.p+"px;border-radius:"+S.r+"px}";
+    $("tn-css").textContent=css;
+    $("tn-r-v").textContent=S.r+" px";$("tn-p-v").textContent=S.p+" px";
+    $("tn-r").disabled=$("tn-p").disabled=$("tn-pbg").disabled=$("tn-pbg-t").disabled=!S.on;
+    $("tn-out").textContent="Фон сайта: "+S.bg+"\nЦвет шрифта: "+S.ink+"\nПлашки: "+(S.on?"да\nФон плашек: "+S.pbg+"\nСкругление: "+S.r+" px\nОтступ: "+S.p+" px":"нет");
+    try{localStorage.setItem("tn-v1",JSON.stringify(S))}catch(e){}
   }
-  $("dk-l").onclick=function(){dark=false;upd()}; $("dk-d").onclick=function(){dark=true;upd()};
-  $("dk-s").addEventListener("input",upd); upd();
+  function colorPair(pk,cid,tid){
+    $(cid).addEventListener("input",function(){S[pk]=this.value.toUpperCase();set(tid,S[pk]);apply()});
+    $(tid).addEventListener("input",function(){var v=this.value.trim();if(v[0]!=="#")v="#"+v;if(ok(v)){S[pk]=v.toUpperCase();set(cid,v.toLowerCase());apply()}});
+  }
+  colorPair("bg","tn-bg","tn-bg-t");colorPair("ink","tn-ink","tn-ink-t");colorPair("pbg","tn-pbg","tn-pbg-t");
+  $("tn-on").addEventListener("change",function(){S.on=this.checked;apply()});
+  $("tn-r").addEventListener("input",function(){S.r=+this.value;apply()});
+  $("tn-p").addEventListener("input",function(){S.p=+this.value;apply()});
+  $("tn-reset").onclick=function(){S=Object.assign({},DEF);sync();apply()};
+  $("tn-copy").onclick=function(){try{navigator.clipboard.writeText($("tn-out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать значения"},1200)};
+  $("tn-min").onclick=function(){var p=$("tn");p.classList.toggle("min");this.textContent=p.classList.contains("min")?"+":"—"};
+  sync();apply();
 })();
 </script>
 </body></html>
