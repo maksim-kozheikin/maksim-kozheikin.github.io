@@ -407,10 +407,11 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     css.textContent=prev;
   }
   var scanT=null;
-  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){scan();if(INSP){renderCard();paint()}},150)}
+  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){scan();if(INSP){if(!SEL)renderCard();paint()}},150)}
   new MutationObserver(function(ms){
     for(var i=0;i<ms.length;i++){
       var t=ms[i].target;
+      if(t.id==="tn-css"||t.id==="tn-ui")continue;
       if(t.nodeType===1&&(t.closest("#tn,#tn-ov,#tn-tip")))continue;
       var nodes=[].slice.call(ms[i].addedNodes).concat([].slice.call(ms[i].removedNodes));
       if(nodes.length&&nodes.every(function(n){return n.nodeType===1&&(n.id==="tn-css"||n.id==="tn-ov"||n.id==="tn-tip"||n.id==="tn"||n.tagName==="STYLE")}))continue;
