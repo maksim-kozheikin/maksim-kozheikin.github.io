@@ -9,7 +9,7 @@
   --bg:#FDFDFC; --surface:#FFFFFF; --ink:#131316; --muted:#46433E; --faint:#000000; --line:#EBEBEF;
   --sel:#F3EFEC; --accent:#131316; --live:#9E7757; --plate:#F3EFEC; --shadow:#916D50;
   --font:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
-  --t-display:46px; --t-title:26px; --t-body:16px; --t-small:14px; --t-caption:13px;
+  --t-display:46px; --t-title:26px; --t-body:16px; --t-small:14px; --t-caption:14px;
   --w-display:500; --w-title:500; --w-strong:600;
   --lh-body:1.6; --ls-display:-.02em; --ls-title:-.01em; --ls-eyebrow:.14em;
   --r-pill:999px; --r-card:14px; --r-plate:40px; --plate-pad:48px;
@@ -312,7 +312,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"ttitle",l:"Title (заголовок раздела)",y:"r",m:[18,40,1,"px"],d:26},
     {k:"tbody",l:"Body (основной текст)",y:"r",m:[14,20,1,"px"],d:16},
     {k:"tsmall",l:"Small (вторичный)",y:"r",m:[11,18,1,"px"],d:14},
-    {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:13},
+    {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:14},
     {k:"wdisplay",l:"Вес Display",y:"r",m:[400,700,100,""],d:500},
     {k:"wtitle",l:"Вес Title",y:"r",m:[400,700,100,""],d:500},
     {k:"wstrong",l:"Вес выделенного",y:"r",m:[400,700,100,""],d:600},
@@ -331,7 +331,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"dur",l:"Скорость анимации",y:"r",m:[0,800,10,"мс"],d:200}]}
   ];
   var DEF={};G.forEach(function(g){g.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="kit-v1",S;
+  var KEY="kit-v2",S;
   try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
   /* цвет */

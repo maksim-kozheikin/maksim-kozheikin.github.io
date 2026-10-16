@@ -369,7 +369,7 @@ html{scrollbar-gutter:stable}
 :root{
   --t-display:clamp(32px,3.2vw,46px);
   --t-title:clamp(22px,1.81vw,26px);
-  --t-body:16px; --t-small:14px; --t-caption:13px;
+  --t-body:16px; --t-small:14px; --t-caption:14px;
   /* старые переменные страниц — на новую шкалу */
   --h1:var(--t-display); --h2:var(--t-title); --h3:var(--t-body);
   --text:var(--t-body); --small:var(--t-small); --eyebrow:var(--t-caption);

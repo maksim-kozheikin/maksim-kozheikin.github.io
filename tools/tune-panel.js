@@ -87,7 +87,6 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var EYE_OFF='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>';
 
   var HTML=`
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="tn-lg" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="2" seed="4" result="t"/><feDisplacementMap id="tn-disp" in="SourceGraphic" in2="t" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 <div id="tn">
   <div class="hd" id="tn-hd"><b><i class="grip"></i><span id="tn-title">Настройка вида</span></b><span class="hr"><button class="ib" id="tn-insp" title="Инспектор текста. Наведите на текст и увидите, где такой же"></button><button class="ib act" id="tn-eye" title="Сравнить с оригиналом (глазик)"></button><button class="ib" id="tn-min" title="Свернуть"></button></span></div>
   <div class="body" id="tn-body">
@@ -118,14 +117,14 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#131316"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#46433E"},
     {k:"faint",l:"Бледный текст",y:"c",d:"#000000"},
-    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}],
+    {k:"btn",l:"Текст на кнопках и табах",y:"c",d:"#131316"}],
     h:"Бледный текст это самый тихий серый. Годы и стрелки в списке проектов слева, номера 01–15 под открытым кейсом, мелкие заголовки над блоками (например «Роль», «Команда»), невыбранный En или Ру."},
    {id:"fs",t:"Размеры текста",o:false,c:[
     {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
     {k:"ttitle",l:"Title (заголовок раздела)",y:"r",m:[18,40,1,"px"],d:26},
     {k:"tbody",l:"Body (основной текст)",y:"r",m:[14,20,1,"px"],d:16},
     {k:"tsmall",l:"Small (вторичный)",y:"r",m:[11,18,1,"px"],d:14},
-    {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:13}],
+    {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:14}],
     h:"Меняет размеры везде, где текст использует эти пять размеров. Отдельные стили настраиваются инспектором."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#F3EFEC"},
@@ -141,29 +140,13 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
    {id:"bd",t:"Рамка и углы картинки",o:false,c:[
     {k:"bw",l:"Толщина рамки",y:"r",m:[0,4,.5,"px"],d:1},{k:"bc",l:"Цвет рамки",y:"c",d:"#000000"},
     {k:"ba",l:"Прозрачность рамки",y:"r",m:[0,100,1,"%"],d:10},{k:"ir",l:"Скругление картинки",y:"r",m:[0,32,1,"px"],d:0}]},
-   {id:"gl",t:"Стекло (Liquid Glass)",o:true,c:[
-    {k:"gcards",l:"И на карточках",y:"k",d:false},
-    {k:"gtg",l:"Цвет кнопок (серый)",y:"c",d:"#F3EFEC"},
-    {k:"gt",l:"Оттенок стекла у выбранного таба и карточек",y:"c",d:"#FFFFFF"},
-    {k:"ga",l:"Плотность заливки",y:"r",m:[0,100,1,"%"],d:90},
-    {k:"gb",l:"Размытие того, что под стеклом",y:"r",m:[0,40,1,"px"],d:35},
-    {k:"gs",l:"Насыщенность цвета под стеклом",y:"r",m:[100,250,5,"%"],d:205},
-    {k:"ge",l:"Светлая кромка",y:"r",m:[0,100,1,"%"],d:64},
-    {k:"gh",l:"Блик сверху",y:"r",m:[0,100,1,"%"],d:100},
-    {k:"gsh",l:"Тень под стеклом",y:"r",m:[0,30,1,"%"],d:20},
-    {k:"gr",l:"Преломление (только Chrome)",y:"r",m:[0,40,1,"px"],d:20},
-    {k:"gn",l:"Зерно на стекле",y:"r",m:[0,40,1,"%"],d:10}],
-    h:"Меняет только внешний вид кнопок и ссылок, у табов только выбранный и наведённый. Теги без действия остаются обычными серыми, их цвет это «Серый в переключателях». Стекло заметно, если под ним есть что размывать, поэтому включайте вместе с подсветкой."},
-   {id:"bk",t:"Подсветка за стеклом",o:false,c:[
-    {k:"k1",l:"Пятно 1",y:"c",d:"#FFB199"},{k:"k2",l:"Пятно 2",y:"c",d:"#9DB7FF"},{k:"k3",l:"Пятно 3",y:"c",d:"#C9A6FF"},
-    {k:"ki",l:"Сила пятен",y:"r",m:[0,100,1,"%"],d:60}]},
    {id:"nz",t:"Шум на всей странице",o:false,c:[
     {k:"nn",l:"Сила шума",y:"r",m:[0,40,1,"%"],d:12},{k:"nz",l:"Размер зерна",y:"r",m:[60,400,10,"px"],d:160}]}
   ];
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v10";
+  var KEY="tn-v11";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -260,36 +243,13 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
-    if(S.o_bk){
-      c+="body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:"+
-        "radial-gradient(42% 36% at 10% 16%,"+rgba(S.k1,S.ki)+",transparent 70%),"+
-        "radial-gradient(40% 40% at 90% 30%,"+rgba(S.k2,S.ki)+",transparent 70%),"+
-        "radial-gradient(46% 42% at 52% 98%,"+rgba(S.k3,S.ki)+",transparent 70%)}";
-      c+="html body .sidebar,html body .topbar{background:transparent}";
-    }
-    if(S.o_gl){
-      /* Только внешний вид. Стекло получают кнопки и ссылки, у табов только выбранный и наведённый.
-         Невыбранный таб остаётся просто текстом. Теги без действия не трогаем, они остаются обычными серыми. */
-      var bf="blur("+S.gb+"px) saturate("+S.gs+"%)";
-      var shadow="inset 0 0 0 1px "+rgba("#FFFFFF",S.ge)+",inset 0 1px 1px "+rgba("#FFFFFF",S.gh)+",0 4px 16px "+rgba(S.sc,S.gsh);
-      var fx="-webkit-backdrop-filter:"+bf+";backdrop-filter:"+bf+(S.gr>0?";backdrop-filter:url(#tn-lg) "+bf:"")+";box-shadow:"+shadow;
-      var grain=S.gn>0?";background-image:"+noise(S.gn/100):"";
-      var fillGrey="background-color:"+rgba(S.gtg,S.ga)+grain,fillLight="background-color:"+rgba(S.gt,S.ga)+grain;
-      var greys=BUTTONS,lights=[".card"];
-      var tabOn=pills(TABS,":hover")+","+pills(TABS,'[aria-pressed="true"]');
-      var all=greys.concat(S.gcards?lights:[]);
-      c+=pills(all)+","+tabOn+"{"+fx+"}";
-      /* кнопки серые, как невыбранный таб. Выбранный таб и карточки светлые */
-      c+=greys.map(function(x){return "html body "+x+(BUTTONS.indexOf(x)>-1?CALM:"")}).join(",")+"{"+fillGrey+"}";
-      c+=tabOn+(S.gcards?",html body .card":"")+"{"+fillLight+"}";
-    }
     Object.keys(OVR).forEach(function(k){
       var o=OVR[k],r=[];
       if(o.color)r.push("color:"+o.color+"!important");
       if(o.fs!=null)r.push("font-size:"+o.fs+"px!important");
       if(o.fw)r.push("font-weight:"+o.fw+"!important");
       if(o.ls!=null)r.push("letter-spacing:"+o.ls+"em!important");
-      if(r.length)c+='html body [data-tnk="'+k+'"]{'+r.join(";")+"}";
+      if(r.length){var a='[data-tnk="'+k+'"]';c+="html body "+a+a+a+a+"{"+r.join(";")+"}"}
     });
     if(S.o_nz)c+="body::after{content:'';position:fixed;inset:0;z-index:5000;pointer-events:none;background:"+noise(1)+";background-size:"+S.nz+"px;opacity:"+(S.nn/100)+";mix-blend-mode:overlay}";
     return c;
@@ -302,8 +262,6 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
     L.push("При наведении: "+on("sh1","подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"));
     L.push("Рамка и углы: "+on("bd","рамка "+S.bw+" px, "+S.bc+", прозрачность "+S.ba+"%, скругление картинки "+S.ir+" px"));
-    L.push("Стекло: "+on("gl",(S.gcards?"и карточки, ":"")+"оттенок "+S.gt+", плотность "+S.ga+"%, размытие "+S.gb+" px, насыщенность "+S.gs+"%, кромка "+S.ge+"%, блик "+S.gh+"%, тень "+S.gsh+"%, преломление "+S.gr+" px, зерно "+S.gn+"%"));
-    L.push("Подсветка за стеклом: "+on("bk",S.k1+" "+S.k2+" "+S.k3+", сила "+S.ki+"%"));
     L.push("Шум на странице: "+on("nz","сила "+S.nn+"%, зерно "+S.nz+" px"));
     L.push("Размеры текста: "+on("fs","Display "+S.tdisplay+", Title "+S.ttitle+", Body "+S.tbody+", Small "+S.tsmall+", Caption "+S.tcaption+" px"));
     Object.keys(OVR).forEach(function(k){
@@ -316,7 +274,6 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function apply(){
     document.body.appendChild($("tn-css"));
     $("tn-css").textContent=EN?build():"";
-    $("tn-disp").setAttribute("scale",S.gr);
     $("tn-out").textContent=outText();
     store(KEY,JSON.stringify(S));
     store("tn-ovr",JSON.stringify(OVR));
