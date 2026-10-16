@@ -2687,7 +2687,7 @@ document.addEventListener("click", e=>{
      во время перетаскивания браузер переадресует щелчок на область
      показа, и тогда по цели не отличить картинку от фона. */
   if(onImage(e.clientX, e.clientY)){
-    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
+    if(z===ZMIN) setZoom(2, e.clientX, e.clientY, true);   // сразу до 200%
     return;
   }
   // щелчок мимо картинки закрывает — но только пока не приближено
