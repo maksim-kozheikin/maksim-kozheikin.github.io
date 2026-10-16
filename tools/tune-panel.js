@@ -116,7 +116,7 @@
     {k:"ba",l:"Прозрачность рамки",y:"r",m:[0,100,1,"%"],d:10},{k:"ir",l:"Скругление картинки",y:"r",m:[0,32,1,"px"],d:0}]},
    {id:"gl",t:"Стекло (Liquid Glass)",o:true,c:[
     {k:"gcards",l:"И на карточках",y:"k",d:false},
-    {k:"gtg",l:"Цвет тегов и кнопок (серый)",y:"c",d:"#F3EFEC"},
+    {k:"gtg",l:"Цвет кнопок (серый)",y:"c",d:"#F3EFEC"},
     {k:"gt",l:"Оттенок стекла у выбранного таба и карточек",y:"c",d:"#FFFFFF"},
     {k:"ga",l:"Плотность заливки",y:"r",m:[0,100,1,"%"],d:90},
     {k:"gb",l:"Размытие того, что под стеклом",y:"r",m:[0,40,1,"px"],d:35},
@@ -126,7 +126,7 @@
     {k:"gsh",l:"Тень под стеклом",y:"r",m:[0,30,1,"%"],d:20},
     {k:"gr",l:"Преломление (только Chrome)",y:"r",m:[0,40,1,"px"],d:20},
     {k:"gn",l:"Зерно на стекле",y:"r",m:[0,40,1,"%"],d:10}],
-    h:"Меняет только внешний вид кнопок и тегов. Активные и наведённые состояния остаются как есть. Стекло заметно, если под ним есть что размывать, поэтому включайте вместе с подсветкой."},
+    h:"Меняет только внешний вид кнопок и ссылок, у табов только выбранный и наведённый. Теги без действия остаются обычными серыми, их цвет это «Серый в переключателях». Стекло заметно, если под ним есть что размывать, поэтому включайте вместе с подсветкой."},
    {id:"bk",t:"Подсветка за стеклом",o:false,c:[
     {k:"k1",l:"Пятно 1",y:"c",d:"#FFB199"},{k:"k2",l:"Пятно 2",y:"c",d:"#9DB7FF"},{k:"k3",l:"Пятно 3",y:"c",d:"#C9A6FF"},
     {k:"ki",l:"Сила пятен",y:"r",m:[0,100,1,"%"],d:60}]},
@@ -209,7 +209,6 @@
   /* кнопки и ссылки, табы и подписи без действия. С ними стекло ведёт себя по-разному */
   var BUTTONS=[".back",".v4close",".duties-more",".v4step",".side-links a",".chip-btn",".dl-btn",".foot a",".case-link",".toggle",".life-tag"];
   var TABS=[".segmented button",".lang button"];
-  var STATIC=[".tag-kind",".tag-ai",".tag-tech",".v4chips .tag"];
   function pills(list,suf){return list.map(function(x){return "html body "+x+(suf||"")}).join(",")}
   var CALM=':not(:hover):not([aria-pressed="true"])';
   function build(){
@@ -237,19 +236,18 @@
       c+="html body .sidebar,html body .topbar{background:transparent}";
     }
     if(S.o_gl){
-      /* Только внешний вид. Кнопки и подписи без действия получают стекло всегда.
-         Невыбранный таб остаётся просто текстом, стекло появляется при наведении и у выбранного.
-         Подписи без действия при наведении не меняются. */
+      /* Только внешний вид. Стекло получают кнопки и ссылки, у табов только выбранный и наведённый.
+         Невыбранный таб остаётся просто текстом. Теги без действия не трогаем, они остаются обычными серыми. */
       var bf="blur("+S.gb+"px) saturate("+S.gs+"%)";
       var shadow="inset 0 0 0 1px "+rgba("#FFFFFF",S.ge)+",inset 0 1px 1px "+rgba("#FFFFFF",S.gh)+",0 4px 16px "+rgba(S.sc,S.gsh);
       var fx="-webkit-backdrop-filter:"+bf+";backdrop-filter:"+bf+(S.gr>0?";backdrop-filter:url(#tn-lg) "+bf:"")+";box-shadow:"+shadow;
       var grain=S.gn>0?";background-image:"+noise(S.gn/100):"";
       var fillGrey="background-color:"+rgba(S.gtg,S.ga)+grain,fillLight="background-color:"+rgba(S.gt,S.ga)+grain;
-      var greys=BUTTONS.concat(STATIC),lights=[".card"];
+      var greys=BUTTONS,lights=[".card"];
       var tabOn=pills(TABS,":hover")+","+pills(TABS,'[aria-pressed="true"]');
       var all=greys.concat(S.gcards?lights:[]);
       c+=pills(all)+","+tabOn+"{"+fx+"}";
-      /* теги и кнопки серые, как невыбранный таб. Выбранный таб и карточки светлые */
+      /* кнопки серые, как невыбранный таб. Выбранный таб и карточки светлые */
       c+=greys.map(function(x){return "html body "+x+(BUTTONS.indexOf(x)>-1?CALM:"")}).join(",")+"{"+fillGrey+"}";
       c+=tabOn+(S.gcards?",html body .card":"")+"{"+fillLight+"}";
     }
