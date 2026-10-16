@@ -2,7 +2,7 @@
 (function(){
   if(document.getElementById("tn"))return;
   var st=document.createElement("style");st.id="tn-css";document.head.appendChild(st);
-  document.body.insertAdjacentHTML("beforeend","<style>\n#tn{position:fixed;right:14px;bottom:14px;z-index:9999;width:292px;max-height:calc(100vh - 28px);overflow:auto;padding:12px 14px;border-radius:14px;background:rgba(20,20,24,.95);color:#fff;font:13px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.4)}\n#tn h4{margin:0;font-size:13px;display:flex;justify-content:space-between;align-items:center}\n#tn .hd button{padding:2px 8px}\n#tn .sec{margin:10px 0 0;padding-top:8px;border-top:1px solid rgba(255,255,255,.15)}\n#tn .row{display:flex;align-items:center;gap:8px;margin-top:6px}\n#tn .row>span{flex:1}\n#tn input[type=color]{width:34px;height:26px;padding:0;border:1px solid #666;border-radius:6px;background:none;cursor:pointer}\n#tn input[type=text]{width:78px;padding:4px 6px;border-radius:6px;border:1px solid #555;background:#111;color:#fff;font:12px ui-monospace,monospace}\n#tn input[type=range]{width:100%;margin:4px 0 0}\n#tn button{padding:5px 9px;border:0;border-radius:8px;cursor:pointer;background:#fff;color:#111;font:inherit}\n#tn .out{margin-top:10px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap}\n#tn.min .body{display:none}\n</style>\n<svg width=\"0\" height=\"0\" style=\"position:absolute\" aria-hidden=\"true\"><filter id=\"tn-lg\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.03 0.05\" numOctaves=\"2\" seed=\"4\" result=\"t\"/><feDisplacementMap id=\"tn-disp\" in=\"SourceGraphic\" in2=\"t\" scale=\"0\" xChannelSelector=\"R\" yChannelSelector=\"G\"/></filter></svg>\n<style>\n#tn .sec{margin:8px 0 0;padding-top:6px;border-top:1px solid rgba(255,255,255,.15)}\n#tn .sh{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none}\n#tn .sh .st{font-weight:700;flex:1;display:flex;align-items:center;gap:6px}\n#tn .sh .st i{font-style:normal;display:inline-block;width:10px;transition:transform .15s;opacity:.7}\n#tn .sec.closed .sh .st i{transform:rotate(-90deg)}\n#tn .sh .rs{padding:2px 8px;font-size:11px;background:rgba(255,255,255,.14);color:#fff}\n#tn .sb{padding-bottom:4px}\n#tn .sec.closed .sb{display:none}\n#tn .sb .row label{flex:1}\n#tn .hint{margin-top:6px;font-size:11px;color:rgba(255,255,255,.55);line-height:1.35}\n</style>\n<div id=\"tn\">\n  <h4 class=\"hd\"><span>Настройка вида</span><button id=\"tn-min\" title=\"Свернуть\">—</button></h4>\n  <div class=\"body\">\n    <div id=\"tn-secs\"></div>\n    <div class=\"out\" id=\"tn-out\"></div>\n    <div class=\"row\"><button id=\"tn-copy\" style=\"flex:1\">Копировать значения</button><button id=\"tn-reset\">Сбросить всё</button></div>\n  </div>\n</div>\n");
+  document.body.insertAdjacentHTML("beforeend","<style>\n#tn{position:fixed;right:14px;bottom:14px;z-index:9999;width:292px;max-height:calc(100vh - 28px);overflow:auto;padding:12px 14px;border-radius:14px;background:rgba(20,20,24,.95);color:#fff;font:13px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.4)}\n#tn h4{margin:0;font-size:13px;display:flex;justify-content:space-between;align-items:center}\n#tn .hd button{padding:2px 8px}\n#tn .sec{margin:10px 0 0;padding-top:8px;border-top:1px solid rgba(255,255,255,.15)}\n#tn .row{display:flex;align-items:center;gap:8px;margin-top:6px}\n#tn .row>span{flex:1}\n#tn input[type=color]{width:34px;height:26px;padding:0;border:1px solid #666;border-radius:6px;background:none;cursor:pointer}\n#tn input[type=text]{width:78px;padding:4px 6px;border-radius:6px;border:1px solid #555;background:#111;color:#fff;font:12px ui-monospace,monospace}\n#tn input[type=range]{width:100%;margin:4px 0 0}\n#tn button{padding:5px 9px;border:0;border-radius:8px;cursor:pointer;background:#fff;color:#111;font:inherit}\n#tn .out{margin-top:10px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap}\n#tn.min .body,#tn.off .body{display:none}#tn.off #tn-min{display:none}#tn .hr{display:flex;align-items:center;gap:8px}#tn .sw{position:relative;width:34px;height:20px;display:inline-block;flex:none}#tn .sw input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}#tn .sw i{position:absolute;inset:0;background:#666;border-radius:20px;transition:background .15s}#tn .sw i::after{content:\"\";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}#tn .sw input:checked+i{background:#34c759}#tn .sw input:checked+i::after{transform:translateX(14px)}\n</style>\n<svg width=\"0\" height=\"0\" style=\"position:absolute\" aria-hidden=\"true\"><filter id=\"tn-lg\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.03 0.05\" numOctaves=\"2\" seed=\"4\" result=\"t\"/><feDisplacementMap id=\"tn-disp\" in=\"SourceGraphic\" in2=\"t\" scale=\"0\" xChannelSelector=\"R\" yChannelSelector=\"G\"/></filter></svg>\n<style>\n#tn .sec{margin:8px 0 0;padding-top:6px;border-top:1px solid rgba(255,255,255,.15)}\n#tn .sh{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none}\n#tn .sh .st{font-weight:700;flex:1;display:flex;align-items:center;gap:6px}\n#tn .sh .st i{font-style:normal;display:inline-block;width:10px;transition:transform .15s;opacity:.7}\n#tn .sec.closed .sh .st i{transform:rotate(-90deg)}\n#tn .sh .rs{padding:2px 8px;font-size:11px;background:rgba(255,255,255,.14);color:#fff}\n#tn .sb{padding-bottom:4px}\n#tn .sec.closed .sb{display:none}\n#tn .sb .row label{flex:1}\n#tn .hint{margin-top:6px;font-size:11px;color:rgba(255,255,255,.55);line-height:1.35}\n</style>\n<div id=\"tn\">\n  <h4 class=\"hd\"><span>Настройка вида</span><span class=\"hr\"><label class=\"sw\" title=\"Включить или выключить настройки\"><input type=\"checkbox\" id=\"tn-en\"><i></i></label><button id=\"tn-min\" title=\"Свернуть\">—</button></span></h4>\n  <div class=\"body\">\n    <div id=\"tn-secs\"></div>\n    <div class=\"out\" id=\"tn-out\"></div>\n    <div class=\"row\"><button id=\"tn-copy\" style=\"flex:1\">Копировать значения</button><button id=\"tn-reset\">Сбросить всё</button></div>\n  </div>\n</div>\n");
   if(innerWidth<700){var t=document.getElementById("tn");t.classList.add("min");document.getElementById("tn-min").textContent="+"}
 })();
 (function(){
@@ -47,6 +47,7 @@
     {k:"nn",l:"Сила шума",y:"r",m:[0,40,1,"%"],d:12},{k:"nz",l:"Размер зерна",y:"r",m:[60,400,10,"px"],d:160}]}
   ];
   var DEF={};SEC.forEach(function(s){s.c.forEach(function(c){DEF[c.k]=c.d})});
+  var EN=true;try{EN=localStorage.getItem("tn-en")!=="0"}catch(e){}
   var KEY="tn-v5",OK="tn-open";
   var S,OPEN={};
   try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -127,7 +128,7 @@
     return L.join("\n");
   }
   function apply(){
-    $("tn-css").textContent=build();
+    $("tn-css").textContent=EN?build():"";
     $("tn-disp").setAttribute("scale",S.gr);
     SEC.forEach(function(s){s.c.forEach(function(c){if(c.y==="r")$("tn-v-"+c.k).textContent=S[c.k]+" "+c.m[3]})});
     $("tn-out").textContent=outText();
@@ -151,5 +152,14 @@
   $("tn-reset").onclick=function(){S=Object.assign({},DEF);sync();apply()};
   $("tn-copy").onclick=function(){try{navigator.clipboard.writeText($("tn-out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать значения"},1200)};
   $("tn-min").onclick=function(){var p=$("tn");p.classList.toggle("min");this.textContent=p.classList.contains("min")?"+":"—"};
-  sync();apply();
+  function applyEn(user){
+    var p=$("tn");$("tn-en").checked=EN;
+    p.classList.toggle("off",!EN);
+    if(EN&&user)p.classList.remove("min");
+    $("tn-min").textContent=p.classList.contains("min")?"+":"—";
+    apply();
+    try{localStorage.setItem("tn-en",EN?"1":"0")}catch(e){}
+  }
+  $("tn-en").addEventListener("change",function(){EN=this.checked;applyEn(true)});
+  sync();applyEn();
 })();
