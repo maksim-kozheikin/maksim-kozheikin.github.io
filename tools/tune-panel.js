@@ -109,15 +109,16 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
    {id:"site",t:"Цвета сайта",o:true,c:[
-    {k:"bg",l:"Фон сайта",y:"c",d:"#FDFDFC"},{k:"sel",l:"Серый в переключателях и кнопках",y:"c",d:"#F3EFEC"},
-    {k:"ac",l:"Акцентный цвет",y:"c",d:"#131316"},
-    {k:"live",l:"Пульсирующая точка",y:"c",d:"#9E7757"}],
+    {k:"bg",l:"Фон сайта",y:"c",d:"#FDFCFC"},{k:"surface",l:"Белый (карточки, выбранный таб)",y:"c",d:"#F4EFEC"},
+    {k:"sel",l:"Серый в переключателях, кнопках и тегах",y:"c",d:"#F4EFEC"},{k:"line",l:"Линии и границы",y:"c",d:"#DFDBD8"},
+    {k:"ac",l:"Акцентный цвет",y:"c",d:"#161413"},
+    {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50"}],
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
    {id:"tx",t:"Цвета текста",o:true,c:[
-    {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#131316"},
+    {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#161413"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
-    {k:"faint",l:"Бледный текст",y:"c",d:"#000000"},
-    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}],
+    {k:"faint",l:"Бледный текст",y:"c",d:"#161413"},
+    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#161413"}],
     h:"Бледный текст это самый тихий серый. Годы и стрелки в списке проектов слева, номера 01–15 под открытым кейсом, мелкие заголовки над блоками (например «Роль», «Команда»), невыбранный En или Ру."},
    {id:"fs",t:"Размеры текста",o:false,c:[
     {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
@@ -127,7 +128,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:14}],
     h:"Меняет размеры везде, где текст использует эти пять размеров. Отдельные стили настраиваются инспектором."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
-    {k:"pbg",l:"Фон подложки",y:"c",d:"#F3EFEC"},
+    {k:"pbg",l:"Фон подложки",y:"c",d:"#F4EFEC"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
    {id:"sh0",t:"Тень картинок в покое",o:true,c:[
     {k:"sc",l:"Цвет тени",y:"c",d:"#916D50"},
@@ -146,7 +147,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v12";
+  var KEY="tn-v13";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -225,7 +226,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function build(){
     var c="";
     var vars=[];
-    if(S.o_site)vars.push("--bg:"+S.bg,"--sel:"+S.sel,"--accent:"+S.ac,"--live:"+S.live);
+    if(S.o_site)vars.push("--bg:"+S.bg,"--surface:"+S.surface,"--sel:"+S.sel,"--line:"+S.line,"--accent:"+S.ac,"--live:"+S.live);
     if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint,"--btn:"+S.btn);
     if(S.o_fs){
       var cl=function(v){return "clamp("+Math.round(v*.7)+"px,"+(v*.0696).toFixed(2)+"vw,"+v+"px)"};
@@ -256,7 +257,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   }
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
-    L.push("Цвета сайта: "+on("site","фон "+S.bg+", серый в переключателях "+S.sel+", акцент "+S.ac));
+    L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", бледный "+S.faint+", на кнопках "+S.btn));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
