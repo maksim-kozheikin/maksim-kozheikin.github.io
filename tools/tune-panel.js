@@ -13,7 +13,8 @@
 #tn .sec{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.15)}
 #tn .sh{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none;font-weight:700}
 #tn .sec.off .sb{display:none}
-#tn .sec.off .sh{opacity:.55}
+#tn .sec.off .sh>span:first-child{opacity:.55}
+#tn .rs{padding:2px 8px;font-size:11px;background:rgba(255,255,255,.14);color:#fff}
 #tn .row{display:flex;align-items:center;gap:8px;margin-top:6px}
 #tn .row>span,#tn .row>label{flex:1}
 #tn input[type=text]{width:84px;padding:4px 6px;border-radius:6px;border:1px solid #555;background:#111;color:#fff;font:12px ui-monospace,monospace}
@@ -48,7 +49,7 @@
 </div>`;
 
   var st=document.createElement("style");st.id="tn-ui";st.textContent=UI_CSS;document.head.appendChild(st);
-  var cs=document.createElement("style");cs.id="tn-css";document.head.appendChild(cs);
+  var cs=document.createElement("style");cs.id="tn-css";document.body.appendChild(cs);
   document.body.insertAdjacentHTML("beforeend",HTML);
   if(innerWidth<700){document.getElementById("tn").classList.add("min");document.getElementById("tn-min").textContent="+"}
 
@@ -124,7 +125,7 @@
   var HSL={};
   var h="";
   SEC.forEach(function(s){
-    h+='<div class="sec" data-s="'+s.id+'"><div class="sh"><span>'+s.t+'</span><label class="sw"><input type="checkbox" id="tn-o-'+s.id+'"><i></i></label></div><div class="sb">';
+    h+='<div class="sec" data-s="'+s.id+'"><div class="sh"><span>'+s.t+'</span><span class="hr"><button class="rs" data-rs="'+s.id+'" title="Вернуть значения этого раздела">Сброс</button><label class="sw"><input type="checkbox" id="tn-o-'+s.id+'"><i></i></label></span></div><div class="sb">';
     s.c.forEach(function(c){
       if(c.y==="c"){
         h+='<div class="row"><span>'+c.l+'</span><button class="sat" id="tn-s-'+c.k+'" title="Подобрать цвет"></button><input id="tn-t-'+c.k+'" type="text"></div>'+
@@ -169,7 +170,7 @@
   function pills(list,suf){return list.map(function(x){return "html body "+x+(suf||"")}).join(",")}
   function build(){
     var c="";
-    if(S.o_site)c+=":root{--bg:"+S.bg+";--ink:"+S.ink+";--accent:"+S.ac+";--sel:"+S.sel+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
+    if(S.o_site)c+=":root:root{--bg:"+S.bg+";--ink:"+S.ink+";--accent:"+S.ac+";--sel:"+S.sel+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
     var lift=S.o_sh1?S.lift:0,scale=S.o_sh1?S.scale:0,t=S.dur+"ms ease",plate=S.o_pl;
@@ -213,6 +214,7 @@
     return L.join("\n");
   }
   function apply(){
+    document.body.appendChild($("tn-css"));
     $("tn-css").textContent=EN?build():"";
     $("tn-disp").setAttribute("scale",S.gr);
     SEC.forEach(function(s){s.c.forEach(function(c){if(c.y==="r")$("tn-v-"+c.k).textContent=S[c.k]+" "+c.m[3]})});
@@ -224,7 +226,11 @@
   SEC.forEach(function(s){
     var sec=document.querySelector('[data-s="'+s.id+'"]'),sh=sec.querySelector(".sh"),tg=$("tn-o-"+s.id);
     tg.addEventListener("change",function(){S["o_"+s.id]=this.checked;sec.classList.toggle("off",!this.checked);apply()});
-    sh.addEventListener("click",function(e){if(e.target.closest(".sw"))return;tg.click()});
+    sh.addEventListener("click",function(e){
+      if(e.target.closest(".sw"))return;
+      if(e.target.closest(".rs")){s.c.forEach(function(c){S[c.k]=DEF[c.k]});S["o_"+s.id]=DEF["o_"+s.id];sync();apply();return}
+      tg.click();
+    });
     s.c.forEach(function(c){
       var k=c.k;
       if(c.y==="r"){$("tn-c-"+k).addEventListener("input",function(){S[k]=+this.value;apply()})}
