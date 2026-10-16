@@ -115,9 +115,9 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#131316"},
-    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#46433E"},
+    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
     {k:"faint",l:"Бледный текст",y:"c",d:"#000000"},
-    {k:"btn",l:"Текст на кнопках и табах",y:"c",d:"#131316"}],
+    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}],
     h:"Бледный текст это самый тихий серый. Годы и стрелки в списке проектов слева, номера 01–15 под открытым кейсом, мелкие заголовки над блоками (например «Роль», «Команда»), невыбранный En или Ру."},
    {id:"fs",t:"Размеры текста",o:false,c:[
     {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
@@ -146,7 +146,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v11";
+  var KEY="tn-v12";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -226,13 +226,13 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var c="";
     var vars=[];
     if(S.o_site)vars.push("--bg:"+S.bg,"--sel:"+S.sel,"--accent:"+S.ac,"--live:"+S.live);
-    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint);
+    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint,"--btn:"+S.btn);
     if(S.o_fs){
       var cl=function(v){return "clamp("+Math.round(v*.7)+"px,"+(v*.0696).toFixed(2)+"vw,"+v+"px)"};
       vars.push("--t-display:"+cl(S.tdisplay),"--t-title:"+cl(S.ttitle),"--t-body:"+S.tbody+"px","--t-small:"+S.tsmall+"px","--t-caption:"+S.tcaption+"px");
     }
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
-    if(S.o_tx)c+=pills(BUTTONS.concat(TABS),CALM)+"{color:"+S.btn+"}";
+
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
     var lift=S.o_sh1?S.lift:0,scale=S.o_sh1?S.scale:0,t=S.dur+"ms ease",plate=S.o_pl;

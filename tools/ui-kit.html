@@ -6,7 +6,7 @@
 <style>
 /* ——— токены. Это единственное место, где живут цвета, размеры и формы ——— */
 :root{
-  --bg:#FDFDFC; --surface:#FFFFFF; --ink:#131316; --muted:#46433E; --faint:#000000; --line:#EBEBEF;
+  --bg:#FDFDFC; --surface:#FFFFFF; --ink:#131316; --muted:#6F655D; --faint:#000000; --line:#EBEBEF;
   --sel:#F3EFEC; --accent:#131316; --live:#9E7757; --plate:#F3EFEC; --shadow:#916D50;
   --font:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
   --t-display:46px; --t-title:26px; --t-body:16px; --t-small:14px; --t-caption:14px;
@@ -298,7 +298,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"bg",l:"Фон сайта",y:"c",d:"#FDFDFC",u:"фон всех страниц"},
     {k:"surface",l:"Белый",y:"c",d:"#FFFFFF",u:"карточки, выбранный таб"},
     {k:"ink",l:"Основной текст",y:"c",d:"#131316",u:"заголовки и абзацы"},
-    {k:"muted",l:"Серый текст",y:"c",d:"#46433E",u:"подписи, вторичный текст"},
+    {k:"muted",l:"Серый текст",y:"c",d:"#6F655D",u:"подписи, вторичный текст"},
     {k:"faint",l:"Бледный текст",y:"c",d:"#000000",u:"годы, номера, мелкие заголовки"},
     {k:"line",l:"Линии",y:"c",d:"#EBEBEF",u:"границы и разделители"},
     {k:"sel",l:"Серый",y:"c",d:"#F3EFEC",u:"переключатели, кнопки, теги"},
@@ -331,7 +331,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"dur",l:"Скорость анимации",y:"r",m:[0,800,10,"мс"],d:200}]}
   ];
   var DEF={};G.forEach(function(g){g.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="kit-v2",S;
+  var KEY="kit-v3",S;
   try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
   /* цвет */
@@ -443,7 +443,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
 
   /* аудит. Данные собраны из CSS страниц и v4.css */
   var A={
-    tok:["#FDFDFC","#FFFFFF","#131316","#46433E","#000000","#EBEBEF","#F3EFEC","#9E7757","#F4F4F7"],
+    tok:["#FDFDFC","#FFFFFF","#131316","#6F655D","#000000","#EBEBEF","#F3EFEC","#9E7757","#F4F4F7"],
     off:[["#FFF",46],["rgba(255,255,255,.14)",21],["rgba(20,20,25,.06)",19],["rgba(255,255,255,.85)",15],["rgba(255,255,255,.26)",14],["rgba(19,19,22,.08)",14],["rgba(255,255,255,.5)",8],["rgba(20,20,25,.3)",8],["rgba(20,20,25,.08)",8],["rgba(145,109,80,.1)",7],["rgba(145,109,80,.15)",7],["rgba(19,19,22,.94)",7],["rgba(255,255,255,.24)",7],["rgba(252,252,253,0)",7],["rgba(20,20,25,.04)",3],["rgba(20,20,25,.12)",2],["rgba(255,255,255,.92)",2],["#EEF2FB",1],["#F7F9FD",1],["#DFE6FF",1],["#EEF1F7",1],["rgba(0,0,0,.18)",1],["rgba(0,0,0,.25)",1],["rgba(10,10,15,.55)",1],["rgba(10,10,15,.08)",1],["rgba(20,20,25,.16)",1]],
     ft:[["--small",124],["--text",88],["--eyebrow",45],["--h1",18],["--h3",15],["--h2",12],["--t-body",7],["--t-small",4],["--t-display",3],["--t-title",5],["--t-caption",1]],
     fo:[[".85rem",30],[".8rem",16],["16px",9],[".9rem",8],["1.3rem",7],["1.15rem",7],["1.8rem",7],["clamp(1.4rem,1.8vw,1.75rem)",4],["1.05rem",2],["12px",2],["14px",2],[".95rem",1],["1.2rem",1],["1.08rem",1],["18px",1],[".92rem",1],["clamp(1.6rem,3vw,2.2rem)",1],["15px",1],["11px",1],["1.1rem",1],[".78rem",1],["1.25rem",1],["13px",1],["1rem",1]],
