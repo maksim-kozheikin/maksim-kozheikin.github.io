@@ -2578,9 +2578,12 @@ window.CRM_HOST = {
   /* типы: c — цвет, r — ползунок [мин, макс, шаг, ед.], k — галочка */
   var SEC=[
    {id:"site",t:"Сайт",open:1,c:[
-    {k:"bg",l:"Фон сайта",y:"c",d:"#FCFCFD"},{k:"ink",l:"Цвет шрифта",y:"c",d:"#131316"},{k:"ac",l:"Акцентный цвет",y:"c",d:"#F0523C"}]},
+    {k:"bg",l:"Фон сайта",y:"c",d:"#FCFCFD"},{k:"ink",l:"Цвет шрифта",y:"c",d:"#131316"},{k:"ac",l:"Акцентный цвет",y:"c",d:"#000000"}]},
+   {id:"pl",t:"Подложка под картинками",c:[
+    {k:"pon",l:"Показывать подложку",y:"k",d:false},{k:"pbg",l:"Фон подложки",y:"c",d:"#DDDDDD"},
+    {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:14},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:20}]},
    {id:"sh0",t:"Тень картинок в покое",c:[
-    {k:"sc",l:"Цвет тени",y:"c",d:"#0E1E6C"},
+    {k:"sc",l:"Цвет тени",y:"c",d:"#875226"},
     {k:"y0",l:"Смещение вниз",y:"r",m:[0,40,.5,"px"],d:7},{k:"b0",l:"Размытие",y:"r",m:[0,60,.5,"px"],d:10.5},{k:"a0",l:"Сила тени",y:"r",m:[0,40,.5,"%"],d:2}]},
    {id:"sh1",t:"Картинки при наведении",c:[
     {k:"lift",l:"Насколько поднимается",y:"r",m:[0,20,.5,"px"],d:1},{k:"scale",l:"Увеличение",y:"r",m:[0,6,.5,"%"],d:0},
@@ -2612,7 +2615,7 @@ window.CRM_HOST = {
     {k:"nn",l:"Сила шума",y:"r",m:[0,40,1,"%"],d:12},{k:"nz",l:"Размер зерна",y:"r",m:[60,400,10,"px"],d:160}]}
   ];
   var DEF={};SEC.forEach(function(s){s.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="tn-v3",OK="tn-open";
+  var KEY="tn-v4",OK="tn-open";
   var S,OPEN={};
   try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
   try{OPEN=JSON.parse(localStorage.getItem(OK))||{}}catch(e){}
@@ -2648,11 +2651,13 @@ window.CRM_HOST = {
     var c=":root{--bg:"+S.bg+";--ink:"+S.ink+";--accent:"+S.ac+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
     var sh0="drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")",sh1="drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")";
     var t=S.dur+"ms ease",im=".figs .fig .fig-btn img";
-    c+=".figs .fig .fig-btn{transition:transform "+t+",filter "+t+"}";
-    c+=im+"{transition:filter "+t+";filter:"+sh0+";border-radius:"+S.ir+"px}";
+    var tg=S.pon?".figs .fig .fig-btn":im,tgH=S.pon?".figs .fig .fig-btn:hover":".figs .fig .fig-btn:hover img";
+    c+=".figs .fig .fig-btn{transition:transform "+t+",filter "+t+(S.pon?";background:"+S.pbg+";padding:"+S.p+"px;border-radius:"+S.r+"px":"")+"}";
+    c+=im+"{transition:filter "+t+";filter:none;border-radius:"+S.ir+"px}";
+    c+=tg+"{filter:"+sh0+"}";
     c+=".figs .fig .fig-btn:hover{transform:translateY(-"+S.lift+"px) scale("+(1+S.scale/100)+")}";
-    c+=".figs .fig .fig-btn:hover img{filter:"+sh1+"}";
-    if(S.bw>0) c+=im+"{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
+    c+=tgH+"{filter:"+sh1+"}";
+    if(S.bw>0) c+=(S.pon?".figs .fig .fig-btn{box-shadow:inset 0 0 0 "+S.bw+"px "+rgba(S.bc,S.ba)+"}":im+"{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}");
     if(S.bon){
       c+="body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:"+
         "radial-gradient(42% 36% at 10% 16%,"+rgba(S.k1,S.ki)+",transparent 70%),"+
@@ -2678,7 +2683,7 @@ window.CRM_HOST = {
   }
   function outText(){
     var L=[];
-    L.push("Фон сайта: "+S.bg,"Цвет шрифта: "+S.ink,"Акцентный цвет: "+S.ac,"Плашки: нет");
+    L.push("Фон сайта: "+S.bg,"Цвет шрифта: "+S.ink,"Акцентный цвет: "+S.ac,"Плашки: "+(S.pon?"да, фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px":"нет"));
     L.push("Тень в покое: "+S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%");
     L.push("При наведении: подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс");
     L.push("Рамка: "+(S.bw>0?S.bw+" px, "+S.bc+", прозрачность "+S.ba+"%":"нет"));
