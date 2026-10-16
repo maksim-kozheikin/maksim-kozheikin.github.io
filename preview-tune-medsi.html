@@ -115,9 +115,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .fig{margin:0;min-width:0;flex:1 1 0}
 .fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
   transition:transform .25s ease}
-.fig-btn:hover{transform:translateY(-3px)}
-.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(0,0,0,.02));transition:filter .25s ease}
-.fig-btn:hover img{filter:drop-shadow(0 14px 20px rgba(0,0,0,.10))}
+.fig-btn:hover{transform:translateY(-1px)}
+.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(14,30,108,.02));transition:filter .25s ease}
+.fig-btn:hover img{filter:drop-shadow(0 16px 10px rgba(14,30,108,.06))}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
@@ -2688,7 +2688,7 @@ document.addEventListener("click", e=>{
      во время перетаскивания браузер переадресует щелчок на область
      показа, и тогда по цели не отличить картинку от фона. */
   if(onImage(e.clientX, e.clientY)){
-    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
+    if(z===ZMIN) setZoom(2, e.clientX, e.clientY, true);   // сразу до 200%
     return;
   }
   // щелчок мимо картинки закрывает — но только пока не приближено
@@ -2843,50 +2843,170 @@ window.CRM_HOST = {
 #tn .out{margin-top:10px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.1);font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap}
 #tn.min .body{display:none}
 </style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="tn-lg" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="2" seed="4" result="t"/><feDisplacementMap id="tn-disp" in="SourceGraphic" in2="t" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<style>
+#tn .sec{margin:8px 0 0;padding-top:6px;border-top:1px solid rgba(255,255,255,.15)}
+#tn .sh{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none}
+#tn .sh .st{font-weight:700;flex:1;display:flex;align-items:center;gap:6px}
+#tn .sh .st i{font-style:normal;display:inline-block;width:10px;transition:transform .15s;opacity:.7}
+#tn .sec.closed .sh .st i{transform:rotate(-90deg)}
+#tn .sh .rs{padding:2px 8px;font-size:11px;background:rgba(255,255,255,.14);color:#fff}
+#tn .sb{padding-bottom:4px}
+#tn .sec.closed .sb{display:none}
+#tn .sb .row label{flex:1}
+#tn .hint{margin-top:6px;font-size:11px;color:rgba(255,255,255,.55);line-height:1.35}
+</style>
 <div id="tn">
   <h4 class="hd"><span>Настройка вида</span><button id="tn-min" title="Свернуть">—</button></h4>
   <div class="body">
-    <div class="sec"><b>Сайт</b>
-      <div class="row"><span>Фон сайта</span><input id="tn-bg" type="color" value="#fcfcfd"><input id="tn-bg-t" type="text" value="#FCFCFD"></div>
-      <div class="row"><span>Цвет шрифта</span><input id="tn-ink" type="color" value="#131316"><input id="tn-ink-t" type="text" value="#131316"></div>
-    </div>
-    <div class="sec"><b>Плашки под картинками</b>
-      <div class="row"><input id="tn-on" type="checkbox"><label for="tn-on" style="flex:1">Показывать плашки</label></div>
-      <div class="row"><span>Фон плашек</span><input id="tn-pbg" type="color" value="#dddddd"><input id="tn-pbg-t" type="text" value="#DDDDDD"></div>
-      <div>Скругление плашек: <b id="tn-r-v"></b></div><input id="tn-r" type="range" min="0" max="40" step="1" value="14">
-      <div>Отступ внутри плашки: <b id="tn-p-v"></b></div><input id="tn-p" type="range" min="0" max="48" step="1" value="20">
-    </div>
+    <div id="tn-secs"></div>
     <div class="out" id="tn-out"></div>
-    <div class="row"><button id="tn-copy" style="flex:1">Копировать значения</button><button id="tn-reset">Сброс</button></div>
+    <div class="row"><button id="tn-copy" style="flex:1">Копировать значения</button><button id="tn-reset">Сбросить всё</button></div>
   </div>
 </div>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
-  var DEF={bg:"#FCFCFD",ink:"#131316",on:false,pbg:"#DDDDDD",r:14,p:20};
-  var S;try{S=JSON.parse(localStorage.getItem("tn-v1"))}catch(e){}; S=Object.assign({},DEF,S||{});
+  /* типы: c — цвет, r — ползунок [мин, макс, шаг, ед.], k — галочка */
+  var SEC=[
+   {id:"site",t:"Сайт",open:1,c:[
+    {k:"bg",l:"Фон сайта",y:"c",d:"#FCFCFD"},{k:"ink",l:"Цвет шрифта",y:"c",d:"#131316"},{k:"ac",l:"Акцентный цвет",y:"c",d:"#000000"}]},
+   {id:"pl",t:"Подложка под картинками",c:[
+    {k:"pon",l:"Показывать подложку",y:"k",d:false},{k:"pbg",l:"Фон подложки",y:"c",d:"#DDDDDD"},
+    {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:14},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:20}]},
+   {id:"sh0",t:"Тень картинок в покое",c:[
+    {k:"sc",l:"Цвет тени",y:"c",d:"#875226"},
+    {k:"y0",l:"Смещение вниз",y:"r",m:[0,40,.5,"px"],d:7},{k:"b0",l:"Размытие",y:"r",m:[0,60,.5,"px"],d:10.5},{k:"a0",l:"Сила тени",y:"r",m:[0,40,.5,"%"],d:2}]},
+   {id:"sh1",t:"Картинки при наведении",c:[
+    {k:"lift",l:"Насколько поднимается",y:"r",m:[0,20,.5,"px"],d:1},{k:"scale",l:"Увеличение",y:"r",m:[0,6,.5,"%"],d:0},
+    {k:"y1",l:"Смещение вниз",y:"r",m:[0,60,.5,"px"],d:16},{k:"b1",l:"Размытие",y:"r",m:[0,80,.5,"px"],d:10},{k:"a1",l:"Сила тени",y:"r",m:[0,60,.5,"%"],d:6},
+    {k:"dur",l:"Скорость анимации",y:"r",m:[0,800,10,"мс"],d:250}]},
+   {id:"bd",t:"Рамка и углы картинки",c:[
+    {k:"bw",l:"Толщина рамки",y:"r",m:[0,4,.5,"px"],d:0},{k:"bc",l:"Цвет рамки",y:"c",d:"#000000"},
+    {k:"ba",l:"Прозрачность рамки",y:"r",m:[0,100,1,"%"],d:10},{k:"ir",l:"Скругление картинки",y:"r",m:[0,32,1,"px"],d:0}]},
+   {id:"gl",t:"Стекло (Liquid Glass)",c:[
+    {k:"gon",l:"Включить стекло на кнопках и тегах",y:"k",d:false},
+    {k:"gcards",l:"И на карточках",y:"k",d:false},
+    {k:"gt",l:"Оттенок стекла",y:"c",d:"#FFFFFF"},
+    {k:"ga",l:"Плотность заливки",y:"r",m:[0,100,1,"%"],d:35},
+    {k:"gb",l:"Размытие того, что под стеклом",y:"r",m:[0,40,1,"px"],d:16},
+    {k:"gs",l:"Насыщенность цвета под стеклом",y:"r",m:[100,250,5,"%"],d:160},
+    {k:"ge",l:"Светлая кромка",y:"r",m:[0,100,1,"%"],d:60},
+    {k:"gh",l:"Блик сверху",y:"r",m:[0,100,1,"%"],d:70},
+    {k:"gsh",l:"Тень под стеклом",y:"r",m:[0,30,1,"%"],d:10},
+    {k:"gr",l:"Преломление (только Chrome)",y:"r",m:[0,40,1,"px"],d:0},
+    {k:"gn",l:"Зерно на стекле",y:"r",m:[0,40,1,"%"],d:0},
+    {k:"gact",l:"Плотность акцента у активной кнопки",y:"r",m:[20,100,1,"%"],d:100}],
+    h:"Стекло видно, только если под ним есть что размывать. Включите «Подсветку за стеклом» ниже."},
+   {id:"bk",t:"Подсветка за стеклом",c:[
+    {k:"bon",l:"Включить цветные пятна на фоне",y:"k",d:false},
+    {k:"k1",l:"Пятно 1",y:"c",d:"#FFB199"},{k:"k2",l:"Пятно 2",y:"c",d:"#9DB7FF"},{k:"k3",l:"Пятно 3",y:"c",d:"#C9A6FF"},
+    {k:"ki",l:"Сила пятен",y:"r",m:[0,100,1,"%"],d:60}]},
+   {id:"nz",t:"Шум на всей странице",c:[
+    {k:"non",l:"Включить шум",y:"k",d:false},
+    {k:"nn",l:"Сила шума",y:"r",m:[0,40,1,"%"],d:12},{k:"nz",l:"Размер зерна",y:"r",m:[60,400,10,"px"],d:160}]}
+  ];
+  var DEF={};SEC.forEach(function(s){s.c.forEach(function(c){DEF[c.k]=c.d})});
+  var KEY="tn-v4",OK="tn-open";
+  var S,OPEN={};
+  try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
+  try{OPEN=JSON.parse(localStorage.getItem(OK))||{}}catch(e){}
   function ok(h){return /^#[0-9a-fA-F]{6}$/.test(h)}
   function rgb(h){return [1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})}
   function mix(a,b,t){var A=rgb(a),B=rgb(b);return "#"+A.map(function(v,i){var x=Math.round(v*t+B[i]*(1-t));return (x<16?"0":"")+x.toString(16)}).join("")}
-  function set(id,v){$(id).value=v}
-  function sync(){set("tn-bg",S.bg.toLowerCase());set("tn-bg-t",S.bg);set("tn-ink",S.ink.toLowerCase());set("tn-ink-t",S.ink);$("tn-on").checked=S.on;set("tn-pbg",S.pbg.toLowerCase());set("tn-pbg-t",S.pbg);set("tn-r",S.r);set("tn-p",S.p)}
+  function rgba(h,a){var c=rgb(h);return "rgba("+c[0]+","+c[1]+","+c[2]+","+(a/100)+")"}
+  function noise(a){
+    var svg="<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 "+a+" 0'/></filter><rect width='160' height='160' filter='url(#n)'/></svg>";
+    return "url(\"data:image/svg+xml,"+encodeURIComponent(svg)+"\")";
+  }
+  /* строим панель */
+  var host=$("tn-secs"),h="";
+  SEC.forEach(function(s){
+    h+='<div class="sec'+((OPEN[s.id]!==undefined?OPEN[s.id]:s.open)?'':' closed')+'" data-s="'+s.id+'"><div class="sh"><span class="st"><i>▾</i>'+s.t+'</span><button class="rs" data-rs="'+s.id+'" title="Вернуть значения этого раздела">Сброс</button></div><div class="sb">';
+    s.c.forEach(function(c){
+      if(c.y==="c") h+='<div class="row"><span>'+c.l+'</span><input id="tn-c-'+c.k+'" type="color"><input id="tn-t-'+c.k+'" type="text"></div>';
+      else if(c.y==="k") h+='<div class="row"><input id="tn-c-'+c.k+'" type="checkbox"><label for="tn-c-'+c.k+'">'+c.l+'</label></div>';
+      else h+='<div>'+c.l+': <b id="tn-v-'+c.k+'"></b></div><input id="tn-c-'+c.k+'" type="range" min="'+c.m[0]+'" max="'+c.m[1]+'" step="'+c.m[2]+'">';
+    });
+    if(s.h) h+='<div class="hint">'+s.h+'</div>';
+    h+='</div></div>';
+  });
+  host.innerHTML=h;
+  function sync(){SEC.forEach(function(s){s.c.forEach(function(c){
+    var e=$("tn-c-"+c.k);
+    if(c.y==="c"){e.value=S[c.k].toLowerCase();$("tn-t-"+c.k).value=S[c.k]}
+    else if(c.y==="k") e.checked=!!S[c.k]; else e.value=S[c.k];
+  })})}
+  function pills(list,suf){return list.map(function(x){return "html body "+x+(suf||"")}).join(",")}
+  var PILLS=[".back",".v4close",".segmented button",".lang button",".duties-more",".v4step",".tag-kind",".side-links a",".chip-btn",".dl-btn",".foot a",".case-link",".toggle",".life-tag"];
+  function build(){
+    var c=":root{--bg:"+S.bg+";--ink:"+S.ink+";--accent:"+S.ac+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
+    var sh0="drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")",sh1="drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")";
+    var t=S.dur+"ms ease",im=".figs .fig .fig-btn img";
+    var tg=S.pon?".figs .fig .fig-btn":im,tgH=S.pon?".figs .fig .fig-btn:hover":".figs .fig .fig-btn:hover img";
+    c+=".figs .fig .fig-btn{transition:transform "+t+",filter "+t+(S.pon?";background:"+S.pbg+";padding:"+S.p+"px;border-radius:"+S.r+"px":"")+"}";
+    c+=im+"{transition:filter "+t+";filter:none;border-radius:"+S.ir+"px}";
+    c+=tg+"{filter:"+sh0+"}";
+    c+=".figs .fig .fig-btn:hover{transform:translateY(-"+S.lift+"px) scale("+(1+S.scale/100)+")}";
+    c+=tgH+"{filter:"+sh1+"}";
+    if(S.bw>0) c+=(S.pon?".figs .fig .fig-btn{box-shadow:inset 0 0 0 "+S.bw+"px "+rgba(S.bc,S.ba)+"}":im+"{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}");
+    if(S.bon){
+      c+="body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:"+
+        "radial-gradient(42% 36% at 10% 16%,"+rgba(S.k1,S.ki)+",transparent 70%),"+
+        "radial-gradient(40% 40% at 90% 30%,"+rgba(S.k2,S.ki)+",transparent 70%),"+
+        "radial-gradient(46% 42% at 52% 98%,"+rgba(S.k3,S.ki)+",transparent 70%)}";
+      c+="html body .sidebar,html body .topbar{background:transparent}";
+    }
+    if(S.gon||S.gcards){
+      var T=PILLS.slice();if(!S.gon)T=[];if(S.gcards)T.push(".card");
+      var bf="blur("+S.gb+"px) saturate("+S.gs+"%)";
+      var shadow="inset 0 0 0 1px "+rgba("#FFFFFF",S.ge)+",inset 0 1px 1px "+rgba("#FFFFFF",S.gh)+",0 4px 16px "+rgba(S.sc,S.gsh);
+      c+=pills(T)+"{-webkit-backdrop-filter:"+bf+";backdrop-filter:"+bf+(S.gr>0?";backdrop-filter:url(#tn-lg) "+bf:"")+";box-shadow:"+shadow+";border-color:transparent}";
+      var rest=T.map(function(x){return "html body "+x+(x===".card"?"":":not(:hover):not([aria-pressed=\"true\"])")}).join(",");
+      c+=rest+"{background-color:"+rgba(S.gt,S.ga)+(S.gn>0?";background-image:"+noise(S.gn/100):"")+"}";
+      if(S.gon){
+        var act=PILLS.map(function(x){return "html body "+x+":hover,html body "+x+"[aria-pressed=\"true\"]"}).join(",");
+        c+=act+"{background-color:color-mix(in srgb,"+S.ac+" "+S.gact+"%,transparent);color:#fff}";
+        c+="html body .segmented,html body .lang{background:transparent}";
+      }
+    }
+    if(S.non) c+="body::after{content:'';position:fixed;inset:0;z-index:5000;pointer-events:none;background:"+noise(1)+";background-size:"+S.nz+"px;opacity:"+(S.nn/100)+";mix-blend-mode:overlay}";
+    return c;
+  }
+  function outText(){
+    var L=[];
+    L.push("Фон сайта: "+S.bg,"Цвет шрифта: "+S.ink,"Акцентный цвет: "+S.ac,"Плашки: "+(S.pon?"да, фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px":"нет"));
+    L.push("Тень в покое: "+S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%");
+    L.push("При наведении: подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс");
+    L.push("Рамка: "+(S.bw>0?S.bw+" px, "+S.bc+", прозрачность "+S.ba+"%":"нет"));
+    L.push("Скругление картинки: "+S.ir+" px");
+    L.push("Стекло: "+(S.gon||S.gcards?"да"+(S.gcards?" (и карточки)":"")+", оттенок "+S.gt+", плотность "+S.ga+"%, размытие "+S.gb+" px, насыщенность "+S.gs+"%, кромка "+S.ge+"%, блик "+S.gh+"%, тень "+S.gsh+"%, преломление "+S.gr+" px, зерно "+S.gn+"%, плотность акцента "+S.gact+"%":"нет"));
+    L.push("Подсветка за стеклом: "+(S.bon?"да, "+S.k1+" "+S.k2+" "+S.k3+", сила "+S.ki+"%":"нет"));
+    L.push("Шум на странице: "+(S.non?"да, сила "+S.nn+"%, зерно "+S.nz+" px":"нет"));
+    return L.join("\n");
+  }
   function apply(){
-    var css=":root{--bg:"+S.bg+";--ink:"+S.ink+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
-    if(S.on) css+=".figs .fig .fig-btn{background:"+S.pbg+";padding:"+S.p+"px;border-radius:"+S.r+"px}";
-    $("tn-css").textContent=css;
-    $("tn-r-v").textContent=S.r+" px";$("tn-p-v").textContent=S.p+" px";
-    $("tn-r").disabled=$("tn-p").disabled=$("tn-pbg").disabled=$("tn-pbg-t").disabled=!S.on;
-    $("tn-out").textContent="Фон сайта: "+S.bg+"\nЦвет шрифта: "+S.ink+"\nПлашки: "+(S.on?"да\nФон плашек: "+S.pbg+"\nСкругление: "+S.r+" px\nОтступ: "+S.p+" px":"нет");
-    try{localStorage.setItem("tn-v1",JSON.stringify(S))}catch(e){}
+    $("tn-css").textContent=build();
+    $("tn-disp").setAttribute("scale",S.gr);
+    SEC.forEach(function(s){s.c.forEach(function(c){if(c.y==="r")$("tn-v-"+c.k).textContent=S[c.k]+" "+c.m[3]})});
+    $("tn-out").textContent=outText();
+    try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
   }
-  function colorPair(pk,cid,tid){
-    $(cid).addEventListener("input",function(){S[pk]=this.value.toUpperCase();set(tid,S[pk]);apply()});
-    $(tid).addEventListener("input",function(){var v=this.value.trim();if(v[0]!=="#")v="#"+v;if(ok(v)){S[pk]=v.toUpperCase();set(cid,v.toLowerCase());apply()}});
-  }
-  colorPair("bg","tn-bg","tn-bg-t");colorPair("ink","tn-ink","tn-ink-t");colorPair("pbg","tn-pbg","tn-pbg-t");
-  $("tn-on").addEventListener("change",function(){S.on=this.checked;apply()});
-  $("tn-r").addEventListener("input",function(){S.r=+this.value;apply()});
-  $("tn-p").addEventListener("input",function(){S.p=+this.value;apply()});
+  SEC.forEach(function(s){s.c.forEach(function(c){
+    var e=$("tn-c-"+c.k);
+    if(c.y==="r") e.addEventListener("input",function(){S[c.k]=+this.value;apply()});
+    else if(c.y==="k") e.addEventListener("change",function(){S[c.k]=this.checked;apply()});
+    else {
+      e.addEventListener("input",function(){S[c.k]=this.value.toUpperCase();$("tn-t-"+c.k).value=S[c.k];apply()});
+      $("tn-t-"+c.k).addEventListener("input",function(){var v=this.value.trim();if(v[0]!=="#")v="#"+v;if(ok(v)){S[c.k]=v.toUpperCase();e.value=v.toLowerCase();apply()}});
+    }
+  })});
+  host.addEventListener("click",function(e){
+    var r=e.target.closest("[data-rs]");
+    if(r){var s=SEC.filter(function(x){return x.id===r.getAttribute("data-rs")})[0];s.c.forEach(function(c){S[c.k]=DEF[c.k]});sync();apply();return}
+    var sh=e.target.closest(".sh");
+    if(sh){var sec=sh.parentNode;sec.classList.toggle("closed");OPEN[sec.getAttribute("data-s")]=!sec.classList.contains("closed");try{localStorage.setItem(OK,JSON.stringify(OPEN))}catch(x){}}
+  });
   $("tn-reset").onclick=function(){S=Object.assign({},DEF);sync();apply()};
   $("tn-copy").onclick=function(){try{navigator.clipboard.writeText($("tn-out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать значения"},1200)};
   $("tn-min").onclick=function(){var p=$("tn");p.classList.toggle("min");this.textContent=p.classList.contains("min")?"+":"—"};
