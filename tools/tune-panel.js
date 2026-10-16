@@ -97,8 +97,9 @@
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#131316"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#746F67"},
-    {k:"faint",l:"Бледный текст (даты, номера)",y:"c",d:"#A4A4A5"},
-    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}]},
+    {k:"faint",l:"Бледный текст",y:"c",d:"#A4A4A5"},
+    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}],
+    h:"Бледный текст это самый тихий серый. Годы и стрелки в списке проектов слева, номера 01–15 под открытым кейсом, мелкие заголовки над блоками (например «Роль», «Команда»), невыбранный En или Ру."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#EFEAE6"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
@@ -220,11 +221,11 @@
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
     var lift=S.o_sh1?S.lift:0,scale=S.o_sh1?S.scale:0,t=S.dur+"ms ease",plate=S.o_pl;
-    /* тень всегда под самой картинкой, подложка только поднимается */
-    c+=".figs .fig .fig-btn{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px;filter:none;transition:transform "+t+"}";
-    c+=".figs .fig .fig-btn img{filter:"+rest+";border-radius:"+(S.o_bd?S.ir:0)+"px;transition:filter "+t+"}";
-    c+=".figs .fig .fig-btn:hover{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:none}";
-    c+=".figs .fig .fig-btn:hover img{filter:"+hov+"}";
+    /* тень, подъём и увеличение только у самой картинки, подложка стоит на месте */
+    c+=".figs .fig .fig-btn{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px;filter:none;transform:none;transition:none}";
+    c+=".figs .fig .fig-btn:hover{transform:none;filter:none}";
+    c+=".figs .fig .fig-btn img{filter:"+rest+";border-radius:"+(S.o_bd?S.ir:0)+"px;transition:transform "+t+",filter "+t+"}";
+    c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
     if(S.o_bk){
