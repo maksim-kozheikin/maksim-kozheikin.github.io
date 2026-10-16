@@ -146,9 +146,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .fig{margin:0;min-width:0;flex:1 1 0}
 .fig-btn{display:block;width:100%;padding:0;background:none;cursor:zoom-in;
   transition:transform .25s ease}
-.fig-btn:hover{transform:translateY(-3px)}
-.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(0,0,0,.02));transition:filter .25s ease}
-.fig-btn:hover img{filter:drop-shadow(0 14px 20px rgba(0,0,0,.10))}
+.fig-btn:hover{transform:translateY(-1px)}
+.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(14,30,108,.02));transition:filter .25s ease}
+.fig-btn:hover img{filter:drop-shadow(0 16px 10px rgba(14,30,108,.06))}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
@@ -2398,7 +2398,7 @@ document.addEventListener("click", e=>{
      во время перетаскивания браузер переадресует щелчок на область
      показа, и тогда по цели не отличить картинку от фона. */
   if(onImage(e.clientX, e.clientY)){
-    if(z===ZMIN) setZoom(z*ZSTEP, e.clientX, e.clientY, true);   // немного приблизить
+    if(z===ZMIN) setZoom(2, e.clientX, e.clientY, true);   // сразу до 200%
     return;
   }
   // щелчок мимо картинки закрывает — но только пока не приближено
@@ -2557,11 +2557,7 @@ window.CRM_HOST = {
     <div class="sec"><b>Сайт</b>
       <div class="row"><span>Фон сайта</span><input id="tn-bg" type="color" value="#fcfcfd"><input id="tn-bg-t" type="text" value="#FCFCFD"></div>
       <div class="row"><span>Цвет шрифта</span><input id="tn-ink" type="color" value="#131316"><input id="tn-ink-t" type="text" value="#131316"></div>
-    </div>
-    <div class="sec"><b>Плашки под картинками</b>
-      <div class="row"><input id="tn-on" type="checkbox"><label for="tn-on" style="flex:1">Показывать плашки</label></div>
-      <div class="row"><span>Фон плашек</span><input id="tn-pbg" type="color" value="#dddddd"><input id="tn-pbg-t" type="text" value="#DDDDDD"></div>
-      <div id="tn-s-r"></div><div id="tn-s-p"></div>
+      <div class="row"><span>Акцентный цвет</span><input id="tn-ac" type="color" value="#f0523c"><input id="tn-ac-t" type="text" value="#F0523C"></div>
     </div>
     <div class="sec"><b>Тень в покое</b>
       <div class="row"><span>Цвет тени</span><input id="tn-sc" type="color" value="#000000"><input id="tn-sc-t" type="text" value="#000000"></div>
@@ -2584,15 +2580,15 @@ window.CRM_HOST = {
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
-  var DEF={bg:"#FCFCFD",ink:"#131316",on:false,pbg:"#DDDDDD",r:14,p:20,
-    sc:"#000000",y0:7,b0:10.5,a0:2,lift:3,scale:0,y1:14,b1:20,a1:10,dur:250,bw:0,bc:"#000000",ba:10,ir:0};
-  var SL=[["r","Скругление плашек",0,40,1,"px"],["p","Отступ внутри плашки",0,48,1,"px"],
+  var DEF={bg:"#FCFCFD",ink:"#131316",ac:"#F0523C",
+    sc:"#0E1E6C",y0:7,b0:10.5,a0:2,lift:1,scale:0,y1:16,b1:10,a1:6,dur:250,bw:0,bc:"#000000",ba:10,ir:0};
+  var SL=[
     ["y0","Смещение вниз",0,40,0.5,"px"],["b0","Размытие",0,60,0.5,"px"],["a0","Сила тени",0,40,0.5,"%"],
     ["lift","Насколько поднимается",0,20,0.5,"px"],["scale","Увеличение",0,6,0.5,"%"],
     ["y1","Смещение вниз",0,60,0.5,"px"],["b1","Размытие",0,80,0.5,"px"],["a1","Сила тени",0,60,0.5,"%"],
     ["dur","Скорость анимации",0,800,10,"мс"],
     ["bw","Толщина рамки",0,4,0.5,"px"],["ba","Прозрачность рамки",0,100,1,"%"],["ir","Скругление картинки",0,32,1,"px"]];
-  var S;try{S=JSON.parse(localStorage.getItem("tn-v1"))}catch(e){}; S=Object.assign({},DEF,S||{});
+  var S;try{S=JSON.parse(localStorage.getItem("tn-v2"))}catch(e){}; S=Object.assign({},DEF,S||{});
   function ok(h){return /^#[0-9a-fA-F]{6}$/.test(h)}
   function rgb(h){return [1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})}
   function mix(a,b,t){var A=rgb(a),B=rgb(b);return "#"+A.map(function(v,i){var x=Math.round(v*t+B[i]*(1-t));return (x<16?"0":"")+x.toString(16)}).join("")}
@@ -2604,40 +2600,38 @@ window.CRM_HOST = {
   });
   function sync(){
     set("tn-bg",S.bg.toLowerCase());set("tn-bg-t",S.bg);set("tn-ink",S.ink.toLowerCase());set("tn-ink-t",S.ink);
-    $("tn-on").checked=S.on;set("tn-pbg",S.pbg.toLowerCase());set("tn-pbg-t",S.pbg);
+    set("tn-ac",S.ac.toLowerCase());set("tn-ac-t",S.ac);
     set("tn-sc",S.sc.toLowerCase());set("tn-sc-t",S.sc);set("tn-bc",S.bc.toLowerCase());set("tn-bc-t",S.bc);
     SL.forEach(function(s){set("tn-i-"+s[0],S[s[0]])});
   }
   function apply(){
-    var css=":root{--bg:"+S.bg+";--ink:"+S.ink+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
+    var css=":root{--bg:"+S.bg+";--ink:"+S.ink+";--accent:"+S.ac+";--muted:"+mix(S.ink,S.bg,.58)+";--faint:"+mix(S.ink,S.bg,.38)+"}";
     var sh0="drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")";
     var sh1="drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")";
     var t=S.dur+"ms ease";
-    var tgt=S.on?".figs .fig .fig-btn":".figs .fig .fig-btn img";
-    var tgtH=S.on?".figs .fig .fig-btn:hover":".figs .fig .fig-btn:hover img";
-    css+=".figs .fig .fig-btn{transition:transform "+t+",filter "+t+";"+(S.on?"background:"+S.pbg+";padding:"+S.p+"px;border-radius:"+S.r+"px;":"")+"}";
+    var tgt=".figs .fig .fig-btn img";
+    var tgtH=".figs .fig .fig-btn:hover img";
+    css+=".figs .fig .fig-btn{transition:transform "+t+",filter "+t+"}";
     css+=".figs .fig .fig-btn img{transition:filter "+t+";filter:none;border-radius:"+S.ir+"px}";
     css+=tgt+"{filter:"+sh0+"}";
     css+=".figs .fig .fig-btn:hover{transform:translateY(-"+S.lift+"px) scale("+(1+S.scale/100)+")}";
     css+=tgtH+"{filter:"+sh1+"}";
-    if(S.bw>0) css+=(S.on?".figs .fig .fig-btn{box-shadow:inset 0 0 0 "+S.bw+"px "+rgba(S.bc,S.ba)+"}":".figs .fig .fig-btn img{box-shadow:inset 0 0 0 "+S.bw+"px "+rgba(S.bc,S.ba)+";outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}");
+    if(S.bw>0) css+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
     $("tn-css").textContent=css;
     SL.forEach(function(s){$("tn-v-"+s[0]).textContent=S[s[0]]+" "+s[5]});
-    $("tn-i-r").disabled=$("tn-i-p").disabled=$("tn-pbg").disabled=$("tn-pbg-t").disabled=!S.on;
-    $("tn-out").textContent="Фон сайта: "+S.bg+"\nЦвет шрифта: "+S.ink+"\nПлашки: "+(S.on?"да\nФон плашек: "+S.pbg+"\nСкругление плашек: "+S.r+" px\nОтступ: "+S.p+" px":"нет")+
+    $("tn-out").textContent="Фон сайта: "+S.bg+"\nЦвет шрифта: "+S.ink+"\nАкцентный цвет: "+S.ac+"\nПлашки: нет"+
       "\nТень в покое: "+S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"+
       "\nПри наведении: подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"+
       "\nРамка: "+(S.bw>0?S.bw+" px, "+S.bc+", прозрачность "+S.ba+"%":"нет")+
       "\nСкругление картинки: "+S.ir+" px";
-    try{localStorage.setItem("tn-v1",JSON.stringify(S))}catch(e){}
+    try{localStorage.setItem("tn-v2",JSON.stringify(S))}catch(e){}
   }
   function colorPair(pk,cid,tid){
     $(cid).addEventListener("input",function(){S[pk]=this.value.toUpperCase();set(tid,S[pk]);apply()});
     $(tid).addEventListener("input",function(){var v=this.value.trim();if(v[0]!=="#")v="#"+v;if(ok(v)){S[pk]=v.toUpperCase();set(cid,v.toLowerCase());apply()}});
   }
-  colorPair("bg","tn-bg","tn-bg-t");colorPair("ink","tn-ink","tn-ink-t");colorPair("pbg","tn-pbg","tn-pbg-t");
+  colorPair("bg","tn-bg","tn-bg-t");colorPair("ink","tn-ink","tn-ink-t");colorPair("ac","tn-ac","tn-ac-t");
   colorPair("sc","tn-sc","tn-sc-t");colorPair("bc","tn-bc","tn-bc-t");
-  $("tn-on").addEventListener("change",function(){S.on=this.checked;apply()});
   $("tn-reset").onclick=function(){S=Object.assign({},DEF);sync();apply()};
   $("tn-copy").onclick=function(){try{navigator.clipboard.writeText($("tn-out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать значения"},1200)};
   $("tn-min").onclick=function(){var p=$("tn");p.classList.toggle("min");this.textContent=p.classList.contains("min")?"+":"—"};
