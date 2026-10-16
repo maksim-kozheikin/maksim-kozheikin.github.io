@@ -7,7 +7,7 @@
 /* ——— токены. Это единственное место, где живут цвета, размеры и формы ——— */
 :root{
   --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#161413; --line:#DFDBD8;
-  --sel:#F4EFEC; --accent:#161413; --live:#916D50; --plate:#F4EFEC; --shadow:#916D50;
+  --sel:#F4EFEC; --tab-on:#FDFCFC; --accent:#161413; --live:#916D50; --plate:#F4EFEC; --shadow:#916D50;
   --font:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
   --t-display:46px; --t-title:26px; --t-body:16px; --t-small:14px; --t-caption:14px;
   --w-display:500; --w-title:500; --w-strong:600;
@@ -96,8 +96,8 @@ button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .btn-k:hover{background:var(--accent);color:#fff}
 .seg{display:inline-flex;gap:2px;padding:3px;border-radius:var(--r-pill);background:var(--sel)}
 .seg button{padding:6px 14px;border-radius:var(--r-pill);font-size:var(--t-small);color:var(--muted)}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.08)}
-.seg button:not([aria-pressed="true"]):hover{background:var(--surface);color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--tab-on);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.08)}
+.seg button:not([aria-pressed="true"]):hover{background:var(--tab-on);color:var(--ink)}
 .states{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
 /* теги */
@@ -302,6 +302,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"faint",l:"Бледный текст",y:"c",d:"#161413",u:"годы, номера, мелкие заголовки"},
     {k:"line",l:"Линии",y:"c",d:"#DFDBD8",u:"границы и разделители"},
     {k:"sel",l:"Серый",y:"c",d:"#F4EFEC",u:"переключатели, кнопки, теги"},
+    {k:"tabon",l:"Выбранный таб",y:"c",d:"#FDFCFC",u:"Работа, Ру"},
     {k:"accent",l:"Акцент",y:"c",d:"#161413",u:"ссылки, маркеры, наведение"},
     {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50",u:"текущая работа"},
     {k:"plate",l:"Подложка под картинками",y:"c",d:"#F4EFEC",u:"фон под макетами"},
@@ -331,7 +332,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     {k:"dur",l:"Скорость анимации",y:"r",m:[0,800,10,"мс"],d:200}]}
   ];
   var DEF={};G.forEach(function(g){g.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="kit-v4",S;
+  var KEY="kit-v5",S;
   try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
   /* цвет */
@@ -377,7 +378,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
   function pxClamp(px){return "clamp("+Math.round(px*.7)+"px,"+(px*.0696).toFixed(2)+"vw,"+px+"px)"}
   function set(k,v){root.style.setProperty(k,v)}
   function apply(){
-    ["bg","surface","ink","muted","faint","line","sel","accent","live"].forEach(function(k){set("--"+k,S[k])});
+    ["bg","surface","ink","muted","faint","line","sel","accent","live"].forEach(function(k){set("--"+k,S[k])});set("--tab-on",S.tabon);
     set("--plate",S.plate);set("--shadow",S.shadow);
     set("--font",'"'+S.font+'",ui-sans-serif,system-ui,-apple-system,sans-serif');
     set("--t-display",S.tdisplay+"px");set("--t-title",S.ttitle+"px");set("--t-body",S.tbody+"px");set("--t-small",S.tsmall+"px");set("--t-caption",S.tcaption+"px");
@@ -395,7 +396,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
   function cssOut(){
     return ":root{\n"+
      ["bg","surface","ink","muted","faint","line","sel","accent","live"].map(function(k){return "  --"+k+":"+S[k]+";"}).join("\n")+"\n"+
-     "  --plate:"+S.plate+"; --shadow:"+S.shadow+";\n"+
+     "  --tab-on:"+S.tabon+"; --plate:"+S.plate+"; --shadow:"+S.shadow+";\n"+
      "  --t-display:"+pxClamp(S.tdisplay)+";\n  --t-title:"+pxClamp(S.ttitle)+";\n  --t-body:"+S.tbody+"px; --t-small:"+S.tsmall+"px; --t-caption:"+S.tcaption+"px;\n"+
      "  --w-display:"+S.wdisplay+"; --w-title:"+S.wtitle+"; --w-strong:"+S.wstrong+";\n  --lh-body:"+S.lhbody+"; --ls-display:"+S.lsdisplay+"em; --ls-eyebrow:"+S.lseyebrow+"em;\n"+
      "  --font:\""+S.font+"\";\n"+
@@ -414,7 +415,7 @@ summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
     $("swatches").innerHTML=g.map(function(c){
       var cr="";
       if(["ink","muted","faint","accent"].indexOf(c.k)>-1){var r=ratio(S[c.k],S.bg);cr='<span class="contrast '+(r>=4.5?"ok":"low")+'">контраст с фоном '+r.toFixed(1)+':1 '+(r>=4.5?"✓":"ниже 4.5")+'</span>'}
-      return '<div class="sw-card"><i style="background:'+S[c.k]+'"></i><div><b>'+c.l+'</b><code>--'+(c.k==="plate"?"plate":c.k)+' · '+S[c.k]+'</code><small>'+c.u+'</small>'+cr+'</div></div>';
+      return '<div class="sw-card"><i style="background:'+S[c.k]+'"></i><div><b>'+c.l+'</b><code>--'+(c.k==="plate"?"plate":c.k==="tabon"?"tab-on":c.k)+' · '+S[c.k]+'</code><small>'+c.u+'</small>'+cr+'</div></div>';
     }).join("");
   }
 

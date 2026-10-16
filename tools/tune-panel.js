@@ -110,7 +110,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var SEC=[
    {id:"site",t:"Цвета сайта",o:true,c:[
     {k:"bg",l:"Фон сайта",y:"c",d:"#FDFCFC"},{k:"surface",l:"Белый (карточки, выбранный таб)",y:"c",d:"#F4EFEC"},
-    {k:"sel",l:"Серый в переключателях, кнопках и тегах",y:"c",d:"#F4EFEC"},{k:"line",l:"Линии и границы",y:"c",d:"#DFDBD8"},
+    {k:"sel",l:"Серый в переключателях, кнопках и тегах",y:"c",d:"#F4EFEC"},{k:"tabon",l:"Выбранный таб (Работа, Ру)",y:"c",d:"#FDFCFC"},{k:"line",l:"Линии и границы",y:"c",d:"#DFDBD8"},
     {k:"ac",l:"Акцентный цвет",y:"c",d:"#161413"},
     {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50"}],
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
@@ -147,7 +147,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v13";
+  var KEY="tn-v14";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -226,7 +226,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function build(){
     var c="";
     var vars=[];
-    if(S.o_site)vars.push("--bg:"+S.bg,"--surface:"+S.surface,"--sel:"+S.sel,"--line:"+S.line,"--accent:"+S.ac,"--live:"+S.live);
+    if(S.o_site)vars.push("--bg:"+S.bg,"--surface:"+S.surface,"--sel:"+S.sel,"--tab-on:"+S.tabon,"--line:"+S.line,"--accent:"+S.ac,"--live:"+S.live);
     if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint,"--btn:"+S.btn);
     if(S.o_fs){
       var cl=function(v){return "clamp("+Math.round(v*.7)+"px,"+(v*.0696).toFixed(2)+"vw,"+v+"px)"};
@@ -257,7 +257,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   }
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
-    L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
+    L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", бледный "+S.faint+", на кнопках "+S.btn));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
