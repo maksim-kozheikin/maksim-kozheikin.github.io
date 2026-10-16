@@ -90,16 +90,17 @@
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
    {id:"site",t:"Цвета сайта",o:true,c:[
-    {k:"bg",l:"Фон сайта",y:"c",d:"#FDFDFC"},{k:"sel",l:"Серый в переключателях и кнопках",y:"c",d:"#E6E0DB"},
-    {k:"ac",l:"Акцентный цвет",y:"c",d:"#131316"}],
-    h:"Акцент красит маркеры, ссылки в тексте и активные пункты."},
+    {k:"bg",l:"Фон сайта",y:"c",d:"#FDFDFC"},{k:"sel",l:"Серый в переключателях и кнопках",y:"c",d:"#EFEAE6"},
+    {k:"ac",l:"Акцентный цвет",y:"c",d:"#131316"},
+    {k:"live",l:"Пульсирующая точка",y:"c",d:"#9E7757"}],
+    h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#131316"},
-    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#757577"},
+    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#746F67"},
     {k:"faint",l:"Бледный текст (даты, номера)",y:"c",d:"#A4A4A5"},
     {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#131316"}]},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
-    {k:"pbg",l:"Фон подложки",y:"c",d:"#E6E0DB"},
+    {k:"pbg",l:"Фон подложки",y:"c",d:"#EFEAE6"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
    {id:"sh0",t:"Тень картинок в покое",o:true,c:[
     {k:"sc",l:"Цвет тени",y:"c",d:"#9E7757"},
@@ -132,7 +133,7 @@
   ];
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="tn-v7";
+  var KEY="tn-v8";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -203,25 +204,29 @@
   }
 
   /* ——— CSS страницы ——— */
-  var PILLS=[".back",".v4close",".segmented button",".lang button",".duties-more",".v4step",".tag-kind",".side-links a",".chip-btn",".dl-btn",".foot a",".case-link",".toggle",".life-tag"];
+  /* кнопки и ссылки, табы и подписи без действия. С ними стекло ведёт себя по-разному */
+  var BUTTONS=[".back",".v4close",".duties-more",".v4step",".side-links a",".chip-btn",".dl-btn",".foot a",".case-link",".toggle",".life-tag"];
+  var TABS=[".segmented button",".lang button"];
+  var STATIC=[".tag-kind",".tag-ai",".tag-tech",".v4chips .tag"];
   function pills(list,suf){return list.map(function(x){return "html body "+x+(suf||"")}).join(",")}
   var CALM=':not(:hover):not([aria-pressed="true"])';
   function build(){
     var c="";
     var vars=[];
-    if(S.o_site)vars.push("--bg:"+S.bg,"--sel:"+S.sel,"--accent:"+S.ac);
+    if(S.o_site)vars.push("--bg:"+S.bg,"--sel:"+S.sel,"--accent:"+S.ac,"--live:"+S.live);
     if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint);
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
-    if(S.o_tx)c+=pills(PILLS,CALM)+"{color:"+S.btn+"}";
+    if(S.o_tx)c+=pills(BUTTONS.concat(TABS),CALM)+"{color:"+S.btn+"}";
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
     var lift=S.o_sh1?S.lift:0,scale=S.o_sh1?S.scale:0,t=S.dur+"ms ease",plate=S.o_pl;
-    c+=".figs .fig .fig-btn{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px;filter:"+(plate?rest:"none")+";transition:transform "+t+",filter "+t+"}";
-    c+=".figs .fig .fig-btn img{filter:"+(plate?"none":rest)+";border-radius:"+(S.o_bd?S.ir:0)+"px;transition:filter "+t+"}";
-    c+=".figs .fig .fig-btn:hover{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+(plate?hov:"none")+"}";
-    c+=".figs .fig .fig-btn:hover img{filter:"+(plate?"none":hov)+"}";
+    /* тень всегда под самой картинкой, подложка только поднимается */
+    c+=".figs .fig .fig-btn{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px;filter:none;transition:transform "+t+"}";
+    c+=".figs .fig .fig-btn img{filter:"+rest+";border-radius:"+(S.o_bd?S.ir:0)+"px;transition:filter "+t+"}";
+    c+=".figs .fig .fig-btn:hover{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:none}";
+    c+=".figs .fig .fig-btn:hover img{filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
-    if(S.o_bd&&S.bw>0)c+=plate?".figs .fig .fig-btn{box-shadow:inset 0 0 0 "+S.bw+"px "+rgba(S.bc,S.ba)+"}":".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
+    if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
     if(S.o_bk){
       c+="body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:"+
         "radial-gradient(42% 36% at 10% 16%,"+rgba(S.k1,S.ki)+",transparent 70%),"+
@@ -230,13 +235,17 @@
       c+="html body .sidebar,html body .topbar{background:transparent}";
     }
     if(S.o_gl){
-      /* только внешний вид. Размытие, кромка, блик и тень добавляются всем, заливка меняется только в спокойном состоянии */
-      var T=PILLS.slice();if(S.gcards)T.push(".card");
+      /* Только внешний вид. Кнопки и подписи без действия получают стекло всегда.
+         Невыбранный таб остаётся просто текстом, стекло появляется при наведении и у выбранного.
+         Подписи без действия при наведении не меняются. */
       var bf="blur("+S.gb+"px) saturate("+S.gs+"%)";
       var shadow="inset 0 0 0 1px "+rgba("#FFFFFF",S.ge)+",inset 0 1px 1px "+rgba("#FFFFFF",S.gh)+",0 4px 16px "+rgba(S.sc,S.gsh);
-      c+=pills(T)+"{-webkit-backdrop-filter:"+bf+";backdrop-filter:"+bf+(S.gr>0?";backdrop-filter:url(#tn-lg) "+bf:"")+";box-shadow:"+shadow+"}";
-      var calm=T.map(function(x){return "html body "+x+(x===".card"?"":CALM)}).join(",");
-      c+=calm+"{background-color:"+rgba(S.gt,S.ga)+(S.gn>0?";background-image:"+noise(S.gn/100):"")+"}";
+      var fx="-webkit-backdrop-filter:"+bf+";backdrop-filter:"+bf+(S.gr>0?";backdrop-filter:url(#tn-lg) "+bf:"")+";box-shadow:"+shadow;
+      var fill="background-color:"+rgba(S.gt,S.ga)+(S.gn>0?";background-image:"+noise(S.gn/100):"");
+      var always=BUTTONS.concat(STATIC);if(S.gcards)always.push(".card");
+      var tabOn=pills(TABS,":hover")+","+pills(TABS,'[aria-pressed="true"]');
+      c+=pills(always)+","+tabOn+"{"+fx+"}";
+      c+=always.map(function(x){return "html body "+x+(BUTTONS.indexOf(x)>-1?CALM:"")}).join(",")+","+tabOn+"{"+fill+"}";
     }
     if(S.o_nz)c+="body::after{content:'';position:fixed;inset:0;z-index:5000;pointer-events:none;background:"+noise(1)+";background-size:"+S.nz+"px;opacity:"+(S.nn/100)+";mix-blend-mode:overlay}";
     return c;
