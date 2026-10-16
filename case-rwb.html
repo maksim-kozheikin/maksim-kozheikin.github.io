@@ -16,8 +16,8 @@
 @keyframes fIn{from{opacity:0;transform:translateY(6px)}}
 
 :root{
-  --bg:#FDFDFC; --surface:#FFFFFF; --ink:#131316; --muted:#746F67; --faint:#A4A4A5;
-  --line:#EBEBEF; --panel:#F4F4F7; --accent:#131316; --sel:#EFEAE6;
+  --bg:#FDFDFC; --surface:#FFFFFF; --ink:#131316; --muted:#46433E; --faint:#000000;
+  --line:#EBEBEF; --panel:#F4F4F7; --accent:#131316; --sel:#F3EFEC;
   /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
      --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
      --h2  Заголовок кейса:    «Расписание», «Главный экран»
@@ -102,9 +102,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* изображения в ряд: одинаковая высота, ширина по пропорции, без обрезки */
 .figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
 .fig{margin:0;min-width:0;flex:1 1 0}
-.fig-btn{display:block;width:100%;padding:48px;background:#EFEAE6;border-radius:40px;cursor:zoom-in}
-.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 7px 10.5px rgba(158,119,87,.02));transition:transform .25s ease,filter .25s ease}
-.fig-btn:hover img{transform:translateY(-2px);filter:drop-shadow(0 0 0 rgba(158,119,87,0))}
+.fig-btn{display:block;width:100%;padding:48px;background:#F3EFEC;border-radius:40px;cursor:zoom-in}
+.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 10px rgba(145,109,80,.1));transition:transform .2s ease,filter .2s ease}
+.fig-btn:hover img{transform:translateY(-1px);filter:drop-shadow(0 10px 15px rgba(145,109,80,.15))}
 @media (max-width:640px){.fig-btn{padding:20px;border-radius:24px}}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
