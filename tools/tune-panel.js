@@ -80,6 +80,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
 #tn .segb button{min-width:34px;padding:6px 10px;border:0;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-weight:600;cursor:pointer}
 #tn .segb button:hover{background:rgba(255,255,255,.22)}
 #tn .segb button.on{background:#fff;color:#111}
+#tn-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);z-index:9996;max-width:min(92vw,420px);padding:10px 14px;border-radius:12px;background:#18181c;color:#fff;font:13px/1.4 system-ui,sans-serif;box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+#tn-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 #tn select.sel{width:170px;padding:6px 8px;border:0;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font:inherit;cursor:pointer}
 #tn select.sel option{color:#111}
 #tn .sw{position:relative;width:34px;height:20px;display:inline-block;flex:none}
@@ -613,6 +615,26 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   $("tn-insp").innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l6.5 16 2.3-6.7L19.5 11z"/></svg>';
   $("tn-insp").onclick=function(){setInsp(!INSP)};
   setTimeout(scan,500);
+
+  /* ——— превью. Окно просмотра не открывает другие страницы, поэтому ссылки на них перехватываем ———
+     Клик по строке в колонке слева переносит выделение на неё, остальные ссылки на страницы показывают подсказку. */
+  var TOAST=document.createElement("div");TOAST.id="tn-toast";document.body.appendChild(TOAST);
+  var toastT=null;
+  function toast(t){TOAST.textContent=t;TOAST.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){TOAST.classList.remove("on")},2600)}
+  document.addEventListener("click",function(e){
+    if(INSP)return;
+    if(e.target.closest&&e.target.closest("#tn"))return;
+    var a=e.target.closest?e.target.closest("a[href]"):null;
+    if(!a)return;
+    var href=a.getAttribute("href")||"";
+    if(!/^[\w.\-]+\.html([?#].*)?$/.test(href))return;
+    e.preventDefault();e.stopPropagation();
+    if(a.matches(".sidebar a.row")){
+      [].forEach.call(document.querySelectorAll(".sidebar a.row[aria-current]"),function(x){x.removeAttribute("aria-current")});
+      a.setAttribute("aria-current","page");
+      toast("В превью страница не открывается. Выделение строки переключено, чтобы вы увидели вариант.");
+    } else toast("В превью переходы между страницами отключены.");
+  },true);
   sync();paintEye();paintMin();apply();
   if(pos)place(pos.x,pos.y);
 })();
