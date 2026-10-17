@@ -79,7 +79,7 @@ html{scrollbar-gutter:stable}
 .segmented button,.lang button,
 .segmented button:hover,.lang button:hover{background:transparent;color:var(--muted);padding:6px 14px;border-radius:999px;font-size:var(--text);box-shadow:none}
 .segmented button:hover,.lang button:hover{color:var(--ink)}
-.segmented button[aria-pressed="true"],.lang button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(20,20,25,.08)}
+.segmented button[aria-pressed="true"],.lang button[aria-pressed="true"]{background:var(--tab-on);color:var(--ink);box-shadow:0 1px 3px rgba(20,20,25,.08)}
 
 /* фильтры-табы над плитками пока убраны */
 #filters{display:none!important}
@@ -369,11 +369,10 @@ html{scrollbar-gutter:stable}
 :root{
   --t-display:clamp(32px,3.2vw,46px);
   --t-title:clamp(22px,1.81vw,26px);
-  --t-body:16px; --t-small:14px; --t-caption:13px;
+  --t-body:16px; --t-small:14px; --t-caption:14px;
   /* старые переменные страниц — на новую шкалу */
   --h1:var(--t-display); --h2:var(--t-title); --h3:var(--t-body);
   --text:var(--t-body); --small:var(--t-small); --eyebrow:var(--t-caption);
-  --faint:var(--muted);                                   /* светло-серый убран */
 }
 body{font-size:var(--t-body)}
 
@@ -442,8 +441,8 @@ body{font-size:var(--t-body)}
 
 /* v4.33 — «сейчас»: мигающий кружок в чипсе с датой текущей работы */
 .v4chips .tag.is-live{display:inline-flex;align-items:center;gap:6px}
-.v4live{position:relative;width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 7px}
-.v4live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--accent);animation:v4pulse 1.6s ease-out infinite}
+.v4live{position:relative;width:7px;height:7px;border-radius:50%;background:var(--live,#916D50);flex:0 0 7px}
+.v4live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--live,#916D50);animation:v4pulse 1.6s ease-out infinite}
 @keyframes v4pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.6);opacity:0}}
 @media (prefers-reduced-motion:reduce){.v4live::after{animation:none}}
 
@@ -585,3 +584,9 @@ body{font-size:var(--t-body)}
 
 /* v4.57 — картинки держат пропорции по заранее известным размерам */
 .main img[width][height]{height:auto}
+
+/* v4.50 — кнопки и теги. Текст одного цвета, токен --btn. Наведение и выбранное состояние остаются как были */
+:root{--btn:var(--ink);--tab-on:var(--bg)}
+.tag-kind,.tag-tech,.v4chips .tag,.sidebar .tag-kind,.sidebar .tag-ai{color:var(--btn)}
+.side-links a:not(:hover),.chip-btn:not(:hover):not([aria-pressed="true"]),.duties-more:not(:hover),.dl-btn:not(:hover),.foot a:not(:hover),.case-link:not(:hover),.toggle:not(:hover),.back:not(:hover),.v4close:not(:hover),
+.segmented button:not(:hover):not([aria-pressed="true"]),.lang button:not(:hover):not([aria-pressed="true"]){color:var(--btn)}
