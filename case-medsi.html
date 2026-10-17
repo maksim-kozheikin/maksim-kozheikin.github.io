@@ -15,7 +15,7 @@
 @keyframes fIn{from{opacity:0;transform:translateY(6px)}}
 
 :root{
-  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#161413;
+  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#6F655D;
   --line:#DFDBD8; --panel:#F4F4F7; --accent:#161413; --sel:#F4EFEC;
   /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
      --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
@@ -300,7 +300,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
-<link rel="stylesheet" href="assets/v4.css">
+<link rel="stylesheet" href="assets/v4.css?v=51">
 <style>/* Medsi: заголовки кейсов («Единый стиль приложения», «Главный экран») того же размера, что разделы («Приложение SmartMed», «Исследования») */
 .block:not(.group) .block-title{font-size:var(--t-display);line-height:1.15;letter-spacing:-.02em}</style>
 </head>
@@ -361,8 +361,8 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
-<script src="assets/site.js"></script>
-<script src="assets/v4.js"></script>
+<script src="assets/site.js?v=51"></script>
+<script src="assets/v4.js?v=51"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "marketing": "assets/medsi-marketing.png",
@@ -2822,7 +2822,7 @@ window.CRM_HOST = {
   caps: {list:true, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:true, blockImg:false, flow:false}
 };
 </script>
-<script src="assets/crm-editor.js" defer=""></script>
+<script src="assets/crm-editor.js?v=51" defer=""></script>
 
 
 </body></html>
