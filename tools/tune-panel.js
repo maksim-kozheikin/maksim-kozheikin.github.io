@@ -117,9 +117,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#161413"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
-    {k:"faint",l:"Бледный текст",y:"c",d:"#161413"},
     {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#161413"}],
-    h:"Бледный текст это самый тихий серый. Годы и стрелки в списке проектов слева, номера 01–15 под открытым кейсом, мелкие заголовки над блоками (например «Роль», «Команда»), невыбранный En или Ру."},
+    h:"Два цвета текста. Основной и серый. Кнопки и теги берут цвет из отдельного поля. Годы, номера и подписи слева это серый."},
    {id:"fs",t:"Размеры текста",o:false,c:[
     {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
     {k:"ttitle",l:"Title (заголовок раздела)",y:"r",m:[18,40,1,"px"],d:26},
@@ -127,6 +126,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"tsmall",l:"Small (вторичный)",y:"r",m:[11,18,1,"px"],d:14},
     {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:14}],
     h:"Меняет размеры везде, где текст использует эти пять размеров. Отдельные стили настраиваются инспектором."},
+   {id:"ring",t:"Рамка у кнопок",o:true,c:[
+    {k:"ringc",l:"Цвет рамки",y:"c",d:"#FDFCFC"},
+    {k:"ringw",l:"Толщина",y:"r",m:[0,4,.5,"px"],d:1.5}],
+    h:"Тонкий ободок вокруг кнопок. Он нужен, чтобы кнопка не терялась, когда попадает на подложку под картинкой."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#F4EFEC"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
@@ -147,7 +150,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v14";
+  var KEY="tn-v15";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -227,11 +230,12 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var c="";
     var vars=[];
     if(S.o_site)vars.push("--bg:"+S.bg,"--surface:"+S.surface,"--sel:"+S.sel,"--tab-on:"+S.tabon,"--line:"+S.line,"--accent:"+S.ac,"--live:"+S.live);
-    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.faint,"--btn:"+S.btn);
+    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.muted,"--btn:"+S.btn);
     if(S.o_fs){
       var cl=function(v){return "clamp("+Math.round(v*.7)+"px,"+(v*.0696).toFixed(2)+"vw,"+v+"px)"};
       vars.push("--t-display:"+cl(S.tdisplay),"--t-title:"+cl(S.ttitle),"--t-body:"+S.tbody+"px","--t-small:"+S.tsmall+"px","--t-caption:"+S.tcaption+"px");
     }
+    vars.push("--btn-ring:"+S.ringc,"--btn-ring-w:"+(S.o_ring?S.ringw:0)+"px");
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
 
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
@@ -258,7 +262,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
-    L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", бледный "+S.faint+", на кнопках "+S.btn));
+    L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
+    L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
     L.push("При наведении: "+on("sh1","подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"));
@@ -360,9 +365,9 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var INSP=false,SEL=null,HOV=null,KEYS={},PR=null,SC=false,SS=false,MX=0,MY=0,HSLI=[0,0,0];
   var SZN={display:"Display",title:"Title",body:"Body",small:"Small",caption:"Caption"};
   var SZT={display:"--t-display",title:"--t-title",body:"--t-body",small:"--t-small",caption:"--t-caption"};
-  var CLN={ink:"основной",muted:"серый",faint:"бледный",accent:"акцент",surface:"белый"};
-  var CLT={ink:"--ink",muted:"--muted",faint:"--faint",accent:"--accent",surface:"--surface"};
-  var CL2KEY={ink:"ink",muted:"muted",faint:"faint",accent:"ac"};
+  var CLN={ink:"основной",muted:"серый",accent:"акцент",surface:"белый"};
+  var CLT={ink:"--ink",muted:"--muted",accent:"--accent",surface:"--surface"};
+  var CL2KEY={ink:"ink",muted:"muted",accent:"ac"};
   var SZ2KEY={display:"tdisplay",title:"ttitle",body:"tbody",small:"tsmall",caption:"tcaption"};
   var WN={"300":"тонкий","400":"обычный","500":"средний","600":"полужирный","700":"жирный","800":"очень жирный"};
   var OV=document.createElement("div");OV.id="tn-ov";document.body.appendChild(OV);

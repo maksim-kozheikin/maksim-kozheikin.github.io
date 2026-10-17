@@ -17,7 +17,7 @@
 @keyframes fIn{from{opacity:0;transform:translateY(6px)}}
 
 :root{
-  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#161413;
+  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#6F655D;
   --line:#DFDBD8; --accent:#161413; --sel:#F4EFEC;
   /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
      --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
@@ -249,7 +249,7 @@ body[data-mode="life"] [data-view="personal"]{display:block}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media print{.duties{max-height:none!important}.toggle{display:none!important}.sidebar,.topbar,.scrim,.back,.dl-btn,#home{display:none!important}.cv-view{display:block!important}.main{padding:0}}
 </style>
-<link rel="stylesheet" href="assets/v4.css">
+<link rel="stylesheet" href="assets/v4.css?v=51">
 </head>
 <body class="home" data-mode="work" data-lang="ru">
 
@@ -349,10 +349,10 @@ body[data-mode="life"] [data-view="personal"]{display:block}
   </main>
 </div>
 
-<script src="assets/site.js"></script>
-<script src="assets/v4.js"></script>
-<script src="assets/v4-tiles-data.js"></script>
-<script src="assets/v4-tiles.js"></script>
+<script src="assets/site.js?v=51"></script>
+<script src="assets/v4.js?v=51"></script>
+<script src="assets/v4-tiles-data.js?v=51"></script>
+<script src="assets/v4-tiles.js?v=51"></script>
 <script>
 /* ============================================================
    СПИСОК ПРОЕКТОВ = навигация слева.
@@ -793,6 +793,6 @@ window.CRM_HOST = {
   caps: {}
 };
 </script>
-<script src="assets/crm-editor.js" defer></script>
+<script src="assets/crm-editor.js?v=51" defer></script>
 </body>
 </html>

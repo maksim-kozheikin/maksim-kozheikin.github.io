@@ -369,6 +369,7 @@ html{scrollbar-gutter:stable}
 :root{
   --t-display:clamp(32px,3.2vw,46px);
   --t-title:clamp(22px,1.81vw,26px);
+  --faint:var(--muted);                                   /* бледного цвета нет, только основной и серый */
   --t-body:16px; --t-small:14px; --t-caption:14px;
   /* старые переменные страниц — на новую шкалу */
   --h1:var(--t-display); --h2:var(--t-title); --h3:var(--t-body);
@@ -590,3 +591,7 @@ body{font-size:var(--t-body)}
 .tag-kind,.tag-tech,.v4chips .tag,.sidebar .tag-kind,.sidebar .tag-ai{color:var(--btn)}
 .side-links a:not(:hover),.chip-btn:not(:hover):not([aria-pressed="true"]),.duties-more:not(:hover),.dl-btn:not(:hover),.foot a:not(:hover),.case-link:not(:hover),.toggle:not(:hover),.back:not(:hover),.v4close:not(:hover),
 .segmented button:not(:hover):not([aria-pressed="true"]),.lang button:not(:hover):not([aria-pressed="true"]){color:var(--btn)}
+
+/* v4.51 — тонкая рамка у кнопок цвета фона. Кнопка остаётся заметной, когда попадает на подложку под картинкой */
+:root{--btn-ring:var(--bg);--btn-ring-w:1.5px}
+.side-links a,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close,.v4step{box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring)}
