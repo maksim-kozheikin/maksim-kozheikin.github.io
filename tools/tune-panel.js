@@ -76,6 +76,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
 #tn .gl i{flex:none;width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.35)}
 #tn .gl span{flex:1;min-width:0}
 #tn .gl em{font-style:normal;color:rgba(255,255,255,.55);font-size:11px}
+#tn select.sel{width:170px;padding:6px 8px;border:0;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font:inherit;cursor:pointer}
+#tn select.sel option{color:#111}
 #tn .sw{position:relative;width:34px;height:20px;display:inline-block;flex:none}
 #tn .sw input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
 #tn .sw i{position:absolute;inset:0;background:rgba(255,255,255,.22);border-radius:20px;transition:background .15s}
@@ -135,6 +137,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"lbba",l:"Плотность фона",y:"r",m:[50,100,1,"%"],d:94},
     {k:"lbfg",l:"Цвет кнопок и подписей",y:"c",d:"#F4EFEC"}],
     h:"Окно, которое открывается по клику на картинку. Кнопки и подписи используют один цвет с разной прозрачностью."},
+   {id:"selrow",t:"Выбранная строка слева",o:true,c:[
+    {k:"selv",l:"Вариант",y:"s",d:"0",opts:[["0","Как сейчас"],["1","1. Серая плашка"],["2","2. Тёплая метка слева"],["3","3. Серые остальные"],["4","4. Точка вместо стрелки"],["5","5. Подчёркивание"],["6","6. Плашка и метка"]]},
+    {k:"selmark",l:"Цвет метки и точки",y:"c",d:"#916D50"}],
+    h:"Как отмечена строка выбранной вкладки в списке слева. Работает на «Жизни» и на страницах кейсов."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#F4EFEC"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
@@ -155,7 +161,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v16";
+  var KEY="tn-v17";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -195,6 +201,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
            '<label>Яркость <b id="tn-hv-'+c.k+'-2"></b></label><input id="tn-h-'+c.k+'-2" type="range" min="0" max="100" step="1"></div>';
       } else if(c.y==="k"){
         h+='<div class="kr"><span>'+c.l+'</span><label class="sw"><input type="checkbox" id="tn-c-'+c.k+'"><i></i></label></div>';
+      } else if(c.y==="s"){
+        h+='<div class="cr"><span>'+c.l+'</span><select class="sel" id="tn-c-'+c.k+'">'+c.opts.map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join("")+'</select></div>';
       } else {
         h+='<div class="rg"><div class="rl"><span>'+c.l+'</span><input class="num" id="tn-n-'+c.k+'" type="number" min="'+c.m[0]+'" max="'+c.m[1]+'" step="'+c.m[2]+'"><em>'+c.m[3]+'</em></div><input id="tn-c-'+c.k+'" type="range" min="'+c.m[0]+'" max="'+c.m[1]+'" step="'+c.m[2]+'"></div>';
       }
@@ -220,6 +228,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
       s.c.forEach(function(c){
         if(c.y==="c"){HSL[c.k]=hex2hsl(S[c.k]);paintEd(c.k)}
         else if(c.y==="k")$("tn-c-"+c.k).checked=!!S[c.k];
+        else if(c.y==="s")$("tn-c-"+c.k).value=S[c.k];
         else{$("tn-c-"+c.k).value=S[c.k];$("tn-n-"+c.k).value=S[c.k]}
       });
     });
@@ -254,6 +263,32 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
+    if(S.o_selrow&&S.selv!=="0"){
+      var CUR='html body .sidebar a.row[aria-current="page"]',M=S.selmark,v=S.selv;
+      var plate=(v==="1"||v==="6");
+      if(plate){
+        c+=CUR+"{background:var(--sel);border-radius:10px;border-top-color:transparent;border-bottom-color:transparent;margin-inline:-8px;padding-inline:10px}";
+        c+=CUR+" + a.row{border-top-color:transparent}";
+        c+='html body .sidebar a.row:has(+ a.row[aria-current="page"]){border-bottom-color:transparent}';
+        c+=CUR+" .tag-kind,"+CUR+" .tag-ai{box-shadow:0 0 0 1.5px var(--bg)}";
+      }
+      if(v==="2"||v==="6"){
+        c+=CUR+"{position:relative}";
+        c+=CUR+"::before{content:'';position:absolute;left:"+(v==="6"?"0":"-10px")+";top:"+(v==="6"?"10px":"8px")+";bottom:"+(v==="6"?"10px":"8px")+";width:3px;border-radius:2px;background:"+M+"}";
+      }
+      if(v==="1"||v==="2"||v==="6")c+=CUR+" .row-ti{font-weight:600}";
+      if(v==="3"){
+        c+='html body .sidebar a.row:not([aria-current="page"]) .row-ti,html body .sidebar a.row:not([aria-current="page"]) .row-arr{color:var(--muted)}';
+        c+='html body .sidebar a.row:not([aria-current="page"]):hover .row-ti,html body .sidebar a.row:not([aria-current="page"]):hover .row-arr{color:var(--ink)}';
+        c+=CUR+" .row-ti{font-weight:600}";
+      }
+      if(v==="4"){
+        c+=CUR+" .row-arr{font-size:0;transform:none}";
+        c+=CUR+" .row-arr::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:"+M+"}";
+        c+=CUR+" .row-ti{font-weight:500}";
+      }
+      if(v==="5")c+=CUR+" .row-ti{font-weight:500;text-decoration:underline;text-decoration-color:"+M+";text-decoration-thickness:2px;text-underline-offset:5px}";
+    }
     Object.keys(OVR).forEach(function(k){
       var o=OVR[k],r=[];
       if(o.color)r.push("color:"+o.color+"!important");
@@ -271,6 +306,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
+    L.push("Выбранная строка слева: "+on("selrow","вариант "+S.selv+(S.selv==="0"?" (как сейчас)":", метка "+S.selmark)));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
     L.push("При наведении: "+on("sh1","подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"));
@@ -312,6 +348,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
         });
       }
       else if(c.y==="k"){$("tn-c-"+k).addEventListener("change",function(){S[k]=this.checked;apply()})}
+      else if(c.y==="s"){$("tn-c-"+k).addEventListener("change",function(){S[k]=this.value;apply()})}
       else{
         $("tn-s-"+k).addEventListener("click",function(){$("tn-e-"+k).classList.toggle("open")});
         $("tn-t-"+k).addEventListener("input",function(){
