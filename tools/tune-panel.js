@@ -76,6 +76,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
 #tn .gl i{flex:none;width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.35)}
 #tn .gl span{flex:1;min-width:0}
 #tn .gl em{font-style:normal;color:rgba(255,255,255,.55);font-size:11px}
+#tn .segb{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+#tn .segb button{min-width:34px;padding:6px 10px;border:0;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+#tn .segb button:hover{background:rgba(255,255,255,.22)}
+#tn .segb button.on{background:#fff;color:#111}
 #tn select.sel{width:170px;padding:6px 8px;border:0;border-radius:8px;background:rgba(255,255,255,.12);color:#fff;font:inherit;cursor:pointer}
 #tn select.sel option{color:#111}
 #tn .sw{position:relative;width:34px;height:20px;display:inline-block;flex:none}
@@ -110,6 +114,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
 
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
+   {id:"selrow",t:"Выбранная строка слева",o:true,c:[
+    {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как сейчас"],["1","1. Серая плашка"],["2","2. Тёплая метка слева"],["3","3. Серые остальные"],["4","4. Точка вместо стрелки"],["5","5. Подчёркивание"],["6","6. Плашка и метка"]]},
+    {k:"selmark",l:"Цвет метки и точки",y:"c",d:"#916D50"}],
+    h:"Как отмечена строка выбранной вкладки в списке слева. Работает на «Жизни» и на страницах кейсов."},
    {id:"site",t:"Цвета сайта",o:true,c:[
     {k:"bg",l:"Фон сайта",y:"c",d:"#FDFCFC"},{k:"surface",l:"Белый (карточки, выбранный таб)",y:"c",d:"#F4EFEC"},
     {k:"sel",l:"Серый в переключателях, кнопках и тегах",y:"c",d:"#F4EFEC"},{k:"tabon",l:"Выбранный таб (Работа, Ру)",y:"c",d:"#FDFCFC"},{k:"line",l:"Линии и границы",y:"c",d:"#DFDBD8"},
@@ -137,10 +145,6 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"lbba",l:"Плотность фона",y:"r",m:[50,100,1,"%"],d:94},
     {k:"lbfg",l:"Цвет кнопок и подписей",y:"c",d:"#F4EFEC"}],
     h:"Окно, которое открывается по клику на картинку. Кнопки и подписи используют один цвет с разной прозрачностью."},
-   {id:"selrow",t:"Выбранная строка слева",o:true,c:[
-    {k:"selv",l:"Вариант",y:"s",d:"0",opts:[["0","Как сейчас"],["1","1. Серая плашка"],["2","2. Тёплая метка слева"],["3","3. Серые остальные"],["4","4. Точка вместо стрелки"],["5","5. Подчёркивание"],["6","6. Плашка и метка"]]},
-    {k:"selmark",l:"Цвет метки и точки",y:"c",d:"#916D50"}],
-    h:"Как отмечена строка выбранной вкладки в списке слева. Работает на «Жизни» и на страницах кейсов."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#F4EFEC"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
@@ -161,7 +165,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v17";
+  var KEY="tn-v18";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -201,6 +205,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
            '<label>Яркость <b id="tn-hv-'+c.k+'-2"></b></label><input id="tn-h-'+c.k+'-2" type="range" min="0" max="100" step="1"></div>';
       } else if(c.y==="k"){
         h+='<div class="kr"><span>'+c.l+'</span><label class="sw"><input type="checkbox" id="tn-c-'+c.k+'"><i></i></label></div>';
+      } else if(c.y==="s"&&c.seg){
+        h+='<div class="segw"><div class="segb" id="tn-c-'+c.k+'">'+c.opts.map(function(o){return '<button type="button" data-v="'+o[0]+'" title="'+o[1]+'">'+(o[0]==="0"?"Как сейчас":o[0])+'</button>'}).join("")+'</div><div class="hint" id="tn-selname" style="margin-top:6px"></div></div>';
       } else if(c.y==="s"){
         h+='<div class="cr"><span>'+c.l+'</span><select class="sel" id="tn-c-'+c.k+'">'+c.opts.map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join("")+'</select></div>';
       } else {
@@ -228,6 +234,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
       s.c.forEach(function(c){
         if(c.y==="c"){HSL[c.k]=hex2hsl(S[c.k]);paintEd(c.k)}
         else if(c.y==="k")$("tn-c-"+c.k).checked=!!S[c.k];
+        else if(c.y==="s"&&c.seg){[].forEach.call($("tn-c-"+c.k).children,function(b){b.classList.toggle("on",b.getAttribute("data-v")===String(S[c.k]))})}
         else if(c.y==="s")$("tn-c-"+c.k).value=S[c.k];
         else{$("tn-c-"+c.k).value=S[c.k];$("tn-n-"+c.k).value=S[c.k]}
       });
@@ -324,6 +331,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     document.body.appendChild($("tn-css"));
     $("tn-css").textContent=EN?build():"";
     $("tn-out").textContent=outText();
+    var nmEl=$("tn-selname");
+    if(nmEl){var f=SEC.filter(function(x){return x.id==="selrow"})[0].c[0].opts.filter(function(o){return o[0]===String(S.selv)})[0];nmEl.textContent=f?f[1]:""}
     store(KEY,JSON.stringify(S));
     store("tn-ovr",JSON.stringify(OVR));
   }
@@ -348,6 +357,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
         });
       }
       else if(c.y==="k"){$("tn-c-"+k).addEventListener("change",function(){S[k]=this.checked;apply()})}
+      else if(c.y==="s"&&c.seg){$("tn-c-"+k).addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;S[k]=b.getAttribute("data-v");[].forEach.call(this.children,function(x){x.classList.toggle("on",x===b)});apply()})}
       else if(c.y==="s"){$("tn-c-"+k).addEventListener("change",function(){S[k]=this.value;apply()})}
       else{
         $("tn-s-"+k).addEventListener("click",function(){$("tn-e-"+k).classList.toggle("open")});
