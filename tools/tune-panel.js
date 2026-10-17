@@ -130,6 +130,11 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"ringc",l:"Цвет рамки",y:"c",d:"#FDFCFC"},
     {k:"ringw",l:"Толщина",y:"r",m:[0,4,.5,"px"],d:1.5}],
     h:"Тонкий ободок вокруг кнопок. Он нужен, чтобы кнопка не терялась, когда попадает на подложку под картинкой."},
+   {id:"lb",t:"Режим просмотра картинок",o:true,c:[
+    {k:"lbbg",l:"Цвет фона",y:"c",d:"#161413"},
+    {k:"lbba",l:"Плотность фона",y:"r",m:[50,100,1,"%"],d:94},
+    {k:"lbfg",l:"Цвет кнопок и подписей",y:"c",d:"#F4EFEC"}],
+    h:"Окно, которое открывается по клику на картинку. Кнопки и подписи используют один цвет с разной прозрачностью."},
    {id:"pl",t:"Подложка под картинками",o:true,c:[
     {k:"pbg",l:"Фон подложки",y:"c",d:"#F4EFEC"},
     {k:"r",l:"Скругление подложки",y:"r",m:[0,40,1,"px"],d:40},{k:"p",l:"Отступ внутри подложки",y:"r",m:[0,48,1,"px"],d:48}]},
@@ -150,7 +155,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v15";
+  var KEY="tn-v16";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -236,6 +241,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
       vars.push("--t-display:"+cl(S.tdisplay),"--t-title:"+cl(S.ttitle),"--t-body:"+S.tbody+"px","--t-small:"+S.tsmall+"px","--t-caption:"+S.tcaption+"px");
     }
     vars.push("--btn-ring:"+S.ringc,"--btn-ring-w:"+(S.o_ring?S.ringw:0)+"px");
+    if(S.o_lb)vars.push("--lb-bg:"+rgba(S.lbbg,S.lbba),"--lb-fg:"+S.lbfg,"--lb-fg-soft:"+rgba(S.lbfg,85),"--lb-fg-dim:"+rgba(S.lbfg,50),"--lb-ctl:"+rgba(S.lbfg,14),"--lb-ctl-hover:"+rgba(S.lbfg,26));
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
 
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
@@ -264,6 +270,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
+    L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
     L.push("При наведении: "+on("sh1","подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"));

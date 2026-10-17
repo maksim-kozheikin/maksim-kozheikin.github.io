@@ -595,3 +595,13 @@ body{font-size:var(--t-body)}
 /* v4.51 — тонкая рамка у кнопок цвета фона. Кнопка остаётся заметной, когда попадает на подложку под картинкой */
 :root{--btn-ring:var(--bg);--btn-ring-w:1.5px}
 .side-links a,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close,.v4step{box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring)}
+
+/* v4.52 — режим просмотра картинок. Цвета берутся из палитры: тёмная подложка из основного текста, кнопки и подписи из серого. */
+:root{
+  --lb-bg:color-mix(in srgb,var(--ink) 94%,transparent);
+  --lb-fg:var(--sel);
+  --lb-fg-soft:color-mix(in srgb,var(--sel) 85%,transparent);
+  --lb-fg-dim:color-mix(in srgb,var(--sel) 50%,transparent);
+  --lb-ctl:color-mix(in srgb,var(--sel) 14%,transparent);
+  --lb-ctl-hover:color-mix(in srgb,var(--sel) 26%,transparent);
+}
