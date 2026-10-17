@@ -1,0 +1,103 @@
+<title>Варианты выбранной вкладки</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --line:#DFDBD8; --sel:#F4EFEC; --warm:#916D50;
+  --font:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-inline:clamp(16px,4vw,56px);padding-block:40px 80px}
+a{color:inherit;text-decoration:none}
+h1{font-size:clamp(28px,3.2vw,40px);font-weight:500;letter-spacing:-.02em;line-height:1.15}
+.lead{margin-top:10px;max-width:62ch;color:var(--muted)}
+.how{margin-top:16px;display:inline-block;padding:6px 12px;border-radius:999px;background:var(--sel);color:var(--muted);font-size:14px}
+.grid{margin-top:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:28px}
+.card{min-width:0}
+.card h2{font-size:18px;font-weight:600;display:flex;gap:10px;align-items:baseline}
+.card h2 i{font-style:normal;color:var(--muted);font-weight:500;font-size:14px}
+.card p{margin-top:4px;color:var(--muted);font-size:14px;min-height:42px}
+.card .rec{margin-left:auto;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--ink);color:var(--bg)}
+.frame{margin-top:12px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+
+/* строки как в левой колонке сайта */
+.list{display:flex;flex-direction:column}
+.row{position:relative;display:flex;gap:12px;align-items:center;padding:11px 8px;border-top:1px solid var(--line);cursor:pointer;color:var(--ink)}
+.list .row:first-child{border-top:0}
+.row .yr{flex:0 0 44px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row .ti{font-size:16px;line-height:1.35;flex:1;min-width:0}
+.row .ti i{font-style:normal;color:var(--muted)}
+.row .tg{flex:none;padding:4px 9px;border-radius:999px;background:var(--sel);color:var(--ink);font-size:14px;line-height:1}
+.row .ar{flex:none;width:10px;text-align:center;color:var(--ink)}
+
+/* 1. серая плашка */
+.v1 .row[aria-current="page"]{background:var(--sel);border-radius:10px;border-color:transparent}
+.v1 .row[aria-current="page"] .ti{font-weight:600}
+.v1 .row[aria-current="page"] .tg{box-shadow:0 0 0 1.5px var(--bg)}
+.v1 .row:has(+ .row[aria-current="page"]){border-bottom-color:transparent}
+.v1 .row[aria-current="page"] + .row{border-top-color:transparent}
+
+/* 2. тёплая метка слева */
+.v2 .row[aria-current="page"]::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--warm)}
+.v2 .row[aria-current="page"] .ti{font-weight:600}
+
+/* 3. серые остальные */
+.v3 .row:not([aria-current="page"]) .ti,.v3 .row:not([aria-current="page"]) .ti i,.v3 .row:not([aria-current="page"]) .ar{color:var(--muted)}
+.v3 .row[aria-current="page"] .ti{font-weight:600}
+.v3 .row:not([aria-current="page"]):hover .ti{color:var(--ink)}
+
+/* 4. другая стрелка */
+.v4 .row[aria-current="page"] .ar{font-size:0}
+.v4 .row[aria-current="page"] .ar::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warm)}
+.v4 .row[aria-current="page"] .ti{font-weight:500}
+
+/* 5. подчёркивание */
+.v5 .row[aria-current="page"] .ti{font-weight:500;text-decoration:underline;text-decoration-color:var(--warm);text-decoration-thickness:2px;text-underline-offset:5px}
+
+/* 6. плашка и метка вместе */
+.v6 .row[aria-current="page"]{background:var(--sel);border-radius:10px;border-color:transparent}
+.v6 .row[aria-current="page"]::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:2px;background:var(--warm)}
+.v6 .row[aria-current="page"] .ti{font-weight:600}
+.v6 .row[aria-current="page"] .tg{box-shadow:0 0 0 1.5px var(--bg)}
+.v6 .row:has(+ .row[aria-current="page"]){border-bottom-color:transparent}
+.v6 .row[aria-current="page"] + .row{border-top-color:transparent}
+
+.sum{margin-top:40px;padding:16px 18px;border-radius:14px;background:var(--sel);max-width:70ch;font-size:15px}
+.sum b{font-weight:600}
+</style>
+
+<h1>Как показать выбранную вкладку в «Жизни»</h1>
+<p class="lead">Сейчас выбранная строка слева не отличается от остальных. Ниже шесть вариантов на тех же строках, цветах и шрифте, что на сайте. Нажмите на любую строку, чтобы сменить выбор и увидеть, как ведёт себя вариант.</p>
+<span class="how">Строки кликабельны. Выбор переключается отдельно в каждом варианте</span>
+
+<div class="grid" id="grid"></div>
+
+<div class="sum"><b>Моя рекомендация.</b> Вариант 6 (серая плашка и тёплая метка слева) или вариант 1 (одна плашка), если нужно проще. Плашка совпадает с выбранным табом «Работа/Жизнь» и подложкой под картинками, а тёплая метка #916D50 повторяет цвет пульсирующей точки, то есть остаётся единственным цветным акцентом на странице. Теги внутри плашки получают тонкую рамку цвета фона, чтобы не сливаться с ней.</div>
+
+<script>
+(function(){
+  var rows=[["2026","Сайт портфолио","","Проект"],["2026","АссистПРО","B2B SaaS","Проект"],["2025","Керамика","","Творчество"],["2024","МТС","Умный дом","Проект"],["2022","Medsi","MedTech","Работа"]];
+  var V=[
+   {c:"v1",t:"Серая плашка",d:"Строка целиком на сером фоне, название жирнее."},
+   {c:"v2",t:"Тёплая метка слева",d:"Тонкая вертикальная полоска цвета точки, название жирнее."},
+   {c:"v3",t:"Серые остальные",d:"Невыбранные строки серые, выбранная чёрная и жирная."},
+   {c:"v4",t:"Точка вместо стрелки",d:"У выбранной вместо стрелки тёплая точка."},
+   {c:"v5",t:"Подчёркивание",d:"Название подчёркнуто тонкой тёплой линией."},
+   {c:"v6",t:"Плашка и метка",d:"Серая плашка плюс тёплая полоска слева.",rec:1}
+  ];
+  var g=document.getElementById("grid"),h="";
+  V.forEach(function(v,i){
+    h+='<section class="card '+v.c+'"><h2><i>'+(i+1)+'</i>'+v.t+(v.rec?'<span class="rec">рекомендую</span>':'')+'</h2><p>'+v.d+'</p><div class="frame"><div class="list">'+
+      rows.map(function(r,k){return '<a class="row"'+(k===0?' aria-current="page"':'')+' href="#"><span class="yr">'+r[0]+'</span><span class="ti">'+r[1]+(r[2]?' <i>· '+r[2]+'</i>':'')+'</span><span class="tg">'+r[3]+'</span><span class="ar">›</span></a>'}).join("")+
+      '</div></div></section>';
+  });
+  g.innerHTML=h;
+  g.addEventListener("click",function(e){
+    var a=e.target.closest(".row");if(!a)return;e.preventDefault();
+    a.parentNode.querySelectorAll(".row").forEach(function(x){x.removeAttribute("aria-current")});
+    a.setAttribute("aria-current","page");
+  });
+})();
+</script>
