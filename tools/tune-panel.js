@@ -117,7 +117,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
    {id:"selrow",t:"Выбранная строка слева",o:true,c:[
-    {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как сейчас","Как сейчас"],["1","Жирный текст","Жирный текст"],["2","Подложка без жирного текста","Подложка"]]}],
+    {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как сейчас","Как сейчас"],["1","Жирный текст (600)","Жирный"],["2","Подложка без жирного текста","Подложка"],["3","Средний текст (500)","Средний"],["4","Подложка и средний текст (500)","Подложка + средний"]]}],
     h:"Как отмечена строка выбранной вкладки в списке слева. Работает на «Жизни» и на страницах кейсов."},
    {id:"site",t:"Цвета сайта",o:true,c:[
     {k:"bg",l:"Фон сайта",y:"c",d:"#FDFCFC"},{k:"surface",l:"Белый (карточки, выбранный таб)",y:"c",d:"#F4EFEC"},
@@ -166,7 +166,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v19";
+  var KEY="tn-v20";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -271,10 +271,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
-    if(S.o_selrow&&(S.selv==="1"||S.selv==="2")){
-      var CUR='html body .sidebar a.row[aria-current="page"]';
-      if(S.selv==="1")c+=CUR+" .row-ti{font-weight:600}";
-      if(S.selv==="2"){
+    if(S.o_selrow&&S.selv!=="0"){
+      var CUR='html body .sidebar a.row[aria-current="page"]',W={"1":600,"3":500,"4":500};
+      if(W[S.selv])c+=CUR+" .row-ti{font-weight:"+W[S.selv]+"}";
+      if(S.selv==="2"||S.selv==="4"){
         c+=CUR+"{background:var(--sel);border-radius:10px;border-top-color:transparent;border-bottom-color:transparent;margin-inline:-8px;padding-inline:10px}";
         c+=CUR+" + a.row{border-top-color:transparent}";
         c+='html body .sidebar a.row:has(+ a.row[aria-current="page"]){border-bottom-color:transparent}';
@@ -298,7 +298,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
-    L.push("Выбранная строка слева: "+on("selrow",({"0":"как сейчас","1":"жирный текст","2":"подложка без жирного текста"})[S.selv]));
+    L.push("Выбранная строка слева: "+on("selrow",({"0":"как сейчас","1":"жирный текст 600","2":"подложка без жирного текста","3":"средний текст 500","4":"подложка и средний текст 500"})[S.selv]));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
     L.push("При наведении: "+on("sh1","подъём "+S.lift+" px, увеличение "+S.scale+"%, тень вниз "+S.y1+" px, размытие "+S.b1+" px, сила "+S.a1+"%, скорость "+S.dur+" мс"));
