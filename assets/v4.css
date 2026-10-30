@@ -624,3 +624,6 @@ html body .points li::before,html body .points.cross li::before,html body .point
 html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
 html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
 html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
+
+/* v4.56 — черты между блоками тонкие, как линии в меню слева */
+html body .head-sep,html body .block.group::before{height:1px;background:var(--line);border-radius:0}
