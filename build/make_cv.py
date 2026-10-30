@@ -162,7 +162,7 @@ hr{border:none;border-top:1px solid #E2E2E6;margin:12px 0 0}
 .lbl{font-weight:500;margin-top:7px}
 ul{list-style:none;margin-top:4px;display:flex;flex-direction:column;gap:2px}
 li{position:relative;padding-left:12px}
-li::before{content:"✦";position:absolute;left:0;top:.05em;color:#F0523C;font-size:.85em}
+li::before{content:"✦";position:absolute;left:0;top:.05em;color:#916D50;font-size:.85em}
 li{padding-left:14px}
 .sec p+p{margin-top:1px}
 """

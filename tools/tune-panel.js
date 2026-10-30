@@ -125,11 +125,23 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"ac",l:"Акцентный цвет",y:"c",d:"#161413"},
     {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50"}],
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
+   {id:"bh",t:"Кнопки в покое и при наведении",o:true,c:[
+    {k:"bnb",l:"Обычная кнопка. Фон",y:"c",d:"#F4EFEC"},
+    {k:"btn",l:"Обычная кнопка. Текст",y:"c",d:"#161413"},
+    {k:"bhc",l:"Обычная при наведении. Фон",y:"c",d:"#E5D9D2"},
+    {k:"bhf",l:"Обычная при наведении. Текст",y:"c",d:"#161413"},
+    {k:"dlb",l:"Чёрная («Скачать CV»). Фон",y:"c",d:"#161413"},
+    {k:"dlf",l:"Чёрная. Текст",y:"c",d:"#FFFFFF"},
+    {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#916D50"},
+    {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
+    h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
+   {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
+    {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
+    h:"Пока выключено, звёздочки такого цвета, как на сайте. Включите, чтобы попробовать другой."},
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#161413"},
-    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
-    {k:"btn",l:"Текст на кнопках и тегах",y:"c",d:"#161413"}],
-    h:"Два цвета текста. Основной и серый. Кнопки и теги берут цвет из отдельного поля. Годы, номера и подписи слева это серый."},
+    {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"}],
+    h:"Два цвета текста. Основной и серый. Цвет текста кнопок и тегов настраивается в разделе про кнопки. Годы, номера и подписи слева это серый."},
    {id:"fs",t:"Размеры текста",o:false,c:[
     {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
     {k:"ttitle",l:"Title (заголовок раздела)",y:"r",m:[18,40,1,"px"],d:26},
@@ -165,8 +177,9 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   ];
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
-  var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v23";
+  var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
+  var BUILD="31 окт 4";
+  var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -252,14 +265,16 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var c="";
     var vars=[];
     if(S.o_site)vars.push("--bg:"+S.bg,"--surface:"+S.surface,"--sel:"+S.sel,"--tab-on:"+S.tabon,"--line:"+S.line,"--accent:"+S.ac,"--live:"+S.live);
-    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.muted,"--btn:"+S.btn);
+    if(S.o_tx)vars.push("--ink:"+S.ink,"--muted:"+S.muted,"--faint:"+S.muted);
     if(S.o_fs){
       var cl=function(v){return "clamp("+Math.round(v*.7)+"px,"+(v*.0696).toFixed(2)+"vw,"+v+"px)"};
       vars.push("--t-display:"+cl(S.tdisplay),"--t-title:"+cl(S.ttitle),"--t-body:"+S.tbody+"px","--t-small:"+S.tsmall+"px","--t-caption:"+S.tcaption+"px");
     }
     vars.push("--btn-ring:"+S.ringc,"--btn-ring-w:"+(S.o_ring?S.ringw:0)+"px");
     if(S.o_lb)vars.push("--lb-bg:"+rgba(S.lbbg,S.lbba),"--lb-fg:"+S.lbfg,"--lb-fg-soft:"+rgba(S.lbfg,85),"--lb-fg-dim:"+rgba(S.lbfg,50),"--lb-ctl:"+rgba(S.lbfg,14),"--lb-ctl-hover:"+rgba(S.lbfg,26));
+    if(S.o_bh)vars.push("--btn-bg:"+S.bnb,"--btn:"+S.btn,"--btn-hover:"+S.bhc,"--btn-hover-fg:"+S.bhf,"--dl-bg:"+S.dlb,"--dl-fg:"+S.dlf,"--dl-bg-hover:"+S.dlbh,"--dl-fg-hover:"+S.dlfh);
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
+    if(S.o_star)c+=":root:root .points li::before,:root:root .points.cross li::before,:root:root .points.inline li::before,:root:root .duties li::before{color:"+S.star+"}";
 
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
@@ -307,7 +322,9 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
-    L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
+    L.push("Кнопки: "+on("bh","обычная фон "+S.bnb+", текст "+S.btn+"; при наведении фон "+S.bhc+", текст "+S.bhf+"; чёрная фон "+S.dlb+", текст "+S.dlf+"; при наведении фон "+S.dlbh+", текст "+S.dlfh));
+    L.push("Звёздочки: "+on("star",S.star));
+    L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
     L.push("Выбранная строка слева: "+on("selrow",({"0":"как на сайте, подложка и средний текст","7":"без выделения","1":"жирный текст 600","2":"подложка без жирного текста","3":"средний текст 500","4":"подложка и средний текст 500","5":"черточка в начале строки в цвет подложки","6":"градиент от начала строки в цвет подложки"})[S.selv]));
@@ -331,7 +348,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var nmEl=$("tn-selname");
     if(nmEl){var f=SEC.filter(function(x){return x.id==="selrow"})[0].c[0].opts.filter(function(o){return o[0]===String(S.selv)})[0];nmEl.textContent=f?f[1]:""}
     store(KEY,JSON.stringify(S));
-    store("tn-ovr",JSON.stringify(OVR));
+    store("tn-ovr2",JSON.stringify(OVR));
   }
 
   /* ——— события разделов ——— */
@@ -380,7 +397,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     $("tn-eye").classList.toggle("act",EN);
     $("tn-eye").title=EN?"Показать оригинал сайта для сравнения":"Вернуть мои настройки";
     P.classList.toggle("cmp",!EN);
-    $("tn-title").textContent=EN?"Настройка вида":"Оригинал сайта";
+    $("tn-title").textContent=EN?"Настройка вида · сборка "+BUILD:"Оригинал сайта";
   }
   $("tn-eye").onclick=function(){EN=!EN;store("tn-en",EN?"1":"0");paintEye();apply()};
   var MINI=load("tn-min")==="1"||(load("tn-min")===null&&innerWidth<700);

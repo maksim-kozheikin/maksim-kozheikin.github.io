@@ -249,7 +249,7 @@ body[data-mode="life"] [data-view="personal"]{display:block}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media print{.duties{max-height:none!important}.toggle{display:none!important}.sidebar,.topbar,.scrim,.back,.dl-btn,#home{display:none!important}.cv-view{display:block!important}.main{padding:0}}
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=53">
+<link rel="stylesheet" href="assets/v4.css?v=57">
 </head>
 <body class="home" data-mode="work" data-lang="ru">
 
@@ -349,10 +349,10 @@ body[data-mode="life"] [data-view="personal"]{display:block}
   </main>
 </div>
 
-<script src="assets/site.js?v=53"></script>
-<script src="assets/v4.js?v=53"></script>
-<script src="assets/v4-tiles-data.js?v=53"></script>
-<script src="assets/v4-tiles.js?v=53"></script>
+<script src="assets/site.js?v=57"></script>
+<script src="assets/v4.js?v=57"></script>
+<script src="assets/v4-tiles-data.js?v=57"></script>
+<script src="assets/v4-tiles.js?v=57"></script>
 <script>
 /* ============================================================
    СПИСОК ПРОЕКТОВ = навигация слева.
@@ -709,10 +709,8 @@ function renderCV(){
   const CVF = {ru:{imgs:["assets/cv-ru-1.webp"], pdf:"assets/cv-ru.pdf"},
                en:{imgs:["assets/cv-en-1.webp"], pdf:"assets/cv-en.pdf"}};
   const alt = lg==="ru" ? "Резюме Максима Кожейкина" : "Maksim Kozheikin — CV";
-  /* сам PDF — со всеми ссылками; если браузер не умеет показывать PDF внутри страницы — картинка листа */
-  $("#cv-open").innerHTML = `<object class="cv-pdf" data="${CVF[lg].pdf}#toolbar=0&navpanes=0&view=FitH" type="application/pdf" aria-label="${alt}">
-      <a href="${CVF[lg].pdf}" target="_blank" rel="noopener">${CVF[lg].imgs.map((src,i)=>`<img src="${src}" alt="${alt}, ${i+1}" width="1240" height="1754">`).join("")}</a>
-    </object>`;
+  /* лист резюме картинкой без тёмного фона просмотрщика PDF; по клику открывается сам PDF со ссылками */
+  $("#cv-open").innerHTML = `<a class="cv-page" href="${CVF[lg].pdf}" target="_blank" rel="noopener">${CVF[lg].imgs.map((src,i)=>`<img src="${src}" alt="${alt}, ${i+1}" width="1240" height="1754">`).join("")}</a>`;
   $("#cv-dl").href = CVF[lg].pdf;
   $("#cv-dl").setAttribute("download", `Maksim-Kozheikin-CV-${lg.toUpperCase()}.pdf`);
   $("#cv-body").innerHTML=`
@@ -793,6 +791,6 @@ window.CRM_HOST = {
   caps: {}
 };
 </script>
-<script src="assets/crm-editor.js?v=53" defer></script>
+<script src="assets/crm-editor.js?v=57" defer></script>
 </body>
 </html>
