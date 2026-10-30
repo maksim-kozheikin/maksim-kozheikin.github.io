@@ -128,12 +128,12 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
    {id:"bh",t:"Кнопки в покое и при наведении",o:true,c:[
     {k:"bnb",l:"Обычная кнопка. Фон",y:"c",d:"#F4EFEC"},
     {k:"btn",l:"Обычная кнопка. Текст",y:"c",d:"#161413"},
-    {k:"bhc",l:"Обычная при наведении. Фон",y:"c",d:"#916D50"},
-    {k:"bhf",l:"Обычная при наведении. Текст",y:"c",d:"#FFFFFF"},
+    {k:"bhc",l:"Обычная при наведении. Фон",y:"c",d:"#E5D9D2"},
+    {k:"bhf",l:"Обычная при наведении. Текст",y:"c",d:"#161413"},
     {k:"dlb",l:"Чёрная («Скачать CV»). Фон",y:"c",d:"#161413"},
     {k:"dlf",l:"Чёрная. Текст",y:"c",d:"#FFFFFF"},
-    {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#161413"},
-    {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FFFFFF"}],
+    {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#916D50"},
+    {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
     h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
    {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
     {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
@@ -178,7 +178,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 3";
+  var BUILD="31 окт 4";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});

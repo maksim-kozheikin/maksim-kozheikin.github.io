@@ -619,8 +619,8 @@ html body .sidebar a.row[aria-current="page"] .tag-kind,html body .sidebar a.row
 html body .points li::before,html body .points.cross li::before,html body .points.inline li::before,html body .duties li::before{color:var(--star)}
 .cv-page{display:block}
 
-/* v4.55 — цвета кнопок в покое и при наведении. Обычные темнеют до цвета звёздочек, чёрная «Скачать CV» остаётся чёрной с белым текстом */
-:root{--btn-bg:var(--sel);--btn-hover:#916D50;--btn-hover-fg:#fff;--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:var(--accent);--dl-fg-hover:#fff}
+/* v4.55 — цвета кнопок в покое и при наведении. Обычные при наведении светло-коричневые с тем же текстом, чёрная «Скачать CV» становится цвета звёздочек */
+:root{--btn-bg:var(--sel);--btn-hover:#E5D9D2;--btn-hover-fg:var(--btn);--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:#916D50;--dl-fg-hover:#FDFCFC}
 html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
 html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
 html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
