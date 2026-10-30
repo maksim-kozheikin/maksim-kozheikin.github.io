@@ -181,6 +181,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
+  var BUILD="31 окт 1";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -402,7 +403,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     $("tn-eye").classList.toggle("act",EN);
     $("tn-eye").title=EN?"Показать оригинал сайта для сравнения":"Вернуть мои настройки";
     P.classList.toggle("cmp",!EN);
-    $("tn-title").textContent=EN?"Настройка вида":"Оригинал сайта";
+    $("tn-title").textContent=EN?"Настройка вида · сборка "+BUILD:"Оригинал сайта";
   }
   $("tn-eye").onclick=function(){EN=!EN;store("tn-en",EN?"1":"0");paintEye();apply()};
   var MINI=load("tn-min")==="1"||(load("tn-min")===null&&innerWidth<700);
