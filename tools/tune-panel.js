@@ -125,6 +125,9 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"ac",l:"Акцентный цвет",y:"c",d:"#161413"},
     {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50"}],
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
+   {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
+    {k:"star",l:"Цвет звёздочки",y:"c",d:"#161413"}],
+    h:"Пока выключено, звёздочки берут акцентный цвет. Включите, чтобы покрасить их отдельно."},
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#161413"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
@@ -166,7 +169,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v23";
+  var KEY="tn-v24";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -260,6 +263,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     vars.push("--btn-ring:"+S.ringc,"--btn-ring-w:"+(S.o_ring?S.ringw:0)+"px");
     if(S.o_lb)vars.push("--lb-bg:"+rgba(S.lbbg,S.lbba),"--lb-fg:"+S.lbfg,"--lb-fg-soft:"+rgba(S.lbfg,85),"--lb-fg-dim:"+rgba(S.lbfg,50),"--lb-ctl:"+rgba(S.lbfg,14),"--lb-ctl-hover:"+rgba(S.lbfg,26));
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
+    if(S.o_star)c+=":root:root .points li::before,:root:root .points.cross li::before,:root:root .points.inline li::before,:root:root .duties li::before{color:"+S.star+"}";
 
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
     var hov=S.o_sh1?"drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.sc,S.a1)+")":rest;
@@ -307,6 +311,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
+    L.push("Звёздочки: "+on("star",S.star));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
