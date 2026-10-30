@@ -37,7 +37,7 @@
 ============================================================ */
 .side-links a,.segmented button,.lang button,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close{
   display:inline-flex;align-items:center;justify-content:center;gap:6px;width:auto;
-  background:var(--sel);color:var(--accent);border:none;border-radius:999px;box-shadow:none;
+  background:var(--btn-bg,var(--sel));color:var(--accent);border:none;border-radius:999px;box-shadow:none;
   padding:8px 16px;margin:0;font-family:var(--sans);font-size:var(--text);font-weight:400;line-height:1.3;white-space:nowrap;
   opacity:1;transition:background .15s,color .15s}
 .side-links a:hover,.segmented button:hover,.lang button:hover,.chip-btn:hover,.duties-more:hover,.dl-btn:hover,
@@ -617,11 +617,10 @@ html body .sidebar a.row[aria-current="page"] .tag-kind,html body .sidebar a.row
 /* v4.54 — звёздочки в списках своего цвета, не акцентного. Кнопка «Скачать CV» остаётся чёрной с белым текстом */
 :root{--star:#916D50}
 html body .points li::before,html body .points.cross li::before,html body .points.inline li::before,html body .duties li::before{color:var(--star)}
-html body .dl-btn,html body .dl-btn:hover{color:#fff}
 .cv-page{display:block}
 
-/* v4.55 — наведение на кнопки. Обычные темнеют до цвета звёздочек, чёрная «Скачать CV» получает небольшую тень, как у картинок */
-:root{--btn-hover:#916D50;--btn-hover-fg:#fff;--btn-hover-shadow:0 0 0 0 transparent;--dl-shadow:0 10px 15px rgba(145,109,80,.15);--dl-lift:-1px}
-html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg);box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--btn-hover-shadow)}
-html body .dl-btn,html body .dl-btn:hover{transition:background .15s,color .15s,box-shadow .2s ease,transform .2s ease}
-html body .dl-btn:hover{background:var(--accent);transform:translateY(var(--dl-lift));box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--dl-shadow)}
+/* v4.55 — цвета кнопок в покое и при наведении. Обычные темнеют до цвета звёздочек, чёрная «Скачать CV» остаётся чёрной с белым текстом */
+:root{--btn-bg:var(--sel);--btn-hover:#916D50;--btn-hover-fg:#fff;--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:var(--accent);--dl-fg-hover:#fff}
+html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
+html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
+html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
