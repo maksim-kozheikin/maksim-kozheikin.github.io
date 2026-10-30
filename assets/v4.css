@@ -619,3 +619,9 @@ html body .sidebar a.row[aria-current="page"] .tag-kind,html body .sidebar a.row
 html body .points li::before,html body .points.cross li::before,html body .points.inline li::before,html body .duties li::before{color:var(--star)}
 html body .dl-btn,html body .dl-btn:hover{color:#fff}
 .cv-page{display:block}
+
+/* v4.55 — наведение на кнопки. Обычные темнеют до цвета звёздочек, чёрная «Скачать CV» получает небольшую тень, как у картинок */
+:root{--btn-hover:#916D50;--dl-shadow:0 10px 15px rgba(145,109,80,.15)}
+html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:#fff}
+html body .dl-btn,html body .dl-btn:hover{transition:background .15s,color .15s,box-shadow .2s ease,transform .2s ease}
+html body .dl-btn:hover{background:var(--accent);transform:translateY(-1px);box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--dl-shadow)}
