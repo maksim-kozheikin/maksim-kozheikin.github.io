@@ -135,6 +135,12 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#916D50"},
     {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
     h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
+   {id:"sep",t:"Черты между блоками",o:true,c:[
+    {k:"sepm",l:"Как линии в меню слева",y:"k",d:false},
+    {k:"sepc",l:"Цвет черты",y:"c",d:"#161413"},
+    {k:"sepw",l:"Толщина черты",y:"r",m:[1,8,1,"px"],d:4},
+    {k:"sepr",l:"Скруглённые концы",y:"k",d:true}],
+    h:"Широкие черты между большими блоками на странице работы. Если включить «Как линии в меню слева», черта станет тонкой, цвета линий сайта."},
    {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
     {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
     h:"Пока выключено, звёздочки такого цвета, как на сайте. Включите, чтобы попробовать другой."},
@@ -178,7 +184,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 4";
+  var BUILD="31 окт 5";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -274,6 +280,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     if(S.o_lb)vars.push("--lb-bg:"+rgba(S.lbbg,S.lbba),"--lb-fg:"+S.lbfg,"--lb-fg-soft:"+rgba(S.lbfg,85),"--lb-fg-dim:"+rgba(S.lbfg,50),"--lb-ctl:"+rgba(S.lbfg,14),"--lb-ctl-hover:"+rgba(S.lbfg,26));
     if(S.o_bh)vars.push("--btn-bg:"+S.bnb,"--btn:"+S.btn,"--btn-hover:"+S.bhc,"--btn-hover-fg:"+S.bhf,"--dl-bg:"+S.dlb,"--dl-fg:"+S.dlf,"--dl-bg-hover:"+S.dlbh,"--dl-fg-hover:"+S.dlfh);
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
+    if(S.o_sep){var sw=S.sepm?1:S.sepw,sc2=S.sepm?"var(--line)":S.sepc,sr=S.sepm?0:(S.sepr?Math.ceil(S.sepw/2):0);c+=":root:root .head-sep,:root:root .block.group::before{height:"+sw+"px;background:"+sc2+";border-radius:"+sr+"px}"}
     if(S.o_star)c+=":root:root .points li::before,:root:root .points.cross li::before,:root:root .points.inline li::before,:root:root .duties li::before{color:"+S.star+"}";
 
     var rest=S.o_sh0?"drop-shadow(0 "+S.y0+"px "+S.b0+"px "+rgba(S.sc,S.a0)+")":"none";
@@ -323,6 +330,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
     L.push("Кнопки: "+on("bh","обычная фон "+S.bnb+", текст "+S.btn+"; при наведении фон "+S.bhc+", текст "+S.bhf+"; чёрная фон "+S.dlb+", текст "+S.dlf+"; при наведении фон "+S.dlbh+", текст "+S.dlfh));
+    L.push("Черты между блоками: "+on("sep",S.sepm?"как линии в меню слева, 1 px":S.sepc+", "+S.sepw+" px, "+(S.sepr?"скруглённые":"прямые")));
     L.push("Звёздочки: "+on("star",S.star));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));

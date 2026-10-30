@@ -142,7 +142,6 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   cursor:zoom-in;will-change:transform;user-select:none;-webkit-user-drag:none}
 .lightbox.zoomed .lightbox-stage img{border-radius:0;cursor:grab}
 .lightbox.zoomed .lightbox-stage.grabbing img{cursor:grabbing}
-.lightbox.zoomed .lightbox-nav{display:none!important}
 
 /* листание */
 .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
@@ -2110,8 +2109,8 @@ document.addEventListener("click", e=>{
   const btn=e.target.closest(".fig-btn");
   if(btn){ openLb(btn); return; }
   if(!lb.classList.contains("open")) return;
-  if(e.target.closest(".lightbox-nav.prev")){ if(z===ZMIN) go(-1); return; }
-  if(e.target.closest(".lightbox-nav.next")){ if(z===ZMIN) go(1); return; }
+  if(e.target.closest(".lightbox-nav.prev")){ go(-1); return; }
+  if(e.target.closest(".lightbox-nav.next")){ go(1); return; }
   if(e.target.closest(".lightbox-close")){ closeLb(); return; }
   if(e.target.closest(".zoom-in")){  setZoom(z*ZSTEP, null, null, true); return; }
   if(e.target.closest(".zoom-out")){ setZoom(z/ZSTEP, null, null, true); return; }
