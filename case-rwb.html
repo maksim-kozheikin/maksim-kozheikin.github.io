@@ -110,7 +110,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
 /* лайтбокс */
-.lightbox{position:fixed;inset:0;z-index:100;background:rgba(19,19,22,.94);
+.lightbox{position:fixed;inset:0;z-index:100;background:var(--lb-bg);
   display:none;flex-direction:column}
 .lightbox.open{display:flex}
 
@@ -118,19 +118,19 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .lightbox-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
   gap:12px;padding:14px 20px}
 .lightbox-close{width:40px;height:40px;border-radius:50%;flex:0 0 auto;
-  background:rgba(255,255,255,.14);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer;
+  background:var(--lb-ctl);color:var(--lb-fg);font-size:1.3rem;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:background .18s}
-.lightbox-close:hover{background:rgba(255,255,255,.26)}
+.lightbox-close:hover{background:var(--lb-ctl-hover)}
 
 .lightbox-zoom{display:flex;align-items:center;gap:2px;
-  background:rgba(255,255,255,.14);border-radius:20px;padding:4px;color:#fff}
-.lightbox-zoom button{width:32px;height:32px;border-radius:50%;background:none;color:#fff;
+  background:var(--lb-ctl);border-radius:20px;padding:4px;color:var(--lb-fg)}
+.lightbox-zoom button{width:32px;height:32px;border-radius:50%;background:none;color:var(--lb-fg);
   font-size:1.15rem;line-height:1;cursor:pointer;transition:background .18s;
   display:flex;align-items:center;justify-content:center}
-.lightbox-zoom button:hover{background:rgba(255,255,255,.24)}
+.lightbox-zoom button:hover{background:var(--lb-ctl-hover)}
 .lightbox-zoom button:disabled{opacity:.35;cursor:default;background:none}
 .lightbox-zoom .lvl{min-width:52px;text-align:center;font-size:.8rem;
-  color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums}
+  color:var(--lb-fg-soft);font-variant-numeric:tabular-nums}
 .lightbox-zoom .zoom-fit{width:auto;padding:0 12px;font-size:.8rem;border-radius:16px}
 
 /* середина: только картинка, всё лишнее обрезается по краям области */
@@ -146,16 +146,16 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
 /* листание */
 .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
-  background:rgba(255,255,255,.14);color:#fff;font-size:1.8rem;line-height:1;z-index:2;cursor:pointer;
+  background:var(--lb-ctl);color:var(--lb-fg);font-size:1.8rem;line-height:1;z-index:2;cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:background .18s}
-.lightbox-nav:hover{background:rgba(255,255,255,.26)}
+.lightbox-nav:hover{background:var(--lb-ctl-hover)}
 .lightbox-nav.prev{left:16px}
 .lightbox-nav.next{right:16px}
 .lightbox-nav svg{display:block;flex:0 0 auto}
 
 .lightbox-meta{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:12px;
-  padding:14px 20px;color:rgba(255,255,255,.85);font-size:.9rem;min-height:20px}
-.lightbox-meta .count{color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+  padding:14px 20px;color:var(--lb-fg-soft);font-size:.9rem;min-height:20px}
+.lightbox-meta .count{color:var(--lb-fg-dim);font-variant-numeric:tabular-nums}
 @media (max-width:640px){
   .lightbox-bar{padding:10px 12px}
   .lightbox-stage{padding:0 48px}
@@ -302,7 +302,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* первый кейс под разделом; группа после группы сохраняет 200px */
 .block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=52">
+<link rel="stylesheet" href="assets/v4.css?v=53">
 <style>/* Wildberries: заголовки кейсов того же размера, что разделы */
 .block:not(.group) .block-title{font-size:var(--t-display);line-height:1.15;letter-spacing:-.02em}</style>
 </head>
@@ -363,8 +363,8 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
-<script src="assets/site.js?v=52"></script>
-<script src="assets/v4.js?v=52"></script>
+<script src="assets/site.js?v=53"></script>
+<script src="assets/v4.js?v=53"></script>
 <script>
 const CURRENT = "rwb";
 
@@ -2259,6 +2259,6 @@ window.CRM_HOST = {
   caps: {list:false, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:false, blockImg:false, flow:false}
 };
 </script>
-<script src="assets/crm-editor.js?v=52" defer></script>
+<script src="assets/crm-editor.js?v=53" defer></script>
 </body>
 </html>
