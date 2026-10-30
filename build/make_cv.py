@@ -196,7 +196,7 @@ def page2(d, lg):
     L=LBL[lg]
     return ('<!DOCTYPE html><html><head><meta charset="utf-8"><style>'+FONTS.replace('{{','{').replace('}}','}')+CSS2.replace('@F@',F)+'</style></head><body>'
       '<h1>'+e(d['name'])+'</h1>'
-      '<div class="head"><div><p class="title">'+e(d['title'])+'</p><p class="sum">'+e(' '.join(d['summary']))+'</p></div>'
+      '<div class="head"><div><p class="title">'+e(d['title'])+'</p><p class="sum">'+(('<br>'.join(e(x) for x in d['summary'])) if lg=='en' else e(' '.join(d['summary'])))+'</p></div>'
       '<div class="ct2"><a href="mailto:maksim.kozheikin@gmail.com">maksim.kozheikin@gmail.com</a>'
       '<div class="ln"><a href="'+SITE+'">'+L["port"]+'</a><a href="https://t.me/maksimdesigner">Telegram</a><a href="https://www.linkedin.com/in/maksim-kozheikin/">LinkedIn</a></div>'
       '</div></div><hr><div class="jobs">'+''.join(rows)+'</div><hr><div class="rest">'+
