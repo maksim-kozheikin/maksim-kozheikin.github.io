@@ -127,11 +127,16 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
    {id:"bh",t:"Наведение на кнопки",o:true,c:[
     {k:"bhc",l:"Цвет обычной кнопки при наведении",y:"c",d:"#916D50"},
-    {k:"dsc",l:"Цвет тени чёрной кнопки",y:"c",d:"#916D50"},
+    {k:"bhk",l:"Текст при наведении белый",y:"k",d:true},
+    {k:"bhf",l:"Цвет текста при наведении",y:"c",d:"#FFFFFF"},
+    {k:"bhs",l:"Тень у обычных кнопок",y:"k",d:false},
+    {k:"dsk",l:"Тень у чёрной кнопки",y:"k",d:true},
+    {k:"dsc",l:"Цвет тени",y:"c",d:"#916D50"},
     {k:"dsy",l:"Тень вниз",y:"r",m:[0,24,1,"px"],d:10},
     {k:"dsb",l:"Размытие тени",y:"r",m:[0,40,1,"px"],d:15},
-    {k:"dsa",l:"Сила тени",y:"r",m:[0,60,1,"%"],d:15}],
-    h:"Обычные кнопки при наведении становятся этого цвета с белым текстом. Чёрная кнопка «Скачать CV» остаётся чёрной, под ней появляется тень."},
+    {k:"dsa",l:"Сила тени",y:"r",m:[0,60,1,"%"],d:15},
+    {k:"dlk",l:"Чёрная кнопка поднимается",y:"k",d:true}],
+    h:"Если выключить «Текст при наведении белый», текст кнопок останется своего цвета. Тень настраивается одна для обычных и чёрной кнопок, у каждой её можно включить или выключить."},
    {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
     {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
     h:"Пока выключено, звёздочки такого цвета, как на сайте. Включите, чтобы попробовать другой."},
@@ -176,7 +181,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v26";
+  var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
@@ -269,7 +274,10 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     }
     vars.push("--btn-ring:"+S.ringc,"--btn-ring-w:"+(S.o_ring?S.ringw:0)+"px");
     if(S.o_lb)vars.push("--lb-bg:"+rgba(S.lbbg,S.lbba),"--lb-fg:"+S.lbfg,"--lb-fg-soft:"+rgba(S.lbfg,85),"--lb-fg-dim:"+rgba(S.lbfg,50),"--lb-ctl:"+rgba(S.lbfg,14),"--lb-ctl-hover:"+rgba(S.lbfg,26));
-    if(S.o_bh)vars.push("--btn-hover:"+S.bhc,"--dl-shadow:0 "+S.dsy+"px "+S.dsb+"px "+rgba(S.dsc,S.dsa));
+    if(S.o_bh){
+      var shd="0 "+S.dsy+"px "+S.dsb+"px "+rgba(S.dsc,S.dsa),none="0 0 0 0 transparent";
+      vars.push("--btn-hover:"+S.bhc,"--btn-hover-fg:"+(S.bhk?S.bhf:"var(--btn)"),"--btn-hover-shadow:"+(S.bhs?shd:none),"--dl-shadow:"+(S.dsk?shd:none),"--dl-lift:"+(S.dlk?"-1px":"0px"));
+    }
     if(vars.length)c+=":root:root{"+vars.join(";")+"}";
     if(S.o_star)c+=":root:root .points li::before,:root:root .points.cross li::before,:root:root .points.inline li::before,:root:root .duties li::before{color:"+S.star+"}";
 
@@ -319,7 +327,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   function outText(){
     var L=[],on=function(id,txt){return S["o_"+id]?txt:"выкл"};
     L.push("Цвета сайта: "+on("site","фон "+S.bg+", белый "+S.surface+", серый в переключателях "+S.sel+", выбранный таб "+S.tabon+", линии "+S.line+", акцент "+S.ac+", точка "+S.live));
-    L.push("Наведение на кнопки: "+on("bh","обычная "+S.bhc+", тень чёрной "+S.dsc+", вниз "+S.dsy+" px, размытие "+S.dsb+" px, сила "+S.dsa+"%"));
+    L.push("Наведение на кнопки: "+on("bh","обычная "+S.bhc+", текст "+(S.bhk?S.bhf:"не меняется")+", тень обычных "+(S.bhs?"да":"нет")+", тень чёрной "+(S.dsk?"да":"нет")+", поднимается "+(S.dlk?"да":"нет")+", тень "+S.dsc+" вниз "+S.dsy+" px, размытие "+S.dsb+" px, сила "+S.dsa+"%"));
     L.push("Звёздочки: "+on("star",S.star));
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted+", на кнопках и тегах "+S.btn));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));

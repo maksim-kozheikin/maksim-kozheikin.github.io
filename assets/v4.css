@@ -566,62 +566,8 @@ body{font-size:var(--t-body)}
 /* v4.54 — плашка вместо ненайденной картинки */
 .v4-miss{display:flex;align-items:center;justify-content:center;min-height:220px;width:100%;border-radius:14px;background:var(--sel);color:var(--muted);font-size:var(--t-small);text-align:center;padding:16px}
 
-/* v4.55 — длинные строки таймлайна не распирают панель на телефоне */
-.sidebar,.list,.v4row{min-width:0}
-.v4row .row-main{min-width:0;overflow:hidden}
-.v4row .row-ti{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.v4row .row-prof{white-space:nowrap}
-@media (max-width:900px){.sidebar{max-width:100vw;width:100%}}
-
-/* =====================================================
-   v4.56
-   — «Кейс 07» — обычным текстом (16, серый)
-   — внутреннее меньше внешнего: заголовок кейса → первый подраздел
-     столько же, сколько между подразделами (40); внутри подраздела
-     (подзаголовок → пункты) — 12
-============================================================ */
-.block-num{font-size:var(--t-body);font-weight:400;color:var(--muted);letter-spacing:0;text-transform:none}
-.block > .sub{margin-top:40px}
-
-/* v4.57 — картинки держат пропорции по заранее известным размерам */
-.main img[width][height]{height:auto}
-
-/* v4.50 — кнопки и теги. Текст одного цвета, токен --btn. Наведение и выбранное состояние остаются как были */
-:root{--btn:var(--ink);--tab-on:var(--bg)}
-.tag-kind,.tag-tech,.v4chips .tag,.sidebar .tag-kind,.sidebar .tag-ai{color:var(--btn)}
-.side-links a:not(:hover),.chip-btn:not(:hover):not([aria-pressed="true"]),.duties-more:not(:hover),.foot a:not(:hover),.case-link:not(:hover),.toggle:not(:hover),.back:not(:hover),.v4close:not(:hover),
-.segmented button:not(:hover):not([aria-pressed="true"]),.lang button:not(:hover):not([aria-pressed="true"]){color:var(--btn)}
-
-/* v4.51 — тонкая рамка у кнопок цвета фона. Кнопка остаётся заметной, когда попадает на подложку под картинкой */
-:root{--btn-ring:var(--bg);--btn-ring-w:1.5px}
-.side-links a,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close,.v4step{box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring)}
-
-/* v4.53 — строки слева. Выбранная строка на серой подложке со средним весом, при наведении название тоже среднего веса */
-html body .sidebar a.row[aria-current="page"]{background:var(--sel);border-radius:10px;border-top-color:transparent;border-bottom-color:transparent;margin-inline:-8px;padding-inline:10px}
-html body .sidebar a.row[aria-current="page"] .row-ti{font-weight:500}
-html body .sidebar a.row:hover .row-ti{font-weight:500}
-html body .sidebar a.row[aria-current="page"] + a.row{border-top-color:transparent}
-html body .sidebar a.row:has(+ a.row[aria-current="page"]){border-bottom-color:transparent}
-html body .sidebar a.row[aria-current="page"] .tag-kind,html body .sidebar a.row[aria-current="page"] .tag-ai{box-shadow:0 0 0 1.5px var(--bg)}
-
-/* v4.52 — режим просмотра картинок. Цвета берутся из палитры: тёмная подложка из основного текста, кнопки и подписи из серого. */
-:root{
-  --lb-bg:color-mix(in srgb,var(--ink) 94%,transparent);
-  --lb-fg:var(--sel);
-  --lb-fg-soft:color-mix(in srgb,var(--sel) 85%,transparent);
-  --lb-fg-dim:color-mix(in srgb,var(--sel) 50%,transparent);
-  --lb-ctl:color-mix(in srgb,var(--sel) 14%,transparent);
-  --lb-ctl-hover:color-mix(in srgb,var(--sel) 26%,transparent);
-}
-
-/* v4.54 — звёздочки в списках своего цвета, не акцентного. Кнопка «Скачать CV» остаётся чёрной с белым текстом */
-:root{--star:#916D50}
-html body .points li::before,html body .points.cross li::before,html body .points.inline li::before,html body .duties li::before{color:var(--star)}
-html body .dl-btn,html body .dl-btn:hover{color:#fff}
-.cv-page{display:block}
-
 /* v4.55 — наведение на кнопки. Обычные темнеют до цвета звёздочек, чёрная «Скачать CV» получает небольшую тень, как у картинок */
-:root{--btn-hover:#916D50;--dl-shadow:0 10px 15px rgba(145,109,80,.15)}
-html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:#fff}
+:root{--btn-hover:#916D50;--btn-hover-fg:#fff;--btn-hover-shadow:0 0 0 0 transparent;--dl-shadow:0 10px 15px rgba(145,109,80,.15);--dl-lift:-1px}
+html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg);box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--btn-hover-shadow)}
 html body .dl-btn,html body .dl-btn:hover{transition:background .15s,color .15s,box-shadow .2s ease,transform .2s ease}
-html body .dl-btn:hover{background:var(--accent);transform:translateY(-1px);box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--dl-shadow)}
+html body .dl-btn:hover{background:var(--accent);transform:translateY(var(--dl-lift));box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring),var(--dl-shadow)}
