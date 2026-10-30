@@ -181,7 +181,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 1";
+  var BUILD="31 окт 2";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
