@@ -180,7 +180,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   ];
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
-  var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
+  var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -353,7 +353,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     var nmEl=$("tn-selname");
     if(nmEl){var f=SEC.filter(function(x){return x.id==="selrow"})[0].c[0].opts.filter(function(o){return o[0]===String(S.selv)})[0];nmEl.textContent=f?f[1]:""}
     store(KEY,JSON.stringify(S));
-    store("tn-ovr",JSON.stringify(OVR));
+    store("tn-ovr2",JSON.stringify(OVR));
   }
 
   /* ——— события разделов ——— */
