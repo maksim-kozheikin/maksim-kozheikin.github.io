@@ -596,12 +596,10 @@ body{font-size:var(--t-body)}
 :root{--btn-ring:var(--bg);--btn-ring-w:1.5px}
 .side-links a,.chip-btn,.duties-more,.dl-btn,.foot a,.case-link,.toggle,.back,.v4close,.v4step{box-shadow:0 0 0 var(--btn-ring-w) var(--btn-ring)}
 
-/* v4.52 — режим просмотра картинок. Цвета берутся из палитры: тёмная подложка из основного текста, кнопки и подписи из серого. */
-:root{
-  --lb-bg:color-mix(in srgb,var(--ink) 94%,transparent);
-  --lb-fg:var(--sel);
-  --lb-fg-soft:color-mix(in srgb,var(--sel) 85%,transparent);
-  --lb-fg-dim:color-mix(in srgb,var(--sel) 50%,transparent);
-  --lb-ctl:color-mix(in srgb,var(--sel) 14%,transparent);
-  --lb-ctl-hover:color-mix(in srgb,var(--sel) 26%,transparent);
-}
+/* v4.53 — строки слева. Выбранная строка на серой подложке со средним весом, при наведении название тоже среднего веса */
+html body .sidebar a.row[aria-current="page"]{background:var(--sel);border-radius:10px;border-top-color:transparent;border-bottom-color:transparent;margin-inline:-8px;padding-inline:10px}
+html body .sidebar a.row[aria-current="page"] .row-ti{font-weight:500}
+html body .sidebar a.row:hover .row-ti{font-weight:500}
+html body .sidebar a.row[aria-current="page"] + a.row{border-top-color:transparent}
+html body .sidebar a.row:has(+ a.row[aria-current="page"]){border-bottom-color:transparent}
+html body .sidebar a.row[aria-current="page"] .tag-kind,html body .sidebar a.row[aria-current="page"] .tag-ai{box-shadow:0 0 0 1.5px var(--bg)}
