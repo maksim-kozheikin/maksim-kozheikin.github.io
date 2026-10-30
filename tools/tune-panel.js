@@ -126,8 +126,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50"}],
     h:"Акцент красит маркеры, ссылки в тексте и активные пункты. Точка стоит у текущей работы."},
    {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
-    {k:"star",l:"Цвет звёздочки",y:"c",d:"#161413"}],
-    h:"Пока выключено, звёздочки берут акцентный цвет. Включите, чтобы покрасить их отдельно."},
+    {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
+    h:"Пока выключено, звёздочки такого цвета, как на сайте. Включите, чтобы попробовать другой."},
    {id:"tx",t:"Цвета текста",o:true,c:[
     {k:"ink",l:"Основной текст и заголовки",y:"c",d:"#161413"},
     {k:"muted",l:"Серый текст (абзацы, подписи)",y:"c",d:"#6F655D"},
@@ -169,7 +169,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr"))||{}}catch(e){}
-  var KEY="tn-v24";
+  var KEY="tn-v25";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
 
