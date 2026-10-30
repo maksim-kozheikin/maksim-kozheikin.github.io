@@ -136,11 +136,11 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
     h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
    {id:"sep",t:"Черты между блоками",o:true,c:[
-    {k:"sepm",l:"Как линии в меню слева",y:"k",d:false},
+    {k:"sepm",l:"Как линии в меню слева",y:"k",d:true},
     {k:"sepc",l:"Цвет черты",y:"c",d:"#161413"},
     {k:"sepw",l:"Толщина черты",y:"r",m:[1,8,1,"px"],d:4},
     {k:"sepr",l:"Скруглённые концы",y:"k",d:true}],
-    h:"Широкие черты между большими блоками на странице работы. Если включить «Как линии в меню слева», черта станет тонкой, цвета линий сайта."},
+    h:"Черты между большими блоками на странице работы. Сейчас на сайте они тонкие, как линии в меню слева. Выключите переключатель, чтобы задать свой цвет и толщину."},
    {id:"star",t:"Звёздочки ✦ в списках",o:false,c:[
     {k:"star",l:"Цвет звёздочки",y:"c",d:"#916D50"}],
     h:"Пока выключено, звёздочки такого цвета, как на сайте. Включите, чтобы попробовать другой."},
@@ -184,7 +184,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 5";
+  var BUILD="31 окт 6";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
