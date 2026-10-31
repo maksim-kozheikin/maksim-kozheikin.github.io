@@ -117,7 +117,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
    {id:"tg",t:"Теги под заголовком",o:true,c:[
-    {k:"tgv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (плашки)","Плашки"],["1","Серый текст 16 px через точку","Серый через точку"],["2","Дата тёмная, остальное серое, через точку","Дата тёмная"],["3","Весь текст тёмный, точки серые","Тёмный"],["5","Звёздочки ✦ вместо точек","Звёздочки"],["6","Серый текст между двумя тонкими линиями (в меню без линий)","Между линиями"],["7","Плашки одного размера в шапке и в меню","Плашки одного размера"],["8","Серый текст через точку и тонкая черта только снизу","Черта снизу"]]}],
+    {k:"tgv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (плашки)","Плашки"],["1","Серый текст 16 px через точку","Серый через точку"],["2","Дата тёмная, остальное серое, через точку","Дата тёмная"],["3","Весь текст тёмный, точки серые","Тёмный"],["5","Звёздочки ✦ вместо точек","Звёздочки"],["6","Серый текст между двумя тонкими линиями (в меню без линий)","Между линиями"],["7","Плашки одного размера в шапке и в меню","Плашки одного размера"],["8","Серый текст через точку и тонкая черта только снизу","Черта снизу"]]},
+    {k:"tgrole",l:"Роль после даты (убрать из заголовка)",y:"k",d:false}],
     h:"Дата, сфера и «Работа» под заголовком страницы и теги в меню слева. Один стиль для обоих. Вместо плашек, которые похожи на кнопки, обычный текст через точку."},
    {id:"selrow",t:"Выбранная строка слева",o:true,c:[
     {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (подложка и средний текст)","Как на сайте"],["7","Без выделения (как было раньше)","Без выделения"],["1","Жирный текст (600)","Жирный"],["2","Подложка без жирного текста","Подложка"],["3","Средний текст (500)","Средний"],["4","Подложка и средний текст (500)","Подложка + средний"],["5","Черточка в начале строки в цвет подложки","Черточка"],["6","Градиент от начала строки в цвет подложки","Градиент"]]}],
@@ -187,7 +188,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 13";
+  var BUILD="31 окт 14";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -298,6 +299,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
+    if(S.o_tg&&S.tgrole)c+="html body .exp-role .exp-pos{display:none}";
     if(S.o_tg&&S.tgv!=="0"){
       /* один стиль и в шапке страницы, и в меню слева */
       var T='html body .v4chips',G=T+' .tag,html body .sidebar .row-tags .tag',GB=T+' .tag + .tag::before,html body .sidebar .row-tags .tag + .tag::before';
@@ -374,8 +376,20 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     });
     return L.join("\n");
   }
+  /* роль из заголовка («Lead UX/UI Designer») встаёт в строку тегов сразу после даты */
+  function roleMove(){
+    var on=EN&&S.o_tg&&S.tgrole,old=document.querySelector(".tn-role-tag");
+    var src=on&&document.querySelector(".exp-role .exp-pos-t"),box=on&&document.querySelector(".v4chips");
+    if(!src||!box){if(old)old.remove();return}
+    var want=src.textContent.trim(),first=box.querySelector(".tag:not(.tn-role-tag)");
+    if(old&&old.textContent===want&&old.parentNode===box&&first&&first.nextElementSibling===old)return;
+    if(old)old.remove();
+    var t=document.createElement("span");t.className="tag tag-kind tn-role-tag";t.textContent=want;
+    if(first)first.after(t);else box.insertBefore(t,box.firstChild);
+  }
   function apply(){
     document.body.appendChild($("tn-css"));
+    roleMove();
     $("tn-css").textContent=EN?build():"";
     $("tn-out").textContent=outText();
     var nmEl=$("tn-selname");
@@ -514,7 +528,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     css.textContent=prev;
   }
   var scanT=null;
-  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){scan();if(INSP){if(!SEL)renderCard();paint()}},150)}
+  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){roleMove();scan();if(INSP){if(!SEL)renderCard();paint()}},150)}
   new MutationObserver(function(ms){
     for(var i=0;i<ms.length;i++){
       var t=ms[i].target;
