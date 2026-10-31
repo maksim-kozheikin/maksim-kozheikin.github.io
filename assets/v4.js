@@ -48,18 +48,18 @@ V4.timeline = [
   {yr:"2020", kind:"work", project:"vtb", ti:{ru:"ВТБ Банк",en:"VTB Bank"}, prof:"FinTech"},
   {yr:"2019", kind:"work", project:"loko", ti:{ru:"Локо Банк",en:"Loko Bank"}, prof:"FinTech"},
   {yr:"2017", kind:"work", project:"zephyr", ti:{ru:"ZephyrLab",en:"ZephyrLab"}, prof:{ru:"дизайн-студия",en:"design studio"}},
-  {id:"mda", yr:"2017", kind:"edu", ti:{ru:"Moscow Digital Academy",en:"Moscow Digital Academy"}, prof:"UX/UI"},
+  {id:"mda", yr:"2017", kind:"edu", ti:{ru:"Moscow Digital Academy",en:"Moscow Digital Academy"}, st:{ru:"MDA",en:"MDA"}, prof:"UX/UI"},
   {id:"freelance", yr:"2016", kind:"work", work:true, ti:{ru:"Фриланс",en:"Freelance"}},
   {id:"gym", yr:"2016", kind:"edu", ti:{ru:"Design:GYM",en:"Design:GYM"}},
-  {id:"toys", yr:"2015", kind:"work", ti:{ru:"Магазин игрушек",en:"Toy store"}, prof:{ru:"консультант",en:"sales"}},
+  {id:"toys", hidden:true, yr:"2015", kind:"work", ti:{ru:"Магазин игрушек",en:"Toy store"}, prof:{ru:"консультант",en:"sales"}},
   {id:"photo", yr:"2015", kind:"art", ti:{ru:"Фотография",en:"Photography"}},
-  {id:"print", yr:"2014", kind:"work", ti:{ru:"Полиграфия",en:"Print design"}, prof:{ru:"первая подработка",en:"first side job"}},
+  {id:"print", hidden:true, yr:"2014", kind:"work", ti:{ru:"Полиграфия",en:"Print design"}, prof:{ru:"первая подработка",en:"first side job"}},
   {id:"waiter", yr:"2014", kind:"work", ti:{ru:"Официант",en:"Waiter"}},
   {id:"camp", yr:"2012", kind:"work", ti:{ru:"Вожатый",en:"Camp counselor"}, prof:{ru:"лагерь",en:"summer camp"}},
   {id:"photoshop", yr:"2012", kind:"art", ti:{ru:"Photoshop",en:"Photoshop"}, prof:{ru:"первые работы",en:"first works"}},
   {id:"build", yr:"2011", kind:"work", ti:{ru:"Стройка",en:"Construction"}, prof:{ru:"разнорабочий",en:"laborer"}},
   {id:"graffiti", yr:"2010", kind:"art", ti:{ru:"Граффити",en:"Graffiti"}},
-  {id:"ksu", yr:"2010", kind:"edu", ti:{ru:"Курский госуниверситет",en:"Kursk State University"}, prof:{ru:"бакалавр",en:"bachelor"}},
+  {id:"ksu", yr:"2010", kind:"edu", ti:{ru:"Курский госуниверситет",en:"Kursk State University"}, st:{ru:"Университет",en:"University"}, prof:{ru:"бакалавр",en:"bachelor"}},
   {id:"school", yr:"2000", kind:"edu", ti:{ru:"Школа",en:"School"}},
   {id:"born", yr:"1993", ti:{ru:"Родился",en:"Born"}},
   /* сводная страница для плитки на главной, в списках не показывается */
@@ -87,11 +87,12 @@ const v4Txt = (v, L) => v==null ? "" : (typeof v==="string" ? v : (v[L]||v.ru||"
 const v4Cap = t => t ? t.charAt(0).toUpperCase() + t.slice(1) : t;   // первое слово — с большой буквы
 
 function v4Prof(e, L){
-  return e && e.prof ? `<span class="row-prof">· ${v4Cap(v4Txt(e.prof, L))}</span>` : "";
+  /* сфера пишется только у работы, у обучения, проектов и творчества после названия ничего нет */
+  return e && e.prof && e.kind==="work" ? `<span class="row-prof">· ${v4Cap(v4Txt(e.prof, L))}</span>` : "";
 }
 function v4Chips(e, L, now){
   if(!e) return "";
-  const ai = e.ai ? `<span class="tag tag-ai">AI</span>` : "";
+  const ai = "";   /* в меню слева только тип страницы, метка AI не показывается */
   const kind = e.kind ? `<span class="tag tag-kind${now?" is-live":""}">${v4Cap(v4Txt(V4.kinds[e.kind], L))}${now?'<span class="v4live" aria-hidden="true"></span>':""}</span>` : "";
   return (ai||kind) ? `<span class="row-tags">${kind}${ai}</span>` : "";   // AI — всегда последним
 }
@@ -114,10 +115,10 @@ function v4Row(p, L, active){
 /* строка таймлайна без кейса — ведёт на свою страницу life.html?id=… */
 function v4LifeHref(e){ return `life.html?id=${e.id}`; }
 function v4LifeRow(e, L, active){
-  const title = v4Txt(e.ti, L);
+  const title = v4Txt(e.st || e.ti, L);   /* в меню короткое имя, st */
   return `<a class="row v4row v4life" href="${active ? "index.html" : v4LifeHref(e)}"${active?' aria-current="page"':''}>
     <span class="row-yr">${e.yr}</span>
-    <span class="row-main"><span class="row-ti" title="${title}">${title}</span>${v4Prof(e, L)}</span>
+    <span class="row-main"><span class="row-ti" title="${v4Txt(e.ti, L)}">${title}</span>${v4Prof(e, L)}</span>
     ${v4Life() ? v4Chips(e, L) : '<span class="v4enddot"></span>'}
     <span class="row-arr" aria-hidden="true"><svg viewBox="0 0 10 10" width="10" height="10"><path d="M3.5 1.5 7 5 3.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>`;
 }
@@ -349,12 +350,14 @@ document.addEventListener("error", e=>{
   im.replaceWith(ph);
 }, true);
 
-/* Теги в меню слева стоят после названия. Если названию не хватает места, теги прячутся, а не обрезают название многоточием */
+/* Теги в меню слева стоят после названия. Если названию не хватает места, прячется сначала тип страницы, потом сфера, а название не обрезается */
 function v4FitTags(){
   const rows = [...document.querySelectorAll(".sidebar .v4row")];
-  rows.forEach(r=>r.classList.remove("tags-off"));
-  rows.filter(r=>{ const t = r.querySelector(".row-ti"); return t && r.querySelector(".row-tags") && t.scrollWidth > t.clientWidth + 1; })
-      .forEach(r=>r.classList.add("tags-off"));
+  rows.forEach(r=>r.classList.remove("tags-off","prof-off"));
+  const cut = r => { const t = r.querySelector(".row-ti"); return !!t && t.scrollWidth > t.clientWidth + 1; };
+  /* сначала прячем тип страницы, потом сферу. Название не обрезается, пока что-то ещё можно убрать */
+  rows.filter(r=>r.querySelector(".row-tags") && cut(r)).forEach(r=>r.classList.add("tags-off"));
+  rows.filter(r=>r.querySelector(".row-prof") && cut(r)).forEach(r=>r.classList.add("prof-off"));
 }
 (function(){
   let raf = 0;
