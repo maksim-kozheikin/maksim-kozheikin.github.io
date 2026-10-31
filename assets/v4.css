@@ -642,17 +642,15 @@ html body .v4chips .tag,html body .sidebar .row-tags .tag{background:none;box-sh
 html body .sidebar a.row[aria-current="page"] .row-tags .tag{box-shadow:none}
 html body .v4chips .tag + .tag::before,html body .sidebar .row-tags .tag + .tag::before{content:"·";margin:0 5px;color:var(--muted)}
 html body .sidebar .v4row{position:relative}
-html body .sidebar .v4row .row-main{flex:0 1 auto;min-width:0}
+html body .sidebar .v4row:has(.row-tags) .row-main{flex:0 1 auto;min-width:0}
 html body .sidebar .v4row .row-tags{flex:0 0 auto;margin-left:-8px;gap:0;flex-wrap:nowrap;align-self:center;align-items:center;line-height:1.35;font-size:var(--t-body)}
 html body .sidebar .v4row .row-tags::before{content:"·";margin:0 5px;color:var(--muted)}
 html body .sidebar .v4row .row-arr{margin-left:auto}
 html body .sidebar .v4row .row-tags .tag.is-live{position:static}
 html body .sidebar .v4row .row-tags:has(.v4live){padding-right:16px}
 html body .sidebar .v4row .row-tags .v4live{position:absolute;right:24px;top:50%;margin-top:-3.5px;width:7px;height:7px;flex-basis:7px}
-/* на телефоне теги в меню слева скрыты, чтобы названия не обрезались. Пульсирующая точка остаётся */
-@media (max-width:640px){
-  html body .sidebar .v4row .row-tags::before,html body .sidebar .v4row .row-tags .tag::before{display:none}
-  html body .sidebar .v4row .row-tags .tag:not(.is-live){display:none}
-  html body .sidebar .v4row .row-tags .tag.is-live{font-size:0}
-  html body .sidebar .v4row .row-tags:has(.v4live){padding-right:0}
-}
+/* если теги не помещаются, прячем их вместо многоточия в названии. Пульсирующая точка остаётся (класс ставит v4.js) */
+html body .sidebar .v4row.tags-off .row-tags::before,html body .sidebar .v4row.tags-off .row-tags .tag::before{display:none}
+html body .sidebar .v4row.tags-off .row-tags .tag:not(.is-live){display:none}
+html body .sidebar .v4row.tags-off .row-tags .tag.is-live{font-size:0}
+html body .sidebar .v4row.tags-off .row-tags:has(.v4live){padding-right:0}

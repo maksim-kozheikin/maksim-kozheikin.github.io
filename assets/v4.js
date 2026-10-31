@@ -348,3 +348,25 @@ document.addEventListener("error", e=>{
   ph.textContent = im.getAttribute("alt") || (document.documentElement.lang==="en" ? "Screen" : "Макет");
   im.replaceWith(ph);
 }, true);
+
+/* Теги в меню слева стоят после названия. Если названию не хватает места, теги прячутся, а не обрезают название многоточием */
+function v4FitTags(){
+  const rows = [...document.querySelectorAll(".sidebar .v4row")];
+  rows.forEach(r=>r.classList.remove("tags-off"));
+  rows.filter(r=>{ const t = r.querySelector(".row-ti"); return t && r.querySelector(".row-tags") && t.scrollWidth > t.clientWidth + 1; })
+      .forEach(r=>r.classList.add("tags-off"));
+}
+(function(){
+  let raf = 0;
+  const soon = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(v4FitTags); };
+  const init = () => {
+    const sb = document.querySelector(".sidebar");
+    if(!sb) return;
+    new MutationObserver(soon).observe(sb, {childList:true, subtree:true});
+    if("ResizeObserver" in window) new ResizeObserver(soon).observe(sb);
+    addEventListener("resize", soon);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(soon);
+    soon();
+  };
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", init) : init();
+})();
