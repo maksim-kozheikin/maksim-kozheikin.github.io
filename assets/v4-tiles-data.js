@@ -16,7 +16,8 @@
 ============================================================ */
 const V4_TILES = {
   medsi:[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
-  "w:medsi-app":[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}]
+  "w:medsi-app":[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
+  "w:sber-video":[{w:12,h:7,video:"assets/sberlegal-demo-720.mp4",poster:"assets/sberlegal-demo-poster.jpg"}]
 };
 
 /* ============================================================
@@ -27,6 +28,7 @@ const V4_TILES = {
    href — куда ведёт (кейс и раздел внутри него).
 ============================================================ */
 const V4_WORK_TILES = [
+  {id:"sber-video", co:{ru:"СберПраво",en:"SberPravo"}, ti:{ru:"Как проходит заказ",en:"How an order works"}, href:"case-sberpravo.html#video"},
   {id:"wb-promo",    co:"Wildberries", ti:{ru:"Акции WB",en:"WB promotions"},           href:"case-rwb.html#wbpromo"},
   {id:"wb-seller",   co:"Wildberries", ti:{ru:"Акции селлера",en:"Seller promotions"},  href:"case-rwb.html#sellerpromo"},
   {id:"wb-prices",   co:"Wildberries", ti:{ru:"Цены и скидки",en:"Prices and discounts"}, href:"case-rwb.html#prices"},

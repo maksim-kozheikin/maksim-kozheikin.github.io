@@ -148,6 +148,11 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .fig-btn:hover img{transform:translateY(-1px);filter:drop-shadow(0 10px 15px rgba(145,109,80,.15))}
 @media (max-width:640px){.fig-btn{padding:20px;border-radius:24px}}
 .fig figcaption{display:none}
+/* несколько картинок на одной общей подложке, каждая по-прежнему открывается отдельно */
+.figs.figs-plate{background:#F4EFEC;border-radius:40px;padding:48px;column-gap:32px}
+.figs.figs-plate .fig{margin:0 0 32px}
+.figs.figs-plate .fig-btn{padding:0;background:none;border-radius:0}
+@media (max-width:640px){.figs.figs-plate{border-radius:24px;padding:20px;column-gap:16px}.figs.figs-plate .fig{margin-bottom:16px}}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
 /* лайтбокс */
@@ -331,7 +336,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=59">
+<link rel="stylesheet" href="assets/v4.css?v=64">
 </head>
 <body data-mode="work" data-lang="ru">
 <a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
@@ -390,8 +395,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
-<script src="assets/site.js?v=59"></script>
-<script src="assets/v4.js?v=59"></script>
+<script src="assets/site.js?v=64"></script>
+<script src="assets/v4.js?v=64"></script>
+<script src="assets/v4-video.js?v=64"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "sol1a": "assets/sber/sber-catalog-2.1-ru.webp",
@@ -464,6 +470,18 @@ const CURRENT = "sberpravo";
       "Веб, iOS и Android. Профиль заказчика, исполнителя и админа."
     ],
     "blocks": [
+      {
+        "a": "video",
+        "notitle": true,
+        "gap": 100,
+        "title": "Как проходит заказ",
+        "lead": "",
+        "video": {
+          "src": "assets/sberlegal-demo-1080.mp4",
+          "poster": "assets/sberlegal-demo-poster.jpg"
+        },
+        "subs": []
+      },
       {
         "a": "menu",
         "group": true,
@@ -1228,7 +1246,8 @@ const CURRENT = "sberpravo";
                 "ih": 10820
               }
             ],
-            "cols": 3
+            "cols": 3,
+            "plate": true
           }
         ]
       }
@@ -1277,6 +1296,18 @@ const CURRENT = "sberpravo";
       "Web, iOS and Android. Client, contractor and admin profiles."
     ],
     "blocks": [
+      {
+        "a": "video",
+        "notitle": true,
+        "gap": 100,
+        "title": "How an order works",
+        "lead": "",
+        "video": {
+          "src": "assets/sberlegal-demo-1080.mp4",
+          "poster": "assets/sberlegal-demo-poster.jpg"
+        },
+        "subs": []
+      },
       {
         "a": "menu",
         "group": true,
@@ -2048,7 +2079,8 @@ const CURRENT = "sberpravo";
                 "ih": 10820
               }
             ],
-            "cols": 3
+            "cols": 3,
+            "plate": true
           }
         ]
       }
@@ -2153,7 +2185,7 @@ function renderBlock(b, num){
 
     // реальные изображения — горизонтальный ряд, клик открывает во весь экран
     const imgs = s.imgs
-      ? `<div class="figs${s.full?" figs-full":""}${s.cols?" figs-cols":""}"${s.cols?` style="--cols:${s.cols}"`:""}>${s.imgs.map(im=>
+      ? `<div class="figs${s.full?" figs-full":""}${s.cols?" figs-cols":""}${s.plate?" figs-plate":""}"${s.cols?` style="--cols:${s.cols}"`:""}>${s.imgs.map(im=>
           `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
              <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
                <img src="${im.src}" alt="${im.cap}"${im.iw?` width="${im.iw}" height="${im.ih}"`:""} loading="lazy">
@@ -2194,6 +2226,9 @@ function renderBlock(b, num){
   const flowline = b.flow ? `<div class="flowline">${b.flow.map((s,i)=>
     `<span class="fl-step">${s}</span>${i<b.flow.length-1?'<span class="fl-arr">→</span>':''}`).join("")}</div>` : "";
 
+  // видео в шапке блока. Запускается само, когда видно, звук выключен
+  const headVideo = b.video ? `<div class="sub"><div class="v4-video-wrap"><video class="v4-video" data-autoplay muted loop playsinline controls preload="metadata" poster="${b.video.poster}" src="${b.video.src}" aria-label="${b.title}"></video></div></div>` : "";
+
   // одна картинка в шапке кейса
   const headImg = b.img ? `<div class="figs"><figure class="fig">
       <button class="fig-btn" data-full="${b.img}" aria-label="Открыть"><img src="${b.img}" alt="${b.title}" loading="lazy"></button>
@@ -2207,9 +2242,9 @@ function renderBlock(b, num){
 
   return `<section class="block${b.group?" group":""}" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
     ${num ? `<div class="block-num">${num}</div>` : ""}
-    <h2 class="block-title">${b.title}</h2>
+    ${b.notitle?"":`<h2 class="block-title">${b.title}</h2>`}
     ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
-    ${why}${task}${meta}${headImg}${subs}${flowline}${tags}${gallery}
+    ${why}${task}${meta}${headImg}${headVideo}${subs}${flowline}${tags}${gallery}
   </section>`;
 }
 
@@ -2227,8 +2262,7 @@ function render(){
     </div>
     <button class="duties-more" id="dutiesBtn"><span>${t.dutiesMore}</span><span class="chev">↓</span></button>
 
-    <div class="head-sep"></div>
-
+    ${t.blocks[0] && t.blocks[0].video ? "" : `<div class="head-sep"></div>`}
 
     ${(()=>{ let g=0; return t.blocks.map(b=>{
         if(b.group){ g++; return renderBlock(b, `${L==="ru"?"Кейс":"Case"} ${String(g).padStart(2,"0")}`); }
@@ -2531,5 +2565,5 @@ window.CRM_HOST = {
   caps: {list:true, metricBig:true, figsFull:true, steps:true, why:true, task:true, tags:true, blockImg:true, flow:true}
 };
 </script>
-<script src="assets/crm-editor.js?v=59" defer></script>
+<script src="assets/crm-editor.js?v=64" defer></script>
 </body></html>

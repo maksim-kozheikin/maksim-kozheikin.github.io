@@ -621,9 +621,16 @@ html body .points li::before,html body .points.cross li::before,html body .point
 
 /* v4.55 — цвета кнопок в покое и при наведении. Обычные при наведении светло-коричневые с тем же текстом, чёрная «Скачать CV» становится цвета звёздочек */
 :root{--btn-bg:var(--sel);--btn-hover:#E5D9D2;--btn-hover-fg:var(--btn);--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:#916D50;--dl-fg-hover:#FDFCFC}
-html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
+html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover,html body .v4step:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
 html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
 html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
 
 /* v4.56 — черты между блоками тонкие, как линии в меню слева */
 html body .head-sep,html body .block.group::before{height:1px;background:var(--line);border-radius:0}
+
+/* v4.57 — видео. В плитке на главной и внутри страницы */
+.m-img.m-video video{width:100%;height:100%;object-fit:cover;display:block}
+.v4-video-wrap{border-radius:40px;overflow:hidden;background:var(--sel);line-height:0;transform:translateZ(0)}
+.v4-video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+@media (max-width:640px){.v4-video-wrap{border-radius:24px}}
+@media (max-width:640px){.m-tile:has(.m-video){grid-row:span 3}.m-img.m-video video{object-fit:contain}}

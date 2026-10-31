@@ -134,7 +134,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"dlf",l:"Чёрная. Текст",y:"c",d:"#FFFFFF"},
     {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#916D50"},
     {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
-    h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
+    h:"Обычные кнопки — cv, email, tg, linkedin, «Показать ещё», стрелки «↑ Все проекты» и «↓ следующий проект». Текст кнопок общий с текстом тегов."},
    {id:"sep",t:"Черты между блоками",o:true,c:[
     {k:"sepm",l:"Как линии в меню слева",y:"k",d:true},
     {k:"sepc",l:"Цвет черты",y:"c",d:"#161413"},
@@ -184,7 +184,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 6";
+  var BUILD="31 окт 8";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -289,6 +289,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     /* тень, подъём и увеличение только у самой картинки, подложка стоит на месте */
     c+=".figs .fig .fig-btn{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px;filter:none;transform:none;transition:none}";
     c+=".figs .fig .fig-btn:hover{transform:none;filter:none}";
+    c+=".figs.figs-plate{background:"+(plate?S.pbg:"none")+";padding:"+(plate?S.p:0)+"px;border-radius:"+(plate?S.r:0)+"px}.figs.figs-plate .fig .fig-btn{background:none;padding:0;border-radius:0}";
+    if(plate)c+="@media(max-width:640px){.figs.figs-plate{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     c+=".figs .fig .fig-btn img{filter:"+rest+";border-radius:"+(S.o_bd?S.ir:0)+"px;transition:transform "+t+",filter "+t+"}";
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
