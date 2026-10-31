@@ -87,8 +87,8 @@ const v4Txt = (v, L) => v==null ? "" : (typeof v==="string" ? v : (v[L]||v.ru||"
 const v4Cap = t => t ? t.charAt(0).toUpperCase() + t.slice(1) : t;   // первое слово — с большой буквы
 
 function v4Prof(e, L){
-  /* сфера пишется только у работы, у обучения, проектов и творчества после названия ничего нет */
-  return e && e.prof && e.kind==="work" ? `<span class="row-prof">· ${v4Cap(v4Txt(e.prof, L))}</span>` : "";
+  /* сфера пишется только у работ, которые есть и на вкладке «Работа». У остальных работ, обучения, проектов и творчества после названия ничего нет */
+  return e && e.prof && e.kind==="work" && (e.project || e.work) ? `<span class="row-prof">· ${v4Cap(v4Txt(e.prof, L))}</span>` : "";
 }
 function v4Chips(e, L, now){
   if(!e) return "";
@@ -212,6 +212,11 @@ function v4Links(id, L){
    чтобы значки не оставались одни на новой строке.
    В режиме редактора (?crm / #crm) текст описания остаётся чистым — редактор правит его как есть. */
 const v4Crm = () => !!window.__V4CRM || /[?&]crm/.test(location.search) || location.hash === "#crm";
+/* описание под заголовком без повтора названия: «Medsi Digital — сервисы…» превращается в «Сервисы…» */
+function v4NoName(text){
+  const m = /^([^—–,]{1,40}?)\s[—–]\s+(\S[\s\S]*)$/.exec(String(text||""));
+  return m ? m[2].charAt(0).toUpperCase() + m[2].slice(1) : text;
+}
 function v4Summary(text, links){
   if(!links || v4Crm()) return `<span class="exp-summary">${text}</span>${links||""}`;
   const i = text.lastIndexOf(" ");

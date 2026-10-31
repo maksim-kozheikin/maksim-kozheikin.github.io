@@ -301,7 +301,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* первый кейс под разделом; группа после группы сохраняет 200px */
 .block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=70">
+<link rel="stylesheet" href="assets/v4.css?v=71">
 <style>/* Wildberries: заголовки кейсов того же размера, что разделы */
 .block:not(.group) .block-title{font-size:var(--t-display);line-height:1.15;letter-spacing:-.02em}</style>
 </head>
@@ -362,8 +362,8 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
-<script src="assets/site.js?v=70"></script>
-<script src="assets/v4.js?v=70"></script>
+<script src="assets/site.js?v=71"></script>
+<script src="assets/v4.js?v=71"></script>
 <script>
 const CURRENT = "rwb";
 
@@ -1946,7 +1946,7 @@ function render(){
     <div id="overview" style="scroll-margin-top:20px"></div>
     ${v4Up(CURRENT, L)}
     <h1 class="exp-role">${v4Title(t.title, "")}</h1>
-    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
+    <p class="exp-meta">${v4Summary(v4NoName(t.desc), v4Links(CURRENT, L))}</p>
     ${v4HeadChips(v4Entry(CURRENT), L, t.date, "", t.position)}
     ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
     <div class="duties" id="duties">
@@ -2258,6 +2258,6 @@ window.CRM_HOST = {
   caps: {list:false, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:false, blockImg:false, flow:false}
 };
 </script>
-<script src="assets/crm-editor.js?v=70" defer></script>
+<script src="assets/crm-editor.js?v=71" defer></script>
 </body>
 </html>
