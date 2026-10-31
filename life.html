@@ -282,7 +282,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=64">
+<link rel="stylesheet" href="assets/v4.css?v=74">
 </head>
 <body data-mode="work" data-lang="ru">
 <a class="v4close" href="index.html" aria-label="Закрыть" title="Закрыть"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
@@ -324,9 +324,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 </div>
 
 
-<script src="assets/site.js?v=64"></script>
-<script src="assets/v4.js?v=64"></script>
-<script src="assets/v4-life.js?v=64"></script>
+<script src="assets/site.js?v=74"></script>
+<script src="assets/v4.js?v=74"></script>
+<script src="assets/v4-life.js?v=74"></script>
 <script>
 /* ============================================================
    СОДЕРЖИМОЕ СТРАНИЦ «РАБОТА + ЖИЗНЬ»
@@ -660,9 +660,9 @@ function render(){
   document.title = `${v4Txt(E.ti, L)} — ${T[L].back}`;
   $("#content").innerHTML = `
     ${v4TlUp(ID, L)}
-    <h1 class="exp-role">${v4Title(v4Txt(E.ti, L), pg.role || "")}</h1>
+    <h1 class="exp-role">${v4Title(v4Txt(E.ti, L), "")}</h1>
     <p class="exp-meta">${v4Summary(pg.desc || v4Txt(E.ti, L), v4Links(ID, L))}</p>
-    ${v4HeadChips(E, L, pg.when || E.yr)}
+    ${v4HeadChips(E, L, pg.when || E.yr, "", pg.role || "")}
     ${(pg.parts||[]).map(part).join("")}
     <div class="foot">${v4TlDown(ID, L)}</div>`;
   document.querySelectorAll("[data-i18n]").forEach(el=>{
@@ -722,6 +722,6 @@ window.CRM_HOST = {
   caps: {list:false, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:false, blockImg:false, flow:false}
 };
 </script>
-<script src="assets/crm-editor.js?v=64" defer></script>
+<script src="assets/crm-editor.js?v=74" defer></script>
 </body>
 </html>

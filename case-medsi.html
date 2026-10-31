@@ -299,7 +299,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 </style>
-<link rel="stylesheet" href="assets/v4.css?v=64">
+<link rel="stylesheet" href="assets/v4.css?v=74">
 <style>/* Medsi: заголовки кейсов («Единый стиль приложения», «Главный экран») того же размера, что разделы («Приложение SmartMed», «Исследования») */
 .block:not(.group) .block-title{font-size:var(--t-display);line-height:1.15;letter-spacing:-.02em}</style>
 </head>
@@ -360,8 +360,8 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
   <div class="lightbox-meta"><span class="cap"></span><span class="count"></span></div>
 </div>
 
-<script src="assets/site.js?v=64"></script>
-<script src="assets/v4.js?v=64"></script>
+<script src="assets/site.js?v=74"></script>
+<script src="assets/v4.js?v=74"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "marketing": "assets/medsi-marketing.png",
@@ -2507,9 +2507,9 @@ function render(){
   $("#content").innerHTML = `
     <div id="overview" style="scroll-margin-top:20px"></div>
     ${v4Up(CURRENT, L)}
-    <h1 class="exp-role">${v4Title(t.title, t.position)}</h1>
-    <p class="exp-meta">${v4Summary(t.desc, v4Links(CURRENT, L))}</p>
-    ${v4HeadChips(v4Entry(CURRENT), L, t.date)}
+    <h1 class="exp-role">${v4Title(t.title, "")}</h1>
+    <p class="exp-meta">${v4Summary(v4NoName(t.desc), v4Links(CURRENT, L))}</p>
+    ${v4HeadChips(v4Entry(CURRENT), L, t.date, "", t.position)}
     ${v4NeedSec(t) ? `<h2 class="v4-sec">${t.navOverview || (L==="ru" ? "Обязанности и достижения" : "Responsibilities and achievements")}</h2>` : ""}
     <div class="duties" id="duties">
       <div class="duties-inner"><ul>${t.duties.map((b,i)=>`<li${i===0 && v4SameText(b, t.navOverview) ? ' class="v4-dup"' : ''}>${b}</li>`).join("")}</ul></div>
@@ -2821,7 +2821,7 @@ window.CRM_HOST = {
   caps: {list:true, metricBig:false, figsFull:false, steps:false, why:false, task:false, tags:true, blockImg:false, flow:false}
 };
 </script>
-<script src="assets/crm-editor.js?v=64" defer=""></script>
+<script src="assets/crm-editor.js?v=74" defer=""></script>
 
 
 </body></html>

@@ -117,11 +117,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   /* типы. c цвет, r ползунок [мин, макс, шаг, ед.], k галочка. o значение тумблера раздела по умолчанию */
   var SEC=[
    {id:"tg",t:"Теги под заголовком",o:true,c:[
-    {k:"tgv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (плашки)","Плашки"],["1","Серый текст 16 px через точку","Серый через точку"],["2","Дата тёмная, остальное серое, через точку","Дата тёмная"],["3","Весь текст тёмный, точки серые","Тёмный"],["5","Звёздочки ✦ вместо точек","Звёздочки"],["6","Серый текст между двумя тонкими линиями (в меню без линий)","Между линиями"],["7","Плашки одного размера в шапке и в меню","Плашки одного размера"],["8","Серый текст через точку и тонкая черта только снизу","Черта снизу"]]},
-    {k:"tgrole",l:"Роль после даты (убрать из заголовка)",y:"k",d:false},
-    {k:"tgleft",l:"Теги в меню слева сразу после названия",y:"k",d:false},
-    {k:"tgdot",l:"Пульсирующая точка у стрелки",y:"k",d:false}],
-    h:"Дата, сфера и «Работа» под заголовком страницы и теги в меню слева. Один стиль для обоих. Вместо плашек, которые похожи на кнопки, обычный текст через точку."},
+    {k:"tgv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (серый текст 16 px через точку)","Как на сайте"],["2","Дата тёмная, остальное серое, через точку","Дата тёмная"],["3","Весь текст тёмный, точки серые","Тёмный"],["5","Звёздочки ✦ вместо точек","Звёздочки"],["6","Серый текст между двумя тонкими линиями (в меню без линий)","Между линиями"],["7","Плашки одного размера в шапке и в меню","Плашки одного размера"]]}],
+    h:"Дата, сфера и «Работа» под заголовком страницы и теги в меню слева. Один стиль для обоих. На сайте теги серым текстом 16 px через точку, под ними тонкая черта. В меню слева тип страницы справа у стрелки, пульсирующая точка у самой стрелки. Остальные варианты для сравнения."},
    {id:"selrow",t:"Выбранная строка слева",o:true,c:[
     {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (подложка и средний текст)","Как на сайте"],["7","Без выделения (как было раньше)","Без выделения"],["1","Жирный текст (600)","Жирный"],["2","Подложка без жирного текста","Подложка"],["3","Средний текст (500)","Средний"],["4","Подложка и средний текст (500)","Подложка + средний"],["5","Черточка в начале строки в цвет подложки","Черточка"],["6","Градиент от начала строки в цвет подложки","Градиент"]]}],
     h:"Как отмечена строка выбранной вкладки в списке слева. Работает на «Жизни» и на страницах кейсов."},
@@ -190,7 +187,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 16";
+  var BUILD="31 окт 20";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -301,28 +298,13 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
-    if(S.o_tg&&S.tgdot){
-      var D='html body .sidebar .v4row';
-      c+=D+"{position:relative}"+D+" .row-tags .tag.is-live{position:static}";
-      c+=D+" .row-tags .v4live{position:absolute;right:24px;top:50%;margin-top:-3.5px;width:7px;height:7px;flex-basis:7px}";
-    }
-    if(S.o_tg&&S.tgleft){
-      var M='html body .sidebar .v4row';
-      c+=M+" .row-main{flex:0 1 auto;min-width:0}";
-      c+=M+" .row-tags{flex:0 0 auto;margin-left:-4px;gap:0;flex-wrap:nowrap;align-self:center;align-items:center;line-height:1.35;font-size:var(--t-body)}";
-      c+=M+" .row-tags::before{content:'·';margin:0 5px;color:var(--muted)}";
-      c+=M+" .row-tags .tag{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--muted);font-size:var(--t-body);line-height:1.35}";
-      c+='html body .sidebar a.row[aria-current="page"] .row-tags .tag{box-shadow:none}';
-      c+=M+" .row-tags .tag + .tag::before{content:'·';margin:0 5px;color:var(--muted)}";
-      c+=M+" .row-arr{margin-left:auto}";
-    }
-    if(S.o_tg&&S.tgrole)c+="html body .exp-role .exp-pos{display:none}";
     if(S.o_tg&&S.tgv!=="0"){
       /* один стиль и в шапке страницы, и в меню слева */
       var T='html body .v4chips',G=T+' .tag,html body .sidebar .row-tags .tag',GB=T+' .tag + .tag::before,html body .sidebar .row-tags .tag + .tag::before';
       if(S.tgv==="7"){
         c+=G+"{background:var(--sel);border-radius:999px;padding:4px 7px;font-size:var(--t-caption);line-height:1;color:var(--btn);box-shadow:none}";
-        c+=T+"{gap:6px}";
+        c+=T+"{gap:6px;border-bottom:none;padding-bottom:0}";
+        c+=GB+"{content:none}";
       }else{
         c+=T+"{gap:0;align-items:center;margin-top:16px}";
         c+=G+"{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--muted);font-size:var(--t-body);line-height:1.35;letter-spacing:0;text-transform:none}";
@@ -332,8 +314,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
         c+=GB+"{content:'"+(five?"✦":"·")+"';margin:0 "+(five?"7":"5")+"px;color:"+(five?"var(--star,#916D50)":"var(--muted)")+";font-size:"+(five?".75em":"1em")+";text-transform:none}";
         if(S.tgv==="2")c+=T+" .tag:first-child{color:var(--ink)}";
         if(S.tgv==="3")c+=G+"{color:var(--ink)}";
-        if(S.tgv==="6")c+=T+"{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0}";
-        if(S.tgv==="8")c+=T+"{border-bottom:1px solid var(--line);padding:0 0 14px}";
+        if(S.tgv==="6")c+=T+"{border-top:1px solid var(--line);padding-top:12px}";
       }
     }
     if(S.o_selrow&&S.selv!=="0"){
@@ -378,7 +359,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
-    L.push("Теги под заголовком: "+on("tg",({"0":"как на сайте, плашки","1":"серый текст через точку","2":"дата тёмная, остальное серое","3":"весь текст тёмный","5":"звёздочки между","6":"между двумя линиями","7":"плашки одного размера","8":"черта только снизу"})[S.tgv]+(S.tgrole?", роль после даты":"")+(S.tgleft?", теги в меню после названия":"")+(S.tgdot?", точка у стрелки":"")));
+    L.push("Теги под заголовком: "+on("tg",({"0":"как на сайте, плашки","1":"серый текст через точку","2":"дата тёмная, остальное серое","3":"весь текст тёмный","5":"звёздочки между","6":"между двумя линиями","7":"плашки одного размера"})[S.tgv]));
     L.push("Выбранная строка слева: "+on("selrow",({"0":"как на сайте, подложка и средний текст","7":"без выделения","1":"жирный текст 600","2":"подложка без жирного текста","3":"средний текст 500","4":"подложка и средний текст 500","5":"черточка в начале строки в цвет подложки","6":"градиент от начала строки в цвет подложки"})[S.selv]));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
@@ -393,20 +374,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     });
     return L.join("\n");
   }
-  /* роль из заголовка («Lead UX/UI Designer») встаёт в строку тегов сразу после даты */
-  function roleMove(){
-    var on=EN&&S.o_tg&&S.tgrole,old=document.querySelector(".tn-role-tag");
-    var src=on&&document.querySelector(".exp-role .exp-pos-t"),box=on&&document.querySelector(".v4chips");
-    if(!src||!box){if(old)old.remove();return}
-    var want=src.textContent.trim(),first=box.querySelector(".tag:not(.tn-role-tag)");
-    if(old&&old.textContent===want&&old.parentNode===box&&first&&first.nextElementSibling===old)return;
-    if(old)old.remove();
-    var t=document.createElement("span");t.className="tag tag-kind tn-role-tag";t.textContent=want;
-    if(first)first.after(t);else box.insertBefore(t,box.firstChild);
-  }
   function apply(){
     document.body.appendChild($("tn-css"));
-    roleMove();
     $("tn-css").textContent=EN?build():"";
     $("tn-out").textContent=outText();
     var nmEl=$("tn-selname");
@@ -545,7 +514,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     css.textContent=prev;
   }
   var scanT=null;
-  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){roleMove();scan();if(INSP){if(!SEL)renderCard();paint()}},150)}
+  function scanSoon(){clearTimeout(scanT);scanT=setTimeout(function(){scan();if(INSP){if(!SEL)renderCard();paint()}},150)}
   new MutationObserver(function(ms){
     for(var i=0;i<ms.length;i++){
       var t=ms[i].target;
