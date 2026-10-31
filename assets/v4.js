@@ -92,7 +92,7 @@ function v4Prof(e, L){
 }
 function v4Chips(e, L, now){
   if(!e) return "";
-  const ai = "";   /* в меню слева только тип страницы, метка AI не показывается */
+  const ai = e.ai ? `<span class="tag tag-ai">AI</span>` : "";
   const kind = e.kind ? `<span class="tag tag-kind${now?" is-live":""}">${v4Cap(v4Txt(V4.kinds[e.kind], L))}${now?'<span class="v4live" aria-hidden="true"></span>':""}</span>` : "";
   return (ai||kind) ? `<span class="row-tags">${kind}${ai}</span>` : "";   // AI — всегда последним
 }

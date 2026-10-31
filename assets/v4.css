@@ -636,7 +636,7 @@ html body .head-sep,html body .block.group::before{height:1px;background:var(--l
 @media (max-width:640px){.m-tile:has(.m-video){grid-row:span 3}.m-img.m-video video{object-fit:contain}}
 
 /* v4.58 — теги текстом 16 px через точку. В шапке страницы и в меню слева один стиль.
-   В меню теги стоят сразу после названия, пульсирующая точка справа у стрелки */
+   В меню на вкладке «Жизнь» тип страницы и AI стоят справа у стрелки, пульсирующая точка у самой стрелки */
 /* отступы вокруг строки тегов. Ровные считаются по видимому тексту, а не по рамкам блоков:
    описание, теги, черта и следующий заголовок разделены 24 px */
 html body .v4chips{gap:0;align-items:center;margin-top:14px;padding-bottom:22px;border-bottom:1px solid var(--line)}
@@ -646,9 +646,7 @@ html body .v4chips .tag,html body .sidebar .row-tags .tag{background:none;box-sh
 html body .sidebar a.row[aria-current="page"] .row-tags .tag{box-shadow:none}
 html body .v4chips .tag + .tag::before,html body .sidebar .row-tags .tag + .tag::before{content:"·";margin:0 5px;color:var(--muted)}
 html body .sidebar .v4row{position:relative}
-html body .sidebar .v4row:has(.row-tags) .row-main{flex:0 1 auto;min-width:0}
-html body .sidebar .v4row .row-tags{flex:0 0 auto;margin-left:-8px;gap:0;flex-wrap:nowrap;align-self:center;align-items:center;line-height:1.35;font-size:var(--t-body)}
-html body .sidebar .v4row .row-tags::before{content:"·";margin:0 5px;color:var(--muted)}
+html body .sidebar .v4row .row-tags{flex:0 0 auto;margin-left:0;gap:0;flex-wrap:nowrap;align-self:center;align-items:center;line-height:1.35;font-size:var(--t-body)}
 html body .sidebar .v4row .row-arr{margin-left:auto}
 html body .sidebar .v4row .row-tags .tag.is-live{position:static}
 html body .sidebar .v4row .row-tags:has(.v4live){padding-right:16px}
