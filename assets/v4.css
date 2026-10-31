@@ -621,7 +621,7 @@ html body .points li::before,html body .points.cross li::before,html body .point
 
 /* v4.55 — цвета кнопок в покое и при наведении. Обычные при наведении светло-коричневые с тем же текстом, чёрная «Скачать CV» становится цвета звёздочек */
 :root{--btn-bg:var(--sel);--btn-hover:#E5D9D2;--btn-hover-fg:var(--btn);--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:#916D50;--dl-fg-hover:#FDFCFC}
-html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
+html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover,html body .v4step:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
 html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
 html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
 

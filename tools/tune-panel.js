@@ -134,7 +134,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     {k:"dlf",l:"Чёрная. Текст",y:"c",d:"#FFFFFF"},
     {k:"dlbh",l:"Чёрная при наведении. Фон",y:"c",d:"#916D50"},
     {k:"dlfh",l:"Чёрная при наведении. Текст",y:"c",d:"#FDFCFC"}],
-    h:"Обычные кнопки — cv, email, tg, linkedin, «На главную», «Показать ещё». Текст кнопок общий с текстом тегов."},
+    h:"Обычные кнопки — cv, email, tg, linkedin, «Показать ещё», стрелки «↑ Все проекты» и «↓ следующий проект». Текст кнопок общий с текстом тегов."},
    {id:"sep",t:"Черты между блоками",o:true,c:[
     {k:"sepm",l:"Как линии в меню слева",y:"k",d:true},
     {k:"sepc",l:"Цвет черты",y:"c",d:"#161413"},
@@ -184,7 +184,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 7";
+  var BUILD="31 окт 8";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
