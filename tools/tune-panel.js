@@ -118,7 +118,8 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var SEC=[
    {id:"tg",t:"Теги под заголовком",o:true,c:[
     {k:"tgv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (плашки)","Плашки"],["1","Серый текст 16 px через точку","Серый через точку"],["2","Дата тёмная, остальное серое, через точку","Дата тёмная"],["3","Весь текст тёмный, точки серые","Тёмный"],["5","Звёздочки ✦ вместо точек","Звёздочки"],["6","Серый текст между двумя тонкими линиями (в меню без линий)","Между линиями"],["7","Плашки одного размера в шапке и в меню","Плашки одного размера"],["8","Серый текст через точку и тонкая черта только снизу","Черта снизу"]]},
-    {k:"tgrole",l:"Роль после даты (убрать из заголовка)",y:"k",d:false}],
+    {k:"tgrole",l:"Роль после даты (убрать из заголовка)",y:"k",d:false},
+    {k:"tgleft",l:"Теги в меню слева сразу после названия",y:"k",d:false}],
     h:"Дата, сфера и «Работа» под заголовком страницы и теги в меню слева. Один стиль для обоих. Вместо плашек, которые похожи на кнопки, обычный текст через точку."},
    {id:"selrow",t:"Выбранная строка слева",o:true,c:[
     {k:"selv",l:"Вариант",y:"s",seg:1,d:"0",opts:[["0","Как на сайте (подложка и средний текст)","Как на сайте"],["7","Без выделения (как было раньше)","Без выделения"],["1","Жирный текст (600)","Жирный"],["2","Подложка без жирного текста","Подложка"],["3","Средний текст (500)","Средний"],["4","Подложка и средний текст (500)","Подложка + средний"],["5","Черточка в начале строки в цвет подложки","Черточка"],["6","Градиент от начала строки в цвет подложки","Градиент"]]}],
@@ -188,7 +189,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
   var DEF={};
   SEC.forEach(function(s){DEF["o_"+s.id]=s.o;s.c.forEach(function(c){DEF[c.k]=c.d})});
   var OVR={};try{OVR=JSON.parse(load("tn-ovr2"))||{}}catch(e){}
-  var BUILD="31 окт 14";
+  var BUILD="31 окт 15";
   var KEY="tn-v27";
   var EN=load("tn-en")!=="0";
   var S;try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
@@ -299,6 +300,16 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     c+=".figs .fig .fig-btn:hover img{transform:translateY(-"+lift+"px) scale("+(1+scale/100)+");filter:"+hov+"}";
     if(plate)c+="@media(max-width:640px){.figs .fig .fig-btn{padding:"+Math.min(S.p,20)+"px;border-radius:"+Math.min(S.r,24)+"px}}";
     if(S.o_bd&&S.bw>0)c+=".figs .fig .fig-btn img{outline:"+S.bw+"px solid "+rgba(S.bc,S.ba)+";outline-offset:-"+S.bw+"px}";
+    if(S.o_tg&&S.tgleft){
+      var M='html body .sidebar .v4row';
+      c+=M+" .row-main{flex:0 1 auto;min-width:0}";
+      c+=M+" .row-tags{flex:0 0 auto;margin-left:-4px;gap:0;flex-wrap:nowrap;align-self:center;align-items:center;line-height:1.35;font-size:var(--t-body)}";
+      c+=M+" .row-tags::before{content:'·';margin:0 5px;color:var(--muted)}";
+      c+=M+" .row-tags .tag{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--muted);font-size:var(--t-body);line-height:1.35}";
+      c+='html body .sidebar a.row[aria-current="page"] .row-tags .tag{box-shadow:none}';
+      c+=M+" .row-tags .tag + .tag::before{content:'·';margin:0 5px;color:var(--muted)}";
+      c+=M+" .row-arr{margin-left:auto}";
+    }
     if(S.o_tg&&S.tgrole)c+="html body .exp-role .exp-pos{display:none}";
     if(S.o_tg&&S.tgv!=="0"){
       /* один стиль и в шапке страницы, и в меню слева */
@@ -361,7 +372,7 @@ body.tn-insp,body.tn-insp *:not(#tn):not(#tn *){cursor:crosshair!important}
     L.push("Цвета текста: "+on("tx","основной "+S.ink+", серый "+S.muted));
     L.push("Рамка у кнопок: "+on("ring",S.ringc+", "+S.ringw+" px"));
     L.push("Режим просмотра: "+on("lb","фон "+S.lbbg+", плотность "+S.lbba+"%, кнопки и подписи "+S.lbfg));
-    L.push("Теги под заголовком: "+on("tg",({"0":"как на сайте, плашки","1":"серый текст через точку","2":"дата тёмная, остальное серое","3":"весь текст тёмный","5":"звёздочки между","6":"между двумя линиями","7":"плашки одного размера","8":"черта только снизу"})[S.tgv]));
+    L.push("Теги под заголовком: "+on("tg",({"0":"как на сайте, плашки","1":"серый текст через точку","2":"дата тёмная, остальное серое","3":"весь текст тёмный","5":"звёздочки между","6":"между двумя линиями","7":"плашки одного размера","8":"черта только снизу"})[S.tgv]+(S.tgrole?", роль после даты":"")+(S.tgleft?", теги в меню после названия":"")));
     L.push("Выбранная строка слева: "+on("selrow",({"0":"как на сайте, подложка и средний текст","7":"без выделения","1":"жирный текст 600","2":"подложка без жирного текста","3":"средний текст 500","4":"подложка и средний текст 500","5":"черточка в начале строки в цвет подложки","6":"градиент от начала строки в цвет подложки"})[S.selv]));
     L.push("Подложка: "+on("pl","фон "+S.pbg+", скругление "+S.r+" px, отступ "+S.p+" px"));
     L.push("Тень в покое: "+on("sh0",S.sc+", вниз "+S.y0+" px, размытие "+S.b0+" px, сила "+S.a0+"%"));
