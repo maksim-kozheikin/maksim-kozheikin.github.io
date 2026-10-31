@@ -227,11 +227,14 @@ function v4Summary(text, links){
 function v4Title(company, role){
   return `<span class="exp-company">${company}</span>${role ? `<span class="exp-pos"> · <span class="exp-pos-t">${role}</span></span>` : ""}`;
 }
-function v4HeadChips(e, L, dateHtml, kindText){
+function v4HeadChips(e, L, dateHtml, kindText, role){
   const c = [];
   /* текущая работа (в дате «Настоящее время» / «Now») — мигающий кружок в конце чипса */
   const live = !!(e && e.project==="rwb") && /настоящее время|сейчас|present|now/i.test(String(dateHtml||""));   /* кружок — только у Wildberries */
-  if(dateHtml) c.push(`<span class="tag tag-kind${live?" is-live":""}"><span class="exp-eyebrow">${dateHtml}</span>${live?'<span class="v4live" aria-hidden="true"></span>':""}</span>`);
+  /* пульсирующая точка живёт только в меню слева у стрелки, в шапке страницы её нет */
+  if(dateHtml) c.push(`<span class="tag tag-kind"><span class="exp-eyebrow">${dateHtml}</span></span>`);
+  /* роль идёт в строке тегов сразу после даты, а не в заголовке */
+  if(role) c.push(`<span class="tag tag-kind">${role}</span>`);
   if(e && e.prof) c.push(`<span class="tag tag-kind">${v4Cap(v4Txt(e.prof, L))}</span>`);
   const k = kindText || (e && e.kind ? v4Cap(v4Txt(V4.kinds[e.kind], L)) : "");
   if(k) c.push(`<span class="tag tag-kind">${k}</span>`);
