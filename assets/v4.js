@@ -164,8 +164,12 @@ function v4Side(L){
 /* короткое название проекта из таймлайна */
 function v4Short(p, L){ const t = V4.timeline.find(x=>x.project===p.id); return t ? v4Txt(t.ti, L) : p.ti[L]; }
 function v4Near(id){
-  const i = PROJECTS.findIndex(p=>p.id===id);
-  return {prev:PROJECTS[i-1], next:PROJECTS[i+1]};
+  const entries = V4.timeline.filter(e=>!e.hidden && (v4Life() || e.project || e.work)).map(e=>{
+    const project = e.project && PROJECTS.find(p=>p.id===e.project);
+    return {id:e.project || e.id, ti:e.ti, href:project ? project.href : v4LifeHref(e)};
+  });
+  const i = entries.findIndex(e=>e.id===id);
+  return i<0 ? {} : {prev:entries[i-1], next:entries[i+1]};
 }
 function v4Up(id, L){
   const {prev} = v4Near(id);
