@@ -136,22 +136,30 @@
   html body.mobile-bottom-nav .fixed-dock .v4close{width:48px;min-width:48px;height:48px}
   html body.mobile-bottom-nav :is(.segmented,.lang){height:48px;padding:4px}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{height:40px;padding:4px 12px}
-  .fixed-left{position:absolute;left:8px;top:8px;height:48px;display:grid;pointer-events:none!important}
-  .fixed-left-surface{position:absolute;inset:0;border-radius:999px;background:var(--sel);transition:clip-path 300ms cubic-bezier(.77,0,.175,1);pointer-events:none}
+  .fixed-left{position:absolute;left:8px;top:8px;height:48px;display:grid;pointer-events:none!important;clip-path:inset(0 0 0 0 round 22px);transition:clip-path 360ms ease-in-out}
+  .fixed-left-surface{position:absolute;inset:0;border-radius:999px;background:var(--sel);clip-path:inset(0 0 0 0 round 22px);transition:clip-path 360ms ease-in-out;pointer-events:none}
+  .fixed-left[data-tabs=false]{clip-path:inset(0 calc(100% - 44px) 0 0 round 22px)}
+  .fixed-left[data-tabs=false]>.fixed-left-surface{clip-path:inset(0 calc(100% - 44px) 0 0 round 22px)}
   html body .fixed-left>.segmented{position:relative;inset:auto;margin:0;background:transparent;box-shadow:none;grid-area:1/1;transform:none}
   html body .fixed-left>.fixed-back{position:absolute;inset:0 auto auto 0;margin:0}
   html body .fixed-left>.fixed-back a{background:transparent}
-  .fixed-left>.segmented{clip-path:inset(0 0 0 0 round 24px);transition:clip-path 300ms cubic-bezier(.77,0,.175,1),opacity 300ms cubic-bezier(.77,0,.175,1),visibility 300ms;opacity:1;visibility:visible;pointer-events:auto}
-  .fixed-left>.fixed-back{transition:opacity 300ms cubic-bezier(.77,0,.175,1),transform 300ms cubic-bezier(.77,0,.175,1),visibility 300ms;transform-origin:24px 24px;opacity:1;pointer-events:auto}
-  .fixed-left[data-tabs=false]>.segmented{clip-path:inset(0 calc(100% - 48px) 0 0 round 24px);opacity:0;visibility:hidden;pointer-events:none}
-  .fixed-left[data-tabs=true]>.fixed-back{opacity:0;transform:scale(.85);visibility:hidden;pointer-events:none}
+  html body .fixed-left>.segmented{clip-path:none;opacity:1;visibility:visible;transform:translateX(0);pointer-events:auto;transition:transform 360ms ease-in-out,visibility 0s}
+  .fixed-left>.fixed-back{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity 360ms ease-in-out,visibility 0s}
+  html body .fixed-left[data-tabs=false]>.segmented{opacity:1;transform:translateX(44px);visibility:hidden;pointer-events:none;transition:transform 360ms ease-in-out,visibility 0s 360ms}
+  .fixed-left[data-tabs=true]>.fixed-back{opacity:0;transform:none;visibility:hidden;pointer-events:none;transition:opacity 360ms ease-in-out,visibility 0s 360ms}
+  .fixed-back a{overflow:hidden}
+  .fixed-back svg{transform:translateX(0);transition:transform 360ms ease-in-out}
+  .fixed-left[data-tabs=true] .fixed-back svg{transform:translateX(-44px)}
   body>.fixed-dock::before,.fixed-sheet>.fixed-dock::before{
     height:calc(88px + env(safe-area-inset-bottom));
     background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 8%,transparent) 20%,color-mix(in srgb,var(--bg) 28%,transparent) 40%,color-mix(in srgb,var(--bg) 56%,transparent) 60%,color-mix(in srgb,var(--bg) 84%,transparent) 80%,var(--bg) 100%);
     backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);
     mask-image:linear-gradient(to bottom,transparent,#000);-webkit-mask-image:linear-gradient(to bottom,transparent,#000);
   }
-  @media(prefers-reduced-motion:reduce){.fixed-left-surface,.fixed-left>.segmented,.fixed-left>.fixed-back{transition:none}}
+  @media(prefers-reduced-motion:reduce){
+    .fixed-left,.fixed-left-surface,html body .fixed-left>.segmented,.fixed-left>.fixed-back,.fixed-back svg{transition:none!important}
+    html body .fixed-left>.segmented,.fixed-left>.fixed-back,.fixed-back svg{transform:none!important}
+  }
 }
 
 /* The blur itself grows toward the bottom, independently of the color gradient. */

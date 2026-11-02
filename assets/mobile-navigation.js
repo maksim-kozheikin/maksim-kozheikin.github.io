@@ -45,7 +45,6 @@ leftControl.append(leftSurface,back,mode);dock.append(leftControl,trigger);if(do
 leftControl.dataset.tabs=String(isHome&&!arrival);
 function setLeftTabs(show){
  leftControl.dataset.tabs=String(show);mode.inert=!show;back.inert=show;
- leftSurface.style.clipPath=show?'inset(0 0 0 0 round 22px)':'inset(0 calc(100% - 44px) 0 0 round 22px)';
 }
 setLeftTabs(isHome&&!arrival);
 const sheet=document.createElement('dialog');sheet.id='mobile-menu';sheet.className='fixed-sheet';sheet.setAttribute('aria-label','Меню сайта');
@@ -115,7 +114,7 @@ const startTransform=getComputedStyle(panel).transform;
 sheetAnimation?.cancel();morph(false);setLeftTabs(isHome);
 const finish=()=>{dock.append(leftControl,trigger);sheet.close();sheetAnimation?.cancel();document.body.style.overflow='';trigger.setAttribute('aria-expanded','false');closing=false;syncLanguage();trigger.focus({preventScroll:true});if(typeof onClosed==='function')onClosed();previousY=scrollY;travel=0;setControlsHidden(false)};
 if(reduced()){finish();return}
-sheetAnimation=panel.animate([{transform:startTransform==='none'?'translateY(0)':startTransform},{transform:'translateY(100%)'}],{duration:300,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
+sheetAnimation=panel.animate([{transform:startTransform==='none'?'translateY(0)':startTransform},{transform:'translateY(100%)'}],{duration:360,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
 sheetAnimation.onfinish=finish;
 }
 trigger.onclick=()=>sheet.open?close():open();
