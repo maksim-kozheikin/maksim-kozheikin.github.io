@@ -93,7 +93,7 @@ function v4Prof(e, L){
 function v4Chips(e, L, now){
   if(!e) return "";
   const ai = e.ai ? `<span class="tag tag-ai">AI</span>` : "";
-  const kind = e.kind ? `<span class="tag tag-kind${now?" is-live":""}">${v4Cap(v4Txt(V4.kinds[e.kind], L))}${now?'<span class="v4live" aria-hidden="true"></span>':""}</span>` : "";
+  const kind = e.kind ? `<span class="tag tag-kind${now?" is-live":""}">${v4Cap(v4Txt(V4.kinds[e.kind], L))}</span>` : "";
   return (ai||kind) ? `<span class="row-tags">${kind}${ai}</span>` : "";   // AI — всегда последним
 }
 
@@ -108,8 +108,7 @@ function v4Row(p, L, active){
     <span class="row-yr">${t ? t.yr : p.yr}</span>
     <span class="row-main"><span class="row-ti" title="${title}">${title}</span>${v4Prof(t, L)}</span>
     ${v4Chips(e, L, now)}
-    ${e ? "" : `<span class="v4enddot">${now ? '<span class="v4live" aria-hidden="true"></span>' : ""}</span>`}
-    <span class="row-arr" aria-hidden="true"><svg viewBox="0 0 10 10" width="10" height="10"><path d="M3.5 1.5 7 5 3.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>`;
+    <span class="row-end"><span class="v4enddot">${now ? '<span class="v4live" aria-hidden="true"></span>' : ""}</span><span class="row-arr" aria-hidden="true">${uiIcon("chevron")}</span></span></a>`;
 }
 
 /* строка таймлайна без кейса — ведёт на свою страницу life.html?id=… */
@@ -119,8 +118,8 @@ function v4LifeRow(e, L, active){
   return `<a class="row v4row v4life" href="${active ? "index.html" : v4LifeHref(e)}"${active?' aria-current="page"':''}>
     <span class="row-yr">${e.yr}</span>
     <span class="row-main"><span class="row-ti" title="${v4Txt(e.ti, L)}">${title}</span>${v4Prof(e, L)}</span>
-    ${v4Life() ? v4Chips(e, L) : '<span class="v4enddot"></span>'}
-    <span class="row-arr" aria-hidden="true"><svg viewBox="0 0 10 10" width="10" height="10"><path d="M3.5 1.5 7 5 3.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>`;
+    ${v4Life() ? v4Chips(e, L) : ""}
+    <span class="row-end"><span class="v4enddot"></span><span class="row-arr" aria-hidden="true">${uiIcon("chevron")}</span></span></a>`;
 }
 
 /* список левой панели: Work — только проекты, Work + Life — весь таймлайн.
@@ -174,12 +173,12 @@ function v4Near(id){
 function v4Up(id, L){
   const {prev} = v4Near(id);
   const label = prev ? v4Short(prev, L) : (L==="ru" ? "Все проекты" : "All projects");
-  return `<a class="v4step v4up" href="${prev ? prev.href : "index.html"}"><span class="ar">↑</span>${label}</a>`;
+  return `<a class="v4step v4up" href="${prev ? prev.href : "index.html"}"><span class="ar">${uiIcon("up")}</span>${label}</a>`;
 }
 function v4Down(id, L){
   const {next} = v4Near(id);
-  if(next) return `<a class="v4step v4down" href="${next.href}"><span class="ar">↓</span>${v4Short(next, L)}</a>`;
-  return `<a class="v4step v4down" href="index.html"><span class="ar">↑</span>${L==="ru"?"Все проекты":"All projects"}</a>`;
+  if(next) return `<a class="v4step v4down" href="${next.href}"><span class="ar">${uiIcon("down")}</span>${v4Short(next, L)}</a>`;
+  return `<a class="v4step v4down" href="index.html"><span class="ar">${uiIcon("up")}</span>${L==="ru"?"Все проекты":"All projects"}</a>`;
 }
 
 /* шапка кейса: «Профиль · » перед описанием компании */
@@ -381,4 +380,22 @@ function v4FitTags(){
     soon();
   };
   document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", init) : init();
+})();
+
+/* Apply the 36 px tracking exception after render and on viewport changes. */
+(function(){
+  let scheduled=false;
+  function scan(){
+    scheduled=false;
+    let changed=false;
+    document.querySelectorAll('h1,h2,h3,.side-name,.exp-role,.block-title,.sub-title,.type-sample').forEach(el=>{
+      const on=parseFloat(getComputedStyle(el).fontSize)===36;
+      if(on!==el.hasAttribute('data-type-36')){el.toggleAttribute('data-type-36',on);changed=true;}
+    });
+    if(changed)document.dispatchEvent(new Event('type-tracking-updated'));
+  }
+  function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(scan);}}
+  addEventListener('resize',schedule);
+  const start=()=>{schedule();new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
