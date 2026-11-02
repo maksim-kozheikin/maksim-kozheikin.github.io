@@ -12,6 +12,20 @@ const controller=new AbortController(),signal=controller.signal,restore=[];
 function park(node){if(!node)return;const marker=document.createComment('mobile navigation placement');node.before(marker);restore.push(()=>{marker.replaceWith(node)})}
 [sidebar,mode,sidebar.querySelector('.lang'),sidebar.querySelector('.side-bottom'),sidebar.querySelector('.side-top')].forEach(park);
 document.body.classList.add('mobile-bottom-nav');
+document.body.dataset.navInput='pointer';
+document.addEventListener('pointerdown',e=>{
+ document.body.dataset.navInput='pointer';
+ if(e.pointerType!=='touch')return;
+ const tile=e.target.closest('.m-tile');
+ if(tile){clearTouch();touchTile=tile;touchPoint={x:e.clientX,y:e.clientY};tile.classList.add('is-touched')}
+},{capture:true,passive:true,signal});
+document.addEventListener('keydown',e=>{if(!e.metaKey&&!e.ctrlKey&&!e.altKey)document.body.dataset.navInput='keyboard'},{capture:true,signal});
+let touchTile,touchPoint;
+function clearTouch(){touchTile?.classList.remove('is-touched');touchTile=null;touchPoint=null}
+document.addEventListener('pointermove',e=>{if(touchPoint&&Math.hypot(e.clientX-touchPoint.x,e.clientY-touchPoint.y)>10)clearTouch()},{passive:true,signal});
+document.addEventListener('pointercancel',clearTouch,{signal});
+document.addEventListener('pointerup',()=>requestAnimationFrame(clearTouch),{signal});
+
 const arrival=sessionStorageGet('portfolio-mobile-arrival')==='home';
 try{sessionStorage.removeItem('portfolio-mobile-arrival')}catch{}
 const settings={get:key=>key==='arrival'&&arrival?'home':null};
@@ -99,7 +113,7 @@ sectionAnimations.set(sub,animation);
 animation.onfinish=()=>{sub.hidden=!expanding;sub.style.overflow='';sectionAnimations.delete(sub)};
 }
 if(isHome&&settings.get('arrival')==='home'&&!reduced()){
-mode.animate([{clipPath:'inset(0 calc(100% - 40px) 0 0 round 20px)',opacity:.25},{clipPath:'inset(0 0 0 0 round 20px)',opacity:1}],{duration:440,easing:'cubic-bezier(.4,0,.2,1)'});
+mode.animate([{clipPath:'inset(0 calc(100% - 52px) 0 0 round 20px)',opacity:.25},{clipPath:'inset(0 0 0 0 round 20px)',opacity:1}],{duration:440,easing:'cubic-bezier(.4,0,.2,1)'});
 const ghost=back.querySelector('a').cloneNode(true);ghost.removeAttribute('href');ghost.setAttribute('aria-hidden','true');ghost.style.cssText='position:absolute!important;left:8px;top:8px;pointer-events:none;z-index:2';dock.append(ghost);
 const dissolve=ghost.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.8)'}],{duration:260,easing:'ease-out'});dissolve.onfinish=()=>ghost.remove();
 }
@@ -115,7 +129,7 @@ function savePosition(){try{sessionStorage.setItem(positionKey(),String(scrollY)
 addEventListener('pagehide',savePosition,{signal});
 if(isHome&&!location.hash){const y=Number(sessionStorageGet(positionKey()))||0;if(y)requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!signal.aborted){scrollTo(0,y);previousY=scrollY;travel=0}}))}
 return ()=>{
-savePosition();controller.abort();languageObserver.disconnect();sheetAnimation?.cancel();
+clearTouch();delete document.body.dataset.navInput;savePosition();controller.abort();languageObserver.disconnect();sheetAnimation?.cancel();
 [...sheet.getAnimations({subtree:true}),...dock.getAnimations({subtree:true})].filter(a=>!('animationName' in a)&&!('transitionProperty' in a)).forEach(a=>a.cancel());
 if(sheet.open)sheet.close();
 sidebar.querySelectorAll('.subnav').forEach(el=>{el.hidden=false;el.style.overflow=''});

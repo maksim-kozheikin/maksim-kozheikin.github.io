@@ -46,3 +46,38 @@
     body>.fixed-dock,.fixed-sheet .v4row .row-arr{transition:none}
   }
 }
+
+@media(max-width:900px){
+  /* Compact Safari-like placement: capsule left, separate round action right. */
+  .fixed-dock{width:calc(100% - 16px);height:68px;min-height:68px}
+  body>.fixed-dock,body>.fixed-dock.is-compact{right:8px;bottom:calc(8px + env(safe-area-inset-bottom));width:calc(100% - 16px)}
+  .fixed-sheet{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .fixed-sheet>.fixed-dock{margin:0 8px}
+  html body .fixed-dock .v4close{width:52px;min-width:52px;height:52px}
+  html body .fixed-dock .segmented{height:52px}
+  html body .fixed-dock .segmented button{height:44px}
+  .fixed-dock .ui-icon,.fixed-menu-toggle>svg{width:20px;height:20px}
+  body>.fixed-dock::before{left:-8px;right:-8px;bottom:calc(-8px - env(safe-area-inset-bottom))}
+  /* Moving a focused control into the dialog must not create a keyboard ring on touch. */
+  body[data-nav-input=pointer] .fixed-dock :focus{outline:none!important}
+}
+@media(max-width:900px) and (hover:none), (max-width:900px) and (pointer:coarse){
+  .mobile-bottom-nav .m-tile .row-ti,
+  .mobile-bottom-nav .m-tile .row-yr,
+  .mobile-bottom-nav .m-tile .row-arr{opacity:0;transition:opacity 100ms ease-out}
+  .mobile-bottom-nav .m-tile.is-touched .row-ti,
+  .mobile-bottom-nav .m-tile.is-touched .row-yr,
+  .mobile-bottom-nav .m-tile.is-touched .row-arr,
+  .mobile-bottom-nav .m-tile:focus-visible .row-ti,
+  .mobile-bottom-nav .m-tile:focus-visible .row-yr,
+  .mobile-bottom-nav .m-tile:focus-visible .row-arr{opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+ .mobile-bottom-nav .m-tile .row-ti,.mobile-bottom-nav .m-tile .row-yr,.mobile-bottom-nav .m-tile .row-arr{transition:none}
+}
+
+@media(max-width:900px){
+  /* The hidden subnav still separates these siblings in the DOM. */
+  html body .fixed-sheet .sidebar a.row[aria-current="page"][aria-expanded="false"] + .subnav + a.row{border-top-color:transparent}
+  .mobile-bottom-nav :is(.points,.duties) li::before{font-size:16px}
+}
