@@ -9,9 +9,9 @@
 .side-id{display:flex;align-items:center;gap:14px;width:fit-content}
 .side-id .avatar{width:48px;height:48px;border-radius:50%;background:var(--sel);color:var(--ink);font-size:15px;font-weight:600;
   display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
-.side-name{font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:-.02em;white-space:nowrap}
+.side-name{font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:normal;white-space:nowrap}
 .side-role{margin-top:2px;color:var(--muted);font-weight:500;font-size:var(--small)}
-.side-lead{font-weight:500;font-size:1.05rem;line-height:1.45;letter-spacing:-.005em;max-width:32ch;color:var(--ink)}
+.side-lead{font-weight:500;font-size:1.05rem;line-height:1.45;letter-spacing:normal;max-width:32ch;color:var(--ink)}
 .side-lead b{font-weight:inherit;color:inherit}
 
 /* строки проектов: годы · название + иконка · должность · стрелка */
@@ -149,7 +149,7 @@ html{scrollbar-gutter:stable}
 .tag{font-size:var(--eyebrow);line-height:1;padding:4px 7px;border-radius:999px;white-space:nowrap}
 .tag-kind{background:var(--sel);color:var(--muted)}
 .tag-tech{box-shadow:inset 0 0 0 1px var(--line);color:var(--muted)}
-.tag-ai{background:var(--ink);color:#fff;font-weight:600;letter-spacing:.02em}
+.tag-ai{background:var(--ink);color:#fff;font-weight:600;letter-spacing:normal}
 .list > .v4life{display:flex;gap:10px;padding:11px 2px;border-top:1px solid var(--line)}
 .v4life .row-ti{color:var(--ink)}
 
@@ -175,7 +175,7 @@ html{scrollbar-gutter:stable}
 .row-yr{transition:color .15s}
 
 /* v4.9 — AI не жирный */
-.tag-ai{font-weight:400;letter-spacing:0}
+.tag-ai{font-weight:400;letter-spacing:normal}
 
 /* =====================================================
    v4.10 — строка по варианту 22
@@ -275,7 +275,7 @@ html{scrollbar-gutter:stable}
    v4.21 — страницы таймлайна (life.html)
 ============================================================ */
 .life-part{margin-top:56px}
-.life-h{font-weight:700;font-size:1.25rem;letter-spacing:-.01em;line-height:1.25;margin-bottom:14px}
+.life-h{font-weight:700;font-size:1.25rem;letter-spacing:normal;line-height:1.25;margin-bottom:14px}
 .life-text{max-width:62ch}
 .life-ph{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);max-width:62ch}
 .life-part .shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -318,14 +318,14 @@ html{scrollbar-gutter:stable}
 .subnav a:hover{padding-left:0}
 
 .exp-role,.exp h3.exp-role,.block-title,.sub-title.sub-title-lg,.life-h,.cv-title,.main-inner .section-head{
-  font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:-.02em;text-transform:none;color:var(--ink)}
+  font-weight:700;font-size:clamp(1.4rem,1.8vw,1.75rem);line-height:1.15;letter-spacing:normal;text-transform:none;color:var(--ink)}
 .exp-role{margin-left:-.03em}
 .exp-role .exp-pos{color:var(--muted)}
 
-.sub-title{font-size:var(--text);letter-spacing:0}
+.sub-title{font-size:var(--text);letter-spacing:normal}
 .duties li:has(> b:only-child),.duties li > b:only-child{font-size:var(--text);font-weight:600}
 /* групповые заголовки кейсов тоже как имя */
-.block.group .block-title,.block .block-title{font-size:clamp(1.4rem,1.8vw,1.75rem);letter-spacing:-.02em;line-height:1.15}
+.block.group .block-title,.block .block-title{font-size:clamp(1.4rem,1.8vw,1.75rem);letter-spacing:normal;line-height:1.15}
 /* текст кейсов — во всю ширину колонки */
 .points,.duties ul,.block-lead,.sub-note,.step-text,.life-text,.life-ph{max-width:none}
 
@@ -335,7 +335,7 @@ html{scrollbar-gutter:stable}
 
 /* v4.25 — шапка проекта снова как в выбранном варианте:
    крупная (как раньше), «Компания · Должность» одной средней жирности (500) */
-.exp-role{font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:-.02em;margin-left:-.045em}
+.exp-role{font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:normal;margin-left:-.045em}
 .exp h3.exp-role{font-weight:500;font-size:var(--h2)}
 
 /* =====================================================
@@ -343,7 +343,7 @@ html{scrollbar-gutter:stable}
    разделы кейсов (группы), «Обязанности и достижения», имя слева и в cv
 ============================================================ */
 .v4-sec,.block.group .block-title,.side-name,.cv-title{
-  font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:-.02em;margin-left:-.045em;color:var(--ink)}
+  font-weight:500;font-size:var(--h1);line-height:1.15;letter-spacing:normal;margin-left:-.045em;color:var(--ink)}
 .v4-sec{margin-top:56px}
 .v4-sec + .duties{margin-top:18px}
 .duties li.v4-dup{display:none}
@@ -351,7 +351,7 @@ html{scrollbar-gutter:stable}
 
 /* v4.27 — «Обязанности и достижения» размером с текст, чуть жирнее;
    заголовки кейсов внутри групп («Единый стиль приложения», «Дискавери») — средней жирности */
-.v4-sec{font-size:var(--text);font-weight:600;line-height:1.5;letter-spacing:0;margin-left:0;margin-top:40px}
+.v4-sec{font-size:var(--text);font-weight:600;line-height:1.5;letter-spacing:normal;margin-left:0;margin-top:40px}
 .v4-sec + .duties{margin-top:12px}
 .block:not(.group) .block-title{font-weight:500}
 
@@ -379,10 +379,10 @@ body{font-size:var(--t-body)}
 
 /* Display */
 .side-name,.cv-title,.exp-role,.block.group .block-title,#cv-view .section-head,.main-inner .section-head{
-  font-size:var(--t-display);font-weight:500;line-height:1.15;letter-spacing:-.02em}
+  font-size:var(--t-display);font-weight:500;line-height:1.15;letter-spacing:normal}
 /* Title */
 .block:not(.group) .block-title,.exp h3.exp-role,.life-h,.sub-title.sub-title-lg{
-  font-size:var(--t-title);font-weight:500;line-height:1.2;letter-spacing:-.01em;margin-left:0}
+  font-size:var(--t-title);font-weight:500;line-height:1.2;letter-spacing:normal;margin-left:0}
 /* Body */
 .sidebar .row-yr,.sidebar .row-ti,.sidebar .row-prof,.side-lead,
 .exp-meta,.duties li,.points li,.block-lead,.sub-note,.step-text,.life-text,
@@ -390,23 +390,23 @@ body{font-size:var(--t-body)}
   font-size:var(--t-body)}
 .sidebar .row-ti{font-weight:400}
 /* Body strong */
-.v4-sec,.sub-title,.duties li:has(> b:only-child),.duties li > b,.points li > b{font-size:var(--t-body);font-weight:500;letter-spacing:0}
+.v4-sec,.sub-title,.duties li:has(> b:only-child),.duties li > b,.points li > b{font-size:var(--t-body);font-weight:500;letter-spacing:normal}
 /* Small */
 .subnav a,.subnav a.grp,.subnav a.cs,.subnav a.cs .n{font-size:var(--t-small)}
 /* Caption */
 .tag,.v4chips .tag,.block-num{font-size:var(--t-caption);font-weight:400}
-.block-num{color:var(--muted);text-transform:none;letter-spacing:0}
+.block-num{color:var(--muted);text-transform:none;letter-spacing:normal}
 /* жирности 600/700 больше нигде */
 .subnav a.active,a.row[aria-current="page"] .row-ti{font-weight:400}
 
 /* v4.28 — остатки жирностей 600/700/800 приводим к системе */
 .main-inner b,.main-inner strong,.duties ul li > b,.duties ul li:has(> b:only-child){font-weight:500}
 .metric .num,.metric .lbl{font-weight:500}
-.metric-big .num{font-size:var(--t-title);font-weight:500;letter-spacing:-.01em}
+.metric-big .num{font-size:var(--t-title);font-weight:500;letter-spacing:normal}
 .metric-big .num-suf{font-size:1em;font-weight:500}
 .metric-big .num-arr{font-weight:400}
-.cv-block h3{font-size:var(--t-body);font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
-.tiles .row-ti{font-size:var(--t-title);font-weight:500;letter-spacing:-.01em}
+.cv-block h3{font-size:var(--t-body);font-weight:500;letter-spacing:normal;text-transform:none;color:var(--ink)}
+.tiles .row-ti{font-size:var(--t-title);font-weight:500;letter-spacing:normal}
 .tiles .row-yr{font-size:var(--t-small);font-weight:400}
 /* жирность — только 400 и 500: жёстко, поверх старых правил страниц */
 .main-inner b,.main-inner strong,.main-inner h3,.main-inner h4,
@@ -580,7 +580,7 @@ body{font-size:var(--t-body)}
      столько же, сколько между подразделами (40); внутри подраздела
      (подзаголовок → пункты) — 12
 ============================================================ */
-.block-num{font-size:var(--t-body);font-weight:400;color:var(--muted);letter-spacing:0;text-transform:none}
+.block-num{font-size:var(--t-body);font-weight:400;color:var(--muted);letter-spacing:normal;text-transform:none}
 .block > .sub{margin-top:40px}
 
 /* v4.57 — картинки держат пропорции по заранее известным размерам */
@@ -620,7 +620,7 @@ html body .points li::before,html body .points.cross li::before,html body .point
 .cv-page{display:block}
 
 /* v4.55 — цвета кнопок в покое и при наведении. Обычные при наведении светло-коричневые с тем же текстом, чёрная «Скачать CV» становится цвета звёздочек */
-:root{--btn-bg:var(--sel);--btn-hover:#E5D9D2;--btn-hover-fg:var(--btn);--dl-bg:var(--accent);--dl-fg:#fff;--dl-bg-hover:#916D50;--dl-fg-hover:#FDFCFC}
+:root{--btn-bg:var(--sel);--btn-hover:#E5D9D2;--btn-hover-fg:var(--btn);--dl-bg:var(--accent);--dl-fg:var(--bg);--dl-bg-hover:#916D50;--dl-fg-hover:#FDFCFC}
 html body .side-links a:hover,html body .chip-btn:hover,html body .duties-more:hover,html body .foot a:hover,html body .case-link:hover,html body .toggle:hover,html body .back:hover,html body .v4close:hover,html body .v4step:hover{background:var(--btn-hover);color:var(--btn-hover-fg)}
 html body .dl-btn{background:var(--dl-bg);color:var(--dl-fg)}
 html body .dl-btn:hover{background:var(--dl-bg-hover);color:var(--dl-fg-hover)}
@@ -642,7 +642,7 @@ html body .head-sep,html body .block.group::before{height:1px;background:var(--l
 html body .v4chips{gap:0;align-items:center;margin-top:14px;padding-bottom:22px;border-bottom:1px solid var(--line)}
 html body .v4chips + *{margin-top:17px}
 html body .v4chips + .duties{margin-top:8px}
-html body .v4chips .tag,html body .sidebar .row-tags .tag{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--muted);font-size:var(--t-body);font-weight:400;line-height:1.35;letter-spacing:0;text-transform:none}
+html body .v4chips .tag,html body .sidebar .row-tags .tag{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--muted);font-size:var(--t-body);font-weight:400;line-height:1.35;letter-spacing:normal;text-transform:none}
 html body .sidebar a.row[aria-current="page"] .row-tags .tag{box-shadow:none}
 html body .v4chips .tag + .tag::before,html body .sidebar .row-tags .tag + .tag::before{content:"·";margin:0 5px;color:var(--muted)}
 html body .sidebar .v4row{position:relative}
@@ -667,3 +667,52 @@ html body .segmented button,html body .lang button{box-sizing:border-box;height:
 html body .v4close{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;width:var(--control-h);min-width:var(--control-h);height:var(--control-h);padding:0;border-radius:50%;flex-shrink:0}
 body:not(.home) > .topbar .back{visibility:hidden;pointer-events:none}
 .m-tile:focus-visible .row-ti,.m-tile:focus-visible .row-yr,.m-tile:focus-visible .row-arr{opacity:1}
+
+/* Integer typography; keep the existing responsive scale, rounded to whole pixels. */
+:root{--t-display:46px;--t-title:26px}
+@media(max-width:900px){:root{--t-display:32px;--t-title:22px}}
+@supports(font-size:round(nearest,1.2px,1px)){
+  :root{--t-display:round(nearest,clamp(32px,3.2vw,46px),1px);--t-title:round(nearest,clamp(22px,1.81vw,26px),1px)}
+}
+html body,html body *{letter-spacing:normal!important}
+.lightbox-close{font-size:21px}.lightbox-zoom button{font-size:18px}
+.lightbox-zoom .lvl,.lightbox-zoom .zoom-fit{font-size:13px}
+.lightbox-meta{font-size:14px}
+.v4link::after{font-size:13px}.life-ai{font-size:13px}
+.points li::before,.duties li::before{font-size:14px}
+/* Hover moves the arrow only, not the row contents. */
+html body .sidebar a.row:not([aria-current="page"]):hover{padding-left:2px}
+/* Integer line heights follow the rounded type sizes. */
+body{line-height:26px}
+.side-name,.cv-title,.exp-role,.block-title,.main-inner .section-head{line-height:round(nearest,calc(var(--t-display) * 1.15),1px)}
+.block:not(.group) .block-title,.exp h3.exp-role,.life-h,.sub-title.sub-title-lg{line-height:round(nearest,calc(var(--t-title) * 1.2),1px)}
+.side-lead,.exp-meta{line-height:26px}
+.duties li,.points li,.block-lead,.sub-note,.step-text,.life-text{line-height:26px}
+.v4-sec{line-height:26px}.sub-title{line-height:26px}
+.subnav a,.subnav a.grp,.subnav a.cs{line-height:22px}
+html body .v4chips .tag,html body .sidebar .row-tags .tag{line-height:22px}
+
+/* Only 36 px display text gets slightly tighter tracking; size is unchanged. */
+html body [data-type-36],html body [data-type-36] *{letter-spacing:-.01em!important}
+
+/* Shared SVG controls and stable live-status geometry. */
+.ui-icon{display:block;flex:none}
+.chev,.ar,.arr{display:inline-flex;align-items:center;justify-content:center}
+html body .sidebar .row-end{display:inline-flex;align-items:center;gap:12px;flex:none;margin-left:auto}
+html body .sidebar .row-end .v4enddot{margin:0;width:7px;flex:0 0 7px}
+html body .sidebar .row-end .v4live{position:relative;right:auto;top:auto;margin:0;width:7px;height:7px}
+html body .sidebar .row-end .row-arr{margin:0}
+html body .sidebar .row-tags:has(.is-live){padding-right:0}
+html body .sidebar a.row[aria-current="page"]:hover .row-arr{transform:translateX(3px) rotate(90deg)}
+.mobile-menu-close{display:none}
+@media(max-width:900px){
+  body.nav-open{overflow:hidden}
+  html body .topbar{display:flex!important;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;padding:14px var(--pad);background:var(--bg);border-bottom:1px solid var(--line)}
+  html body .sidebar:not(.kit-menu){position:fixed;inset:0 0 0 auto;width:min(340px,calc(100vw - 48px));max-width:calc(100vw - 48px);height:100dvh;overflow-y:auto;padding:var(--pad);z-index:50;transform:translateX(100%);transition:transform .28s ease;box-shadow:-20px 0 60px color-mix(in srgb,var(--ink) 8%,transparent)}
+  html body.nav-open .sidebar{transform:translateX(0)}
+  html body .main{padding-top:var(--pad)}
+  .mobile-menu-close{position:sticky;top:0;align-self:flex-end;display:flex;align-items:center;justify-content:center;width:40px;min-height:40px;border-radius:50%;padding:0;background:var(--sel);color:var(--ink);z-index:2}
+  .mobile-menu-close:hover{background:var(--btn-hover)}
+  html body .scrim{background:color-mix(in srgb,var(--ink) 30%,transparent)}
+}
+@media(prefers-reduced-motion:reduce){html body .sidebar{transition:none}}

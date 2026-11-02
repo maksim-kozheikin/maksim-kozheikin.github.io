@@ -1,475 +1,390 @@
-<meta charset="utf-8">
-<title>UI kit портфолио</title>
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ——— токены. Это единственное место, где живут цвета, размеры и формы ——— */
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UI-кит портфолио</title><link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+
+::view-transition-old(main-col){animation:fOut .16s ease both}
+::view-transition-new(main-col){animation:fIn .22s ease both}
+@keyframes fOut{to{opacity:0;transform:translateY(-4px)}}
+@keyframes fIn{from{opacity:0;transform:translateY(6px)}}
+
 :root{
-  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --line:#DFDBD8; --ring:#FDFCFC; --ringw:1.5px;
-  --sel:#F4EFEC; --tab-on:#FDFCFC; --accent:#161413; --live:#916D50; --plate:#F4EFEC; --shadow:#916D50;
-  --font:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
-  --t-display:46px; --t-title:26px; --t-body:16px; --t-small:14px; --t-caption:14px;
-  --w-display:500; --w-title:500; --w-strong:600;
-  --lh-body:1.6; --ls-display:-.02em; --ls-title:-.01em; --ls-eyebrow:.14em;
-  --r-pill:999px; --r-card:14px; --r-plate:40px; --plate-pad:48px;
-  --sh0:0 5px 10px rgba(145,109,80,.1); --sh1:0 10px 15px rgba(145,109,80,.15); --lift:1px; --dur:200ms;
+  --bg:#FDFCFC; --surface:#F4EFEC; --ink:#161413; --muted:#6F655D; --faint:#6F655D;
+  --line:#DFDBD8; --panel:#F4F4F7; --accent:#161413; --sel:#F4EFEC;
+  /* ТИПОГРАФИЧЕСКАЯ ШКАЛА — 5 ступеней, других размеров в проекте нет
+     --h1  Заголовок раздела:  «Кабинет врача», «Приложение SmartMed»
+     --h2  Заголовок кейса:    «Расписание», «Главный экран»
+           Заголовок страницы: «Lead UX/UI Designer · Medsi Digital»
+     --h3  Подзаголовок:       «Проблемы», «Результат»
+     --text  Основной текст:   пункты списков, описания, обязанности
+     --small Вторичный текст:  чипы, подписи, навигация, мета
+     --eyebrow Надзаголовок:   «КЕЙС 05», рубрики, метки  */
+  --h1:clamp(2rem,3.4vw,2.9rem);
+  --h2:clamp(1.6rem,2.2vw,2rem);
+  --h3:1.02rem;
+  --text:.98rem;
+  --small:.88rem;
+  --eyebrow:.72rem;
+  --sans:"Golos Text",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --sidebar-w:clamp(300px,40vw,560px);
+  --pad:clamp(20px,3vw,40px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:var(--t-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:340px minmax(0,1fr);min-height:100vh}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 
-/* ——— редактор ——— */
-#ed{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;background:#18181c;color:#f2f2f4;font:12.5px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;padding:16px 14px 20px}
-#ed h1{font-size:15px;font-weight:650;margin-bottom:2px}
-#ed .lead{color:rgba(255,255,255,.55);font-size:11.5px;margin-bottom:10px}
-#ed .grp{margin-top:10px;padding:10px 10px 8px;border-radius:12px;background:rgba(255,255,255,.06)}
-#ed .gh{display:flex;align-items:center;justify-content:space-between;gap:8px}
-#ed .gh b{font-size:12.5px;font-weight:650}
-#ed .rs{padding:3px 8px;border:0;border-radius:7px;background:transparent;color:rgba(255,255,255,.6);font:inherit;font-size:11px;cursor:pointer}
-#ed .rs:hover{background:rgba(255,255,255,.12);color:#fff}
-#ed .cr{display:flex;align-items:center;gap:8px;margin-top:8px}
-#ed .cr span{flex:1;color:rgba(255,255,255,.85)}
-#ed .cr em{font-style:normal;font-size:10.5px;color:rgba(255,255,255,.5);min-width:44px;text-align:right}
-#ed .sat{width:34px;height:24px;padding:0;border-radius:7px;border:1px solid rgba(255,255,255,.3);cursor:pointer}
-#ed input[type=text]{width:78px;padding:4px 6px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:#fff;font:12px ui-monospace,monospace}
-#ed .ed{display:none;margin-top:6px;padding:8px 8px 2px;border-radius:9px;background:rgba(0,0,0,.3)}
-#ed .ed.open{display:block}
-#ed .ed label{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65)}
-#ed .ed input[type=range]{height:14px;border-radius:7px;margin:3px 0 8px;border:1px solid rgba(255,255,255,.22)}
-#ed .ed input[type=range]::-webkit-slider-runnable-track{height:12px;background:transparent}
-#ed .ed input[type=range]::-webkit-slider-thumb{width:16px;height:16px;margin-top:-2px;border:2px solid #222}
-#ed .ed input[type=range]::-moz-range-track{height:12px;background:transparent}
-#ed .ed input[type=range]::-moz-range-thumb{width:12px;height:12px;border:2px solid #222}
-#ed .rg{margin-top:8px}
-#ed .rl{display:flex;align-items:center;gap:6px}
-#ed .rl span{flex:1;color:rgba(255,255,255,.85)}
-#ed .rl em{font-style:normal;color:rgba(255,255,255,.45);font-size:11px;min-width:16px}
-#ed input.num{width:58px;padding:3px 6px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:#fff;font:12px ui-monospace,monospace;text-align:right;-moz-appearance:textfield}
-#ed input.num::-webkit-outer-spin-button,#ed input.num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-#ed input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:18px;margin:2px 0 0;background:transparent;cursor:pointer}
-#ed input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:rgba(255,255,255,.2)}
-#ed input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.5)}
-#ed input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:rgba(255,255,255,.2)}
-#ed input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:#fff}
-#ed select{width:150px;padding:5px 6px;border:0;border-radius:6px;background:rgba(255,255,255,.1);color:#fff;font:inherit}
-#ed select option{color:#111}
-#ed .ft{display:flex;gap:8px;margin-top:12px}
-#ed .btn{flex:1;padding:8px 10px;border:0;border-radius:9px;background:#fff;color:#111;font:inherit;font-weight:600;cursor:pointer}
-#ed .btn.ghost{flex:none;background:rgba(255,255,255,.12);color:#fff}
-#ed pre{margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.07);font:11px/1.45 ui-monospace,monospace;white-space:pre-wrap;color:rgba(255,255,255,.75);max-height:220px;overflow:auto}
+/* ============================================================
+   КОМПОНЕНТЫ — переиспользуются везде. Новых не заводим.
+   .row   — строка списка (проекты, образование, портфолио)
+   .card  — карточка (проблемы, решения, цели, результаты)
+   .shot  — плейсхолдер изображения
+   .chip  — тег
+============================================================ */
+.list{display:flex;flex-direction:column}
+.row{display:flex;gap:12px;align-items:baseline;padding:11px 2px;border-top:1px solid var(--line);
+  transition:padding-left .18s,color .18s}
+.list > .row:last-child,.list > a.row:last-of-type{border-bottom:1px solid var(--line)}
+a.row:hover{padding-left:7px}
+a.row:hover .row-ti{color:var(--accent)}
+.row-yr{flex:0 0 82px;font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.row-ti{font-size:var(--text);line-height:1.4}
+.row-arr{margin-left:auto;color:var(--faint);font-size:var(--text);line-height:1;align-self:center;transition:transform .2s,color .2s}
+a.row:hover .row-arr{transform:translateX(3px)}
+a.row[aria-current="page"] .row-arr{transform:rotate(90deg)}
+a.row[aria-current="page"] .row-ti{color:var(--accent);font-weight:600}
+a.row[aria-current="page"] .row-arr{color:var(--accent)}
 
-/* ——— страница ——— */
-#kit{padding:40px clamp(20px,4vw,64px) 120px;max-width:1100px}
-.k-top{display:flex;flex-direction:column;gap:10px}
-.k-top .display{font-size:var(--t-display);font-weight:var(--w-display);letter-spacing:var(--ls-display);line-height:1.15}
-.k-sec{margin-top:64px}
-.k-h{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.k-h h2{font-size:var(--t-title);font-weight:var(--w-title);letter-spacing:var(--ls-title);line-height:1.2}
-.k-h span{font-size:var(--t-small);color:var(--muted)}
-.tok{display:inline-block;margin-bottom:8px;padding:3px 8px;border-radius:6px;background:var(--sel);color:var(--muted);font:11.5px ui-monospace,monospace}
-.k-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.k-cell{display:flex;flex-direction:column;gap:8px}
-.sw-card{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface)}
-.sw-card i{flex:none;width:52px;height:52px;border-radius:10px;border:1px solid rgba(0,0,0,.08)}
-.sw-card b{display:block;font-size:var(--t-small);font-weight:var(--w-strong)}
-.sw-card code{display:block;font:11.5px ui-monospace,monospace;color:var(--muted)}
-.sw-card small{display:block;font-size:var(--t-caption);color:var(--muted);line-height:1.35;margin-top:2px}
-.contrast{font:11px ui-monospace,monospace;margin-top:2px}
-.contrast.ok{color:#1a7f37}.contrast.low{color:#b42318}
+.subnav{display:flex;flex-direction:column;padding:4px 0 10px 94px;gap:2px}
+.subnav a{color:var(--muted);font-size:var(--small);transition:color .15s,padding-left .15s}
+.subnav a:hover{color:var(--accent);padding-left:4px}
+.subnav a.active{color:var(--accent);font-weight:600}
 
-/* типографика */
-.t-display{font-size:var(--t-display);font-weight:var(--w-display);letter-spacing:var(--ls-display);line-height:1.15}
-.t-title{font-size:var(--t-title);font-weight:var(--w-title);letter-spacing:var(--ls-title);line-height:1.2}
-.t-sub{font-size:var(--t-body);font-weight:var(--w-strong)}
-.t-body{font-size:var(--t-body);max-width:62ch}
-.t-muted{color:var(--muted)}
-.t-small{font-size:var(--t-small);color:var(--muted)}
-.t-eyebrow{font-size:var(--t-caption);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--muted);font-weight:600}
-.t-faint{font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}
-.t-link{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+/* разделы — тихие рубрики (eyebrow, уже есть в системе), кейсы — основной текст */
+.subnav a.grp{color:var(--muted);font-size:var(--small)}
+.subnav a.grp:hover{color:var(--accent)}
+.subnav a.cs{display:flex;gap:8px;align-items:baseline;color:var(--faint);font-size:var(--small)}
+.subnav a.cs:hover{color:var(--accent)}
+.subnav a.cs .n{flex:0 0 16px;color:inherit;font-variant-numeric:tabular-nums;font-size:var(--small)}
+.subnav a.active{color:var(--accent)}
 
-/* кнопки и табы */
-.btn-k{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-pill);background:var(--sel);color:var(--ink);box-shadow:0 0 0 var(--ringw) var(--ring);font-size:var(--t-body);line-height:1.3;transition:background var(--dur),color var(--dur)}
-.btn-k:hover{background:#E5D9D2;color:var(--ink)}
-.seg{display:inline-flex;gap:2px;padding:3px;border-radius:var(--r-pill);background:var(--sel)}
-.seg button{padding:6px 14px;border-radius:var(--r-pill);font-size:var(--t-small);color:var(--muted)}
-.seg button[aria-pressed="true"]{background:var(--tab-on);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.08)}
-.seg button:not([aria-pressed="true"]):hover{background:var(--tab-on);color:var(--ink)}
-.states{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
-/* теги */
-.tag-k{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:var(--r-pill);background:var(--sel);color:var(--muted);font-size:var(--t-caption);line-height:1;white-space:nowrap}
-.tag-k.ai{background:none;color:var(--muted);font-size:var(--t-body);font-weight:400;padding:0;line-height:1.35}
-.live{position:relative;width:7px;height:7px;border-radius:50%;background:var(--live);flex:none}
-.live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--live);animation:pulse 1.6s ease-out infinite}
-@keyframes pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h3{font-weight:600;font-size:var(--h3);margin-bottom:9px}
+.card p{color:var(--muted);font-size:var(--text)}
+/* метрика — только цифра и подпись, разделение воздухом */
+.card.metric{background:none;border:none;border-radius:0;padding:0;text-align:left}
+.cols:has(.card.metric){grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 40px;margin-top:20px}
+.card.metric .num{display:inline;font-weight:600;font-size:var(--text);color:var(--ink)}
+.card.metric .lbl{display:inline;color:var(--ink);font-size:var(--text);font-weight:600;line-height:1.5}
+.card.metric .desc{display:none}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
+/* пункты внутри кейса */
+.points{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:64ch}
+.points li{position:relative;padding-left:20px;color:var(--ink);font-size:var(--text)}
+.points li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
+.points li b{color:var(--ink);font-weight:600}
 
-/* списки */
-.rows{max-width:560px}
-.row-k{display:flex;gap:12px;align-items:baseline;padding:11px 2px;border-top:1px solid var(--line);transition:padding-left var(--dur)}
-.rows .row-k:last-child{border-bottom:1px solid var(--line)}
-.row-k:hover{padding-left:7px}
-.row-k:hover .ti{color:var(--accent)}
-.row-k .yr{flex:0 0 64px;font-size:var(--t-small);color:var(--muted);font-variant-numeric:tabular-nums}
-.row-k .ti{font-size:var(--t-body);line-height:1.4}
-.row-k .ti i{font-style:normal;color:var(--muted)}
-.row-k .arr{margin-left:auto;color:var(--muted);align-self:center}
-.row-k.cur .ti{color:var(--accent);font-weight:var(--w-strong)}
-.sub-k{display:flex;flex-direction:column;gap:2px;padding:8px 0 0 76px;font-size:var(--t-small)}
-.sub-k a{display:flex;gap:8px;color:var(--muted)}
-.sub-k a:hover,.sub-k a.on{color:var(--accent)}
-.sub-k a.on{font-weight:var(--w-strong)}
-.sub-k .n{flex:0 0 18px;color:var(--muted);font-variant-numeric:tabular-nums}
-.points-k{list-style:none;display:flex;flex-direction:column;gap:11px;max-width:60ch}
-.points-k li{position:relative;padding-left:20px;font-size:var(--t-body)}
-.points-k li::before{content:"✦";position:absolute;left:0;top:0;color:#916D50;font-size:.85rem;line-height:calc(var(--t-body)*var(--lh-body))}
-.points-k b{font-weight:var(--w-strong)}
+/* маркер по умолчанию ✦; в «Проблемах» — точка */
+.points.cross li::before{content:"✦";top:0;width:auto;height:auto;border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6);transform:rotate(45deg)}
 
-/* карточки */
-.card-k{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:20px}
-.card-k h3{font-size:var(--t-body);font-weight:var(--w-strong);margin-bottom:8px}
-.card-k p{color:var(--muted);font-size:var(--t-body)}
-.metric-k b{font-size:var(--t-body);font-weight:var(--w-strong)}
 
-/* подложка и картинка */
-.plate{background:var(--plate);padding:var(--plate-pad);border-radius:var(--r-plate);max-width:560px}
-.plate .shot{display:block;width:100%;aspect-ratio:16/10;border-radius:10px;background:var(--surface);transition:transform var(--dur) ease,filter var(--dur) ease;overflow:hidden;position:relative}
-.plate .shot::before,.plate .shot::after{content:"";position:absolute;left:8%;right:8%;height:8px;border-radius:4px;background:var(--line)}
-.plate .shot::before{top:14%;width:40%}.plate .shot::after{top:30%;height:48%;border-radius:8px;background:var(--sel)}
-.plate:hover .shot{transform:translateY(calc(var(--lift)*-1))}
+/* модификатор: пункты в ряд со звёздочкой (не .row — тот занят строкой списка) */
+.points.inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px 28px;max-width:none;margin-top:20px}
+/* длинные пункты — шире колонка, чтобы не превращались в лапшу */
+.points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px 40px}
+.points.inline li{padding-left:20px;color:var(--ink);font-weight:400;font-size:var(--text);line-height:1.45}
+.points.inline li::before{content:"✦";position:absolute;left:0;top:0;width:auto;height:auto;
+  border-radius:0;background:none;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.45)}
 
-/* аудит */
-details{margin-top:12px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface)}
-summary{cursor:pointer;padding:14px 16px;font-weight:var(--w-strong);list-style:none;display:flex;justify-content:space-between;gap:12px}
-summary::-webkit-details-marker{display:none}
-summary span{font-weight:400;color:var(--muted);font-size:var(--t-small)}
-.aud{padding:0 16px 16px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip-a{display:inline-flex;align-items:center;gap:6px;padding:4px 8px 4px 4px;border-radius:var(--r-pill);border:1px solid var(--line);font:11.5px ui-monospace,monospace;color:var(--muted);background:var(--surface)}
-.chip-a i{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
-.chip-a.t{padding:4px 9px}
-.chip-a.off{border-color:#e8b4a8;color:#b42318}
-.aud h4{margin-top:14px;font-size:var(--t-small);font-weight:var(--w-strong)}
-.aud p{color:var(--muted);font-size:var(--t-small);margin-top:2px}
+.shot{border:1px solid var(--line);border-radius:14px;aspect-ratio:16/9;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:var(--small);text-align:center;padding:20px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+.caption{color:var(--muted);font-size:var(--small);margin-top:10px}
+/* изображения в ряд: одинаковая высота, ширина по пропорции, без обрезки */
+.figs{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;align-items:flex-start}
+.fig{margin:0;min-width:0;flex:1 1 0}
+.fig-btn{display:block;width:100%;padding:48px;background:#F4EFEC;border-radius:40px;cursor:zoom-in}
+.fig-btn img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 10px rgba(145,109,80,.1));transition:transform .2s ease,filter .2s ease}
+.fig-btn:hover img{transform:translateY(-1px);filter:drop-shadow(0 10px 15px rgba(145,109,80,.15))}
+@media (max-width:640px){.fig-btn{padding:20px;border-radius:24px}}
+.fig figcaption{display:none}
+@media (max-width:640px){.fig{flex:1 1 100%!important}}
 
-@media (max-width:900px){
-  body{grid-template-columns:1fr}
-  #ed{position:static;height:auto;max-height:70vh}
+/* лайтбокс */
+.lightbox{position:fixed;inset:0;z-index:100;background:var(--lb-bg);
+  display:none;flex-direction:column}
+.lightbox.open{display:flex}
+
+/* верхняя полоса: масштаб слева, закрытие справа. Картинка сюда не заходит */
+.lightbox-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px 20px}
+.lightbox-close{width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+  background:var(--lb-ctl);color:var(--lb-fg);font-size:1.3rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-close:hover{background:var(--lb-ctl-hover)}
+
+.lightbox-zoom{display:flex;align-items:center;gap:2px;
+  background:var(--lb-ctl);border-radius:20px;padding:4px;color:var(--lb-fg)}
+.lightbox-zoom button{width:32px;height:32px;border-radius:50%;background:none;color:var(--lb-fg);
+  font-size:1.15rem;line-height:1;cursor:pointer;transition:background .18s;
+  display:flex;align-items:center;justify-content:center}
+.lightbox-zoom button:hover{background:var(--lb-ctl-hover)}
+.lightbox-zoom button:disabled{opacity:.35;cursor:default;background:none}
+.lightbox-zoom .lvl{min-width:52px;text-align:center;font-size:.8rem;
+  color:var(--lb-fg-soft);font-variant-numeric:tabular-nums}
+.lightbox-zoom .zoom-fit{width:auto;padding:0 12px;font-size:.8rem;border-radius:16px}
+
+/* середина: только картинка, всё лишнее обрезается по краям области */
+.lightbox-stage{flex:1 1 auto;min-height:0;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;padding:0 80px;touch-action:none}
+/* листать нечего — поля под стрелки не нужны */
+.lightbox.single .lightbox-stage{padding:0 20px}
+.lightbox-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;
+  cursor:zoom-in;will-change:transform;user-select:none;-webkit-user-drag:none}
+.lightbox.zoomed .lightbox-stage img{border-radius:0;cursor:grab}
+.lightbox.zoomed .lightbox-stage.grabbing img{cursor:grabbing}
+
+/* листание */
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;
+  background:var(--lb-ctl);color:var(--lb-fg);font-size:1.8rem;line-height:1;z-index:2;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.lightbox-nav:hover{background:var(--lb-ctl-hover)}
+.lightbox-nav.prev{left:16px}
+.lightbox-nav.next{right:16px}
+.lightbox-nav svg{display:block;flex:0 0 auto}
+
+.lightbox-meta{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:14px 20px;color:var(--lb-fg-soft);font-size:.9rem;min-height:20px}
+.lightbox-meta .count{color:var(--lb-fg-dim);font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .lightbox-bar{padding:10px 12px}
+  .lightbox-stage{padding:0 48px}
+  .lightbox.single .lightbox-stage{padding:0 8px}
+  .lightbox-nav{width:38px;height:38px}
+  .lightbox-nav svg{width:18px;height:18px}
+  .lightbox-nav.prev{left:5px}
+  .lightbox-nav.next{right:5px}
+  .lightbox-zoom .zoom-fit{padding:0 10px}
 }
-.btn-k{height:40px;padding-block:0;line-height:1;box-sizing:border-box}
-.seg{height:40px;padding:4px;box-sizing:border-box;align-items:center;gap:0}
-.seg button{height:32px;padding:0 10px;font-size:var(--t-body);line-height:1;color:var(--ink)}
-.seg button:not([aria-pressed="true"]):hover{background:transparent}
-.row-k:hover .ti{font-weight:500}
-</style>
 
-<aside id="ed" aria-label="Редактор ui kit">
-  <h1>UI kit портфолио</h1>
-  <p class="lead">Меняйте цвета, размеры и формы. Страница справа обновляется сразу. Значения хранятся в браузере.</p>
-  <div id="groups"></div>
-  <div class="ft"><button class="btn" id="copy">Копировать значения</button><button class="btn ghost" id="reset">Сбросить всё</button></div>
-  <pre id="out"></pre>
-</aside>
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:var(--small);color:var(--muted)}
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
+.jtbd b{color:var(--ink);font-weight:600}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:24px}
+.gallery .shot{aspect-ratio:3/4}
 
-<main id="kit">
-  <header class="k-top">
-    <span class="tok">ui kit · портфолио Максима Кожейкина</span>
-    <div class="display">Один набор цветов, размеров и форм</div>
-    <p class="t-body t-muted">Здесь собраны все токены сайта и компоненты, которые их используют. Смените значение слева, и каждый компонент ниже перекрасится. Внизу в разделе «Аудит» показано, сколько разных значений сейчас разбросано по сайту.</p>
-  </header>
 
-  <section class="k-sec" id="colors">
-    <div class="k-h"><h2>Цвета</h2><span>11 ролей вместо 40 значений</span></div>
-    <div class="k-grid" id="swatches"></div>
-  </section>
+/* логотип компании */
+.company-logo{width:56px;height:56px;border-radius:14px;display:block;margin-bottom:20px}
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Текст</h2><span>два цвета, 5 размеров, 3 веса</span></div>
-    <div class="k-grid" style="grid-template-columns:1fr">
-      <div class="k-cell"><span class="tok" id="tk-display"></span><div class="t-display">Максим Кожейкин</div></div>
-      <div class="k-cell"><span class="tok" id="tk-title"></span><div class="t-title">Lead UX/UI Designer · Medsi Digital</div></div>
-      <div class="k-cell"><span class="tok" id="tk-sub"></span><div class="t-sub">Создание команды дизайна</div></div>
-      <div class="k-cell"><span class="tok" id="tk-body"></span><p class="t-body">Сформировал команду из пяти дизайнеров, менторил джунов. Ввёл скрам-практики, в том числе онбординг, ретро, демо и дэйли.</p></div>
-      <div class="k-cell"><span class="tok">серый текст · --muted</span><p class="t-body t-muted">Серый текст для абзацев и подписей. Он тише основного, но читается спокойно.</p></div>
-      <div class="k-cell"><span class="tok" id="tk-small"></span><p class="t-small">Вторичный текст для навигации, мета-данных и подписей к картинкам.</p></div>
-      <div class="k-cell"><span class="tok" id="tk-caption"></span><p class="t-eyebrow">Кейс 05 · Роль · Команда</p></div>
-      <div class="k-cell"><span class="tok">годы, номера, стрелки · серый --muted</span><p class="t-faint">2024 · 01 · 02 · 03 ›</p></div>
-      <div class="k-cell"><span class="tok">ссылка в тексте · --accent</span><p class="t-body">Читайте полностью <a class="t-link" href="#colors">на странице проекта</a>.</p></div>
-    </div>
-  </section>
+/* шапка страницы = блок опыта с главной (переиспользуем) */
+.exp-eyebrow{font-size:var(--small);color:var(--faint);font-variant-numeric:tabular-nums}
+.exp-role{font-weight:700;font-size:var(--h1);line-height:1.2;margin-top:6px;letter-spacing:normal}
+.exp-company{color:var(--accent)}
+.exp-summary{margin-top:10px;color:var(--muted)}
+/* обязанности: видны сразу, подрезаны, раскрываются кнопкой */
+.duties{position:relative;overflow:hidden;max-height:340px;transition:max-height .35s ease;margin-top:16px}
+.duties.open{max-height:none}
+.duties::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;
+  background:linear-gradient(to bottom,rgba(252,252,253,0),var(--bg));pointer-events:none;transition:opacity .25s}
+.duties.open::after{opacity:0}
+.duties-more{margin-top:10px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:500;font-size:var(--small)}
+.duties-more .chev{transition:transform .2s}
+.duties-more:hover .chev{transform:translateY(2px)}
+.duties-more.hidden{display:none}
+/* дайджест достижений */
+.achievements{margin-top:clamp(36px,5vh,52px)}
+.section-head{font-size:var(--eyebrow);letter-spacing:normal;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+/* шапка отделена от кейсов */
+.head-sep{margin:100px 0;height:4px;background:var(--accent);border-radius:2px}
+.duties-inner{padding-top:0}
+.duties ul{list-style:none;display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.duties li{position:relative;padding-left:18px;color:var(--ink);font-size:var(--text)}
+.duties li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:.85rem;line-height:1;display:flex;align-items:center;height:calc(var(--text) * 1.6)}
+/* пункт-подзаголовок (целиком жирный) — без маркера */
+.duties li:has(> b:only-child){padding-left:0;color:var(--ink);font-weight:600;margin-top:10px}
+.duties li:has(> b:only-child)::before{display:none}
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Кнопки и табы</h2><span>наведите курсор, чтобы увидеть состояния</span></div>
-    <div class="states">
-      <a class="btn-k" href="#colors">cv</a>
-      <a class="btn-k" href="#colors">email</a>
-      <a class="btn-k" href="#colors">↑ Wildberries</a>
-      <a class="btn-k" href="#colors">Посмотреть ещё ↓</a>
-    </div>
-    <div class="states" style="margin-top:16px">
-      <div class="seg" data-seg><button aria-pressed="true">Работа</button><button aria-pressed="false">Жизнь</button></div>
-      <div class="seg" data-seg><button aria-pressed="false">En</button><button aria-pressed="true">Ру</button></div>
-    </div>
-  </section>
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Теги</h2><span>без действия, при наведении не меняются</span></div>
-    <div class="states">
-      <span class="tag-k">Июнь 2022 — Март 2024</span>
-      <span class="tag-k">MedTech</span>
-      <span class="tag-k">Работа</span>
-      <span class="tag-k">Июль 2024 — Сейчас<span class="live" aria-hidden="true"></span></span>
-      <span class="tag-k ai">AI</span>
-    </div>
-  </section>
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:18px}
+.side-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:14px;font-size:var(--text)}
+.side-links a{color:var(--accent);width:fit-content;transition:opacity .15s}
+.side-links a:hover{opacity:.65}
+.side-tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.segmented{display:flex;gap:2px;background:var(--sel);padding:3px;border-radius:10px}
+.segmented button{padding:6px 11px;border-radius:7px;font-weight:500;font-size:var(--eyebrow);color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.segmented button[aria-pressed="true"]{background:var(--tab-on);color:var(--ink);box-shadow:0 1px 2px rgba(20,20,25,.06)}
+.lang{display:inline-flex;gap:2px;font-size:var(--eyebrow);font-weight:500;background:var(--sel);padding:3px;border-radius:10px}
+.lang button{padding:6px 11px;border-radius:7px;color:var(--faint)}
+.lang button[aria-pressed="true"]{color:var(--ink);background:var(--tab-on);box-shadow:0 1px 2px rgba(20,20,25,.06)}
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Списки</h2><span>проекты слева и разделы кейса</span></div>
-    <div class="rows">
-      <a class="row-k" href="#colors"><span class="yr">2024</span><span class="ti">Wildberries <i>· E-commerce</i></span><span class="arr">›</span></a>
-      <a class="row-k cur" href="#colors"><span class="yr">2022</span><span class="ti">Medsi <i>· MedTech</i></span><span class="arr">⌄</span></a>
-      <div class="sub-k"><a href="#colors"><span class="n">01</span>Единый стиль приложения</a><a class="on" href="#colors"><span class="n">02</span>Главный экран</a><a href="#colors"><span class="n">03</span>Запись</a></div>
-      <a class="row-k" href="#colors"><span class="yr">2021</span><span class="ti">СберПраво <i>· LegalTech</i></span><span class="arr">›</span></a>
-    </div>
-    <ul class="points-k" style="margin-top:28px">
-      <li><b>Создание команды дизайна</b> — сформировал команду из пяти дизайнеров.</li>
-      <li>Разработал концепцию дизайна приложения, которая объединила продукты в единую систему.</li>
-    </ul>
-  </section>
+.shell{display:flex;min-height:100vh}
+.sidebar{view-transition-name:side-col;width:var(--sidebar-w);flex:0 0 var(--sidebar-w);position:sticky;top:0;align-self:flex-start;
+  height:100vh;overflow-y:auto;padding:var(--pad);padding-right:clamp(48px,9vw,170px);display:flex;flex-direction:column;gap:24px;background:var(--bg)}
+.main{view-transition-name:main-col;flex:1 1 auto;min-width:0;padding:var(--pad);padding-left:clamp(32px,4vw,80px)}
+.main-inner{max-width:820px}
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Карточки</h2><span>белая поверхность, линия, скругление</span></div>
-    <div class="k-grid">
-      <div class="card-k"><h3>Проблема</h3><p>Пациенты не понимали, как записаться, и звонили в колл-центр.</p></div>
-      <div class="card-k"><h3>Решение</h3><p>Упростили запись до трёх шагов и убрали лишние поля.</p></div>
-      <div class="card-k metric-k"><h3>Результат</h3><p><b>−30%</b> звонков в колл-центр</p></div>
-    </div>
-  </section>
+.back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-weight:500;font-size:var(--small)}
+.back:hover{color:var(--accent)}
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Картинка на подложке</h2><span>подложка стоит, картинка поднимается</span></div>
-    <div class="plate"><div class="shot" role="img" aria-label="Пример макета"></div></div>
-  </section>
 
-  <section class="k-sec">
-    <div class="k-h"><h2>Аудит</h2><span>что сейчас реально на сайте</span></div>
-    <details>
-      <summary>Цвета <span>40 разных значений, в ui kit 11</span></summary>
-      <div class="aud">
-        <p>Токены сайта и самые частые значения из CSS. Красным отмечены значения, которых нет среди токенов. Это прозрачные белые и тёмные для стекла, лайтбокса и теней.</p>
-        <h4>Токены</h4>
-        <div class="chips" id="aud-tok"></div>
-        <h4>Значения вне токенов</h4>
-        <div class="chips" id="aud-off"></div>
-      </div>
-    </details>
-    <details>
-      <summary>Размеры текста <span>42 значения, в ui kit 5</span></summary>
-      <div class="aud">
-        <p>Пять токенов покрывают большую часть. Остальное прописано вручную прямо в стилях страниц.</p>
-        <h4>Токены</h4>
-        <div class="chips" id="aud-ft"></div>
-        <h4>Вручную, вне токенов</h4>
-        <div class="chips" id="aud-fo"></div>
-      </div>
-    </details>
-    <details>
-      <summary>Формы и веса <span>16 скруглений, 8 межбуквенных, 4 веса</span></summary>
-      <div class="aud">
-        <h4>Скругления</h4>
-        <div class="chips" id="aud-r"></div>
-        <h4>Межбуквенное расстояние</h4>
-        <div class="chips" id="aud-l"></div>
-        <h4>Веса</h4>
-        <div class="chips" id="aud-w"></div>
-      </div>
-    </details>
-  </section>
-</main>
 
-<script>
-(function(){
-  var $=function(i){return document.getElementById(i)};
-  var root=document.documentElement;
-  var store=function(k,v){try{localStorage.setItem(k,v)}catch(e){}};
-  var load=function(k){try{return localStorage.getItem(k)}catch(e){return null}};
 
-  /* токены. c цвет, r ползунок [мин, макс, шаг, ед.], s выбор */
-  var G=[
-   {id:"col",t:"Цвета",c:[
-    {k:"bg",l:"Фон сайта",y:"c",d:"#FDFCFC",u:"фон всех страниц"},
-    {k:"surface",l:"Белый",y:"c",d:"#F4EFEC",u:"карточки, выбранный таб"},
-    {k:"ink",l:"Основной текст",y:"c",d:"#161413",u:"заголовки и абзацы"},
-    {k:"muted",l:"Серый текст",y:"c",d:"#6F655D",u:"подписи, вторичный текст"},
-    {k:"line",l:"Линии",y:"c",d:"#DFDBD8",u:"границы и разделители"},
-    {k:"sel",l:"Серый",y:"c",d:"#F4EFEC",u:"переключатели, кнопки, теги"},
-    {k:"tabon",l:"Выбранный таб",y:"c",d:"#FDFCFC",u:"Работа, Ру"},
-    {k:"ringc",l:"Рамка у кнопок",y:"c",d:"#FDFCFC",u:"тонкий ободок, чтобы кнопка была видна на подложке"},
-    {k:"accent",l:"Акцент",y:"c",d:"#161413",u:"ссылки, маркеры, наведение"},
-    {k:"live",l:"Пульсирующая точка",y:"c",d:"#916D50",u:"текущая работа"},
-    {k:"plate",l:"Подложка под картинками",y:"c",d:"#F4EFEC",u:"фон под макетами"},
-    {k:"shadow",l:"Цвет теней",y:"c",d:"#916D50",u:"тень картинок"}]},
-   {id:"typ",t:"Текст",c:[
-    {k:"font",l:"Шрифт",y:"s",d:"Golos Text",o:["Golos Text","Inter","Manrope","IBM Plex Sans","Onest"]},
-    {k:"tdisplay",l:"Display (имя, заголовок)",y:"r",m:[28,72,1,"px"],d:46},
-    {k:"ttitle",l:"Title (заголовок раздела)",y:"r",m:[18,40,1,"px"],d:26},
-    {k:"tbody",l:"Body (основной текст)",y:"r",m:[14,20,1,"px"],d:16},
-    {k:"tsmall",l:"Small (вторичный)",y:"r",m:[11,18,1,"px"],d:14},
-    {k:"tcaption",l:"Caption (теги, подписи)",y:"r",m:[10,16,1,"px"],d:14},
-    {k:"wdisplay",l:"Вес Display",y:"r",m:[400,700,100,""],d:500},
-    {k:"wtitle",l:"Вес Title",y:"r",m:[400,700,100,""],d:500},
-    {k:"wstrong",l:"Вес выделенного",y:"r",m:[400,700,100,""],d:600},
-    {k:"lhbody",l:"Межстрочный интервал",y:"r",m:[1.3,2,.05,""],d:1.6},
-    {k:"lsdisplay",l:"Межбуквенное у Display",y:"r",m:[-.06,.02,.005,"em"],d:-.02},
-    {k:"lseyebrow",l:"Межбуквенное у Caption",y:"r",m:[0,.3,.01,"em"],d:.14}]},
-   {id:"shape",t:"Формы",c:[
-    {k:"rpill",l:"Скругление кнопок и тегов (40 это круглые)",y:"r",m:[0,40,1,"px"],d:40},
-    {k:"rcard",l:"Скругление карточек",y:"r",m:[0,32,1,"px"],d:14},
-    {k:"rplate",l:"Скругление подложки",y:"r",m:[0,60,1,"px"],d:40},
-    {k:"pad",l:"Отступ внутри подложки",y:"r",m:[0,64,1,"px"],d:48},
-    {k:"ringw",l:"Толщина рамки у кнопок",y:"r",m:[0,4,.5,"px"],d:1.5}]},
-   {id:"shd",t:"Тень и наведение",c:[
-    {k:"y0",l:"Тень в покое, вниз",y:"r",m:[0,40,.5,"px"],d:5},{k:"b0",l:"Тень в покое, размытие",y:"r",m:[0,60,.5,"px"],d:10},{k:"a0",l:"Тень в покое, сила",y:"r",m:[0,40,.5,"%"],d:10},
-    {k:"lift",l:"Подъём при наведении",y:"r",m:[0,20,.5,"px"],d:1},
-    {k:"y1",l:"Тень при наведении, вниз",y:"r",m:[0,60,.5,"px"],d:10},{k:"b1",l:"Тень при наведении, размытие",y:"r",m:[0,80,.5,"px"],d:15},{k:"a1",l:"Тень при наведении, сила",y:"r",m:[0,60,.5,"%"],d:15},
-    {k:"dur",l:"Скорость анимации",y:"r",m:[0,800,10,"мс"],d:200}]}
-  ];
-  var DEF={};G.forEach(function(g){g.c.forEach(function(c){DEF[c.k]=c.d})});
-  var KEY="kit-v6",S;
-  try{S=JSON.parse(load(KEY))}catch(e){}; S=Object.assign({},DEF,S||{});
+/* блок = один раздел */
+/* кейс — без подложки, разделение воздухом */
+/* новый раздел (группа) — большой отступ */
+.block.group{margin-top:200px;position:relative}
+/* цветная полоска-разделитель между разделами */
+.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group:first-of-type::before{display:none}
+.block.group:first-of-type{margin-top:0}
+.block.group .block-title{font-size:var(--h1);letter-spacing:normal}
 
-  /* цвет */
-  function ok(h){return /^#[0-9a-fA-F]{6}$/.test(h)}
-  function rgb(h){return [1,3,5].map(function(i){return parseInt(h.substr(i,2),16)})}
-  function rgba(h,a){var c=rgb(h);return "rgba("+c[0]+","+c[1]+","+c[2]+","+(a/100)+")"}
-  function hex2hsl(h){var c=rgb(h).map(function(v){return v/255}),mx=Math.max(c[0],c[1],c[2]),mn=Math.min(c[0],c[1],c[2]),l=(mx+mn)/2,d=mx-mn,hh=0,ss=0;
-    if(d){ss=d/(1-Math.abs(2*l-1));if(mx===c[0])hh=((c[1]-c[2])/d)%6;else if(mx===c[1])hh=(c[2]-c[0])/d+2;else hh=(c[0]-c[1])/d+4;hh*=60;if(hh<0)hh+=360}
-    return [Math.round(hh),Math.round(ss*100),Math.round(l*100)]}
-  function hsl2hex(h,s,l){s/=100;l/=100;var k=function(n){return (n+h/30)%12},a=s*Math.min(l,1-l);
-    var f=function(n){var v=l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));var x=Math.round(v*255);return (x<16?"0":"")+x.toString(16)};
-    return ("#"+f(0)+f(8)+f(4)).toUpperCase()}
-  function lum(h){var c=rgb(h).map(function(v){v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
-  function ratio(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+/* кейс внутри раздела — средний отступ */
+.block{margin-top:140px;scroll-margin-top:20px}
 
-  /* панель */
-  var HSL={},h="";
-  G.forEach(function(g){
-    h+='<section class="grp" data-g="'+g.id+'"><div class="gh"><b>'+g.t+'</b><button class="rs" data-rs="'+g.id+'">Сброс</button></div>';
-    g.c.forEach(function(c){
-      if(c.y==="c")h+='<div class="cr"><span>'+c.l+'</span><button class="sat" id="s-'+c.k+'" title="Подобрать цвет"></button><input id="t-'+c.k+'" type="text" maxlength="7"></div><div class="ed" id="e-'+c.k+'"><label>Оттенок <b id="hv-'+c.k+'-0"></b></label><input id="h-'+c.k+'-0" type="range" min="0" max="360"><label>Насыщенность <b id="hv-'+c.k+'-1"></b></label><input id="h-'+c.k+'-1" type="range" min="0" max="100"><label>Яркость <b id="hv-'+c.k+'-2"></b></label><input id="h-'+c.k+'-2" type="range" min="0" max="100"></div>';
-      else if(c.y==="s")h+='<div class="cr"><span>'+c.l+'</span><select id="f-'+c.k+'">'+c.o.map(function(o){return '<option>'+o+'</option>'}).join("")+'</select></div>';
-      else h+='<div class="rg"><div class="rl"><span>'+c.l+'</span><input class="num" id="n-'+c.k+'" type="number" min="'+c.m[0]+'" max="'+c.m[1]+'" step="'+c.m[2]+'"><em>'+c.m[3]+'</em></div><input id="r-'+c.k+'" type="range" min="'+c.m[0]+'" max="'+c.m[1]+'" step="'+c.m[2]+'"></div>';
-    });
-    h+='</section>';
-  });
-  $("groups").innerHTML=h;
+/* первый кейс сразу под своим разделом — ближе */
+.block.group + .block:not(.group){margin-top:88px}   /* первый кейс под разделом; группа после группы сохраняет 200px */
+.block-num{font-size:var(--eyebrow);letter-spacing:normal;text-transform:uppercase;color:var(--accent);font-weight:600}
+.block-title{font-weight:700;font-size:var(--h2);letter-spacing:normal;margin-top:8px;line-height:1.2}
+.block-lead{color:var(--muted);margin-top:10px;max-width:60ch}
 
-  function paintEd(k){
-    var v=HSL[k];$("s-"+k).style.background=S[k];$("t-"+k).value=S[k];
-    for(var i=0;i<3;i++){$("h-"+k+"-"+i).value=v[i];$("hv-"+k+"-"+i).textContent=v[i]+(i?"%":"°")}
-    $("h-"+k+"-0").style.background="linear-gradient(90deg,"+[0,60,120,180,240,300,360].map(function(x){return "hsl("+x+","+v[1]+"%,"+v[2]+"%)"}).join(",")+")";
-    $("h-"+k+"-1").style.background="linear-gradient(90deg,hsl("+v[0]+",0%,"+v[2]+"%),hsl("+v[0]+",100%,"+v[2]+"%))";
-    $("h-"+k+"-2").style.background="linear-gradient(90deg,#000,hsl("+v[0]+","+v[1]+"%,50%),#fff)";
-  }
-  function sync(){G.forEach(function(g){g.c.forEach(function(c){
-    if(c.y==="c"){HSL[c.k]=hex2hsl(S[c.k]);paintEd(c.k)}
-    else if(c.y==="s")$("f-"+c.k).value=S[c.k];
-    else{$("r-"+c.k).value=S[c.k];$("n-"+c.k).value=S[c.k]}
-  })})}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 26px;margin-top:24px;padding:22px 0;border-top:1px solid rgba(19,19,22,.08);border-bottom:1px solid rgba(19,19,22,.08)}
+.meta h4{font-size:var(--eyebrow);letter-spacing:normal;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:7px}
+.meta p{font-size:var(--small)}
+.meta .dim{color:var(--muted)}
+.goal{display:inline-flex;align-items:center;gap:5px;background:var(--accent-weak);color:var(--accent);font-weight:600;font-size:var(--small);padding:3px 9px;border-radius:20px;margin-top:4px}
 
-  /* применяем токены к странице */
-  function pxClamp(px){return "clamp("+Math.round(px*.7)+"px,"+(px*.0696).toFixed(2)+"vw,"+px+"px)"}
-  function set(k,v){root.style.setProperty(k,v)}
-  function apply(){
-    ["bg","surface","ink","muted","line","sel","accent","live"].forEach(function(k){set("--"+k,S[k])});set("--tab-on",S.tabon);set("--ring",S.ringc);set("--ringw",S.ringw+"px");
-    set("--plate",S.plate);set("--shadow",S.shadow);
-    set("--font",'"'+S.font+'",ui-sans-serif,system-ui,-apple-system,sans-serif');
-    set("--t-display",S.tdisplay+"px");set("--t-title",S.ttitle+"px");set("--t-body",S.tbody+"px");set("--t-small",S.tsmall+"px");set("--t-caption",S.tcaption+"px");
-    set("--w-display",S.wdisplay);set("--w-title",S.wtitle);set("--w-strong",S.wstrong);set("--lh-body",S.lhbody);
-    set("--ls-display",S.lsdisplay+"em");set("--ls-title",(S.lsdisplay/2)+"em");set("--ls-eyebrow",S.lseyebrow+"em");
-    set("--r-pill",S.rpill>=40?"999px":S.rpill+"px");set("--r-card",S.rcard+"px");set("--r-plate",S.rplate+"px");set("--plate-pad",S.pad+"px");
-    set("--sh0","0 "+S.y0+"px "+S.b0+"px "+rgba(S.shadow,S.a0));set("--sh1","0 "+S.y1+"px "+S.b1+"px "+rgba(S.shadow,S.a1));
-    set("--lift",S.lift+"px");set("--dur",S.dur+"ms");
-    /* тень картинки. Через стиль, чтобы подхватывать оба состояния */
-    $("shadow-css").textContent=".plate .shot{filter:drop-shadow("+"0 "+S.y0+"px "+S.b0+"px "+rgba(S.shadow,S.a0)+")}.plate:hover .shot{filter:drop-shadow(0 "+S.y1+"px "+S.b1+"px "+rgba(S.shadow,S.a1)+")}";
-    paintInfo();
-    $("out").textContent=cssOut();
-    store(KEY,JSON.stringify(S));
-  }
-  function cssOut(){
-    return ":root{\n"+
-     ["bg","surface","ink","muted","line","sel","accent","live"].map(function(k){return "  --"+k+":"+S[k]+";"}).join("\n")+"\n"+"  --faint:"+S.muted+"; --btn-ring:"+S.ringc+"; --btn-ring-w:"+S.ringw+"px;\n"+
-     "  --tab-on:"+S.tabon+"; --plate:"+S.plate+"; --shadow:"+S.shadow+";\n"+
-     "  --t-display:"+pxClamp(S.tdisplay)+";\n  --t-title:"+pxClamp(S.ttitle)+";\n  --t-body:"+S.tbody+"px; --t-small:"+S.tsmall+"px; --t-caption:"+S.tcaption+"px;\n"+
-     "  --w-display:"+S.wdisplay+"; --w-title:"+S.wtitle+"; --w-strong:"+S.wstrong+";\n  --lh-body:"+S.lhbody+"; --ls-display:"+S.lsdisplay+"em; --ls-eyebrow:"+S.lseyebrow+"em;\n"+
-     "  --font:\""+S.font+"\";\n"+
-     "  --r-pill:"+(S.rpill>=40?"999px":S.rpill+"px")+"; --r-card:"+S.rcard+"px; --r-plate:"+S.rplate+"px; --plate-pad:"+S.pad+"px;\n"+
-     "  --shadow-rest:0 "+S.y0+"px "+S.b0+"px "+rgba(S.shadow,S.a0)+"; --shadow-hover:0 "+S.y1+"px "+S.b1+"px "+rgba(S.shadow,S.a1)+";\n  --lift:"+S.lift+"px; --dur:"+S.dur+"ms;\n}";
-  }
-  /* подписи токенов и таблица цветов */
-  function paintInfo(){
-    $("tk-display").textContent="Display · --t-display · "+S.tdisplay+"px · вес "+S.wdisplay;
-    $("tk-title").textContent="Title · --t-title · "+S.ttitle+"px · вес "+S.wtitle;
-    $("tk-sub").textContent="Подзаголовок · --t-body · вес "+S.wstrong;
-    $("tk-body").textContent="Body · --t-body · "+S.tbody+"px · интервал "+S.lhbody;
-    $("tk-small").textContent="Small · --t-small · "+S.tsmall+"px";
-    $("tk-caption").textContent="Caption · --t-caption · "+S.tcaption+"px · "+S.lseyebrow+"em";
-    var g=G[0].c;
-    $("swatches").innerHTML=g.map(function(c){
-      var cr="";
-      if(["ink","muted","accent"].indexOf(c.k)>-1){var r=ratio(S[c.k],S.bg);cr='<span class="contrast '+(r>=4.5?"ok":"low")+'">контраст с фоном '+r.toFixed(1)+':1 '+(r>=4.5?"✓":"ниже 4.5")+'</span>'}
-      return '<div class="sw-card"><i style="background:'+S[c.k]+'"></i><div><b>'+c.l+'</b><code>--'+(c.k==="plate"?"plate":c.k==="tabon"?"tab-on":c.k)+' · '+S[c.k]+'</code><small>'+c.u+'</small>'+cr+'</div></div>';
-    }).join("");
-  }
+.sub{margin-top:16px}                 /* внутреннее: подсекция под заголовком */
+.sub + .sub{margin-top:40px}          /* внешнее: между подсекциями */
+.sub > *:first-child{margin-top:0}    /* первый элемент подсекции не отрывается */
+.sub > .points:first-child{margin-top:0}  /* список сразу под заголовком блока */
+.sub-title{font-weight:700;font-size:var(--h3);letter-spacing:normal}
+.sub-title ~ .points,.sub-title ~ .sub-note{margin-top:12px}
+.sub-note{color:var(--ink);margin-top:0;max-width:56ch;font-size:var(--text)}
 
-  /* события */
-  G.forEach(function(g){g.c.forEach(function(c){
-    var k=c.k;
-    if(c.y==="r"){
-      var rg=$("r-"+k),nm=$("n-"+k);
-      rg.addEventListener("input",function(){S[k]=+this.value;nm.value=S[k];apply()});
-      nm.addEventListener("input",function(){var v=parseFloat(this.value);if(isNaN(v))return;v=Math.min(c.m[1],Math.max(c.m[0],v));S[k]=v;rg.value=v;apply()});
-    } else if(c.y==="s"){
-      $("f-"+k).addEventListener("change",function(){S[k]=this.value;apply()});
-    } else {
-      $("s-"+k).addEventListener("click",function(){$("e-"+k).classList.toggle("open")});
-      $("t-"+k).addEventListener("input",function(){var v=this.value.trim();if(v[0]!=="#")v="#"+v;if(ok(v)){S[k]=v.toUpperCase();HSL[k]=hex2hsl(S[k]);var keep=this.value;paintEd(k);this.value=keep;apply()}});
-      for(var i=0;i<3;i++)(function(i){$("h-"+k+"-"+i).addEventListener("input",function(){HSL[k][i]=+this.value;S[k]=hsl2hex(HSL[k][0],HSL[k][1],HSL[k][2]);paintEd(k);apply()})})(i);
-    }
-  })});
-  $("groups").addEventListener("click",function(e){
-    var r=e.target.closest("[data-rs]");if(!r)return;
-    G.filter(function(g){return g.id===r.getAttribute("data-rs")})[0].c.forEach(function(c){S[c.k]=DEF[c.k]});sync();apply();
-  });
-  $("reset").onclick=function(){S=Object.assign({},DEF);sync();apply()};
-  $("copy").onclick=function(){try{navigator.clipboard.writeText($("out").textContent)}catch(e){};var b=this;b.textContent="Скопировано";setTimeout(function(){b.textContent="Копировать значения"},1200)};
-  document.querySelectorAll("[data-seg]").forEach(function(seg){seg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;seg.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))})})});
+.jtbd{font-size:var(--small);color:var(--muted);margin-bottom:12px}
+.jtbd b{color:var(--ink);font-weight:600}
 
-  /* аудит. Данные собраны из CSS страниц и v4.css */
-  var A={
-    tok:["#FDFCFC","#F4EFEC","#161413","#6F655D","#DFDBD8","#916D50","#F4F4F7"],
-    off:[["#FFF",46],["rgba(255,255,255,.14)",21],["rgba(20,20,25,.06)",19],["rgba(255,255,255,.85)",15],["rgba(255,255,255,.26)",14],["rgba(19,19,22,.08)",14],["rgba(255,255,255,.5)",8],["rgba(20,20,25,.3)",8],["rgba(20,20,25,.08)",8],["rgba(145,109,80,.1)",7],["rgba(145,109,80,.15)",7],["rgba(19,19,22,.94)",7],["rgba(255,255,255,.24)",7],["rgba(252,252,253,0)",7],["rgba(20,20,25,.04)",3],["rgba(20,20,25,.12)",2],["rgba(255,255,255,.92)",2],["#EEF2FB",1],["#F7F9FD",1],["#DFE6FF",1],["#EEF1F7",1],["rgba(0,0,0,.18)",1],["rgba(0,0,0,.25)",1],["rgba(10,10,15,.55)",1],["rgba(10,10,15,.08)",1],["rgba(20,20,25,.16)",1]],
-    ft:[["--small",124],["--text",88],["--eyebrow",45],["--h1",18],["--h3",15],["--h2",12],["--t-body",7],["--t-small",4],["--t-display",3],["--t-title",5],["--t-caption",1]],
-    fo:[[".85rem",30],[".8rem",16],["16px",9],[".9rem",8],["1.3rem",7],["1.15rem",7],["1.8rem",7],["clamp(1.4rem,1.8vw,1.75rem)",4],["1.05rem",2],["12px",2],["14px",2],[".95rem",1],["1.2rem",1],["1.08rem",1],["18px",1],[".92rem",1],["clamp(1.6rem,3vw,2.2rem)",1],["15px",1],["11px",1],["1.1rem",1],[".78rem",1],["1.25rem",1],["13px",1],["1rem",1]],
-    r:[["0",31],["50%",27],["10px",26],["14px",24],["20px",23],["2px",21],["7px",16],["16px",11],["999px",10],["8px",9],["3px",8],["40px",7],["24px",7],["12px",2],["6px",2],["18px",1]],
-    l:[["-.02em",27],[".14em",19],["-.01em",15],["-.03em",7],[".12em",7],["0",7],["-.005em",1],[".02em",1]],
-    w:[["600",103],["500",64],["700",35],["400",17],["800",1]]
-  };
-  function chips(id,list,mode){
-    $(id).innerHTML=list.map(function(x){
-      if(typeof x==="string")return '<span class="chip-a"><i style="background:'+x+'"></i>'+x+'</span>';
-      if(mode==="col")return '<span class="chip-a off"><i style="background:'+x[0]+'"></i>'+x[0]+' × '+x[1]+'</span>';
-      return '<span class="chip-a t'+(mode==="off"?" off":"")+'">'+x[0]+' × '+x[1]+'</span>';
-    }).join("");
-  }
-  chips("aud-tok",A.tok);chips("aud-off",A.off,"col");chips("aud-ft",A.ft);chips("aud-fo",A.fo,"off");
-  chips("aud-r",A.r);chips("aud-l",A.l);chips("aud-w",A.w);
 
-  var st=document.createElement("style");st.id="shadow-css";document.head.appendChild(st);
-  sync();apply();
+
+
+.foot{margin-top:80px;padding:32px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot a{color:var(--accent);font-weight:500;font-size:var(--small)}
+
+
+
+.topbar{display:none}
+@media (max-width:900px){
+  .shell{flex-direction:column}
+  .topbar{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;padding:14px var(--pad);background:var(--bg);border-bottom:1px solid var(--line)}
+  .burger{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+  .burger span{width:18px;height:2px;background:var(--ink);border-radius:2px}
+  .sidebar{position:fixed;inset:0 0 0 auto;width:min(88vw,340px);z-index:50;transform:translateX(100%);transition:transform .28s ease;box-shadow:-20px 0 60px rgba(20,20,25,.08)}
+  body.nav-open .sidebar{transform:translateX(0)}
+  .scrim{position:fixed;inset:0;background:rgba(20,20,25,.3);opacity:0;pointer-events:none;transition:.28s;z-index:45}
+  body.nav-open .scrim{opacity:1;pointer-events:auto}
+}
+@media (min-width:901px){.scrim{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+</style><link rel="stylesheet" href="../assets/v4.css?v=76"><style>
+body{display:block}.kit{max-width:1280px;margin:auto;padding:32px clamp(16px,4vw,48px) 100px}.kit-head{display:flex;align-items:start;justify-content:space-between;gap:20px;flex-wrap:wrap}.kit h1{font-size:32px;font-weight:500}.kit h2{font-size:26px;font-weight:500;line-height:1.2}.kit h3{font-size:16px;font-weight:500}.kit-nav{display:flex;gap:8px 20px;flex-wrap:wrap;margin:24px 0 48px}.kit-nav a{text-decoration:underline;text-underline-offset:4px}.kit section{margin-top:56px;scroll-margin-top:20px}.kit .intro{color:var(--muted);max-width:80ch;margin-top:10px}.kit .section-top{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px}.kit .section-top span{font-size:14px;color:var(--muted)}.kit table{border-collapse:collapse;width:100%;text-align:left}.kit th{font-size:13px;font-weight:400;color:var(--muted)}.kit td,.kit th{padding:16px 12px 16px 0;border-bottom:1px solid var(--line);vertical-align:top}.kit code{font:12px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.kit .swatch{display:block;width:52px;height:52px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--line)}.kit .roles{display:flex;gap:4px;flex-wrap:wrap}.kit .role{display:block;font-size:14px}.kit .type-row{display:grid;grid-template-columns:minmax(240px,1fr) minmax(420px,1fr);gap:28px;border-bottom:1px solid var(--line);padding:22px 0}.kit .type-meta{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;font-size:14px}.kit .type-meta small{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.kit .type-label{color:var(--muted);font-size:13px;margin-bottom:10px}.kit .type-sample{overflow-wrap:anywhere}.kit .examples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.kit .example{border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}.kit .example h3{margin-bottom:14px}.kit .example .spec{font-size:13px;color:var(--muted);margin-top:14px}.kit .example .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:40px}.kit .v4close{position:static!important;margin:0}.kit .v4step,.kit .back{margin:0}.kit .side-links{margin:0}.kit .duties-more{margin:0}.kit .force-hover{background:var(--btn-hover)!important;color:var(--btn)!important}.kit .dl-btn.force-hover{background:var(--dl-bg-hover)!important;color:var(--dl-fg-hover)!important}.kit .force-focus{outline:2px solid var(--accent);outline-offset:3px}.kit .viewer{background:var(--lb-bg);color:var(--lb-fg);border-radius:14px;padding:20px}.kit .viewer .lightbox-zoom{position:static;display:inline-flex}.kit .viewer .lightbox-close,.kit .viewer .lightbox-nav{position:static;transform:none}.kit .viewer-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.kit .icons{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.kit .icon-cell{padding:18px;border:1px solid var(--line);border-radius:14px}.kit .icon-sample{display:flex;align-items:center;gap:16px;min-height:40px;font-size:20px}.kit .icon-cell p{font-size:14px;margin-top:10px}.kit .icon-cell code{display:block;margin-top:6px}.kit .sidebar.kit-menu{position:static!important;inset:auto;transform:none;box-shadow:none;width:100%;height:auto;max-width:none;display:block;padding:0;overflow:visible}.kit .kit-menu .v4row{padding:11px 2px;display:flex;gap:10px;align-items:center}.kit .kit-menu .row-main{flex:1}.kit .kit-menu .subnav{padding-left:52px}.kit .kit-menu .subnav a{display:block}.kit .kit-state{font-size:13px;color:var(--muted);margin:16px 0 8px}.kit .list-demo{max-width:75ch}.kit .list-demo .points li{margin-bottom:10px}.kit .fig-demo{background:var(--sel);border-radius:40px;padding:32px}.kit .fig-demo img{max-width:100%;height:auto;display:block}.kit .spacings{display:flex;gap:20px;align-items:end;flex-wrap:wrap}.kit .spacing{background:var(--sel);width:44px;position:relative}.kit .spacing span{position:absolute;bottom:100%;font-size:13px}.kit .pending{padding:18px;border-left:3px solid var(--star);background:var(--sel);margin-top:20px}.kit .table-wrap{overflow-x:auto}.kit .m-tile{width:100%;height:130px}.kit .m-tile .row-ti{font-size:16px}.kit .m-tile.focus-demo{outline:2px solid var(--accent);outline-offset:3px}.kit .m-tile.focus-demo .row-ti,.kit .m-tile.focus-demo .row-arr,.kit .m-tile.focus-demo .row-yr{opacity:1}
+@media(max-width:950px){.kit .type-row{grid-template-columns:1fr}.kit .examples{grid-template-columns:1fr 1fr}}@media(max-width:600px){.kit .examples{grid-template-columns:1fr}.kit .type-meta{grid-template-columns:repeat(3,1fr)}.kit td,.kit th{padding-right:10px}.kit h1{font-size:28px}.kit .fig-demo{border-radius:24px;padding:20px}}
+.kit .type-meta small{min-height:32px}
+</style></head><body><main class="kit"><div class="kit-head"><div><h1>UI-кит портфолио</h1><p class="intro">Текущее оформление сайта · согласованные размеры 40 / 32 px. Цвета и компоненты подключены из assets/v4.css. Образцы можно наводить и выбирать клавишей Tab.</p></div><a href="../index.html">Открыть сайт ↗</a></div><nav class="kit-nav" aria-label="Разделы UI-кита"><a href="#colors">Цвета и роли</a><a href="#type">Типографика</a><a href="#buttons">Кнопки</a><a href="#icons">Иконки</a><a href="#icon-proposal">Иконки кнопок</a><a href="#menu">Меню</a><a href="#content">Контент</a><a href="#geometry">Геометрия</a><a href="#rules">Поведение</a></nav>
+<section id="colors"><div class="section-top"><h2>Цвета и все роли</h2><span>Одинаковый цвет сгруппирован в одну строку</span></div><div class="table-wrap"><table><thead><tr><th>Цвет</th><th>Значение</th><th>Токены и роли</th></tr></thead><tbody id="color-rows"></tbody></table></div></section>
+<section id="type"><div class="section-top"><h2>Типографика</h2><span>Образец слева · применённые значения справа</span></div><p class="intro">Golos Text. Размер и интервал ниже вычисляются из образца при изменении ширины окна. Высота строки — расстояние между базовыми линиями соседних строк текста. Размер шрифта — высота кегля. Межбуквенный интервал normal; для текста ровно 36 px — −0,01 em, без изменения размера.</p><div id="type-rows"></div></section>
+<section id="buttons"><div class="section-top"><h2>Кнопки и состояния</h2><span>Покой · наведение · фокус · выбор</span></div><div class="examples">
+<div class="example"><h3>Контакты</h3><div class="side-links controls"><a href="mailto:maksim.kozheikin@gmail.com">email</a><a href="https://t.me/maksimdesigner">tg</a><a href="../index.html#cv">cv</a></div><p class="spec">40 px · 16 / 400 · капсула</p></div>
+<div class="example"><h3>Обычная · состояния</h3><div class="side-links controls"><a href="#buttons">Покой</a><a href="#buttons" class="force-hover">Наведение</a><a href="#buttons" class="force-focus">Фокус</a></div><p class="spec">Фон #F4EFEC → #E5D9D2 · текст #161413</p></div>
+<div class="example"><h3>Скачать CV</h3><div class="controls"><a class="dl-btn" href="../assets/cv-ru.pdf" download><span data-kit-icon="download"></span> Скачать CV</a><a class="dl-btn force-hover" href="../assets/cv-en.pdf" download><span data-kit-icon="download"></span> Download CV</a></div><p class="spec">40 px · чёрная → коричневая · белый текст</p></div>
+<div class="example"><h3>Предыдущая / следующая</h3><div class="controls"><a class="v4step" href="../case-medsi.html"><span data-kit-icon="up"></span>Medsi</a><a class="v4step" href="../case-sberpravo.html"><span data-kit-icon="down"></span>СберПраво</a></div><p class="spec">40 px · ↑ / ↓ соответствуют меню</p></div>
+<div class="example"><h3>Показать обязанности</h3><div class="controls"><button class="duties-more" id="demo-more">Посмотреть ещё <span data-kit-icon="down"></span></button></div><p id="more-result" hidden>Пример дополнительных обязанностей. На сайте раскрытие одностороннее.</p><p class="spec">40 px · без обратного сворачивания</p></div>
+<div class="example"><h3>Крестик и бургер</h3><div class="controls"><a class="v4close" href="../index.html" aria-label="Закрыть кейс"><span data-kit-icon="close"></span></a><button class="burger" style="display:flex;width:40px;height:40px;border:1px solid var(--line);border-radius:10px;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Меню"><span data-kit-icon="menu"></span></button></div><p class="spec">Крестик 40×40 px, круг · бургер 40×40 px, радиус 10 px</p></div>
+<div class="example"><h3>Режим</h3><div class="segmented" role="group" aria-label="Пример режима"><button aria-pressed="true">Работа</button><button aria-pressed="false">Жизнь</button></div><p class="spec">Капсула 40 px · кнопка 32 px · отступы 4 px</p></div>
+<div class="example"><h3>Язык</h3><div class="lang" role="group" aria-label="Пример языка"><button aria-pressed="false">En</button><button aria-pressed="true">Ру</button></div><p class="spec">16 / 400 · выбранное состояние со светлой подложкой</p></div>
+<div class="example"><h3>Ссылки действий</h3><div class="controls"><a class="case-link" href="../case-medsi.html">Смотреть кейс <span data-kit-icon="chevron"></span></a><a class="back" href="../index.html"><span data-kit-icon="left"></span>На главную</a></div><p class="spec">Для внутренней ссылки — тот же шеврон, что в меню; внешние ссылки — ↗</p></div></div>
+<h3 style="margin:28px 0 12px">Управление просмотром изображений</h3><div class="viewer"><div class="viewer-row"><div class="lightbox-zoom"><button class="zoom-out" disabled aria-label="Отдалить"><span data-kit-icon="minus"></span></button><span class="lvl">100%</span><button class="zoom-in" aria-label="Приблизить"><span data-kit-icon="plus"></span></button><button class="zoom-fit">Вписать</button></div><button class="lightbox-close" aria-label="Закрыть просмотр"><span data-kit-icon="close"></span></button><button class="lightbox-nav" aria-label="Предыдущее изображение"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M15.25 5.5 8.75 12 15.25 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="lightbox-nav" aria-label="Следующее изображение"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M8.75 5.5 15.25 12 8.75 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><p class="intro">Палитра просмотрщика: фон — основной #161413 с прозрачностью 94%; иконки — #F4EFEC; подписи — тот же цвет с прозрачностью 85% и 50%; подложки кнопок — с прозрачностью 14% и 26%. Новые цвета не добавляются. Это отдельный тёмный компонент сайта. Неактивный «−» показан только как состояние просмотрщика, а не как новый вариант обычной кнопки.</p></section>
+<section id="icons"><div class="section-top"><h2>Все иконки и символы</h2><span>Единый набор · SVG-иконки действий</span></div><div class="icons" id="icon-grid"></div><p class="intro">Иконки действий берутся из assets/ui.js. Шеврон меню и «Смотреть кейс» одинаковый. Навигация ↑ / ↓ / ← использует один SVG с поворотом. Внешняя ссылка сохраняет исходный SVG 12 px.</p></section>
+<section id="icon-proposal"><div class="section-top"><h2>Иконки в кнопках</h2><span>Штрих 2 px вместо тонких стрелок и символов шрифта</span></div><p class="intro">Текст остаётся 16 / 400. Иконки действий — SVG 18×18 px с округлыми окончаниями и штрихом 2 px. В меню и «Смотреть кейс» — один шеврон 10×10 px, штрих 1,8 px. Внешняя ссылка — прежний рисунок SVG, размером 12 px. Стрелки навигации — один SVG, повёрнутый вверх, вниз и влево. ↑ / ↓ остаются вертикальными. Иконки кнопок показаны только здесь, на сайт ещё не перенесены.</p><div class="table-wrap"><table><thead><tr><th>Назначение</th><th>Компонент</th></tr></thead><tbody id="icon-proposal-rows"></tbody></table></div><div class="pending">Наведение в меню: положение строки, года, названия и точки сохраняется. Двигается только стрелка вправо на 3 px; название, как согласовано, становится насыщенностью 500.</div></section><section id="menu"><div class="section-top"><h2>Навигация, метки и плитки</h2><span>Состояния и структура</span></div><div class="examples"><div class="example"><h3>Строка меню</h3><div class="sidebar kit-menu"><p class="kit-state">Обычная · наведите мышь</p><a class="row v4row" href="../case-medsi.html"><span class="row-yr">2022</span><span class="row-main"><span class="row-ti">Medsi</span></span><span class="row-arr"><span data-kit-icon="chevron"></span></span></a><p class="kit-state">Выбранная</p><a class="row v4row" href="../case-medsi.html" aria-current="page"><span class="row-yr">2022</span><span class="row-main"><span class="row-ti">Medsi</span></span><span class="row-arr" style="transform:rotate(90deg)"><span data-kit-icon="chevron"></span></span></a><div class="subnav"><a href="#menu">Обязанности</a><a class="active" href="#menu">01 · Приложение</a></div></div></div>
+<div class="example"><h3>Метки и статус</h3><div style="display:flex;gap:16px;align-items:center"><span style="color:var(--muted)">Работа · AI</span><span class="v4live" aria-label="Текущая работа"></span></div><div class="v4chips"><span class="tag">2022 — 2024</span><span class="tag">Lead UX/UI Designer</span><span class="tag">MedTech</span></div><p class="spec">16 / 400 · серый · без капсул. Точка 7 px, пульсация 1,6 s.</p></div>
+<div class="example"><h3>Плитка · фокус</h3><a class="m-tile focus-demo" href="../case-rwb.html"><span class="row-yr">Wildberries</span><span class="row-ti">Акции WB</span><span class="row-arr"><span data-kit-icon="chevron"></span></span></a><p class="spec">Подпись при hover и focus-visible · радиус 16 px</p></div></div><div class="pending">Точка и стрелка находятся в одной группе с зазором 12 px. На мобильном меню есть собственное закрытие; кнопки страницы за ним неактивны. Escape закрывает меню.</div></section>
+<section id="content"><div class="section-top"><h2>Содержимое кейсов</h2><span>Списки · ссылки · изображения</span></div><div class="list-demo"><ul class="points"><li>Собрал команду дизайнеров и выстроил процессы</li><li><b>Личный вклад.</b> Разработал единый подход к продуктам</li></ul><p class="life-text" style="margin-top:20px">Внутритекстовая <a href="#content">ссылка с подчёркиванием</a>. Вспомогательные ссылки компании <span class="v4links"><a class="v4link" href="https://example.com" aria-label="Сайт компании"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="v4link" href="https://wikipedia.org" aria-label="Википедия"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M1.6 4.2 4.7 12.3 7.9 5.6l3.3 6.7 3.1-8.1" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/><path d="M.6 4.2h2.4M6.6 4.2h2.6M12.9 4.2h2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a></span></p></div><div class="fig-demo" style="margin-top:24px"><img src="../assets/ru-medsi-One-visual-style.webp" alt="Пример макета SmartMed на подложке" loading="lazy"></div><p class="intro">Подложка изображения — #F4EFEC. Радиус видео 40 px на компьютере / 24 px на телефоне. Пустые плитки и «Заполнить» остаются заготовками контента.</p></section>
+<section id="geometry"><div class="section-top"><h2>Геометрия и интервалы</h2></div><table><thead><tr><th>Правило</th><th>Значение</th><th>Где применяется</th></tr></thead><tbody><tr><td>Контролы</td><td>40 px</td><td>Кнопки и капсулы переключателей</td></tr><tr><td>Внутренняя кнопка</td><td>32 px + 4 px с каждой стороны</td><td>Режим и язык</td></tr><tr><td>Радиусы</td><td>999 / 50% / 10 / 16 / 40 px</td><td>Кнопки / крестик / выбранная строка / плитка / видео</td></tr><tr><td>Линии</td><td>1 px · #DFDBD8</td><td>Меню и разделители</td></tr><tr><td>Ритм контента</td><td>12 / 40 / 80 / 120 px</td><td>Подзаголовок → текст / подблоки / крупные отступы</td></tr><tr><td>Адаптивность</td><td>900 / 640 px</td><td>Мобильная навигация / мозаика и медиа</td></tr></tbody></table></section>
+<section id="rules"><div class="section-top"><h2>Что ещё входит в систему</h2></div><ul class="points"><li>Состояния hover, focus-visible, selected и disabled там, где они существуют.</li><li>Правила иерархии и адаптации. Размеры Display и Title уменьшаются на узких экранах.</li><li>Поведение. ↑ / ↓ повторяют порядок меню, «Посмотреть ещё» раскрывает текст один раз, крестик кейса ведёт на главную.</li><li>Доступность. Фокус заметен; подписи доступны с клавиатуры; пульсация отключается при reduced motion.</li><li>Граница между действующим компонентом и предложением. Новые варианты сначала показываем в контексте страницы.</li></ul><p class="intro">Редактор произвольных цветов и шрифтов из прежнего UI-кита убран: эта версия документирует реальные значения сайта. Для настройки оформления остаётся tools/tune-panel.js.</p></section>
+</main><script src="../assets/ui.js?v=76"></script><script src="../assets/site.js?v=76"></script><script src="../assets/v4.js?v=76"></script><script>
+(()=>{
+document.querySelectorAll('[data-kit-icon]').forEach(e=>e.outerHTML=uiIcon(e.dataset.kitIcon));
+const roleMap={
+'--bg':'Фон страницы; светлая выбранная кнопка; рамка вокруг контролов',
+'--surface':'Поверхности, карточки и вспомогательные подложки',
+'--sel':'Фон обычных кнопок, переключателей, выбранной строки, плиток и медиа',
+'--ink':'Основной текст, заголовки и иконки; основа тёмного просмотрщика',
+'--accent':'Ссылки, фокус, фон кнопки скачивания CV',
+'--btn':'Текст обычных кнопок',
+'--muted':'Описания, даты, сферы, метки AI и подписи',
+'--faint':'Алиас вторичного текста, номера и стрелки',
+'--line':'Разделители, границы строк и рамка бургера',
+'--tab-on':'Подложка выбранного режима и языка',
+'--star':'Звёздочки списков',
+'--live':'Пульсирующая точка текущей работы',
+'--btn-bg':'Фон обычной кнопки в покое',
+'--btn-hover':'Фон обычной кнопки при наведении',
+'--btn-hover-fg':'Текст обычной кнопки при наведении',
+'--btn-ring':'Тонкая внешняя рамка кнопок',
+'--dl-bg':'Фон «Скачать CV» в покое',
+'--dl-fg':'Текст и иконка «Скачать CV» в покое',
+'--dl-bg-hover':'Фон «Скачать CV» при наведении',
+'--dl-fg-hover':'Текст и иконка «Скачать CV» при наведении',
+'--lb-bg':'Тёмная подложка просмотра изображения, основной цвет 94%',
+'--lb-fg':'Основные иконки и подписи просмотрщика',
+'--lb-fg-soft':'Вторичные подписи просмотрщика, 85%',
+'--lb-fg-dim':'Приглушённые подписи просмотрщика, 50%',
+'--lb-ctl':'Подложка контролов просмотрщика, 14%',
+'--lb-ctl-hover':'Подложка контролов просмотрщика при наведении, 26%',
+'--panel':'Редактор CRM — пустые изображения, плитки медиатеки и фон просмотра устройств (3 применения)'
+};
+// This token is used as a fallback by the live status dot.
+document.documentElement.style.setProperty('--live','#916D50');
+const probe=document.createElement('span');probe.style.display='none';document.body.append(probe);
+function resolve(token){probe.style.color='';probe.style.color='var('+token+')';return getComputedStyle(probe).color}
+function hex(c){if(c.startsWith('rgb('))return '#'+c.match(/\d+/g).slice(0,3).map(v=>(+v).toString(16).padStart(2,'0')).join('').toUpperCase();return c}
+const colors=new Map();Object.entries(roleMap).forEach(([token,role])=>{const c=resolve(token);if(!colors.has(c))colors.set(c,[]);colors.get(c).push({token,role})});
+document.getElementById('color-rows').innerHTML=[...colors].map(([color,roles])=>'<tr><td><span class="swatch" style="background:'+color+'"></span></td><td><strong>'+hex(color)+'</strong></td><td>'+roles.map(r=>'<div class="role"><code>'+r.token+'</code> — '+r.role+'</div>').join('')+'</td></tr>').join('');probe.remove();
+const styles=[
+['Display','Название страницы и крупный раздел кейса','Medsi Digital','font-size:var(--t-display);font-weight:500;line-height:round(nearest,calc(var(--t-display) * 1.15),1px);letter-spacing:normal;color:var(--ink)'],
+['Display 36','Фиксированный размер · плотнее на 0,01 em','Medsi Digital','font-size:36px;font-weight:500;line-height:41px;letter-spacing:normal;color:var(--ink)'],
+['Title','Раздел «Жизни», подраздел кейса','Запись к врачу','font-size:var(--t-title);font-weight:500;line-height:round(nearest,calc(var(--t-title) * 1.2),1px);letter-spacing:normal;color:var(--ink)'],
+['Body','Основной текст','Проектирую сервисы и мобильные приложения','font-size:16px;font-weight:400;line-height:26px;letter-spacing:normal;color:var(--ink)'],
+['Body strong','Подзаголовок и выделение','Обязанности и достижения','font-size:16px;font-weight:500;line-height:26px;letter-spacing:normal;color:var(--ink)'],
+['Secondary','Описание компании и вспомогательный текст','Сервисы для сети клиник МЕДСИ','font-size:16px;font-weight:400;line-height:26px;letter-spacing:normal;color:var(--muted)'],
+['Small','Пункты подменю','01 · Единый стиль приложения','font-size:14px;font-weight:400;line-height:22px;letter-spacing:normal;color:var(--muted)'],
+['Case number','Номер кейса — текущая версия','Кейс 01','font-size:16px;font-weight:400;line-height:26px;letter-spacing:normal;color:var(--muted)'],
+['Tags','Тип, дата, AI и сфера','Работа · AI · MedTech','font-size:16px;font-weight:400;line-height:22px;letter-spacing:normal;color:var(--muted)'],
+['Button','Надписи кнопок','Посмотреть ещё','font-size:16px;font-weight:400;line-height:1;letter-spacing:normal;color:var(--ink)']
+];
+document.getElementById('type-rows').innerHTML=styles.map(([name,role,text,css],i)=>'<div class="type-row"><div><div class="type-label">'+name+' · '+role+'</div><div class="type-sample" id="sample-'+i+'" style="'+css+'">'+text+'</div></div><div class="type-meta" id="meta-'+i+'"></div></div>').join('');
+function metrics(){styles.forEach((_,i)=>{const s=getComputedStyle(document.getElementById('sample-'+i));document.getElementById('meta-'+i).innerHTML=[['Размер',Math.round(parseFloat(s.fontSize))+'px'],['Цвет',hex(s.color)],['Вес',s.fontWeight],['Высота строки',Math.round(parseFloat(s.lineHeight))+'px'],['Буквы',s.letterSpacing]].map(([k,v])=>'<div><small>'+k+'</small>'+v+'</div>').join('')})}metrics();document.addEventListener('type-tracking-updated',metrics);addEventListener('resize',metrics);document.fonts.ready.then(metrics);
+const rowIcon=uiIcon('chevron');
+const closeIcon=document.querySelector('.kit .v4close').innerHTML;
+const dlIcon=document.querySelector('.kit .dl-btn svg').outerHTML;
+const prev=document.querySelector('.kit .lightbox-nav svg').outerHTML;
+const next=document.querySelectorAll('.kit .lightbox-nav svg')[1].outerHTML;
+const icons=[['Строка меню',rowIcon,'SVG · 10×10 · штрих 1,8'],['Открытый кейс','<span style="display:inline-flex;transform:rotate(90deg)">'+rowIcon+'</span>','Тот же SVG · поворот 90°'],['Плитка / опыт',uiIcon('chevron'),'SVG · 10×10 · штрих 1,8'],['Предыдущая страница',uiIcon('up'),'SVG · 18×18 · одна стрелка с поворотом'],['Следующая / показать ещё',uiIcon('down'),'SVG · 18×18 · поворот 180°'],['Возврат',uiIcon('left'),'SVG · 18×18 · поворот −90°'],['Ссылка на кейс',uiIcon('chevron'),'Тот же SVG, что в меню'],['Сайт компании',V4_ICON_SITE,'SVG · 12×12 · штрих 1,8'],['Википедия',V4_ICON_WIKI,'SVG · 13×13 · штрих 1,45 / 1,3'],['Скачать CV',dlIcon,'SVG · 18×18 · штрих 2 · стрелка и нижняя полоса'],['Закрыть кейс',closeIcon,'SVG · 18×18 · штрих 2'],['Меню',uiIcon('menu'),'SVG · 18×18 · штрих 2'],['Предыдущее изображение',prev,'SVG · 22×22 · штрих 2,2'],['Следующее изображение',next,'SVG · 22×22 · штрих 2,2'],['Масштаб',uiIcon('minus')+uiIcon('plus'),'SVG · 18×18 · штрих 2'],['Закрыть просмотр',uiIcon('close'),'SVG · 18×18 · штрих 2'],['Маркер списка','<span style="color:var(--star)">✦</span>','Текст · #916D50'],['Текущая работа','<span class="v4live"></span>','CSS · круг 7 px · пульсация'],['Результат / цель','✓','Текст · компонент .goal'],['Рост должности','→','Текст Senior → Lead, не действие']];
+document.getElementById('icon-grid').innerHTML=icons.map(([name,icon,description])=>'<div class="icon-cell"><div class="icon-sample">'+icon+'</div><p>'+name+'</p><code>'+description+'</code></div>').join('');
+
+const vector=(name)=>uiIcon(name==='right'?'chevron':name);
+const mini=uiIcon('chevron');
+const previewButton=(html,download=false)=>'<span class="'+(download?'dl-btn':'v4step')+'" style="gap:8px;pointer-events:none">'+html+'</span>';
+const navArrow=(rotation)=>uiIcon(rotation===180?'down':rotation===-90?'left':'up');
+const externalIcon=V4_ICON_SITE;
+const proposed=[
+['Меню · шеврон',rowIcon,mini],['Предыдущая страница','↑ Medsi',navArrow(0)+'Medsi'],['Следующая страница','↓ СберПраво',navArrow(180)+'СберПраво'],['Показать ещё','Посмотреть ещё ↓','Посмотреть ещё'+vector('down')],['Скачать CV',dlIcon+'Скачать CV',vector('download')+'Скачать CV'],['Плитка / ссылка на кейс','Смотреть кейс ↗','Смотреть кейс'+mini],['Внешняя ссылка','Сайт '+V4_ICON_SITE,'Сайт'+externalIcon],['Возврат','← На главную',navArrow(-90)+'На главную'],['Закрыть просмотр','✕',vector('close')],['Приблизить','+',vector('plus')],['Отдалить','−',vector('minus')],['Бургер','☰',vector('menu')],['Галочка','✓',vector('check')]
+];
+document.getElementById('icon-proposal-rows').innerHTML=proposed.map(([name,old,next])=>'<tr><td>'+name+'</td><td>'+previewButton(next,name==='Скачать CV')+'</td></tr>').join('');
+document.querySelectorAll('.segmented,.lang').forEach(group=>group.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'))}));
+document.getElementById('demo-more').onclick=e=>{document.getElementById('more-result').hidden=false;e.currentTarget.hidden=true};
 })();
-</script>
+</script></body></html>

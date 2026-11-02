@@ -55,7 +55,7 @@ function v4Mosaic(L, mode){
       ${img}
       <span class="row-yr">${top}</span>
       <span class="row-ti">${name}</span>
-      <span class="row-arr">›</span>${ed}
+      <span class="row-arr">${uiIcon("chevron")}</span>${ed}
     </a>`;
   }).join("");
 }
