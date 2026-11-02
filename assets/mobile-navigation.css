@@ -137,12 +137,15 @@
   html body.mobile-bottom-nav :is(.segmented,.lang){height:48px;padding:4px}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{height:40px;padding:4px 12px}
   .fixed-left{position:absolute;left:8px;top:8px;height:48px;display:grid;pointer-events:none!important;clip-path:inset(0 0 0 0 round 22px);transition:clip-path 360ms ease-in-out}
-  .fixed-left-surface{position:absolute;inset:0;border-radius:999px;background:var(--sel);clip-path:inset(0 0 0 0 round 22px);transition:clip-path 360ms ease-in-out;pointer-events:none}
+  /* Only this small, absolutely positioned surface changes width. The glyph and
+     labels keep their size; one border follows the real circle/capsule edge. */
+  .fixed-left-surface{position:absolute;inset:0 auto 0 0;width:100%;box-sizing:border-box;border:var(--btn-ring-w) solid var(--btn-ring);border-radius:999px;background:var(--sel);transition:width 360ms ease-in-out;pointer-events:none}
   .fixed-left[data-tabs=false]{clip-path:inset(0 calc(100% - 44px) 0 0 round 22px)}
-  .fixed-left[data-tabs=false]>.fixed-left-surface{clip-path:inset(0 calc(100% - 44px) 0 0 round 22px)}
+  .fixed-left[data-tabs=false]>.fixed-left-surface{width:44px}
   html body .fixed-left>.segmented{position:relative;inset:auto;margin:0;background:transparent;box-shadow:none;grid-area:1/1;transform:none}
   html body .fixed-left>.fixed-back{position:absolute;inset:0 auto auto 0;margin:0}
-  html body .fixed-left>.fixed-back a{background:transparent}
+  html body.mobile-bottom-nav .fixed-left>.fixed-back a,
+  html body.mobile-bottom-nav .fixed-left>.fixed-back a:hover{background:transparent;box-shadow:none}
   html body .fixed-left>.segmented{clip-path:none;opacity:1;visibility:visible;transform:translateX(0);pointer-events:auto;transition:transform 360ms ease-in-out,visibility 0s}
   .fixed-left>.fixed-back{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity 360ms ease-in-out,visibility 0s}
   html body .fixed-left[data-tabs=false]>.segmented{opacity:1;transform:translateX(44px);visibility:hidden;pointer-events:none;transition:transform 360ms ease-in-out,visibility 0s 360ms}
