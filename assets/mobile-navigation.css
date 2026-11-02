@@ -99,7 +99,9 @@
   html body.mobile-bottom-nav .fixed-back a{padding:0}
   html body.mobile-bottom-nav .duties-more{margin-top:var(--more-gap,4px)}
   .mobile-bottom-nav .m-img.m-video{inset:0}
-  .mobile-bottom-nav .m-img.m-video video{width:100%;height:100%;object-fit:cover}
+  .mobile-bottom-nav .tiles.mosaic:has(.m-video){grid-template-rows:calc(100cqw * 9 / 16)}
+  .mobile-bottom-nav .m-tile:has(.m-video){grid-column:1 / -1;grid-row:1}
+  .mobile-bottom-nav .m-img.m-video video{width:100%;height:100%;object-fit:contain}
   .fixed-sheet::backdrop{background:transparent}
   .fixed-dimmer{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--ink) 28%,transparent);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 240ms ease,visibility 240ms}
   .fixed-dimmer.is-open{opacity:1;visibility:visible}
@@ -191,7 +193,7 @@
   .fixed-left>.fixed-back{transform-origin:22px 22px}
 }
 
-/* Home's edge treatment is independent from the auto-hiding controls. */
+/* Home uses a separate edge layer, synchronized with the controls in JS. */
 @media(max-width:900px){
   .fixed-page-gradient{position:fixed;left:0;right:0;bottom:0;height:calc(88px + env(safe-area-inset-bottom));z-index:59;pointer-events:none;isolation:isolate}
   .fixed-page-gradient .fixed-edge{inset:0;z-index:0;height:100%}
@@ -212,4 +214,21 @@
   html body.mobile-bottom-nav .duties-more{margin-top:4px!important}
   html body.mobile-bottom-nav .fixed-menu-toggle>svg,
   html body.mobile-bottom-nav .fixed-back svg{width:20px!important;height:20px!important}
+}
+
+/* The modal hosts one solid sliding surface and anchored controls. */
+@media(max-width:900px){
+  .fixed-sheet{inset:0;width:100%;height:100dvh;max-height:100dvh;border-radius:0;background:transparent;padding:0}
+  .fixed-sheet[open]{display:block}
+  .fixed-sheet-panel{position:absolute;left:0;right:0;bottom:0;height:88dvh;display:flex;flex-direction:column;border-radius:24px 24px 0 0;background:var(--bg);overflow:hidden;transform:translateY(0)}
+  .fixed-sheet .fixed-scroll{flex:1;min-height:0}
+  .fixed-page-gradient{transition:opacity 440ms cubic-bezier(.4,0,.2,1),visibility 440ms}
+  .fixed-page-gradient.is-compact{opacity:0;visibility:hidden}
+  html body.mobile-bottom-nav :is(a,button){-webkit-tap-highlight-color:transparent}
+  html body.mobile-bottom-nav[data-nav-input=pointer] :is(a,button):focus{outline:none!important}
+  html body.mobile-bottom-nav :is(.side-links a,.chip-btn,.duties-more,.foot a,.v4step,.case-link,.toggle,.back,.v4close):hover{background:var(--sel);color:var(--ink)}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button:hover{background:transparent;color:var(--ink);box-shadow:none}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button[aria-pressed=true]:hover{background:var(--tab-on);color:var(--ink)}
+  html body.mobile-bottom-nav .dl-btn:hover{background:var(--dl-bg);color:var(--dl-fg)}
+  @media(prefers-reduced-motion:reduce){.fixed-page-gradient{transition:none}}
 }
