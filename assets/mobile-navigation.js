@@ -54,6 +54,12 @@ function addProgressiveBlur(parent){
  edge.innerHTML='<span></span><span></span><span></span>';parent.prepend(edge);
 }
 addProgressiveBlur(dock);addProgressiveBlur(footer);
+const homeGradient=isHome?document.createElement('div'):null;
+if(homeGradient){
+ homeGradient.className='fixed-page-gradient';homeGradient.setAttribute('aria-hidden','true');
+ const wash=document.createElement('div');wash.className='fixed-gradient-wash';homeGradient.append(wash);
+ addProgressiveBlur(homeGradient);document.body.append(homeGradient);document.body.dataset.homeEdge='true';
+}
 const lang=sidebar.querySelector('.lang'),sideBottom=sidebar.querySelector('.side-bottom');
 if(lang&&sideBottom)sideBottom.append(lang);
 if(sideBottom)sidebar.prepend(sideBottom);
@@ -148,7 +154,7 @@ sidebar.querySelectorAll('.subnav').forEach(el=>{el.hidden=false;el.style.overfl
 sidebar.querySelectorAll('[aria-expanded]').forEach(el=>el.removeAttribute('aria-expanded'));
 mode.inert=false;intro?.classList.remove('fixed-intro');download?.classList.remove('fixed-download');
 restore.reverse().forEach(fn=>fn());
-sheet.remove();dimmer.remove();dock.remove();document.body.style.overflow='';document.body.classList.remove('mobile-bottom-nav','nav-open');
+homeGradient?.remove();delete document.body.dataset.homeEdge;sheet.remove();dimmer.remove();dock.remove();document.body.style.overflow='';document.body.classList.remove('mobile-bottom-nav','nav-open');
 };
 
 
