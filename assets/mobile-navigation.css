@@ -196,8 +196,8 @@
 /* Home uses a separate edge layer, synchronized with the controls in JS. */
 @media(max-width:900px){
   .fixed-page-gradient{position:fixed;left:0;right:0;bottom:0;height:calc(88px + env(safe-area-inset-bottom));z-index:59;pointer-events:none;isolation:isolate}
-  .fixed-page-gradient .fixed-edge{inset:0;z-index:0;height:100%}
-  .fixed-page-gradient .fixed-gradient-wash{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 8%,transparent) 20%,color-mix(in srgb,var(--bg) 28%,transparent) 40%,color-mix(in srgb,var(--bg) 56%,transparent) 60%,color-mix(in srgb,var(--bg) 84%,transparent) 80%,var(--bg) 100%);pointer-events:none}
+  :is(.fixed-page-gradient,.fixed-sheet-gradient) .fixed-edge{inset:0;z-index:0;height:100%}
+  :is(.fixed-page-gradient,.fixed-sheet-gradient) .fixed-gradient-wash{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 8%,transparent) 20%,color-mix(in srgb,var(--bg) 28%,transparent) 40%,color-mix(in srgb,var(--bg) 56%,transparent) 60%,color-mix(in srgb,var(--bg) 84%,transparent) 80%,var(--bg) 100%);pointer-events:none}
   body[data-home-edge=true]>.fixed-dock::before,body[data-home-edge=true]>.fixed-dock>.fixed-edge{display:none}
 }
 /* Approved tuning values: home 200 px, inner pages and sheet 72 px. */
@@ -222,6 +222,9 @@
   .fixed-sheet[open]{display:block}
   .fixed-sheet-panel{position:absolute;left:0;right:0;bottom:0;height:88dvh;display:flex;flex-direction:column;border-radius:24px 24px 0 0;background:var(--bg);overflow:hidden;transform:translateY(0)}
   .fixed-sheet .fixed-scroll{flex:1;min-height:0}
+  .fixed-sheet-gradient{position:absolute;left:0;right:0;bottom:0;height:calc(72px + env(safe-area-inset-bottom));z-index:1;isolation:isolate;pointer-events:none}
+  .fixed-sheet-gradient .fixed-edge{height:100%}
+  .fixed-sheet>.fixed-dock::before{display:none}
   .fixed-page-gradient{transition:opacity 440ms cubic-bezier(.4,0,.2,1),visibility 440ms}
   .fixed-page-gradient.is-compact{opacity:0;visibility:hidden}
   html body.mobile-bottom-nav :is(a,button){-webkit-tap-highlight-color:transparent}

@@ -56,7 +56,10 @@ function addProgressiveBlur(parent){
  const edge=document.createElement('div');edge.className='fixed-edge';edge.setAttribute('aria-hidden','true');
  edge.innerHTML='<span></span><span></span><span></span>';parent.prepend(edge);
 }
-addProgressiveBlur(dock);addProgressiveBlur(footer);
+addProgressiveBlur(dock);
+// The sheet's wash and blur travel with its surface, not the anchored controls.
+const sheetGradient=document.createElement('div');sheetGradient.className='fixed-sheet-gradient';sheetGradient.setAttribute('aria-hidden','true');
+sheetGradient.innerHTML='<div class="fixed-gradient-wash"></div>';addProgressiveBlur(sheetGradient);panel.append(sheetGradient);
 const homeGradient=isHome?document.createElement('div'):null;
 if(homeGradient){
  homeGradient.className='fixed-page-gradient';homeGradient.setAttribute('aria-hidden','true');
