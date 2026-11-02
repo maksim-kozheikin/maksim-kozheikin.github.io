@@ -716,3 +716,7 @@ html body .sidebar a.row[aria-current="page"]:hover .row-arr{transform:translate
   html body .scrim{background:color-mix(in srgb,var(--ink) 30%,transparent)}
 }
 @media(prefers-reduced-motion:reduce){html body .sidebar{transition:none}}
+
+/* Approved global content controls. */
+html body a[href*="linkedin.com"]{display:none!important}
+html body .duties-more{margin-top:8px;position:relative;z-index:1}
