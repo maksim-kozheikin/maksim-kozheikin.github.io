@@ -1,0 +1,48 @@
+/* Shared mobile navigation. Desktop keeps the existing sidebar. */
+@media(max-width:900px){
+  html:has(body.mobile-bottom-nav){scrollbar-gutter:auto}
+  body.mobile-bottom-nav .topbar,body.mobile-bottom-nav>.scrim,
+  body.mobile-bottom-nav>.v4close,body.mobile-bottom-nav #cv-close{display:none!important}
+  html body.mobile-bottom-nav .shell{display:block;min-height:0}
+  html body.mobile-bottom-nav .main{width:100%;margin:0;padding:24px 20px 100px!important}
+  .mobile-bottom-nav .v4link::after{left:auto;right:0;transform:translateY(4px)}
+  .mobile-bottom-nav .v4link:hover::after,.mobile-bottom-nav .v4link:focus-visible::after{transform:translateY(0)}
+  .mobile-bottom-nav .points.inline.wide{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+  .mobile-bottom-nav .fixed-intro{margin:0 0 28px;display:flex;flex-direction:column;gap:14px}
+  .mobile-bottom-nav .fixed-intro .side-name{white-space:normal}
+  .fixed-dock{display:flex;align-items:center;box-sizing:border-box;width:calc(100% - 32px);height:56px;min-height:56px;padding:8px;border:0;border-radius:28px;background:transparent;flex:none;overflow:visible}
+  body>.fixed-dock{position:fixed;z-index:60;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));pointer-events:none;isolation:isolate;transition:transform 440ms cubic-bezier(.4,0,.2,1),visibility 440ms}
+  body>.fixed-dock::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:-16px;right:-16px;bottom:calc(-16px - env(safe-area-inset-bottom));height:calc(124px + env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--bg) 55%,transparent) 30%,color-mix(in srgb,var(--bg) 94%,transparent) 66%,var(--bg))}
+  body>.fixed-dock>*{pointer-events:auto}
+  body>.fixed-dock.is-compact{transform:translateY(calc(100% + 24px + env(safe-area-inset-bottom)));visibility:hidden;pointer-events:none}
+  body>.fixed-dock.is-compact>*{pointer-events:none}
+  .fixed-dock>.segmented,.fixed-dock>.fixed-back{position:absolute;left:8px;top:8px;margin:0}
+  html body .fixed-dock>.fixed-menu-toggle{position:absolute;inset:8px 8px auto auto;margin:0}
+  html body .fixed-dock .v4close{box-sizing:border-box;width:40px;min-width:40px;height:40px;padding:0}
+  html body .fixed-back .v4close{position:static;inset:auto;margin:0}
+  .fixed-back{display:flex;align-items:center}
+  .fixed-menu-toggle svg path{transform-box:view-box;transform-origin:12px 6px}
+  .fixed-menu-toggle .menu-mid{transform-origin:12px 12px}
+  .fixed-menu-toggle .menu-bottom{transform-origin:12px 18px}
+  .fixed-dock button,.fixed-dock a{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .fixed-sheet{position:fixed;inset:auto 0 0;margin:0;width:100%;max-width:none;height:auto;max-height:88dvh;border:0;border-radius:24px 24px 0 0;background:var(--bg);color:var(--ink);padding:0 0 calc(16px + env(safe-area-inset-bottom));overflow:hidden}
+  .fixed-sheet[open]{display:flex;flex-direction:column}
+  .fixed-sheet::backdrop{background:color-mix(in srgb,var(--ink) 30%,transparent)}
+  .fixed-handle{display:flex;align-items:center;justify-content:center;height:28px;flex:none}
+  .fixed-handle span{width:36px;height:4px;border-radius:999px;background:var(--line)}
+  .fixed-scroll{overflow:auto;overscroll-behavior:contain;min-height:0;flex:0 1 auto}
+  html body .fixed-sheet .sidebar{display:flex!important;position:static!important;inset:auto!important;transform:none!important;width:100%!important;min-width:0;max-width:none;height:auto!important;max-height:none;min-height:0;overflow:visible;padding:12px 20px 24px!important;visibility:visible;gap:22px;border:0;box-shadow:none}
+  .fixed-sheet .side-mode:not(:has(*)){display:none}
+  html body .fixed-sheet .side-bottom{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:12px;width:100%;min-width:0;margin:0}
+  html body .fixed-sheet .side-bottom .side-links{display:flex;flex:1;flex-wrap:nowrap;gap:8px;min-width:0;overflow-x:auto;padding:2px 0;scrollbar-width:thin}
+  .fixed-sheet .side-bottom .side-links a,.fixed-sheet .side-bottom .lang{flex-shrink:0}
+  .fixed-sheet>.fixed-dock{position:relative;margin:0 16px}
+  .fixed-sheet .subnav[hidden]{display:none!important}
+  .fixed-sheet .v4row .row-arr{transition:transform 320ms cubic-bezier(.4,0,.2,1)}
+  .fixed-sheet .v4row[aria-expanded=false] .row-arr{transform:none!important}
+  .fixed-sheet .v4row[aria-expanded=true] .row-arr{transform:rotate(90deg)!important}
+  .fixed-sheet .v4row[aria-expanded] .row-arr svg{transform:none!important}
+  @media(prefers-reduced-motion:reduce){
+    body>.fixed-dock,.fixed-sheet .v4row .row-arr{transition:none}
+  }
+}
