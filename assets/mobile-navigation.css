@@ -93,7 +93,7 @@
     backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
     mask-image:linear-gradient(to bottom,transparent,#000 60%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 60%);
   }
-  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn){box-sizing:border-box;min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.v4step,.case-link,.toggle,.dl-btn){box-sizing:border-box;min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px}
   html body.mobile-bottom-nav :is(.segmented,.lang){box-sizing:border-box;height:52px;padding:4px;gap:0;align-items:center}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{box-sizing:border-box;height:44px;padding:4px 14px;min-width:40px;line-height:1}
   html body.mobile-bottom-nav .fixed-back a{padding:0}
@@ -130,7 +130,7 @@
 /* A persistent left control morphs without remounting its labels or icon. */
 @media(max-width:900px){
   .fixed-dock{height:64px;min-height:64px}
-  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn){min-height:48px}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.v4step,.case-link,.toggle,.dl-btn){min-height:48px}
   html body.mobile-bottom-nav .fixed-dock .v4close{width:48px;min-width:48px;height:48px}
   html body.mobile-bottom-nav :is(.segmented,.lang){height:48px;padding:4px}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{height:40px;padding:4px 12px}
@@ -145,7 +145,7 @@
   .fixed-left[data-tabs=true]>.fixed-back{opacity:0;transform:scale(.85);visibility:hidden;pointer-events:none}
   body>.fixed-dock::before,.fixed-sheet>.fixed-dock::before{
     height:calc(88px + env(safe-area-inset-bottom));
-    background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 2%,transparent) 20%,color-mix(in srgb,var(--bg) 7%,transparent) 40%,color-mix(in srgb,var(--bg) 16%,transparent) 60%,color-mix(in srgb,var(--bg) 28%,transparent) 80%,color-mix(in srgb,var(--bg) 42%,transparent) 100%);
+    background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 8%,transparent) 20%,color-mix(in srgb,var(--bg) 28%,transparent) 40%,color-mix(in srgb,var(--bg) 56%,transparent) 60%,color-mix(in srgb,var(--bg) 84%,transparent) 80%,var(--bg) 100%);
     backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);
     mask-image:linear-gradient(to bottom,transparent,#000);-webkit-mask-image:linear-gradient(to bottom,transparent,#000);
   }
@@ -173,7 +173,7 @@
   @media(prefers-reduced-transparency:reduce){.fixed-edge>span{backdrop-filter:none;-webkit-backdrop-filter:none}}
 }
 @media(max-width:900px){
-  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn,.chip){min-width:56px;box-sizing:border-box}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.v4step,.case-link,.toggle,.dl-btn,.chip){min-width:56px;box-sizing:border-box}
   html body.mobile-bottom-nav .chip{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 12px}
   html body.mobile-bottom-nav :is(.segmented,.lang){min-width:56px}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{min-width:48px}
@@ -183,10 +183,33 @@
 /* 44 px control-size comparison. */
 @media(max-width:900px){
   .fixed-dock{height:60px;min-height:60px}
-  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn,.chip){min-height:44px}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.v4step,.case-link,.toggle,.dl-btn,.chip){min-height:44px}
   html body.mobile-bottom-nav :is(.segmented,.lang){height:44px}
   html body.mobile-bottom-nav :is(.segmented,.lang) button{height:36px;min-width:44px}
   html body.mobile-bottom-nav .fixed-dock .v4close{width:44px;min-width:44px;max-width:44px;height:44px}
   .fixed-left{height:44px}
   .fixed-left>.fixed-back{transform-origin:22px 22px}
+}
+
+/* Home's edge treatment is independent from the auto-hiding controls. */
+@media(max-width:900px){
+  .fixed-page-gradient{position:fixed;left:0;right:0;bottom:0;height:calc(88px + env(safe-area-inset-bottom));z-index:59;pointer-events:none;isolation:isolate}
+  .fixed-page-gradient .fixed-edge{inset:0;z-index:0;height:100%}
+  .fixed-page-gradient .fixed-gradient-wash{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 8%,transparent) 20%,color-mix(in srgb,var(--bg) 28%,transparent) 40%,color-mix(in srgb,var(--bg) 56%,transparent) 60%,color-mix(in srgb,var(--bg) 84%,transparent) 80%,var(--bg) 100%);pointer-events:none}
+  body[data-home-edge=true]>.fixed-dock::before,body[data-home-edge=true]>.fixed-dock>.fixed-edge{display:none}
+}
+/* Approved tuning values: home 200 px, inner pages and sheet 72 px. */
+@media(max-width:900px){
+  body>.fixed-dock::before,.fixed-sheet>.fixed-dock::before,.fixed-edge{height:calc(72px + env(safe-area-inset-bottom))}
+  .fixed-page-gradient{height:calc(200px + env(safe-area-inset-bottom))}
+  .fixed-page-gradient .fixed-edge{height:100%}
+  html body.mobile-bottom-nav :is([data-mode-btn],[data-lang-btn]){padding-inline:16px!important}
+  html body.mobile-bottom-nav .fixed-sheet .side-links a:not(.v4close),
+  html body.mobile-bottom-nav :is(.duties-more,.v4up,.v4down,#cv-dl,.chip){padding-inline:16px!important}
+  html body.mobile-bottom-nav :is(.segmented,.lang){padding:4px!important}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button{height:36px!important}
+  html body.mobile-bottom-nav :is(.side-links a:not(.v4close),.duties-more,.v4step,.foot a,.case-link,.toggle,.dl-btn,.chip){min-width:56px!important}
+  html body.mobile-bottom-nav .duties-more{margin-top:4px!important}
+  html body.mobile-bottom-nav .fixed-menu-toggle>svg,
+  html body.mobile-bottom-nav .fixed-back svg{width:20px!important;height:20px!important}
 }
