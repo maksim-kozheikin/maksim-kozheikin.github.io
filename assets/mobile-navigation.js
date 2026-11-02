@@ -8,7 +8,7 @@ function sync(){teardown?.();teardown=mobile.matches?setup():null}
 function setup(){
 const sidebar=document.querySelector('.sidebar'),mode=sidebar?.querySelector('.segmented');
 if(!sidebar||!mode)return ()=>{};
-const controller=new AbortController(),signal=controller.signal,restore=[];
+const controller=new AbortController(),signal=controller.signal,restore=[],savedPositionKey=positionKey();
 function park(node){if(!node)return;const marker=document.createComment('mobile navigation placement');node.before(marker);restore.push(()=>{marker.replaceWith(node)})}
 [sidebar,mode,sidebar.querySelector('.lang'),sidebar.querySelector('.side-bottom'),sidebar.querySelector('.side-top')].forEach(park);
 document.body.classList.add('mobile-bottom-nav');
@@ -17,14 +17,17 @@ document.addEventListener('pointerdown',e=>{
  document.body.dataset.navInput='pointer';
  if(e.pointerType!=='touch')return;
  const tile=e.target.closest('.m-tile');
- if(tile){clearTouch();touchTile=tile;touchPoint={x:e.clientX,y:e.clientY};tile.classList.add('is-touched')}
+ clearTouch();
+ if(tile){touchTile=tile;touchPoint={x:e.clientX,y:e.clientY};tile.classList.add('is-touched')}
 },{capture:true,passive:true,signal});
 document.addEventListener('keydown',e=>{if(!e.metaKey&&!e.ctrlKey&&!e.altKey)document.body.dataset.navInput='keyboard'},{capture:true,signal});
 let touchTile,touchPoint;
 function clearTouch(){touchTile?.classList.remove('is-touched');touchTile=null;touchPoint=null}
 document.addEventListener('pointermove',e=>{if(touchPoint&&Math.hypot(e.clientX-touchPoint.x,e.clientY-touchPoint.y)>10)clearTouch()},{passive:true,signal});
 document.addEventListener('pointercancel',clearTouch,{signal});
-document.addEventListener('pointerup',()=>requestAnimationFrame(clearTouch),{signal});
+// Keep the caption through navigation; a new touch or scroll gesture clears it.
+document.addEventListener('pointerup',()=>{touchPoint=null},{signal});
+addEventListener('pageshow',clearTouch,{signal});
 
 const arrival=sessionStorageGet('portfolio-mobile-arrival')==='home';
 try{sessionStorage.removeItem('portfolio-mobile-arrival')}catch{}
@@ -46,9 +49,9 @@ function setLeftTabs(show){
 }
 setLeftTabs(isHome&&!arrival);
 const sheet=document.createElement('dialog');sheet.id='mobile-menu';sheet.className='fixed-sheet';sheet.setAttribute('aria-label','Меню сайта');
-sheet.innerHTML='<div class="fixed-handle" aria-hidden="true"><span></span></div><div class="fixed-scroll"></div><footer class="fixed-dock"></footer>';
+sheet.innerHTML='<section class="fixed-sheet-panel"><div class="fixed-handle" aria-hidden="true"><span></span></div><div class="fixed-scroll"></div></section><footer class="fixed-dock"></footer>';
 const dimmer=document.createElement('div');dimmer.className='fixed-dimmer';dimmer.setAttribute('aria-hidden','true');document.body.append(dimmer,sheet);sheet.querySelector('.fixed-scroll').append(sidebar);
-const footer=sheet.querySelector('footer');
+const footer=sheet.querySelector('footer'),panel=sheet.querySelector('.fixed-sheet-panel');
 function addProgressiveBlur(parent){
  const edge=document.createElement('div');edge.className='fixed-edge';edge.setAttribute('aria-hidden','true');
  edge.innerHTML='<span></span><span></span><span></span>';parent.prepend(edge);
@@ -86,27 +89,35 @@ paths.forEach((p,i)=>{p.getAnimations().forEach(a=>a.cancel());p.style.transform
 }
 let sheetAnimation,closing=false;
 const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
-const collapsedClip='inset(calc(100% - 88px - env(safe-area-inset-bottom, 0px)) 0 0 0 round 22px 24px 0 0)';
-const expandedClip='inset(0 0 0 0 round 22px 24px 0 0)';
+function setControlsHidden(hidden){dock.classList.toggle('is-compact',hidden);homeGradient?.classList.toggle('is-compact',hidden)}
+function sizePanelForWork(){
+ const row=sidebar.querySelector('.v4row'),sideStyle=getComputedStyle(sidebar),scrollStyle=getComputedStyle(sheet.querySelector('.fixed-scroll'));
+ const count=typeof V4!=='undefined'?V4.timeline.filter(e=>!e.hidden&&(e.project||e.work)).length:7;
+ const height=sheet.querySelector('.fixed-handle').getBoundingClientRect().height+
+ (sideBottom?.getBoundingClientRect().height||44)+
+ parseFloat(sideStyle.paddingTop)+parseFloat(sideStyle.paddingBottom)+parseFloat(sideStyle.rowGap)+
+ (row?.getBoundingClientRect().height||46)*count+parseFloat(scrollStyle.paddingBottom);
+ panel.style.height=Math.min(innerHeight*.88,Math.ceil(height))+'px';
+}
 function open(){
 sidebar.querySelectorAll('.subnav').forEach(sub=>{const row=sub.previousElementSibling;if(row?.matches('.v4row'))row.setAttribute('aria-expanded',String(!sub.hidden))});
-closing=false;sheetAnimation?.cancel();dock.classList.remove('is-compact');footer.append(leftControl,trigger);sheet.showModal();getComputedStyle(leftSurface).clipPath;setLeftTabs(true);dimmer.classList.add('is-open');document.body.style.overflow='hidden';trigger.setAttribute('aria-expanded','true');morph(true);syncLanguage();trigger.focus({preventScroll:true});
-if(!reduced())sheetAnimation=sheet.animate([{clipPath:collapsedClip,backgroundColor:'transparent'},{clipPath:expandedClip,backgroundColor:getComputedStyle(sheet).backgroundColor}],{duration:380,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
+closing=false;sheetAnimation?.cancel();setControlsHidden(false);footer.append(leftControl,trigger);sheet.showModal();sizePanelForWork();getComputedStyle(leftSurface).clipPath;setLeftTabs(true);dimmer.classList.add('is-open');document.body.style.overflow='hidden';trigger.setAttribute('aria-expanded','true');morph(true);syncLanguage();trigger.focus({preventScroll:true});
+if(!reduced())sheetAnimation=panel.animate([{transform:'translateY(100%)'},{transform:'translateY(0)'}],{duration:380,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
 }
 function close(onClosed){
 if(closing||!sheet.open)return;
 closing=true;
 dimmer.classList.remove('is-open');
-const startClip=getComputedStyle(sheet).clipPath;
+const startTransform=getComputedStyle(panel).transform;
 sheetAnimation?.cancel();morph(false);setLeftTabs(isHome);
-const finish=()=>{dock.append(leftControl,trigger);sheet.close();sheetAnimation?.cancel();document.body.style.overflow='';trigger.setAttribute('aria-expanded','false');closing=false;syncLanguage();trigger.focus({preventScroll:true});if(typeof onClosed==='function')onClosed();previousY=scrollY;travel=0;dock.classList.remove('is-compact')};
+const finish=()=>{dock.append(leftControl,trigger);sheet.close();sheetAnimation?.cancel();document.body.style.overflow='';trigger.setAttribute('aria-expanded','false');closing=false;syncLanguage();trigger.focus({preventScroll:true});if(typeof onClosed==='function')onClosed();previousY=scrollY;travel=0;setControlsHidden(false)};
 if(reduced()){finish();return}
-sheetAnimation=sheet.animate([{clipPath:startClip==='none'?expandedClip:startClip,backgroundColor:getComputedStyle(sheet).backgroundColor},{clipPath:collapsedClip,backgroundColor:'transparent'}],{duration:300,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
+sheetAnimation=panel.animate([{transform:startTransform==='none'?'translateY(0)':startTransform},{transform:'translateY(100%)'}],{duration:300,easing:'cubic-bezier(.32,.72,0,1)',fill:'both'});
 sheetAnimation.onfinish=finish;
 }
 trigger.onclick=()=>sheet.open?close():open();
 sheet.addEventListener('cancel',e=>{e.preventDefault();close()});
-sheet.addEventListener('click',e=>{if(e.target===sheet&&e.clientY<sheet.getBoundingClientRect().top)close()});
+sheet.addEventListener('click',e=>{if(e.target===sheet)close()});
 function route(r){
 const url=new URL(r,location.href);
 savePosition();
@@ -120,7 +131,7 @@ const sub=a.nextElementSibling;
 if(sub?.classList.contains('subnav')){e.preventDefault();e.stopImmediatePropagation();toggleSection(a,sub);return}
 }
 if(raw.startsWith('#')&&raw!=='#cv'&&raw!=='#'&&sheet.contains(a)){const el=document.getElementById(raw.slice(1));if(el){e.preventDefault();e.stopImmediatePropagation();close(()=>{scrollTo({top:scrollY+el.getBoundingClientRect().top-20,behavior:'instant'});el.tabIndex=-1;el.focus({preventScroll:true})})}return}
-const u=new URL(a.href);if(u.origin===location.origin&&(/(index|case-[\w-]+|life)\.html$/.test(u.pathname)||raw==='#cv'||raw==='#')){e.preventDefault();e.stopImmediatePropagation();route(raw==='#cv'?'index.html#cv':raw==='#'?'index.html':u.href)}
+const u=new URL(a.href);if(u.origin===location.origin&&(/(index|case-[\w-]+|life)\.html$/.test(u.pathname)||raw==='#cv'||raw==='#')){e.preventDefault();e.stopImmediatePropagation();const target=raw==='#cv'?'index.html#cv':raw==='#'?'index.html':u.href;const navigate=()=>{if(new URL(target,location.href).href!==location.href)route(target)};if(sheet.open)close(navigate);else navigate()}
 },{capture:true,signal});
 const sectionAnimations=new WeakMap();
 function toggleSection(row,sub){
@@ -138,12 +149,12 @@ if(isHome&&arrival){requestAnimationFrame(()=>{if(!signal.aborted)setLeftTabs(tr
 let previousY=scrollY,travel=0,direction=0,scheduled=false;
 addEventListener('scroll',()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{
 const delta=scrollY-previousY;previousY=scrollY;
-if(scrollY<60){dock.classList.remove('is-compact');travel=0}
-else if(!sheet.open&&Math.abs(delta)>1){const next=Math.sign(delta);if(next!==direction){direction=next;travel=0}travel+=Math.abs(delta);if(travel>(direction>0?72:24)){dock.classList.toggle('is-compact',direction>0);travel=0}}
+if(scrollY<60){setControlsHidden(false);travel=0}
+else if(!sheet.open&&Math.abs(delta)>1){const next=Math.sign(delta);if(next!==direction){direction=next;travel=0}travel+=Math.abs(delta);if(travel>(direction>0?72:24)){setControlsHidden(direction>0);travel=0}}
 scheduled=false;
 })},{passive:true,signal});
-dock.addEventListener('focusin',()=>dock.classList.remove('is-compact'));
-function savePosition(){try{sessionStorage.setItem(positionKey(),String(scrollY))}catch{}}
+dock.addEventListener('focusin',()=>setControlsHidden(false));
+function savePosition(){try{sessionStorage.setItem(savedPositionKey,String(scrollY))}catch{}}
 addEventListener('pagehide',savePosition,{signal});
 if(isHome&&!location.hash){const y=Number(sessionStorageGet(positionKey()))||0;if(y)requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!signal.aborted){scrollTo(0,y);previousY=scrollY;travel=0}}))}
 return ()=>{
@@ -160,5 +171,6 @@ homeGradient?.remove();delete document.body.dataset.homeEdge;sheet.remove();dimm
 
 }
 mobile.addEventListener('change',sync);
+addEventListener('hashchange',()=>{if(mobile.matches&&(location.pathname.endsWith('/')||location.pathname.endsWith('/index.html')))sync()});
 sync();
 })();
