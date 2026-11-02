@@ -81,3 +81,112 @@
   html body .fixed-sheet .sidebar a.row[aria-current="page"][aria-expanded="false"] + .subnav + a.row{border-top-color:transparent}
   .mobile-bottom-nav :is(.points,.duties) li::before{font-size:16px}
 }
+
+/* Refinements for real iPhone/Safari viewing. */
+@media(max-width:900px){
+  .fixed-dock{width:calc(100% - 32px)}
+  body>.fixed-dock,body>.fixed-dock.is-compact{right:16px;width:calc(100% - 32px)}
+  .fixed-sheet>.fixed-dock{margin:0 16px}
+  body>.fixed-dock::before{
+    left:-16px;right:-16px;height:calc(104px + env(safe-area-inset-bottom));
+    background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--bg) 12%,transparent) 40%,color-mix(in srgb,var(--bg) 35%,transparent));
+    backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+    mask-image:linear-gradient(to bottom,transparent,#000 60%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 60%);
+  }
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn){box-sizing:border-box;min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px}
+  html body.mobile-bottom-nav :is(.segmented,.lang){box-sizing:border-box;height:52px;padding:4px;gap:0;align-items:center}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button{box-sizing:border-box;height:44px;padding:4px 14px;min-width:40px;line-height:1}
+  html body.mobile-bottom-nav .fixed-back a{padding:0}
+  html body.mobile-bottom-nav .duties-more{margin-top:var(--more-gap,4px)}
+  .mobile-bottom-nav .m-img.m-video{inset:0}
+  .mobile-bottom-nav .m-img.m-video video{width:100%;height:100%;object-fit:cover}
+  .fixed-sheet::backdrop{background:transparent}
+  .fixed-dimmer{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--ink) 28%,transparent);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 240ms ease,visibility 240ms}
+  .fixed-dimmer.is-open{opacity:1;visibility:visible}
+  html body.mobile-bottom-nav .fixed-dock>#cv-dl{position:absolute;left:50%;top:8px;transform:translateX(-50%);margin:0;max-width:calc(100% - 136px);white-space:nowrap}
+  .fixed-sheet .fixed-scroll{scroll-padding-bottom:16px}
+  @media(max-width:360px){
+    .fixed-dock>#cv-dl svg{display:none}
+    html body.mobile-bottom-nav .fixed-dock>#cv-dl{padding:0 8px}
+  }
+  @media(prefers-reduced-motion:reduce){.fixed-dimmer{transition:none}}
+}
+
+@media(max-width:900px){
+  /* Same left-hand tabs inside every sheet; the home button stays on the page. */
+  .fixed-sheet{padding-bottom:0}
+  .fixed-sheet .fixed-scroll{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+  .fixed-sheet>.fixed-dock{position:absolute;left:16px;bottom:calc(8px + env(safe-area-inset-bottom));margin:0;z-index:2;isolation:isolate}
+  .fixed-sheet>.fixed-dock::before{
+    content:"";position:absolute;z-index:-1;pointer-events:none;
+    left:-16px;right:-16px;bottom:calc(-8px - env(safe-area-inset-bottom));
+    height:calc(104px + env(safe-area-inset-bottom));
+    background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--bg) 12%,transparent) 40%,color-mix(in srgb,var(--bg) 35%,transparent));
+    backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+    mask-image:linear-gradient(to bottom,transparent,#000 60%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 60%);
+  }
+}
+
+/* A persistent left control morphs without remounting its labels or icon. */
+@media(max-width:900px){
+  .fixed-dock{height:64px;min-height:64px}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn){min-height:48px}
+  html body.mobile-bottom-nav .fixed-dock .v4close{width:48px;min-width:48px;height:48px}
+  html body.mobile-bottom-nav :is(.segmented,.lang){height:48px;padding:4px}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button{height:40px;padding:4px 12px}
+  .fixed-left{position:absolute;left:8px;top:8px;height:48px;display:grid;pointer-events:none!important}
+  .fixed-left-surface{position:absolute;inset:0;border-radius:999px;background:var(--sel);transition:clip-path 300ms cubic-bezier(.77,0,.175,1);pointer-events:none}
+  html body .fixed-left>.segmented{position:relative;inset:auto;margin:0;background:transparent;box-shadow:none;grid-area:1/1;transform:none}
+  html body .fixed-left>.fixed-back{position:absolute;inset:0 auto auto 0;margin:0}
+  html body .fixed-left>.fixed-back a{background:transparent}
+  .fixed-left>.segmented{clip-path:inset(0 0 0 0 round 24px);transition:clip-path 300ms cubic-bezier(.77,0,.175,1),opacity 300ms cubic-bezier(.77,0,.175,1),visibility 300ms;opacity:1;visibility:visible;pointer-events:auto}
+  .fixed-left>.fixed-back{transition:opacity 300ms cubic-bezier(.77,0,.175,1),transform 300ms cubic-bezier(.77,0,.175,1),visibility 300ms;transform-origin:24px 24px;opacity:1;pointer-events:auto}
+  .fixed-left[data-tabs=false]>.segmented{clip-path:inset(0 calc(100% - 48px) 0 0 round 24px);opacity:0;visibility:hidden;pointer-events:none}
+  .fixed-left[data-tabs=true]>.fixed-back{opacity:0;transform:scale(.85);visibility:hidden;pointer-events:none}
+  body>.fixed-dock::before,.fixed-sheet>.fixed-dock::before{
+    height:calc(88px + env(safe-area-inset-bottom));
+    background:linear-gradient(to bottom,transparent 0%,color-mix(in srgb,var(--bg) 2%,transparent) 20%,color-mix(in srgb,var(--bg) 7%,transparent) 40%,color-mix(in srgb,var(--bg) 16%,transparent) 60%,color-mix(in srgb,var(--bg) 28%,transparent) 80%,color-mix(in srgb,var(--bg) 42%,transparent) 100%);
+    backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);
+    mask-image:linear-gradient(to bottom,transparent,#000);-webkit-mask-image:linear-gradient(to bottom,transparent,#000);
+  }
+  @media(prefers-reduced-motion:reduce){.fixed-left-surface,.fixed-left>.segmented,.fixed-left>.fixed-back{transition:none}}
+}
+
+/* The blur itself grows toward the bottom, independently of the color gradient. */
+@media(max-width:900px){
+  body>.fixed-dock::before,.fixed-sheet>.fixed-dock::before{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .fixed-edge{position:absolute;z-index:-2;left:-16px;right:-16px;bottom:calc(-8px - env(safe-area-inset-bottom));height:calc(88px + env(safe-area-inset-bottom))}
+  .fixed-edge,.fixed-edge *{pointer-events:none!important}
+  .fixed-edge>span{position:absolute;inset:0}
+  .fixed-edge>span:nth-child(1){
+    backdrop-filter:blur(.25px);-webkit-backdrop-filter:blur(.25px);
+    mask-image:linear-gradient(to bottom,transparent 0%,#000 75%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 75%);
+  }
+  .fixed-edge>span:nth-child(2){
+    backdrop-filter:blur(.5px);-webkit-backdrop-filter:blur(.5px);
+    mask-image:linear-gradient(to bottom,transparent 20%,#000 90%);-webkit-mask-image:linear-gradient(to bottom,transparent 20%,#000 90%);
+  }
+  .fixed-edge>span:nth-child(3){
+    backdrop-filter:blur(.85px);-webkit-backdrop-filter:blur(.85px);
+    mask-image:linear-gradient(to bottom,transparent 45%,#000 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 45%,#000 100%);
+  }
+  @media(prefers-reduced-transparency:reduce){.fixed-edge>span{backdrop-filter:none;-webkit-backdrop-filter:none}}
+}
+@media(max-width:900px){
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn,.chip){min-width:56px;box-sizing:border-box}
+  html body.mobile-bottom-nav .chip{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 12px}
+  html body.mobile-bottom-nav :is(.segmented,.lang){min-width:56px}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button{min-width:48px}
+  .mobile-bottom-nav .tag{min-inline-size:1lh}
+  html body.mobile-bottom-nav .fixed-dock .v4close{width:48px;min-width:48px;max-width:48px;height:48px;border-radius:50%}
+}
+/* 44 px control-size comparison. */
+@media(max-width:900px){
+  .fixed-dock{height:60px;min-height:60px}
+  html body.mobile-bottom-nav :is(.side-links a,.duties-more,.foot a,.case-link,.toggle,.dl-btn,.chip){min-height:44px}
+  html body.mobile-bottom-nav :is(.segmented,.lang){height:44px}
+  html body.mobile-bottom-nav :is(.segmented,.lang) button{height:36px;min-width:44px}
+  html body.mobile-bottom-nav .fixed-dock .v4close{width:44px;min-width:44px;max-width:44px;height:44px}
+  .fixed-left{height:44px}
+  .fixed-left>.fixed-back{transform-origin:22px 22px}
+}
