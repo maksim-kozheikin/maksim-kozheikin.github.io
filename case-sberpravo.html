@@ -185,8 +185,9 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* листать нечего — поля под стрелки не нужны */
 .lightbox.single .lightbox-stage{padding:0 20px}
 .lightbox-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;
-  cursor:zoom-in;will-change:transform;user-select:none;-webkit-user-drag:none}
+  cursor:zoom-in;user-select:none;-webkit-user-drag:none}
 .lightbox.zoomed .lightbox-stage img{border-radius:0;cursor:grab}
+.lightbox-stage img.layout-zoom{flex:none;max-width:none;max-height:none}
 .lightbox.zoomed .lightbox-stage.grabbing img{cursor:grabbing}
 
 /* листание */
@@ -2334,9 +2335,19 @@ let gallery=[], idx=0, dir=1;                   // dir — куда листал
    сверху и снизу полосы с кнопками, туда картинка заезжать не должна. */
 const ZMIN=1, ZMAX=8, ZSTEP=1.4;
 let z=1, tx=0, ty=0;
+const touchZoom=matchMedia("(pointer: coarse)");
+
+function fittedImage(){
+  if(!touchZoom.matches || !lbImg.naturalWidth || !lbStage.clientHeight) return null;
+  const style=getComputedStyle(lbStage);
+  const availableWidth=lbStage.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);
+  const ratio=Math.min(1, availableWidth/lbImg.naturalWidth, lbStage.clientHeight/lbImg.naturalHeight);
+  return {width:lbImg.naturalWidth*ratio, height:lbImg.naturalHeight*ratio};
+}
 
 function limits(){
-  const w=lbImg.offsetWidth*z, h=lbImg.offsetHeight*z;
+  const fitted=fittedImage();
+  const w=(fitted?.width ?? lbImg.offsetWidth)*z, h=(fitted?.height ?? lbImg.offsetHeight)*z;
   return { mx:Math.max(0,(w-lbStage.clientWidth)/2),
            my:Math.max(0,(h-lbStage.clientHeight)/2) };
 }
@@ -2346,8 +2357,14 @@ function clampPan(){
   ty=Math.min(l.my, Math.max(-l.my, ty));
 }
 function paintZoom(animate){
-  lbImg.style.transition = animate ? "transform .2s ease" : "none";
-  lbImg.style.transform  = `translate(${tx}px, ${ty}px) scale(${z})`;
+  const fitted=fittedImage();
+  lbImg.classList.toggle("layout-zoom", !!fitted);
+  lbImg.style.transition = animate
+    ? fitted ? "width .2s ease, height .2s ease, transform .2s ease" : "transform .2s ease"
+    : "none";
+  lbImg.style.width = fitted ? fitted.width*z+"px" : "";
+  lbImg.style.height = fitted ? fitted.height*z+"px" : "";
+  lbImg.style.transform = `translate(${tx}px, ${ty}px) scale(${fitted ? 1 : z})`;
   lb.classList.toggle("zoomed", z>ZMIN);
   if(lbLvl) lbLvl.textContent = Math.round(z*100)+"%";
   const out=lb.querySelector(".zoom-out"), inn=lb.querySelector(".zoom-in");
@@ -2411,6 +2428,7 @@ function openLb(btn){
   dir=1;
   showImg(at);
   lb.classList.add("open");
+  paintZoom(false);
 }
 function closeLb(){ lb.classList.remove("open"); resetZoom(false); }
 
@@ -2528,7 +2546,12 @@ function endPointer(e){
 }
 ["pointerup","pointercancel"].forEach(t=>lbStage.addEventListener(t, endPointer));
 
-addEventListener("resize", ()=>{ if(lb.classList.contains("open")){ clampPan(); paintZoom(false); } });
+function refreshZoom(){
+  if(lb.classList.contains("open")){ clampPan(); paintZoom(false); }
+}
+addEventListener("resize", refreshZoom);
+touchZoom.addEventListener("change", refreshZoom);
+lbImg.addEventListener("load", refreshZoom);
 
 /* файла нет (например, его удалили из assets) — убираем из листания
    и сразу показываем следующую картинку в ту же сторону */
