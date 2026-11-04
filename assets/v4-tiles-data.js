@@ -17,6 +17,7 @@
 const V4_TILES = {
   medsi:[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
   "w:medsi-app":[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
+  "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
   "w:sber-video":[{w:12,h:7,video:"assets/sberlegal-demo-720.mp4",poster:"assets/sberlegal-demo-poster.jpg"}]
 };
 
@@ -48,3 +49,6 @@ const V4_WORK_TILES = [
   {id:"freelance-1", co:{ru:"Фриланс",en:"Freelance"},     ti:{ru:"Фриланс",en:"Freelance"},                 href:"life.html?id=freelance"},
   {id:"edu-1",       co:{ru:"Обучение",en:"Education"},    ti:{ru:"Обучение",en:"Education"},                href:"life.html?id=education"}
 ];
+
+/* Keep the existing tile dimensions; lift the application animation after the opening video. */
+const V4_TILES_ORDER = {work:["w:sber-video:0","w:sber-app:0"]};
