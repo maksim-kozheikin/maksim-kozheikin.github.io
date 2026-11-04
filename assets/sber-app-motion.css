@@ -1,0 +1,18 @@
+.sber-app-showcase{position:relative;width:100%;aspect-ratio:8/5;overflow:hidden;border-radius:40px;background:#f4efec;container-type:inline-size;isolation:isolate}
+.sber-app-showcase>.sber-app-motion-link{position:absolute;inset:0;width:100%;height:100%;padding:0;border-radius:inherit;background:transparent;overflow:hidden}
+.sber-app-motion-columns{position:absolute;inset:0 8%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3cqw;pointer-events:none}
+.sber-app-motion-track{display:flex;flex-direction:column;align-self:start;min-width:0;animation:sber-app-drift 110s linear infinite;animation-play-state:paused;will-change:transform}
+.sber-app-motion-track:nth-child(1){animation-duration:112s;animation-delay:-9s}.sber-app-motion-track:nth-child(2){animation-direction:reverse;animation-duration:123s;animation-delay:-53s}.sber-app-motion-track:nth-child(3){animation-duration:105s;animation-delay:-27s}
+.sber-app-motion-group{display:flex;flex-direction:column;gap:2.5cqw;padding-bottom:2.5cqw}
+.sber-app-motion-screen{display:block;border-radius:1.95cqw;overflow:hidden;box-shadow:0 10px 15px rgba(145,109,80,.15);flex:none;background:white}
+.sber-app-showcase .sber-app-motion-screen>img{display:block;width:100%;height:auto;filter:none;transform:none;transition:none}
+.sber-app-showcase[data-running="true"] .sber-app-motion-track{animation-play-state:running}
+@keyframes sber-app-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-50%,0)}}
+@media(max-width:640px){.sber-app-showcase{border-radius:24px}}
+@media(prefers-reduced-motion:reduce){.sber-app-showcase .sber-app-motion-track{animation:none;will-change:auto}.sber-app-motion-track:nth-child(1){transform:translateY(-8%)}.sber-app-motion-track:nth-child(2){transform:translateY(-22%)}.sber-app-motion-track:nth-child(3){transform:translateY(-14%)}}
+
+/* The animation belongs to the 8×5 application tile on the homepage. */
+.m-app-motion{aspect-ratio:8/5;align-self:start}
+.m-app-motion>.sber-app-showcase{position:absolute;inset:0;height:100%;border-radius:inherit}
+.sber-app-motion-link{display:block;color:inherit}
+.m-app-motion .sber-app-motion-link:focus-visible{outline-offset:-3px}

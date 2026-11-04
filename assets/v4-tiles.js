@@ -27,7 +27,7 @@ function v4MosaicList(mode){
       const rh = TILE_RHYTHM[r++ % TILE_RHYTHM.length];
       const base = c || {w:rh[0], h:rh[1]};
       const key = `${id}:${n}`, loc = local[key] || {};
-      out.push({key, id, n, e, item, w:loc.w||base.w, h:loc.h||base.h, img:base.img||"", fit:base.fit||"cover", video:base.video||"", poster:base.poster||""});
+      out.push({key, id, n, e, item, w:loc.w||base.w, h:loc.h||base.h, img:base.img||"", fit:base.fit||"cover", video:base.video||"", poster:base.poster||"", motion:base.motion||""});
     });
   };
   if(mode==="work") (typeof V4_WORK_TILES!=="undefined" ? V4_WORK_TILES : []).forEach(t=>push("w:"+t.id, t, null));
@@ -51,6 +51,10 @@ function v4Mosaic(L, mode){
     const img = t.video ? `<span class="m-img m-video"><video data-autoplay muted loop playsinline preload="none" poster="${t.poster}" src="${t.video}" aria-hidden="true" tabindex="-1"></video></span>`
       : t.img ? `<span class="m-img${t.fit==="contain"?" m-contain":""}"><img src="${t.img}" alt="" loading="lazy"></span>` : "";
     const ed = edit ? `<span class="m-lbl">${t.w}×${t.h}</span><span class="m-rs" title="Потяните, чтобы изменить размер"></span>` : "";
+    if(t.motion === "sber-app") {
+      const labels = `<span class="row-yr">${top}</span><span class="row-ti">${name}</span><span class="row-arr">${uiIcon("chevron")}</span>`;
+      return `<div id="sber-app-tile" class="m-tile m-app-motion"${edit?' draggable="true"':''} style="--w:${t.w};--h:${t.h};--wm:${Math.min(t.w,6)}" data-key="${t.key}">${SberAppMotion.markup(L,{href,labels})}${ed}</div>`;
+    }
     return `<a class="m-tile${t.img||t.video?"":" m-empty"}" href="${href}"${edit?' draggable="true"':''} style="--w:${t.w};--h:${t.h};--wm:${Math.min(t.w,6)}" data-key="${t.key}">
       ${img}
       <span class="row-yr">${top}</span>
@@ -65,7 +69,7 @@ function v4TilesFile(){
   const res = {};
   const ORD = {work:v4MosaicList("work").map(t=>t.key), life:v4MosaicList("life").map(t=>t.key)};
   [...v4MosaicList("life"), ...v4MosaicList("work")].forEach(t=>{
-    const c = {w:t.w, h:t.h}; if(t.img){ c.img=t.img; if(t.fit!=="cover") c.fit=t.fit; } if(t.video){ c.video=t.video; c.poster=t.poster; }
+    const c = {w:t.w, h:t.h}; if(t.motion) c.motion=t.motion; if(t.img){ c.img=t.img; if(t.fit!=="cover") c.fit=t.fit; } if(t.video){ c.video=t.video; c.poster=t.poster; }
     (res[t.id] = res[t.id] || [])[t.n] = c;
   });
   const body = Object.entries(res).map(([k,v])=>`  ${/^[a-z_]\w*$/i.test(k)?k:JSON.stringify(k)}:[${v.map(c=>"{"+Object.entries(c).map(([a,b])=>a+":"+JSON.stringify(b)).join(",")+"}").join(",")}]`).join(",\n");

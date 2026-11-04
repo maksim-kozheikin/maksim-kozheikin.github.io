@@ -1,0 +1,86 @@
+{
+  "en": {
+    "home": {
+      "src": "assets/sber/app-motion/en/home.webp",
+      "width": 720,
+      "height": 4626
+    },
+    "catalog": {
+      "src": "assets/sber/app-motion/en/catalog.webp",
+      "width": 720,
+      "height": 2308
+    },
+    "profile": {
+      "src": "assets/sber/app-motion/en/profile.webp",
+      "width": 720,
+      "height": 2410
+    },
+    "orders": {
+      "src": "assets/sber/app-motion/en/orders.webp",
+      "width": 720,
+      "height": 3167
+    },
+    "empty": {
+      "src": "assets/sber/app-motion/en/empty.webp",
+      "width": 720,
+      "height": 1505
+    },
+    "detail": {
+      "src": "assets/sber/app-motion/en/detail.webp",
+      "width": 720,
+      "height": 1731
+    },
+    "chat": {
+      "src": "assets/sber/app-motion/en/chat.webp",
+      "width": 720,
+      "height": 1561
+    },
+    "payment": {
+      "src": "assets/sber/app-motion/en/payment.webp",
+      "width": 720,
+      "height": 1623
+    }
+  },
+  "ru": {
+    "home": {
+      "src": "assets/sber/app-motion/ru/home.webp",
+      "width": 720,
+      "height": 4626
+    },
+    "catalog": {
+      "src": "assets/sber/app-motion/ru/catalog.webp",
+      "width": 720,
+      "height": 2308
+    },
+    "profile": {
+      "src": "assets/sber/app-motion/ru/profile.webp",
+      "width": 720,
+      "height": 2439
+    },
+    "orders": {
+      "src": "assets/sber/app-motion/ru/orders.webp",
+      "width": 720,
+      "height": 3167
+    },
+    "empty": {
+      "src": "assets/sber/app-motion/ru/empty.webp",
+      "width": 720,
+      "height": 1505
+    },
+    "detail": {
+      "src": "assets/sber/app-motion/ru/detail.webp",
+      "width": 720,
+      "height": 1731
+    },
+    "chat": {
+      "src": "assets/sber/app-motion/ru/chat.webp",
+      "width": 720,
+      "height": 1561
+    },
+    "payment": {
+      "src": "assets/sber/app-motion/ru/payment.webp",
+      "width": 720,
+      "height": 1623
+    }
+  }
+}
