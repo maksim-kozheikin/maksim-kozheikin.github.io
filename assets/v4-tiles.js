@@ -48,14 +48,23 @@ function v4Mosaic(L, mode){
     const href = it ? it.href : (p ? p.href : `life.html?id=${e.id}`);
     const top = it ? v4Txt(it.co, L) : e.yr;
     const name = it ? v4Txt(it.ti, L) : v4Txt(e.ti, L);
-    const img = t.video ? `<span class="m-img m-video"><video data-autoplay muted loop playsinline preload="none" poster="${t.poster}" src="${t.video}" aria-hidden="true" tabindex="-1"></video></span>`
-      : t.img ? `<span class="m-img${t.fit==="contain"?" m-contain":""}"><img src="${t.img}" alt="" loading="lazy"></span>` : "";
+    const search = t.motion === "sber-search";
+    let img = "";
+    if(t.video){
+      const video = `<video data-autoplay muted loop playsinline preload="none" poster="${t.poster}" src="${t.video}" aria-hidden="true" tabindex="-1"></video>`;
+      img = search
+        ? `<span class="m-img" id="sber-search-tile"><span class="m-search-hand">${video}</span></span>`
+        : `<span class="m-img m-video">${video}</span>`;
+    } else if(t.img){
+      img = `<span class="m-img${t.fit==="contain"?" m-contain":""}"><img src="${t.img}" alt="" loading="lazy"></span>`;
+    }
     const ed = edit ? `<span class="m-lbl">${t.w}×${t.h}</span><span class="m-rs" title="Потяните, чтобы изменить размер"></span>` : "";
     if(t.motion === "sber-app") {
       const labels = `<span class="row-yr">${top}</span><span class="row-ti">${name}</span><span class="row-arr">${uiIcon("chevron")}</span>`;
       return `<div id="sber-app-tile" class="m-tile m-app-motion"${edit?' draggable="true"':''} style="--w:${t.w};--h:${t.h};--wm:${Math.min(t.w,6)}" data-key="${t.key}">${SberAppMotion.markup(L,{href,labels})}${ed}</div>`;
     }
-    return `<a class="m-tile${t.img||t.video?"":" m-empty"}" href="${href}"${edit?' draggable="true"':''} style="--w:${t.w};--h:${t.h};--wm:${Math.min(t.w,6)}" data-key="${t.key}">
+    const tileClass = search ? " m-sber-search" : t.img || t.video ? "" : " m-empty";
+    return `<a class="m-tile${tileClass}" href="${href}"${edit?' draggable="true"':''} style="--w:${t.w};--h:${t.h};--wm:${Math.min(t.w,6)}" data-key="${t.key}">
       ${img}
       <span class="row-yr">${top}</span>
       <span class="row-ti">${name}</span>

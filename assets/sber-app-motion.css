@@ -1,4 +1,5 @@
-.sber-app-showcase{position:relative;width:100%;aspect-ratio:8/5;overflow:hidden;border-radius:40px;background:#f4efec;container-type:inline-size;isolation:isolate}
+:root{--sber-tile-surface:#f4efec}
+.sber-app-showcase{position:relative;width:100%;aspect-ratio:8/5;overflow:hidden;border-radius:40px;background:var(--sber-tile-surface);container-type:inline-size;isolation:isolate}
 .sber-app-showcase>.sber-app-motion-link{position:absolute;inset:0;width:100%;height:100%;padding:0;border-radius:inherit;background:transparent;overflow:hidden}
 .sber-app-motion-columns{position:absolute;inset:0 8%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3cqw;pointer-events:none}
 .sber-app-motion-track{display:flex;flex-direction:column;align-self:start;min-width:0;animation:sber-app-drift 110s linear infinite;animation-play-state:paused;will-change:transform}
@@ -16,3 +17,44 @@
 .m-app-motion>.sber-app-showcase{position:absolute;inset:0;height:100%;border-radius:inherit}
 .sber-app-motion-link{display:block;color:inherit}
 .m-app-motion .sber-app-motion-link:focus-visible{outline-offset:-3px}
+
+.m-tile.m-sber-search{aspect-ratio:4/5;align-self:start;background:var(--sber-tile-surface);container-type:inline-size}
+@media(width > 640px){
+  /* The exact 4:5 tile is a quarter-gap shorter than its five-row grid area. */
+  .tiles.mosaic:has(.m-sber-search:not([draggable]))>.m-app-motion{
+    width:100%;
+    height:calc(100% - var(--mg) / 4);
+  }
+}
+#sber-search-tile{scroll-margin-top:24px}
+.m-search-hand{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:104%;
+  aspect-ratio:1122 / 1402;
+  /* Anchor the phone's center in the source image, instead of the center of the hand. */
+  transform:translate(-47.55%,-43.7%);
+}
+.m-search-hand::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url(sber/search-hand-cutout.webp) center / contain no-repeat;
+  filter:drop-shadow(0 1.4cqw 2.5cqw rgba(145,109,80,.16));
+}
+.m-search-hand video{
+  position:absolute;
+  display:block;
+  background:#fff;
+  inset:9.24% auto auto 26.92%;
+  width:41.1%;
+  height:68.95%;
+  object-fit:fill;
+  border-radius:15% / 7.2%;
+}
+@media(max-width:640px){
+  .mobile-bottom-nav .tiles.mosaic:has(.m-sber-search:not([draggable])){grid-template-rows:calc(100cqw * 9 / 16) calc(100cqw * 5 / 8) calc(100cqw * 5 / 4)}
+  .tiles.mosaic:has(.m-sber-search:not([draggable]))>.m-app-motion{grid-row:2}
+  .m-sber-search:not([draggable]){grid-column:1/-1;grid-row:3}
+}
