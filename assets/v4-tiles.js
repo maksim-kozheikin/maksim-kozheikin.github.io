@@ -27,7 +27,7 @@ function v4MosaicList(mode){
       const rh = TILE_RHYTHM[r++ % TILE_RHYTHM.length];
       const base = c || {w:rh[0], h:rh[1]};
       const key = `${id}:${n}`, loc = local[key] || {};
-      out.push({key, id, n, e, item, w:loc.w||base.w, h:loc.h||base.h, img:base.img||"", fit:base.fit||"cover", video:base.video||"", poster:base.poster||"", motion:base.motion||""});
+      out.push({key, id, n, e, item, w:loc.w||base.w, h:loc.h||base.h, img:base.img||"", fit:base.fit||"cover", video:base.video||"", videoMobile:base.videoMobile||"", poster:base.poster||"", motion:base.motion||""});
     });
   };
   if(mode==="work") (typeof V4_WORK_TILES!=="undefined" ? V4_WORK_TILES : []).forEach(t=>push("w:"+t.id, t, null));
@@ -51,7 +51,10 @@ function v4Mosaic(L, mode){
     const search = t.motion === "sber-search";
     let img = "";
     if(t.video){
-      const video = `<video data-autoplay muted loop playsinline preload="none" poster="${t.poster}" src="${t.video}" aria-hidden="true" tabindex="-1"></video>`;
+      const sources = t.videoMobile
+        ? `<source src="${t.videoMobile}" type="video/mp4" media="(max-width: 640px)"><source src="${t.video}" type="video/mp4">`
+        : "";
+      const video = `<video data-autoplay muted loop playsinline preload="none" poster="${t.poster}"${sources ? "" : ` src="${t.video}"`} aria-hidden="true" tabindex="-1">${sources}</video>`;
       img = search
         ? `<span class="m-img" id="sber-search-tile"><span class="m-search-hand">${video}</span></span>`
         : `<span class="m-img m-video">${video}</span>`;
@@ -78,7 +81,7 @@ function v4TilesFile(){
   const res = {};
   const ORD = {work:v4MosaicList("work").map(t=>t.key), life:v4MosaicList("life").map(t=>t.key)};
   [...v4MosaicList("life"), ...v4MosaicList("work")].forEach(t=>{
-    const c = {w:t.w, h:t.h}; if(t.motion) c.motion=t.motion; if(t.img){ c.img=t.img; if(t.fit!=="cover") c.fit=t.fit; } if(t.video){ c.video=t.video; c.poster=t.poster; }
+    const c = {w:t.w, h:t.h}; if(t.motion) c.motion=t.motion; if(t.img){ c.img=t.img; if(t.fit!=="cover") c.fit=t.fit; } if(t.video){ c.video=t.video; c.poster=t.poster; if(t.videoMobile) c.videoMobile=t.videoMobile; }
     (res[t.id] = res[t.id] || [])[t.n] = c;
   });
   const body = Object.entries(res).map(([k,v])=>`  ${/^[a-z_]\w*$/i.test(k)?k:JSON.stringify(k)}:[${v.map(c=>"{"+Object.entries(c).map(([a,b])=>a+":"+JSON.stringify(b)).join(",")+"}").join(",")}]`).join(",\n");

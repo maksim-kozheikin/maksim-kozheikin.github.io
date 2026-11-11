@@ -119,6 +119,29 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
+.figs.figs-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:48px;background:#F4EFEC;border-radius:40px}
+
+.monitor-compare{margin:16px 0 0;padding:clamp(16px,4vw,48px);border:0;border-radius:clamp(24px,4vw,40px);min-inline-size:0;background:#F4EFEC}
+.monitor-controls{display:flex;justify-content:center;margin-top:20px}
+.monitor-controls button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.monitor-stage{display:grid;place-items:center;aspect-ratio:1493/1054}
+.monitor-stage .fig-btn{padding:0;background:transparent;border-radius:0}
+.monitor-stage .fig-btn > svg{display:block;width:100%;height:auto;border-radius:clamp(8px,1.5vw,16px);box-shadow:0 12px 32px #916d5033}
+/* Perspective transform from the screenshot rectangle to the four screen corners. */
+.monitor-stage .fig-btn .monitor-screen-image {
+  width:372px;
+  height:279px;
+  filter:none;
+  transition:none;
+  transform-origin:0 0;
+  transform:matrix3d(.8989709919,.0024165887,0,-.0002715834,.0071897329,.8987166068,0,.000010637,0,0,1,0,0,0,0,1);
+}
+.monitor-stage .fig-btn[hidden]{display:none}
+
+.figs-comparison .fig-btn{padding:0;background:transparent;border-radius:0}
+.figs-comparison .fig:nth-child(3){grid-column:1/-1}
+@media (max-width:640px){.figs.figs-comparison{grid-template-columns:1fr;padding:20px;gap:12px;border-radius:24px}}
+
 /* лайтбокс */
 .lightbox{position:fixed;inset:0;z-index:100;background:var(--lb-bg);
   display:none;flex-direction:column}
@@ -243,18 +266,31 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 /* блок = один раздел */
 /* кейс — без подложки, разделение воздухом */
 /* новый раздел (группа) — большой отступ */
-.block.group{margin-top:200px;position:relative}
+.main-inner {
+  --section-gap:clamp(112px, 15vw, 200px);
+  --case-gap:clamp(80px, 10vw, 128px);
+  --first-case-gap:clamp(48px, 7vw, 88px);
+}
+.block.group{margin-top:var(--section-gap);position:relative}
 /* цветная полоска-разделитель между разделами */
-.block.group::before{content:"";position:absolute;top:-100px;left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
+.block.group::before{content:"";position:absolute;top:calc(var(--section-gap) / -2);left:0;width:100%;height:4px;background:var(--accent);border-radius:2px}
 .block.group:first-of-type::before{display:none}
 .block.group:first-of-type{margin-top:0}
 .block.group .block-title{font-size:var(--h1);letter-spacing:-.03em}
 
 /* кейс внутри раздела — средний отступ */
-.block{margin-top:140px;scroll-margin-top:20px}
+.block{margin-top:var(--case-gap);scroll-margin-top:20px}
 
 /* первый кейс сразу под своим разделом — ближе */
-.block.group + .block:not(.group){margin-top:88px}   /* первый кейс под разделом; группа после группы сохраняет 200px */
+.block.group + .block:not(.group){margin-top:var(--first-case-gap)}
+.case-video {
+  display:block;
+  width:100%;
+  aspect-ratio:16 / 9;
+  margin-top:24px;
+  border-radius:clamp(24px, 4vw, 40px);
+  background:#F4EFEC;
+}
 .block-num{font-size:var(--eyebrow);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .block-title{font-weight:700;font-size:var(--h2);letter-spacing:-.02em;margin-top:8px;line-height:1.2}
 .block-lead{color:var(--muted);margin-top:10px;max-width:60ch}
@@ -364,6 +400,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 <script src="assets/ui.js?v=77"></script>
 <script src="assets/site.js?v=76"></script>
 <script src="assets/v4.js?v=76"></script>
+<script defer src="assets/v4-video.js?v=76"></script>
 <script>
 /*CRM_IMG_S*/const IMG = {
   "marketing": "assets/medsi-marketing.png",
@@ -1160,7 +1197,18 @@ const CURRENT = "medsi";
         ]
       },
       {
+        "a": "workspace-monitors",
+        "title": "Адаптивный интерфейс",
+        "lead": "Врачи работают за мониторами шириной 1920 px. За основу макетов я взял 1440 px и проработал несколько размеров экрана, чтобы интерфейс корректно работал и на больших мониторах, и на ноутбуках. Для операторов колл-центра поддержка ноутбуков особенно важна. Также учёл будущую адаптацию для больших iPad. Дальше показываю макеты на 1440 px.",
+        "subs": [
+          {
+            "monitor": {"old": "Было", "new": "Стало", "alt": "Рабочее место врача. На мониторе открыто расписание."}
+          }
+        ]
+      },
+      {
         "a": "schedule",
+        "video": "schedule",
         "title": "Расписание",
         "lead": "",
         "subs": [
@@ -1203,12 +1251,11 @@ const CURRENT = "medsi";
                 "p": "Вынес популярные функции из контекстного меню в правую панель"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/ru-medsi-workspace-schedule.webp",
-                "cap": "",
-                "w": 100
-              }
+              { "src": "assets/medsi/schedule-before-1920.webp", "alt": "Старый интерфейс расписания", "cap": "", "w": 100 },
+              { "src": "assets/medsi/schedule-doctors-1920.webp", "alt": "Дневное расписание девяти врачей", "cap": "", "w": 100 },
+              { "src": "assets/medsi/schedule-after.webp", "alt": "Обновлённое расписание с выбранным приёмом", "cap": "", "w": 100 }
             ]
           }
         ]
@@ -1299,6 +1346,7 @@ const CURRENT = "medsi";
       },
       {
         "a": "diagnosis",
+        "video": "diagnosis",
         "title": "Диагноз",
         "lead": "",
         "subs": [
@@ -2150,7 +2198,18 @@ const CURRENT = "medsi";
         ]
       },
       {
+        "a": "workspace-monitors",
+        "title": "Responsive interface",
+        "lead": "Doctors work on monitors that are 1920 px wide. I used 1440 px as the design baseline and designed for several screen sizes so the workspace works on both desktop monitors and laptops. Laptop support is especially important for call-center operators. I also considered future support for larger iPads. The screens that follow use the 1440 px layout.",
+        "subs": [
+          {
+            "monitor": {"old": "Before", "new": "After", "alt": "Doctor’s workstation with the schedule open on the monitor."}
+          }
+        ]
+      },
+      {
         "a": "schedule",
+        "video": "schedule",
         "title": "Schedule",
         "lead": "",
         "subs": [
@@ -2193,11 +2252,11 @@ const CURRENT = "medsi";
                 "p": "Moved popular functions from the context menu into the right panel"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/en-medsi-workspace-schedule.webp",
-                "cap": ""
-              }
+              { "src": "assets/medsi/schedule-before-1920.webp", "alt": "Legacy appointment schedule", "cap": "", "w": 100 },
+              { "src": "assets/medsi/schedule-doctors-1920.webp", "alt": "Daily schedule for nine doctors", "cap": "", "w": 100 },
+              { "src": "assets/medsi/schedule-after.webp", "alt": "Updated schedule with a selected appointment", "cap": "", "w": 100 }
             ]
           }
         ]
@@ -2286,6 +2345,7 @@ const CURRENT = "medsi";
       },
       {
         "a": "diagnosis",
+        "video": "diagnosis",
         "title": "Diagnosis",
         "lead": "",
         "subs": [
@@ -2451,6 +2511,20 @@ function renderNav(){
   });
 }
 
+const caseVideos = {
+  schedule: {
+    source: "assets/medsi/schedule-loop.mp4?v=in-window-notices",
+    mobile: "assets/medsi/schedule-loop-720.mp4?v=in-window-notices",
+    poster: "assets/medsi/schedule-loop-poster.png?v=in-window-notices",
+    label: {ru:"Демонстрация расписания", en:"Schedule walkthrough"}
+  },
+  diagnosis: {
+    source: "assets/medsi/ehr-motion-preview.mp4?v=visit-notes",
+    poster: "assets/medsi/ehr-motion-poster.jpg",
+    label: {ru:"Как врач дополняет и сохраняет запись о приёме", en:"Completing and saving a visit note"}
+  }
+};
+
 function renderBlock(b, num){
   const meta = b.meta ? `<div class="meta">
     ${b.meta.map(([h,v])=>`<div><h4>${h}</h4><p class="dim">${v}</p></div>`).join("")}
@@ -2470,20 +2544,46 @@ function renderBlock(b, num){
 
     // реальные изображения — горизонтальный ряд, клик открывает во весь экран
     const imgs = s.imgs
-      ? `<div class="figs">${s.imgs.map(im=>
+      ? `<div class="figs${s.comparison ? " figs-comparison" : ""}">${s.imgs.map(im=>
           `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
              <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
-               <img src="${im.src}" alt="${im.cap}" loading="lazy">
+               <img src="${im.src}" alt="${im.alt || im.cap}" loading="lazy">
              </button>
              ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
            </figure>`).join("")}</div>`
       : "";
     const results = s.results ? `<div class="cols">${s.results.map(r=>
       `<div class="card metric"><div class="num">${r.n}</div><div class="lbl">${r.l}</div><div class="desc">${r.d}</div></div>`).join("")}</div>` : "";
+    const monitor = s.monitor ? `<fieldset class="monitor-compare" aria-label="${b.title}">
+      <div class="monitor-stage">
+        ${[
+          {state:"old", label:s.monitor.old, src:"assets/medsi/schedule-before-1920.webp"},
+          {state:"new", label:s.monitor.new, src:"assets/medsi/schedule-doctors-1920.webp"}
+        ].map(({state,label,src})=>`
+          <button type="button" class="fig-btn monitor-${state}" data-monitor-panel="${state}" data-full="${src}" aria-label="${label}"${state === "new" ? " hidden" : ""}>
+            <svg viewBox="0 0 1493 1054" role="img" aria-label="${s.monitor.alt}">
+              <defs><clipPath id="workspace-monitor-${state}"><polygon points="589,273 958,274 959,549 591,520"/></clipPath></defs>
+              <image href="assets/medsi/doctor-workspace-photo.jpg" width="1493" height="1054"/>
+              <g clip-path="url(#workspace-monitor-${state})">
+                <foreignObject x="588" y="272" width="374" height="280">
+                  <img class="monitor-screen-image" src="${src}" alt="">
+                </foreignObject>
+                <rect x="588" y="271" width="375" height="279" fill="#272822" opacity=".12"/>
+              </g>
+            </svg>
+          </button>`).join("")}
+      </div>
+      <div class="monitor-controls">
+        <div class="segmented">
+          <button type="button" data-monitor-view="old" aria-pressed="true">${s.monitor.old}</button>
+          <button type="button" data-monitor-view="new" aria-pressed="false">${s.monitor.new}</button>
+        </div>
+      </div>
+    </fieldset>` : "";
     return `<div class="sub"${s.gap!=null?` style="margin-top:${s.gap}px"`:""}>
       ${s.ti ? `<h3 class="sub-title">${s.ti}</h3>` : ""}
       ${s.note?`<p class="sub-note">${s.note}</p>`:""}
-      ${cards}${results}${imgs}${shots}
+      ${cards}${results}${imgs}${shots}${monitor}
       ${s.caption?`<p class="caption">${s.caption}</p>`:""}
     </div>`;
   }).join("");
@@ -2496,11 +2596,19 @@ function renderBlock(b, num){
     ? `<div class="gallery">${Array.from({length:b.gallery},(_,i)=>
         `<div class="shot">${L==="ru"?"Макет":"Screen"} ${i+1}</div>`).join("")}</div>` : "";
 
+  const video = caseVideos[b.video];
+  const demo = video ? `
+    <video class="case-video" data-autoplay muted loop playsinline controls preload="none"
+      poster="${video.poster}" aria-label="${video.label[L]}">
+      ${video.mobile ? `<source src="${video.mobile}" type="video/mp4" media="(max-width: 640px)">` : ""}
+      <source src="${video.source}" type="video/mp4">
+    </video>` : "";
+
   return `<section class="block${b.group?" group":""}" id="${b.a}"${b.gap!=null?` style="margin-top:${b.gap}px"`:""}>
     ${num ? `<div class="block-num">${num}</div>` : ""}
     <h2 class="block-title">${b.title}</h2>
     ${b.lead ? `<p class="block-lead">${b.lead}</p>` : ""}
-    ${tags}${meta}${subs}${gallery}
+    ${tags}${meta}${subs}${gallery}${demo}
   </section>`;
 }
 
@@ -2671,6 +2779,17 @@ function openLb(btn){
 function closeLb(){ lb.classList.remove("open"); resetZoom(false); }
 
 document.addEventListener("click", e=>{
+  const option=e.target.closest("[data-monitor-view]");
+  if(option){
+    const comparison=option.closest(".monitor-compare");
+    comparison.querySelectorAll("[data-monitor-view]").forEach(button=>{
+      button.setAttribute("aria-pressed",String(button===option));
+    });
+    comparison.querySelectorAll("[data-monitor-panel]").forEach(panel=>{
+      panel.hidden=panel.dataset.monitorPanel!==option.dataset.monitorView;
+    });
+    return;
+  }
   const btn=e.target.closest(".fig-btn");
   if(btn){ openLb(btn); return; }
   if(!lb.classList.contains("open")) return;
