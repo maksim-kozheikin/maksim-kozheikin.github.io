@@ -17,6 +17,8 @@
 const V4_TILES = {
   medsi:[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
   "w:medsi-app":[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
+  "w:medsi-cab":[{w:12,h:7,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
+  "w:medsi-ehr":[{w:12,h:7,video:"assets/medsi/ehr-motion-preview.mp4?v=visit-notes",poster:"assets/medsi/ehr-motion-poster.jpg"}],
   "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
   "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/search-loop-no-status.mp4",poster:"assets/sber/search-loop-no-status-poster.png"}],
   "w:sber-video":[{w:12,h:7,video:"assets/sberlegal-demo-720.mp4",poster:"assets/sberlegal-demo-poster.jpg"}]
@@ -30,6 +32,8 @@ const V4_TILES = {
    href — куда ведёт (кейс и раздел внутри него).
 ============================================================ */
 const V4_WORK_TILES = [
+  {id:"medsi-cab",   co:"Medsi",       ti:{ru:"Расписание",en:"Schedule"},                 href:"case-medsi.html#schedule"},
+  {id:"medsi-ehr",   co:"Medsi",       ti:{ru:"Запись о приёме в ЭМК",en:"Visit note in the EHR"}, href:"case-medsi.html#diagnosis"},
   {id:"sber-video", co:{ru:"СберПраво",en:"SberPravo"}, ti:{ru:"Как проходит заказ",en:"How an order works"}, href:"case-sberpravo.html#video"},
   {id:"wb-promo",    co:"Wildberries", ti:{ru:"Акции WB",en:"WB promotions"},           href:"case-rwb.html#wbpromo"},
   {id:"wb-seller",   co:"Wildberries", ti:{ru:"Акции селлера",en:"Seller promotions"},  href:"case-rwb.html#sellerpromo"},
@@ -37,7 +41,6 @@ const V4_WORK_TILES = [
   {id:"medsi-app",   co:"Medsi",       ti:{ru:"Приложение SmartMed",en:"SmartMed app"},  href:"case-medsi.html#mobile"},
   {id:"medsi-doctor",co:"Medsi",       ti:{ru:"Выбор врача",en:"Choosing a doctor"},     href:"case-medsi.html#doctor"},
   {id:"medsi-pharm", co:"Medsi",       ti:{ru:"Аптека",en:"Pharmacy"},                   href:"case-medsi.html#pharmacy"},
-  {id:"medsi-cab",   co:"Medsi",       ti:{ru:"Кабинет врача",en:"Doctor’s workspace"},  href:"case-medsi.html#cabinet"},
   {id:"sber-menu",   co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Меню и заказы",en:"Menu and orders"},     href:"case-sberpravo.html#menu"},
   {id:"sber-flow",   co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Путь юзера",en:"User flow"},              href:"case-sberpravo.html#flow"},
   {id:"sber-landing",co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Лендинг",en:"Landing"},                   href:"case-sberpravo.html#landing"},
@@ -52,5 +55,5 @@ const V4_WORK_TILES = [
   {id:"sber-search", co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Поиск юриста",en:"Finding a lawyer"},      href:"case-sberpravo.html#flow-design"}
 ];
 
-/* Pair the Sber application and search tiles after the opening video. */
-const V4_TILES_ORDER = {work:["w:sber-video:0","w:sber-app:0","w:sber-search:0"]};
+/* Lead with the MEDSI demos, followed by the SberPravo tiles. */
+const V4_TILES_ORDER = {work:["w:medsi-cab:0","w:medsi-ehr:0","w:sber-video:0","w:sber-app:0","w:sber-search:0"]};
