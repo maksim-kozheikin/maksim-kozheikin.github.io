@@ -33,7 +33,7 @@ const V4_TILES = {
 ============================================================ */
 const V4_WORK_TILES = [
   {id:"medsi-cab",   co:"Medsi",       ti:{ru:"Расписание",en:"Schedule"},                 href:"case-medsi.html#schedule"},
-  {id:"medsi-ehr",   co:"Medsi",       ti:{ru:"Запись о приёме в ЭМК",en:"Visit note in the EHR"}, href:"case-medsi.html#diagnosis"},
+  {id:"medsi-ehr",   co:"Medsi",       ti:{ru:"Запись о приёме в ЭМК",en:"Visit note in the EHR"}, href:"case-medsi.html#dashboard"},
   {id:"sber-video", co:{ru:"СберПраво",en:"SberPravo"}, ti:{ru:"Как проходит заказ",en:"How an order works"}, href:"case-sberpravo.html#video"},
   {id:"wb-promo",    co:"Wildberries", ti:{ru:"Акции WB",en:"WB promotions"},           href:"case-rwb.html#wbpromo"},
   {id:"wb-seller",   co:"Wildberries", ti:{ru:"Акции селлера",en:"Seller promotions"},  href:"case-rwb.html#sellerpromo"},

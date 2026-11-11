@@ -119,7 +119,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .fig figcaption{display:none}
 @media (max-width:640px){.fig{flex:1 1 100%!important}}
 
-.figs.figs-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:48px;background:#F4EFEC;border-radius:40px}
+.figs.figs-comparison{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding:48px;background:#F4EFEC;border-radius:40px}
 
 .monitor-compare{margin:16px 0 0;padding:clamp(16px,4vw,48px);border:0;border-radius:clamp(24px,4vw,40px);min-inline-size:0;background:#F4EFEC}
 .monitor-controls{display:flex;justify-content:center;margin-top:20px}
@@ -139,8 +139,7 @@ a.row[aria-current="page"] .row-arr{color:var(--accent)}
 .monitor-stage .fig-btn[hidden]{display:none}
 
 .figs-comparison .fig-btn{padding:0;background:transparent;border-radius:0}
-.figs-comparison .fig:nth-child(3){grid-column:1/-1}
-@media (max-width:640px){.figs.figs-comparison{grid-template-columns:1fr;padding:20px;gap:12px;border-radius:24px}}
+@media (max-width:640px){.figs.figs-comparison{padding:20px;gap:12px;border-radius:24px}}
 
 /* лайтбокс */
 .lightbox{position:fixed;inset:0;z-index:100;background:var(--lb-bg);
@@ -1253,9 +1252,9 @@ const CURRENT = "medsi";
             ],
             "comparison": true,
             "imgs": [
-              { "src": "assets/medsi/schedule-before-1920.webp", "alt": "Старый интерфейс расписания", "cap": "", "w": 100 },
-              { "src": "assets/medsi/schedule-doctors-1920.webp", "alt": "Дневное расписание девяти врачей", "cap": "", "w": 100 },
-              { "src": "assets/medsi/schedule-after.webp", "alt": "Обновлённое расписание с выбранным приёмом", "cap": "", "w": 100 }
+              {"src": "assets/medsi/case-previews/ru/14-schedule-before.webp", "alt": "Старый интерфейс расписания", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/ru/14-schedule-doctors.png", "alt": "Дневное расписание девяти врачей", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/ru/14-schedule.png", "alt": "Обновлённое расписание с выбранным приёмом", "cap": "", "w": 100}
             ]
           }
         ]
@@ -1288,12 +1287,10 @@ const CURRENT = "medsi";
                 "p": "Стало очевидно, что надо двигаться сверху вниз. От заголовка к кнопке"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/ru-medsi-workspace-create.webp",
-                "cap": "",
-                "w": 100
-              }
+              {"src": "assets/medsi/case-previews/ru/15-new-entry-before.webp", "alt": "Создание записи в старой ЭМК", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/ru/15-new-entry.png", "alt": "Создание записи в обновлённой ЭМК", "cap": "", "w": 100}
             ]
           }
         ]
@@ -1334,19 +1331,16 @@ const CURRENT = "medsi";
                 "p": "Разные ЭМК пациентов, теперь открываются как вкладки, что упростило заполнение множества карт одновременно"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/ru-medsi-workspace-emk.webp",
-                "cap": "",
-                "w": 100
-              }
+              {"src": "assets/medsi/case-previews/ru/16-ehr-summary-before.webp", "alt": "Резюме ЭМК в старом интерфейсе", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/ru/16-ehr-summary.png", "alt": "Резюме ЭМК в обновлённом интерфейсе", "cap": "", "w": 100}
             ]
           }
         ]
       },
       {
         "a": "diagnosis",
-        "video": "diagnosis",
         "title": "Диагноз",
         "lead": "",
         "subs": [
@@ -1381,9 +1375,59 @@ const CURRENT = "medsi";
                 "p": "Расскрыл все дропдауны, чтобы ускорить настройку диагноза"
               }
             ],
+            "comparison": true,
+            "imgs": [
+              {"src": "assets/medsi/case-previews/ru/17-diagnosis-before.webp", "alt": "Редактор диагноза в старой ЭМК", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/ru/17-diagnosis.png", "alt": "Редактор диагноза в обновлённой ЭМК", "cap": "", "w": 100}
+            ]
+          }
+        ]
+      },
+      {
+        "a": "dashboard",
+        "video": "dashboard",
+        "title": "Дашборд врача",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Проблемы",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Раньше у врача не было дашборда. Чтобы увидеть приёмы на день, найти незавершённую запись или проверить документы на подпись, приходилось открывать разные разделы."
+              },
+              {
+                "h": "",
+                "p": "Перед следующим приёмом врач открывал расписание и детали нужного слота, чтобы уточнить, кто придёт и по какому поводу."
+              }
+            ]
+          },
+          {
+            "ti": "Результат",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "Черновики приёмов",
+                "p": "Показывают незавершённые записи. Врач может вернуться к нужному черновику прямо с дашборда."
+              },
+              {
+                "h": "Документы на подпись",
+                "p": "Список и счётчик показывают, какие документы ещё ждут подписи. Не нужно обходить карты пациентов."
+              },
+              {
+                "h": "Моё расписание",
+                "p": "Приёмы и перерывы на сегодня видны сразу. Полное расписание открывается из виджета."
+              },
+              {
+                "h": "Следующий приём",
+                "p": "Время, пациент, тип визита и статус прибытия собраны в одной карточке. Врач может подготовиться к приёму и открыть его детали."
+              }
+            ],
             "imgs": [
               {
-                "src": "assets/ru-medsi-workspace-diagnoz.webp",
+                "src": "assets/medsi/case-previews/ru/18-dashboard.png",
+                "alt": "Новый дашборд врача",
                 "cap": "",
                 "w": 100
               }
@@ -2254,9 +2298,9 @@ const CURRENT = "medsi";
             ],
             "comparison": true,
             "imgs": [
-              { "src": "assets/medsi/schedule-before-1920.webp", "alt": "Legacy appointment schedule", "cap": "", "w": 100 },
-              { "src": "assets/medsi/schedule-doctors-1920.webp", "alt": "Daily schedule for nine doctors", "cap": "", "w": 100 },
-              { "src": "assets/medsi/schedule-after.webp", "alt": "Updated schedule with a selected appointment", "cap": "", "w": 100 }
+              {"src": "assets/medsi/case-previews/en/14-schedule-before.webp", "alt": "Legacy appointment schedule", "cap": "", "w": 100},
+              {"src": "assets/medsi/schedule-doctors-1920.webp", "alt": "Daily schedule for nine doctors", "cap": "", "w": 100},
+              {"src": "assets/medsi/schedule-after.webp", "alt": "Updated schedule with a selected appointment", "cap": "", "w": 100}
             ]
           }
         ]
@@ -2289,11 +2333,10 @@ const CURRENT = "medsi";
                 "p": "It became obvious that you move top to bottom. From the heading to the button"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/en-medsi-workspace-create.webp",
-                "cap": ""
-              }
+              {"src": "assets/medsi/case-previews/en/15-new-entry-before.webp", "alt": "Creating an entry in the legacy EHR", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/en/15-new-entry.png", "alt": "Creating an entry in the redesigned EHR", "cap": "", "w": 100}
             ]
           }
         ]
@@ -2334,18 +2377,16 @@ const CURRENT = "medsi";
                 "p": "Different patient records now open as tabs, which made filling in many records at once easier"
               }
             ],
+            "comparison": true,
             "imgs": [
-              {
-                "src": "assets/en-medsi-workspace-emk.webp",
-                "cap": ""
-              }
+              {"src": "assets/medsi/case-previews/en/16-ehr-summary-before.webp", "alt": "Legacy EHR summary", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/en/16-ehr-summary.png", "alt": "Redesigned EHR summary", "cap": "", "w": 100}
             ]
           }
         ]
       },
       {
         "a": "diagnosis",
-        "video": "diagnosis",
         "title": "Diagnosis",
         "lead": "",
         "subs": [
@@ -2380,9 +2421,59 @@ const CURRENT = "medsi";
                 "p": "Expanded all dropdowns to speed up diagnosis setup"
               }
             ],
+            "comparison": true,
+            "imgs": [
+              {"src": "assets/medsi/case-previews/en/17-diagnosis-before.webp", "alt": "Diagnosis editor in the legacy EHR", "cap": "", "w": 100},
+              {"src": "assets/medsi/case-previews/en/17-diagnosis.png", "alt": "Diagnosis editor in the redesigned EHR", "cap": "", "w": 100}
+            ]
+          }
+        ]
+      },
+      {
+        "a": "dashboard",
+        "video": "dashboard",
+        "title": "Doctor dashboard",
+        "lead": "",
+        "subs": [
+          {
+            "ti": "Problems",
+            "mark": "cross",
+            "cards": [
+              {
+                "h": "",
+                "p": "Doctors previously had no dashboard. They had to open separate sections to see the day’s appointments, find unfinished notes, and check which documents needed a signature."
+              },
+              {
+                "h": "",
+                "p": "Before the next visit, doctors opened the schedule and the details of the relevant slot to see who was coming and why."
+              }
+            ]
+          },
+          {
+            "ti": "Result",
+            "mark": "star",
+            "cards": [
+              {
+                "h": "Draft visit notes",
+                "p": "Shows unfinished notes and lets doctors resume a draft directly from the dashboard."
+              },
+              {
+                "h": "Documents to sign",
+                "p": "A list and count show which documents still need a signature without opening each patient’s chart."
+              },
+              {
+                "h": "My schedule",
+                "p": "Shows today’s appointments and breaks at a glance and links to the full schedule."
+              },
+              {
+                "h": "Next appointment",
+                "p": "Brings the time, patient, visit type and arrival status together so doctors can prepare and open the appointment details."
+              }
+            ],
             "imgs": [
               {
-                "src": "assets/en-medsi-workspace-diagnoz.webp",
+                "src": "assets/medsi/visit-storyboard/01-dashboard.png",
+                "alt": "New doctor dashboard",
                 "cap": "",
                 "w": 100
               }
@@ -2518,7 +2609,7 @@ const caseVideos = {
     poster: "assets/medsi/schedule-loop-poster.png?v=in-window-notices",
     label: {ru:"Демонстрация расписания", en:"Schedule walkthrough"}
   },
-  diagnosis: {
+  dashboard: {
     source: "assets/medsi/ehr-motion-preview.mp4?v=visit-notes",
     poster: "assets/medsi/ehr-motion-poster.jpg",
     label: {ru:"Как врач дополняет и сохраняет запись о приёме", en:"Completing and saving a visit note"}
@@ -2546,7 +2637,7 @@ function renderBlock(b, num){
     const imgs = s.imgs
       ? `<div class="figs${s.comparison ? " figs-comparison" : ""}">${s.imgs.map(im=>
           `<figure class="fig"${im.w?` data-w="${im.w}" style="flex:0 0 ${im.w}%;max-width:${im.w}%"`:""}>
-             <button class="fig-btn" data-full="${im.src}" aria-label="Открыть изображение">
+             <button class="fig-btn" data-full="${im.src}" aria-label="${L==="ru"?"Открыть изображение":"Open image"}${im.alt ? " — "+im.alt : ""}">
                <img src="${im.src}" alt="${im.alt || im.cap}" loading="lazy">
              </button>
              ${im.cap?`<figcaption>${im.cap}</figcaption>`:""}
