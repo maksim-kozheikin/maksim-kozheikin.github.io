@@ -1,0 +1,29 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22.16" height="26.592" viewBox="0 0 22.16 26.592" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="mark" filter="url(#filter0_d_0_136)">
+<g clip-path="url(#clip0_0_136)">
+<g id="bg">
+<use xlink:href="#stroke0_0_136" fill="#E30611"/>
+<mask id="stroke1_0_136" fill="white">
+<use xlink:href="#stroke0_0_136"/>
+</mask>
+<path d="M19.2053 8.27307C19.2053 12.8422 15.1427 15.512 11.08 20.6827C7.01733 15.512 2.95467 12.8422 2.95467 8.27307C2.95467 3.70398 6.5925 0 11.08 0C15.5675 0 19.2053 3.70398 19.2053 8.27307Z" stroke-width="2.95467" stroke="white" mask="url(#stroke1_0_136)"/>
+</g>
+<circle id="Ellipse 5" cx="11.0734" cy="8.12654" r="2.95467" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_136" x="0" y="0" width="22.16" height="26.592" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2.95467"/>
+<feGaussianBlur stdDeviation="1.47733"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_136"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_136" result="shape"/>
+</filter>
+<clipPath id="clip0_0_136">
+<rect width="16.2507" height="20.6827" fill="white" transform="translate(2.95467)"/>
+</clipPath>
+<path id="stroke0_0_136" d="M19.2053 8.27307C19.2053 12.8422 15.1427 15.512 11.08 20.6827C7.01733 15.512 2.95467 12.8422 2.95467 8.27307C2.95467 3.70398 6.5925 0 11.08 0C15.5675 0 19.2053 3.70398 19.2053 8.27307Z"/>
+</defs>
+</svg>

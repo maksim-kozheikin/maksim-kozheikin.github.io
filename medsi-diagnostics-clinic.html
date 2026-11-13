@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinic diagnostics · MEDSI</title>
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/select.css">
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/chips.css">
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/clinic.css">
+  <script src="assets/medsi/smartmed-diagnostics/clinic.js" defer></script>
+</head>
+<body>
+  <main class="phone clinic-phone" data-state="select">
+    <header class="navigation">
+      <div class="status" aria-hidden="true">
+        <span>9:41</span>
+        <img class="signal" src="assets/medsi/smartmed-diagnostics/signal.svg" alt="">
+        <img class="wifi" src="assets/medsi/smartmed-diagnostics/wifi.svg" alt="">
+        <img class="battery" src="assets/medsi/smartmed-diagnostics/battery.svg" alt="">
+      </div>
+      <button class="back" type="button" aria-label="Back"><img src="assets/medsi/smartmed-diagnostics/navbar.svg" alt=""></button>
+      <div class="navigation-title"><strong id="clinic-title">Step 2 of 3</strong><span>Maria Nazarova</span></div>
+      <button class="filters" type="button" aria-label="Filters"><img src="assets/medsi/smartmed-diagnostics/clinic-filter.svg" alt=""></button>
+    </header>
+
+    <section class="clinic-select" data-screen="select">
+      <div class="clinic-search">
+        <h1>Choose a doctor and time</h1>
+        <label class="search">
+          <img src="assets/medsi/smartmed-diagnostics/search.svg" alt="">
+          <input type="search" aria-label="Doctor's name" placeholder="Doctor's name">
+        </label>
+      </div>
+      <div class="clinic-selection">
+        <div class="clinic-chips"><button type="button" class="smartmed-chip" data-chip="filter" aria-pressed="true">Ultrasound</button><button type="button" class="smartmed-chip" data-chip="filter" aria-pressed="false">Clinic</button></div>
+        <section class="clinic-calendar" aria-label="Appointment dates">
+          <h2><img src="assets/medsi/smartmed-diagnostics/clinic-calendar.svg" alt="">Thursday, August 23</h2>
+          <div class="clinic-week">
+            <button type="button" aria-pressed="true">23<small>Thu</small></button>
+            <button type="button">24<small>Fri</small></button><button type="button">25<small>Sat</small></button>
+            <button type="button">26<small>Sun</small></button><button type="button" class="unavailable">27<small>Mon</small></button>
+            <button type="button">28<small>Tue</small></button><button type="button">29<small>Wed</small></button>
+          </div>
+        </section>
+        <p class="clinic-time"><img src="assets/medsi/smartmed-diagnostics/clinic-time.svg" alt="">Times shown in the clinic's local time</p>
+        <article class="clinic-doctor">
+          <header>
+            <img src="assets/medsi/smartmed-diagnostics/zimin.png" alt="">
+            <div><h2>Zimin Yuri<br>Borisovich</h2><div class="doctor-meta"><span>Ultrasound • 12 YOE</span><span>3000,00 ₽</span></div></div>
+          </header>
+          <div class="clinic-location">
+            <p>Clinic</p>
+            <button class="clinic-site" type="button">Clinical and Diagnostic Center in Grokholsky Lane</button>
+            <p>Available times</p>
+            <div class="clinic-slots">
+              <button class="smartmed-chip" data-chip="time" type="button">08:45</button><button class="smartmed-chip" data-chip="time" type="button" data-next="referral">09:40</button>
+              <button class="smartmed-chip" data-chip="time" type="button">11:20</button><button class="smartmed-chip" data-chip="time" type="button">12:50</button>
+              <button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+            </div>
+          </div>
+        </article>
+        <article class="clinic-doctor">
+          <header>
+            <img src="assets/medsi/smartmed-diagnostics/clinic-kvasenko.png" alt="">
+            <div><h2>Kvasenko Sergey<br>Borisovich</h2><p>Ultrasound</p></div>
+          </header>
+        </article>
+      </div>
+    </section>
+
+    <section class="insurance-screen" data-screen="referral" hidden aria-label="Referral required">
+      <div class="insurance-copy">
+        <img src="assets/medsi/smartmed-diagnostics/insurance-warning.svg" alt="">
+        <p>If you're booking under your health insurance plan at no charge, make sure you have a referral for this test.</p>
+        <p>Without a referral the test is charged. Check the price with the clinic before your visit.</p>
+      </div>
+      <button class="clinic-primary" type="button" data-next="confirmation">Got it</button>
+    </section>
+
+    <section class="clinic-confirm" data-screen="confirmation" hidden aria-label="Confirmation">
+      <dl class="clinic-fields">
+        <div><dt>Patient</dt><dd>Nazarova Margarita Yuryevna</dd></div>
+        <div><dt>Service</dt><dd>Ultrasound</dd></div>
+        <div><dt>Specialty</dt><dd>General practitioner</dd></div>
+        <div><dt>Doctor</dt><dd>Zimin Yuri Borisovich</dd></div>
+        <div><dt>Date and time</dt><dd>Thursday, April 19 at 9:40 AM</dd></div>
+        <div><dt>Clinic</dt><dd>Clinical and Diagnostic Center in Grokholsky Lane</dd></div>
+      </dl>
+      <div class="clinic-payment">
+        <p>Price <strong>4 000 ₽</strong></p>
+        <label class="clinic-terms"><input type="checkbox" checked><span>I accept <em>the terms and conditions</em></span></label>
+        <button class="clinic-primary" type="button" data-next="loading">Submit request</button>
+      </div>
+    </section>
+
+    <section class="clinic-loading" data-screen="loading" hidden role="status">
+      <img src="assets/medsi/smartmed-diagnostics/booking-pulse.png" alt="">
+      <h1>Booking your appointment</h1>
+      <p>This will take a moment. You don't have to wait — we'll send you a push notification.</p>
+    </section>
+
+    <section class="clinic-receipt" data-screen="details" hidden aria-label="Appointment details">
+      <p class="clinic-success">Your clinic appointment is booked</p>
+      <div class="invoice">
+        <img src="assets/medsi/smartmed-diagnostics/invoice.svg" alt="">
+        <span>Invoice</span>
+        <button class="clinic-primary" type="button">Pay</button>
+      </div>
+      <dl class="clinic-fields">
+        <div><dt>Patient</dt><dd>Nazarova Margarita Yuryevna</dd></div>
+        <div><dt>Service</dt><dd>Ultrasound</dd></div>
+        <div><dt>Date and time</dt><dd>Thursday, April 19 at 9:40 AM</dd></div>
+        <div><dt>Room</dt><dd>Shown after payment</dd></div>
+        <div><dt>Price</dt><dd><strong>4 000 ₽</strong></dd></div>
+      </dl>
+      <article class="receipt-doctor">
+        <img src="assets/medsi/smartmed-diagnostics/receipt-zimin.png" alt="">
+        <div><h2>Zimin Yuri<br>Borisovich</h2><p>Ultrasound</p></div>
+      </article>
+      <article class="receipt-location">
+        <header>
+          <h2>Clinical and Diagnostic Center in Grokholsky Lane</h2>
+          <p><img src="assets/medsi/smartmed-diagnostics/older-map-pin.svg" alt="">12 Solyanka Street, bldg. 1, Moscow</p>
+        </header>
+        <div class="receipt-map">
+          <img class="map-image" src="assets/medsi/smartmed-diagnostics/older-clinic-map.png" alt="Map of the clinic location">
+          <img class="map-pin" src="assets/medsi/smartmed-diagnostics/older-map-marker.svg" alt="">
+        </div>
+      </article>
+    </section>
+
+    <div class="clinic-home" aria-hidden="true"></div>
+  </main>
+</body>
+</html>

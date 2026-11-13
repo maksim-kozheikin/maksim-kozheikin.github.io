@@ -1,0 +1,78 @@
+.smartmed-chip {
+  --chip-unit: var(--smartmed-chip-unit, 1px);
+  --chip-height: 24;
+  --chip-padding-block: 4;
+  --chip-padding-inline: 8;
+  --chip-font-size: 12;
+  --chip-line-height: 16;
+  --chip-weight: 500;
+  --chip-background: #fff;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: calc(4 * var(--chip-unit));
+  min-block-size: calc(var(--chip-height) * var(--chip-unit));
+  padding: calc(var(--chip-padding-block) * var(--chip-unit)) calc(var(--chip-padding-inline) * var(--chip-unit));
+  border: 0;
+  border-radius: 999px;
+  background: var(--chip-background);
+  color: #141414;
+  font-family: "MTS Sans", sans-serif;
+  font-size: calc(var(--chip-font-size) * var(--chip-unit));
+  font-weight: var(--chip-weight);
+  line-height: calc(var(--chip-line-height) * var(--chip-unit));
+  white-space: nowrap;
+}
+.smartmed-chip[data-chip="section"] {
+  --chip-height: 32;
+  --chip-padding-block: 8;
+  --chip-padding-inline: 12;
+  --chip-background: #f6f6f6;
+  --chip-weight: 400;
+}
+.smartmed-chip[data-chip="filter"] {
+  --chip-height: 32;
+  --chip-padding-block: 6;
+  --chip-padding-inline: 16;
+  --chip-font-size: 14;
+  --chip-line-height: 20;
+  --chip-background: #ebebeb;
+  --chip-weight: 400;
+}
+.smartmed-chip:is([data-selected], [aria-pressed="true"]) {
+  --chip-weight: 500;
+  background: #00b2ac;
+  color: #fff;
+}
+.smartmed-chip[data-chip="bonus"] { --chip-background: #ffd644; }
+.smartmed-chip img { display: block; flex: none; width: calc(12 * var(--chip-unit)); height: calc(12 * var(--chip-unit)); }
+.smartmed-chip[data-chip="bonus"] img { width: calc(10 * var(--chip-unit)); height: calc(10 * var(--chip-unit)); }
+.smartmed-chip .smartmed-chip-currency { width: 8px; height: 7.656px; }
+
+/* Align the visible MTS Sans glyphs with the optical center of the account icons. */
+.smartmed-chip:is([data-chip="account"], [data-chip="bonus"]) .smartmed-chip-label {
+  transform: translateY(1px);
+}
+.smartmed-chip:is([data-chip="account"], [data-chip="bonus"]) img {
+  transform: translateY(-1px);
+}
+.smartmed-chip[data-chip="account"] .smartmed-chip-currency {
+  transform: translateY(-.5px);
+}
+
+.smartmed-chip[data-chip="time"] {
+  --chip-height: 36;
+  --chip-padding-block: 9;
+  --chip-padding-inline: 0;
+  --chip-font-size: var(--smartmed-time-font-size, 13);
+  --chip-line-height: 18;
+  --chip-weight: 400;
+  --chip-background: #f6f6f6;
+  inline-size: var(--smartmed-time-width, calc(50 * var(--chip-unit)));
+  border-radius: var(--smartmed-time-radius, calc(8 * var(--chip-unit)));
+  padding-block-start: calc(9 * var(--chip-unit) + var(--smartmed-time-label-inset, .5px));
+  padding-block-end: calc(9 * var(--chip-unit) - var(--smartmed-time-label-inset, .5px));
+}
+.smartmed-chip[data-chip="time"] img { width: calc(16 * var(--chip-unit)); height: calc(16 * var(--chip-unit)); }

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Раскадровка · Запись на диагностику</title>
+  <style>
+    :root { --stage: #F4EFEC; --shadow: #916D50; --ink: #141414; --muted: #5e5753; }
+    @font-face {
+      font-family: "MTS Sans";
+      src: url("assets/medsi/fonts/MTSSans-Regular.ttf") format("truetype");
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: "MTS Sans";
+      src: url("assets/medsi/fonts/MTSSans-Medium.ttf") format("truetype");
+      font-weight: 500;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf9f8; color: var(--ink); font: 16px/1.5 "MTS Sans", sans-serif; }
+    main { width: min(100% - 40px, 1240px); margin: 48px auto; }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 500; line-height: 1.1; }
+    .summary { margin-top: 12px; color: var(--muted); }
+    .frames { margin: 32px 0 0; padding: 0; list-style: none; display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); }
+    .frame { display: grid; grid-template-rows: auto 1fr auto; gap: 12px; }
+    .time { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    h2 { font-size: 18px; font-weight: 500; line-height: 1.25; margin: 4px 0 6px; }
+    .frame header p { color: var(--muted); font-size: 14px; }
+    .stage { position: relative; overflow: hidden; background: var(--stage); border-radius: 20px; aspect-ratio: 4 / 5; container-type: inline-size; }
+    .mockup {
+      --width: 49cqw;
+      --top: 9cqw;
+      --left: 50%;
+      position: absolute;
+      left: var(--left);
+      top: var(--top);
+      width: var(--width);
+      aspect-ratio: 277 / 600;
+      transform: translateX(-50%);
+      border-radius: calc(var(--width) * 17.728 / 277);
+      box-shadow: 0 2.8cqw 8cqw color-mix(in srgb, var(--shadow) 28%, transparent);
+      overflow: hidden;
+    }
+    iframe {
+      display: block;
+      width: 277px;
+      height: 600px;
+      border: 0;
+      transform: scale(calc(var(--width) / 277px));
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .source { font-size: 13px; color: #48625e; text-underline-offset: 3px; width: fit-content; }
+    .continuity { margin-top: 32px; padding-top: 16px; border-top: 1px solid #dfd7d0; max-width: 76ch; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Запись на диагностику</h1>
+    <p class="summary">Запись в клинику на гастроскопию к Юрию Зимину. 24 секунды · 4:5 · интерфейс на английском.</p>
+    <ol class="frames">
+      <li class="frame">
+        <header><div class="time">00:00–00:05.22</div><h2>Appointment</h2><p>Плавно прокручиваем страницу до секции Clinics. В поиске по очереди появляются «Search by doctor...», «Search by specialty...» и «Search by clinic...». Между ними остаётся «Search by».</p></header>
+        <div class="stage "><div class="mockup"><iframe src="medsi-diagnostics-entry.html" title="Appointment" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-entry.html">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:05.22–00:05.30</div><h2>Clinic appointment</h2><p>Возвращаемся наверх. Нажимаем Clinic appointment.</p></header>
+        <div class="stage clinic-entry"><div class="mockup"><iframe src="medsi-diagnostics-entry.html" title="Clinic appointment" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-entry.html">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:05.30–00:06.20</div><h2>Choose a diagnostic test</h2><p>Нажимаем Gastroscopy (EGD). Список подвидов открывается справа.</p></header>
+        <div class="stage specialty-shot"><div class="mockup"><iframe src="medsi-diagnostics-specialty.html" title="Choose a diagnostic test" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-specialty.html">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:06.20–00:08.80</div><h2>Types of gastroscopy</h2><p>Прокручиваем подвиды гастроскопии и выбираем услугу. Экран врачей открывается справа.</p></header>
+        <div class="stage gastroscopy-shot"><div class="mockup"><iframe src="medsi-diagnostics-gastroscopy.html?view=selected" title="Types of gastroscopy" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-gastroscopy.html">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:08.80–00:10.88</div><h2>Choose a doctor and time</h2><p>Показываем список на 20 сентября и прокручиваем от первой карточки к Zimin Yuri Borisovich.</p></header>
+        <div class="stage "><div class="mockup"><iframe src="medsi-diagnostics-select.html?flow=clinic" title="Choose a doctor and time" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-select.html?flow=clinic">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:10.88–00:11.65</div><h2>Zimin Yuri Borisovich</h2><p>Нажимаем 11:20 в строке очного приёма второй карточки.</p></header>
+        <div class="stage slot"><div class="mockup"><iframe src="medsi-diagnostics-select.html?flow=clinic&amp;view=slots" title="Zimin Yuri Borisovich" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-select.html?flow=clinic&amp;view=slots">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:11.65–00:15.10</div><h2>Confirm your details</h2><p>Прокручиваем до конца. Подложка под кнопкой плавно исчезает, затем нажимаем Book diagnostics.</p></header>
+        <div class="stage submit"><div class="mockup"><iframe src="medsi-diagnostics-booking.html?flow=clinic" title="Confirm your details" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-booking.html?flow=clinic">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:15.10–00:16.25</div><h2>Booking…</h2><p>Кнопка показывает загрузку. Надпись плавно сменяется индикатором, кнопка остаётся на месте.</p></header>
+        <div class="stage "><div class="mockup"><iframe src="medsi-diagnostics-booking.html?flow=clinic&amp;state=booking" title="Booking…" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-booking.html?flow=clinic&amp;state=booking">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:16.25–00:17.95</div><h2>Appointment details</h2><p>Показываем подтверждение, статус оплаты и номер кабинета.</p></header>
+        <div class="stage "><div class="mockup"><iframe src="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked" title="Appointment details" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:17.95–00:22.65</div><h2>Payment</h2><p>Снизу открывается панель оплаты. Показываем нажатие на Pay 5 000 ₽. Через полсекунды панель плавно уходит вниз. Галочка прорисовывается одновременно с исчезновением кнопки и сжатием карточки.</p></header>
+        <div class="stage"><div class="mockup"><iframe src="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked&amp;view=payment" title="Payment" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked&amp;view=payment">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:22.65–00:23.17</div><h2>Возврат к записи</h2><p>Нажимаем Back в деталях приёма. Возвращаемся на вкладку Appointment.</p></header>
+        <div class="stage return"><div class="mockup"><iframe src="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked&amp;view=paid" title="Возврат к записи" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked">Открыть экран</a>
+      </li>
+      <li class="frame">
+        <header><div class="time">00:23.17–00:24.0</div><h2>Кадр для стыка</h2><p>Повторяем первый общий план вкладки Appointment.</p></header>
+        <div class="stage "><div class="mockup"><iframe src="medsi-diagnostics-entry.html" title="Кадр для стыка" tabindex="-1"></iframe></div></div>
+        <a class="source" href="medsi-diagnostics-entry.html">Открыть экран</a>
+      </li>
+    </ol>
+    <p class="continuity">В сценарии выбран один приём — 20 сентября в 11:20, 5 000 ₽. Экран выбора диагностики собран по предоставленному скриншоту.</p>
+  </main>
+</body>
+</html>

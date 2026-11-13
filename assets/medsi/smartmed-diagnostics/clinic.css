@@ -1,0 +1,220 @@
+.clinic-phone { --wide-card: 259.272px; --clinic-card: 253.363px; }
+.clinic-phone [hidden] { display: none !important; }
+.clinic-phone .navigation {
+  z-index: 1;
+  height: 65.003px;
+  background: var(--white);
+}
+.clinic-phone .navigation-title strong { transform: none; }
+.clinic-phone .navigation-title span { transform: translateY(-1px); }
+.clinic-phone:not([data-state="select"]) .navigation-title span,
+.clinic-phone:not([data-state="select"]) .filters,
+.clinic-phone:not([data-state="select"]):not([data-state="details"]) .back,
+.clinic-phone:is([data-state="referral"], [data-state="loading"]) .navigation-title { display: none; }
+.clinic-phone:is([data-state="confirmation"], [data-state="details"]) .navigation-title {
+  top: 40.85px;
+}
+.clinic-phone:is([data-state="confirmation"], [data-state="details"]) .navigation-title strong {
+  font-size: 12.557px;
+  line-height: 17.728px;
+}
+.clinic-phone[data-state="select"] .navigation-title strong { transform: translateX(-1px); }
+.clinic-phone[data-state="select"] .navigation-title span { transform: translate(-1.3px, -1px); }
+.clinic-home {
+  position: absolute;
+  z-index: 1;
+  bottom: 6.02px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 99.72px;
+  height: 3.693px;
+  border-radius: 99px;
+  background: #000;
+  pointer-events: none;
+}
+[data-state="select"] .clinic-home { display: none; }
+.clinic-select, .clinic-receipt {
+  height: calc(100% - 65.003px);
+  overflow: auto;
+  scrollbar-width: none;
+}
+.clinic-search { height: 74px; padding: 1.477px var(--gutter) 0; background: var(--white); }
+.clinic-search h1 { top: 1px; font-size: 17.728px; line-height: 23.637px; }
+.clinic-search .search { margin-top: 14.773px; width: 253px; background: var(--paper); }
+.clinic-search input { padding-bottom: 2px; }
+.clinic-selection { width: var(--clinic-card); margin-inline: auto; padding: 11.819px 0; }
+.clinic-chips { --smartmed-chip-unit: .7386667px; display: flex; gap: 5.909px; margin-bottom: 11.819px; }
+.clinic-calendar, .clinic-doctor { overflow: hidden; border-radius: 8.864px; background: var(--white); }
+.clinic-calendar { height: 94.549px; padding: 11.819px; }
+.clinic-calendar h2 {
+  display: flex;
+  align-items: center;
+  gap: 5.909px;
+  font-size: 12.557px;
+  line-height: 17.728px;
+}
+.clinic-calendar h2 img { width: 11.819px; height: 11.819px; }
+.clinic-week { display: flex; gap: 5.909px; margin-top: 8.864px; }
+.clinic-week button {
+  flex: 0 0 33.98px;
+  height: 44.32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 5.909px;
+  background: var(--paper);
+  font-size: 12.557px;
+  line-height: 16.251px;
+}
+.clinic-week small { font-size: 8.864px; line-height: 11.819px; color: #666; }
+.clinic-week button[aria-pressed="true"] { background: var(--teal); color: #fff; font-weight: 500; }
+.clinic-week button[aria-pressed="true"] small { color: #fff; }
+.clinic-week .unavailable { background: #fff; box-shadow: inset 0 0 0 .739px var(--line); color: var(--subtle); }
+.clinic-week .unavailable small { color: var(--subtle); }
+.clinic-time {
+  height: 41.365px;
+  margin: 11.819px 0 8.864px;
+  display: flex;
+  align-items: center;
+  gap: 5.909px;
+  padding: 11.819px;
+  border-radius: 8.864px;
+  background: var(--surface);
+  font-size: 10.341px;
+  font-weight: 500;
+  line-height: 14.773px;
+}
+.clinic-time { padding-top: 12.9px; }
+.clinic-time img { width: 17.728px; height: 17.728px; }
+.clinic-doctor { margin-bottom: 8.864px; padding: 11.819px; }
+.clinic-doctor header, .receipt-doctor { display: flex; gap: 11.819px; align-items: flex-start; }
+.clinic-doctor header img, .receipt-doctor img { width: 32.501px; height: 32.501px; }
+.clinic-doctor header > div { flex: 1; }
+.clinic-doctor h2 { font-size: 12.557px; line-height: 17.728px; }
+.doctor-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 4.432px; font-size: 8.864px; }
+.doctor-meta span:last-child { font-size: 10.341px; }
+.clinic-location { margin-top: 11.3px; }
+.clinic-location p { margin-bottom: 5.909px; color: var(--subtle); font-size: 10.341px; line-height: 14.773px; }
+.clinic-site {
+  justify-content: start;
+  height: 32.501px;
+  margin-bottom: 8.864px;
+  padding: 0 11.819px;
+  background: var(--teal);
+  color: #fff;
+  border-radius: 5.909px;
+  font-size: 10.341px;
+  font-weight: 500;
+  white-space: nowrap;
+  padding-top: 1px;
+}
+.clinic-slots {
+  --smartmed-chip-unit: .7386667px;
+  --smartmed-time-width: 47.275px;
+  --smartmed-time-font-size: 14;
+  --smartmed-time-label-inset: 1px;
+  --smartmed-time-radius: 4.432px;
+  display: flex;
+  gap: 2.955px;
+}
+.clinic-primary {
+  width: 100%;
+  height: 32.501px;
+  background: var(--teal);
+  border-radius: 4.432px;
+  color: var(--white);
+  font-size: 12.557px;
+  font-weight: 500;
+  line-height: 17.728px;
+}
+.clinic-primary:disabled { opacity: .5; cursor: default; }
+.clinic-phone:is([data-state="referral"], [data-state="loading"]) { background: var(--white); }
+.insurance-copy, .insurance-screen > .clinic-primary {
+  position: absolute;
+  left: 14.773px;
+  width: 247.453px;
+}
+.insurance-copy { top: 190.58px; font-size: 11.819px; line-height: 17.728px; }
+.insurance-copy img { width: 35.456px; height: 35.456px; margin-bottom: 17.728px; }
+.insurance-copy p + p { margin-top: 17.728px; }
+.insurance-screen > .clinic-primary { top: 527.41px; font-weight: 400; }
+.clinic-confirm, .clinic-receipt { width: var(--wide-card); margin: 8.864px auto 0; }
+.clinic-fields, .clinic-payment, .clinic-success, .invoice, .receipt-doctor, .receipt-location {
+  margin: 0;
+  border-radius: 7.387px;
+  background: var(--white);
+  overflow: hidden;
+}
+.clinic-fields > div { position: relative; padding: 6.91px 11.819px 0; min-height: 44.819px; }
+.clinic-confirm .clinic-fields > div:last-child { min-height: 62.819px; }
+.clinic-fields > div + div::before {
+  content: "";
+  position: absolute;
+  inset: 0 11.819px auto;
+  height: 1px;
+  background: #f5f5f5;
+}
+.clinic-receipt .clinic-fields > div + div::before { inset-inline: 0; }
+.clinic-fields dt { color: var(--muted); font-size: 10.341px; line-height: 14.773px; }
+.clinic-fields dd { margin: 0; font-size: 11.819px; line-height: 18px; }
+.clinic-payment { margin-top: 5.909px; padding: 11.819px 11.819px 19.78px; }
+.clinic-payment p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 29.547px;
+  padding-bottom: 8.864px;
+  border-bottom: 1px solid var(--surface);
+  font-size: 11.819px;
+}
+.clinic-payment p strong, .clinic-fields dd strong { font-weight: 700; }
+.clinic-payment p strong { font-size: 14.773px; }
+.clinic-terms { display: flex; align-items: center; gap: 5.909px; margin: 11.819px 0 9.603px; color: var(--muted); }
+.clinic-terms input {
+  appearance: none;
+  width: 17.728px;
+  height: 17.728px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 4.432px;
+  cursor: pointer;
+}
+.clinic-terms input:checked { border-color: transparent; background: url("terms-check.svg") center / 17.728px no-repeat; }
+.clinic-terms span { position: relative; top: 1px; font-size: 10.341px; line-height: 14.773px; }
+.clinic-terms em { font-style: normal; color: var(--teal); }
+.clinic-loading {
+  position: absolute;
+  top: 221.6px;
+  left: 14.773px;
+  width: 247.453px;
+  text-align: center;
+}
+.clinic-loading img { width: 55.4px; height: 55.4px; border-radius: 50%; margin: 0 auto 20.68px; }
+.clinic-loading h1 { top: 0; font-size: 14.773px; line-height: 20.683px; font-weight: 400; }
+.clinic-loading p { margin-top: 7.387px; font-size: 12.557px; line-height: 17.728px; color: var(--muted); }
+.clinic-receipt { height: calc(100% - 73.867px); padding-bottom: 25.115px; }
+.clinic-receipt > * + * { margin-top: 8.864px; }
+.clinic-success { height: 47.275px; padding: 15.45px 8.864px 0; font-size: 12.557px; line-height: 17.728px; text-align: center; font-weight: 500; }
+.invoice {
+  display: flex;
+  gap: 12.557px;
+  align-items: center;
+  height: 50.229px;
+  padding: 0 13.296px 0 15.512px;
+  font-size: 11.819px;
+}
+.invoice img { width: 25.115px; height: 28.069px; }
+.invoice button { padding-top: 1px; margin-left: auto; width: 65.003px; height: 23.637px; font-size: 10.341px; }
+.clinic-receipt .receipt-doctor { margin-top: 6.371px; }
+.receipt-doctor { padding: 8.864px 11.819px; height: 70.912px; }
+.receipt-doctor h2, .receipt-location h2 { font-size: 11.819px; line-height: 17.728px; }
+.receipt-doctor p, .receipt-location p { margin-top: 2.955px; color: var(--muted); font-size: 10.341px; line-height: 14.773px; }
+.receipt-location header { height: 70.912px; padding: 8.864px 11.819px; }
+.receipt-location h2 { color: #001424; padding-top: 1px; }
+.receipt-location p { display: flex; align-items: center; gap: 2.955px; }
+.receipt-location p img { width: 10.341px; height: 10.341px; }
+.receipt-map { position: relative; height: 88.64px; overflow: hidden; }
+.receipt-map img { position: absolute; transform: translate(-50%, -50%); }
+.receipt-map .map-image { width: 623.435px; height: 421.779px; object-fit: cover; left: calc(50% - 24.75px); top: calc(50% + 11.45px); }
+.receipt-map .map-pin { width: 16.251px; height: 20.683px; left: calc(50% - .37px); top: 50%; }

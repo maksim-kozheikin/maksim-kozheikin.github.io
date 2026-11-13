@@ -16,8 +16,8 @@
 ============================================================ */
 const V4_TILES = {
   medsi:[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
-  "w:medsi-app":[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
-  "w:medsi-cab":[{w:12,h:7,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
+  "w:medsi-app":[{w:4,h:5,video:"assets/medsi/diagnostics-loop-restored-time.mp4",poster:"assets/medsi/diagnostics-loop-approved-poster.jpg"}],
+  "w:medsi-cab":[{w:8,h:5,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
   "w:medsi-ehr":[{w:12,h:7,video:"assets/medsi/ehr-motion-preview.mp4?v=visit-notes",poster:"assets/medsi/ehr-motion-poster.jpg"}],
   "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
   "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/search-loop-no-status.mp4",poster:"assets/sber/search-loop-no-status-poster.png"}],
@@ -38,7 +38,7 @@ const V4_WORK_TILES = [
   {id:"wb-promo",    co:"Wildberries", ti:{ru:"Акции WB",en:"WB promotions"},           href:"case-rwb.html#wbpromo"},
   {id:"wb-seller",   co:"Wildberries", ti:{ru:"Акции селлера",en:"Seller promotions"},  href:"case-rwb.html#sellerpromo"},
   {id:"wb-prices",   co:"Wildberries", ti:{ru:"Цены и скидки",en:"Prices and discounts"}, href:"case-rwb.html#prices"},
-  {id:"medsi-app",   co:"Medsi",       ti:{ru:"Приложение SmartMed",en:"SmartMed app"},  href:"case-medsi.html#mobile"},
+  {id:"medsi-app",   co:"Medsi",       ti:{ru:"Запись на диагностику",en:"Booking a diagnostic exam"}, href:"case-medsi.html#flow"},
   {id:"medsi-doctor",co:"Medsi",       ti:{ru:"Выбор врача",en:"Choosing a doctor"},     href:"case-medsi.html#doctor"},
   {id:"medsi-pharm", co:"Medsi",       ti:{ru:"Аптека",en:"Pharmacy"},                   href:"case-medsi.html#pharmacy"},
   {id:"sber-menu",   co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Меню и заказы",en:"Menu and orders"},     href:"case-sberpravo.html#menu"},
@@ -56,4 +56,4 @@ const V4_WORK_TILES = [
 ];
 
 /* Lead with the MEDSI demos, followed by the SberPravo tiles. */
-const V4_TILES_ORDER = {work:["w:medsi-cab:0","w:medsi-ehr:0","w:sber-video:0","w:sber-app:0","w:sber-search:0"]};
+const V4_TILES_ORDER = {work:["w:medsi-cab:0","w:medsi-app:0","w:medsi-ehr:0","w:sber-video:0","w:sber-app:0","w:sber-search:0"]};

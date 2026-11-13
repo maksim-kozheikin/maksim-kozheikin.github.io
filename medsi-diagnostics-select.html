@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose a doctor and time · MEDSI</title>
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/select.css">
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/chips.css">
+  <script src="assets/medsi/smartmed-diagnostics/select-flow.js" defer></script>
+</head>
+<body>
+  <main class="phone" aria-label="Diagnostics">
+    <header class="navigation">
+      <div class="status" aria-hidden="true">
+        <span>9:41</span>
+        <img class="signal" src="assets/medsi/smartmed-diagnostics/signal.svg" alt="">
+        <img class="wifi" src="assets/medsi/smartmed-diagnostics/wifi.svg" alt="">
+        <img class="battery" src="assets/medsi/smartmed-diagnostics/battery.svg" alt="">
+      </div>
+      <a class="back" href="medsi-diagnostics-gastroscopy.html" aria-label="Back"><img src="assets/medsi/smartmed-diagnostics/navbar.svg" alt=""></a>
+      <div class="navigation-title">
+        <strong>Diagnostics</strong>
+        <span>Maria Nazarova • Step 2 of 3  </span>
+      </div>
+      <button class="filters" type="button" aria-label="Filters"><img src="assets/medsi/smartmed-diagnostics/buttonicon16pxfiltres.svg" alt=""></button>
+    </header>
+
+    <div class="controls">
+      <h1>Choose a doctor and time</h1>
+      <label class="search">
+        <img src="assets/medsi/smartmed-diagnostics/search.svg" alt="">
+        <input type="search" aria-label="Search doctors" placeholder="Search doctors">
+      </label>
+      <div class="chips">
+        <button type="button" class="smartmed-chip" data-chip="filter" aria-pressed="true">Ultrasound</button>
+        <button type="button" class="smartmed-chip" data-chip="filter" aria-pressed="false">Clinics</button>
+      </div>
+    </div>
+
+    <section class="calendar" aria-label="Appointment dates">
+      <header class="calendar-header">
+        <h2>Friday, September 20</h2>
+        <button type="button">Full month<img src="assets/medsi/smartmed-diagnostics/arrowdropdownfor32s.svg" alt=""></button>
+      </header>
+      <div class="weekdays" aria-hidden="true">
+        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+      </div>
+      <div class="days">
+        <span class="day edge" aria-hidden="true"></span>
+        <button class="day past" type="button" aria-label="September 16">16</button>
+        <button class="day past" type="button" aria-label="September 17">17<img class="date-dots" src="assets/medsi/smartmed-diagnostics/frame1851039782.svg" alt=""></button>
+        <button class="day today" type="button" aria-label="September 18">18</button>
+        <button class="day" type="button" aria-label="September 19">19</button>
+        <button class="day selected" type="button" aria-label="September 20" aria-pressed="true">20<img class="date-dots" src="assets/medsi/smartmed-diagnostics/frame1851039783.svg" alt=""></button>
+        <button class="day" type="button" aria-label="September 21">21</button>
+        <button class="day" type="button" aria-label="September 22">22<img class="date-dots wide" src="assets/medsi/smartmed-diagnostics/frame1851039784.svg" alt=""></button>
+        <span class="day edge" aria-hidden="true"></span>
+      </div>
+      <div class="bookings">
+        <p>08:40 • Allergist-immunologist • Solyanka Clinical</p>
+        <p>13:20 • Ultrasound • Michurinsky Medical Center</p>
+      </div>
+    </section>
+
+    <section class="results" aria-label="Available doctors">
+      <div class="local-time">
+        <img src="assets/medsi/smartmed-diagnostics/statusbanner.svg" alt="">
+        <span>Times shown in each clinic's local time</span>
+        <button type="button" aria-label="Dismiss local time notice"><img src="assets/medsi/smartmed-diagnostics/close-banner.svg" alt=""></button>
+      </div>
+
+      <article class="premium">
+        <div class="premium-label">Premium department</div>
+        <div class="doctor-card">
+          <header class="doctor">
+            <div class="portrait portrait-premium"><img src="assets/medsi/smartmed-diagnostics/doctor-kvasenko.png" alt=""></div>
+            <div><h2>Kvasenko Sergey Borisovich</h2><p>Ultrasound • 12 YOE</p></div>
+            <img class="forward" src="assets/medsi/smartmed-diagnostics/16pxarrowdropdown44m56l.svg" alt="">
+          </header>
+          <div class="appointment">
+            <p class="price"><strong>10 400 ₽</strong> • Extended appointment • 1 hour</p>
+            <p class="place"><img src="assets/medsi/smartmed-diagnostics/12pxcardplace.svg" alt="">Clinical and Diagnostic Center in Grokholsky Lane</p>
+            <div class="slots" aria-label="In-clinic times">
+              <button class="smartmed-chip" data-chip="time" type="button">08:45</button><button class="smartmed-chip" data-chip="time" type="button">11:20</button><button class="smartmed-chip" data-chip="time" type="button">12:50</button><button class="smartmed-chip" data-chip="time" type="button">13:20</button><button class="smartmed-chip" data-chip="time" type="button">20:40</button>
+              <button class="smartmed-chip" data-chip="time" type="button" aria-label="More appointment times"><img src="assets/medsi/smartmed-diagnostics/frame1851039804.svg" alt=""></button>
+            </div>
+            <div class="online">
+              <p><img src="assets/medsi/smartmed-diagnostics/12pxcardonline.svg" alt="">Online consultation</p>
+              <div class="slots" aria-label="Online consultation times">
+                <button class="smartmed-chip" data-chip="time" type="button">08:45</button><button class="smartmed-chip" data-chip="time" type="button">11:20</button><button class="smartmed-chip" data-chip="time" type="button">12:50</button><button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="doctor-card listed-doctor" id="zimin-card">
+        <header class="doctor">
+          <div class="portrait"><img src="assets/medsi/smartmed-diagnostics/receipt-zimin.png" alt=""></div>
+          <div><h2>Zimin Yuri Borisovich</h2><p>Gastroscopy • 10 YOE</p></div>
+          <img class="forward" src="assets/medsi/smartmed-diagnostics/16pxarrowdropdown44m56l.svg" alt="">
+        </header>
+        <div class="appointment">
+          <p class="price"><strong>5 000 ₽</strong></p>
+          <p class="place"><img src="assets/medsi/smartmed-diagnostics/12pxcardplace.svg" alt="">Clinical and Diagnostic Center on Solyanka</p>
+          <form class="slots" action="medsi-diagnostics-booking.html" aria-label="Zimin Yuri Borisovich in-clinic times">
+            <input type="hidden" name="flow" value="clinic" disabled>
+            <button class="smartmed-chip" data-chip="time" type="button">08:45</button>
+            <button class="smartmed-chip" data-chip="time" type="submit">11:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">12:50</button>
+            <button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">20:40</button>
+            <button class="smartmed-chip" data-chip="time" type="button" aria-label="More appointment times"><img src="assets/medsi/smartmed-diagnostics/frame1851039804.svg" alt=""></button>
+          </form>
+          <div class="online">
+            <p><img src="assets/medsi/smartmed-diagnostics/12pxcardonline.svg" alt="">Online consultation</p>
+            <div class="slots" aria-label="Online consultation times">
+              <button class="smartmed-chip" data-chip="time" type="button">08:45</button>
+            <button class="smartmed-chip" data-chip="time" type="button">11:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">12:50</button>
+            <button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="doctor-card listed-doctor">
+        <header class="doctor">
+          <div class="portrait portrait-kolyvanova"><img src="assets/medsi/smartmed-diagnostics/doctor-kolyvanova.png" alt=""></div>
+          <div><h2>Kolyvanova Marina<br>Vyacheslavovna</h2><p>Gastroscopy • 14 YOE</p></div>
+          <img class="forward" src="assets/medsi/smartmed-diagnostics/16pxarrowdropdown44m56l.svg" alt="">
+        </header>
+        <div class="appointment">
+          <p class="price"><strong>5 000 ₽</strong></p>
+          <p class="place"><img src="assets/medsi/smartmed-diagnostics/12pxcardplace.svg" alt="">Clinical and Diagnostic Center on Solyanka</p>
+          <div class="slots" aria-label="Solyanka in-clinic times">
+            <button class="smartmed-chip" data-chip="time" type="button">08:45</button>
+            <button class="smartmed-chip" data-chip="time" type="button">11:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">12:50</button>
+            <button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">20:40</button>
+            <button class="smartmed-chip" data-chip="time" type="button" aria-label="More appointment times"><img src="assets/medsi/smartmed-diagnostics/frame1851039804.svg" alt=""></button>
+          </div>
+          <p class="place"><img src="assets/medsi/smartmed-diagnostics/12pxcardplace.svg" alt=""><span>Multidisciplinary Medical Center<br>MEDSI Michurinsky</span></p>
+          <div class="slots" aria-label="Michurinsky in-clinic times">
+            <button class="smartmed-chip" data-chip="time" type="button">15:45</button>
+            <button class="smartmed-chip" data-chip="time" type="button">16:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">17:50</button>
+            <button class="smartmed-chip" data-chip="time" type="button">18:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">18:40</button>
+            <button class="smartmed-chip" data-chip="time" type="button" aria-label="More appointment times"><img src="assets/medsi/smartmed-diagnostics/frame1851039804.svg" alt=""></button>
+          </div>
+          <div class="online">
+            <p><img src="assets/medsi/smartmed-diagnostics/12pxcardonline.svg" alt="">Online consultation</p>
+            <div class="slots" aria-label="Online consultation times">
+              <button class="smartmed-chip" data-chip="time" type="button">08:45</button>
+            <button class="smartmed-chip" data-chip="time" type="button">11:20</button>
+            <button class="smartmed-chip" data-chip="time" type="button">12:50</button>
+            <button class="smartmed-chip" data-chip="time" type="button">13:20</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

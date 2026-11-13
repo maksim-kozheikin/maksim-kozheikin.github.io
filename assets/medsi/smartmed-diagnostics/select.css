@@ -1,0 +1,316 @@
+@font-face {
+  font-family: MTS Sans;
+  src: url("../fonts/MTSSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: MTS Sans;
+  src: url("../fonts/MTSSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: MTS Sans;
+  src: url("../fonts/MTSSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+:root {
+  --paper: #f6f6f6;
+  --white: #fff;
+  --ink: #141414;
+  --muted: #808080;
+  --subtle: #a8a8a8;
+  --line: #e0e0e0;
+  --surface: #ebebeb;
+  --teal: #00b2ac;
+  --gutter: 11.819px;
+  --card-radius: 11.819px;
+  --phone-radius: 17.728px;
+}
+* { box-sizing: border-box; }
+body {
+  display: grid;
+  min-height: 100vh;
+  margin: 0;
+  place-items: center;
+  background: #b7b7b7;
+  color: var(--ink);
+  font-family: MTS Sans, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 9.603px;
+  line-height: 13.296px;
+}
+h1, h2, p { margin: 0; }
+h1, h2, strong { font-weight: 500; }
+img { display: block; }
+button, input { color: inherit; font: inherit; }
+button {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+:focus-visible { outline: 1px solid var(--teal); outline-offset: 1px; }
+.phone {
+  position: relative;
+  width: 276.904px;
+  height: 599.59px;
+  overflow: hidden;
+  border-radius: var(--phone-radius);
+  background: var(--paper);
+}
+.phone::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset .369px .369px 0 0 var(--line), inset -.739px -.739px 0 0 var(--line);
+  pointer-events: none;
+  content: "";
+}
+.navigation { position: relative; height: 65.003px; }
+.status span {
+  position: absolute;
+  top: 10.35px;
+  left: 22.95px;
+  font: 600 11.08px/13.296px -apple-system, sans-serif;
+  letter-spacing: -.1219px;
+}
+.status img, .back, .filters { position: absolute; }
+.signal { top: 12.92px; left: 216.1px; width: 12.631px; height: 7.904px; }
+.wifi { top: 12.76px; left: 232.55px; width: 11.375px; height: 8.168px; }
+.battery { top: 11.73px; left: 246.7px; width: 18.56px; height: 8.93px; }
+.back, .filters { top: 39.89px; width: 17.728px; height: 17.728px; }
+.back { left: var(--gutter); }
+.filters { left: 247.45px; }
+.back img, .filters img { width: 100%; }
+.navigation-title {
+  position: absolute;
+  top: 36.68px;
+  left: 0;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+}
+.navigation-title strong { font-size: 10.341px; line-height: 14.773px; transform: translateX(-1.47px); }
+.navigation-title span { color: var(--muted); font-size: 8.864px; line-height: 11.819px; transform: translate(-.8px, -1.15px); }
+.controls {
+  position: relative;
+  height: 108.45px;
+  padding-inline: 11.92px;
+  padding-block: var(--gutter);
+}
+h1 { position: relative; top: 2px; font-size: 14.773px; line-height: 17.728px; }
+.search {
+  position: relative;
+  display: flex;
+  height: 26.592px;
+  width: 253px;
+  margin-top: 7.68px;
+  border-radius: 7.387px;
+  background: var(--surface);
+}
+.search img { position: absolute; top: 7.87px; left: 7.387px; width: 10.341px; }
+.search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0 8px 1px 23.637px;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  font-size: 12.557px;
+  line-height: 16.251px;
+}
+.search input::placeholder { color: var(--subtle); opacity: 1; }
+.chips { --smartmed-chip-unit: .7386667px; display: flex; gap: 2.955px; margin-top: 11.77px; }
+.controls::after, .bookings::before, .calendar::after, .doctor-card .appointment::before {
+  position: absolute;
+  right: 0;
+  left: var(--gutter);
+  height: 1px;
+  background: color-mix(in srgb, var(--line) 38%, transparent);
+  content: "";
+}
+.controls::after, .calendar::after { bottom: -.55px; }
+.calendar { position: relative; height: 136.08px; }
+.calendar-header {
+  display: flex;
+  height: 34.29px;
+  padding: 0 var(--gutter);
+  align-items: center;
+  justify-content: space-between;
+}
+.calendar-header h2 { transform: translateY(1px); font-size: 11.819px; line-height: 17.728px; }
+.calendar-header button { display: flex; gap: 2.955px; color: #8c8c8c; transform: translate(-.55px, 2.15px); }
+.calendar-header img { transform: translateY(-2px); width: 11.819px; height: 11.819px; }
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 36.933px);
+  margin-left: 9.2px;
+  height: 15.28px;
+  text-align: center;
+  color: var(--subtle);
+  font-weight: 500;
+  font-size: 8.864px;
+  line-height: 11.819px;
+  align-items: center;
+  padding-top: 3px;
+}
+.weekdays span:nth-child(n + 4) { transform: translateX(.65px); }
+.days {
+  display: flex;
+  gap: 1.49px;
+  width: max-content;
+  margin-left: -26.86px;
+}
+.day {
+  position: relative;
+  width: 35.456px;
+  height: 35.456px;
+  padding-top: 2px;
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 12.557px;
+  line-height: 16.251px;
+}
+.day.past, .day.edge:first-child { border: .739px solid var(--surface); background: transparent; color: #ccc; }
+.day.today, .day.selected { font-weight: 700; }
+.day.selected { background: var(--teal); color: var(--white); }
+.date-dots { position: absolute; top: 25.044px; left: 50%; transform: translateX(-50%); width: 8.06px; }
+.date-dots.wide { width: 14.5px; }
+.bookings {
+  position: relative;
+  margin-top: 8.42px;
+  padding: 7.35px var(--gutter) 0 11.92px;
+  font-size: 8.864px;
+  line-height: 14.773px;
+}
+.bookings p + p { margin-top: .227px; }
+.bookings::before, .doctor-card .appointment::before { top: 0; }
+.calendar::after { bottom: 0; left: 0; }
+.results { padding: 12.12px 0 0 11.92px; width: 265.283px; }
+.local-time {
+  display: flex;
+  align-items: center;
+  gap: 5.909px;
+  height: 23.819px;
+  padding: 5.909px;
+  border-radius: 8.864px;
+  background: var(--surface);
+  font-size: 8.864px;
+  font-weight: 500;
+  line-height: 11.819px;
+}
+.local-time span { flex: 1; transform: translateY(.7px); }
+.local-time button { width: 11.819px; height: 11.819px; }
+.local-time button img { width: 12px; height: 12px; }
+.local-time img { width: 11.819px; height: 11.819px; }
+.premium {
+  margin-top: 5.909px;
+  margin-bottom: 5.909px;
+  border-radius: var(--card-radius);
+  background: url("rectangle4410.png") center -.74px / 254.84px 31.024px no-repeat;
+}
+.premium-label {
+  height: 19.205px;
+  border-radius: var(--card-radius) var(--card-radius) 0 0;
+  color: #806a6e;
+  text-align: center;
+  padding: 4.4px 0 0 1px;
+  font-size: 8.864px;
+  line-height: 11.819px;
+}
+.premium .doctor-card { box-shadow: 0 0 0 .739px #ded8d9b8; }
+.doctor-card {
+  background: var(--white);
+  border-radius: var(--card-radius);
+}
+.doctor {
+  display: flex;
+  height: 48.728px;
+  align-items: flex-start;
+  gap: 8.864px;
+  padding: 8.864px;
+}
+.portrait {
+  position: relative;
+  flex: none;
+  width: 29.547px;
+  height: 29.547px;
+  overflow: hidden;
+  border-radius: 5.909px;
+  background: var(--paper);
+}
+.portrait img { width: 100%; height: 100%; object-fit: cover; }
+.portrait-premium::after {
+  position: absolute;
+  inset: -6.645px -5.91px -2.95px 11.82px;
+  background: url("ellipse92.svg") center / 100% 100% no-repeat;
+  mix-blend-mode: darken;
+  content: "";
+}
+.doctor h2 { font-size: 11.819px; line-height: 16.251px; white-space: nowrap; }
+.results > .doctor-card .doctor p { color: var(--subtle); }
+.results > .doctor-card .doctor h2 { transform: translate(.15px, .3px); }
+.doctor p { color: #868686; transform: translateY(1.5px); }
+.doctor .forward { width: 11.819px; height: 11.819px; margin: 9.6px 0 0 auto; transform: rotate(-90deg); }
+.appointment { position: relative; padding: 8.864px 8.864px 8.48px; }
+.doctor-card .appointment::before { left: 8.864px; background: #f4f4f4; }
+.price { transform: translate(.6px, 1px); white-space: nowrap; line-height: 17.728px; }
+.price strong { font-size: 12.557px; line-height: 16.251px; }
+.place, .online p { display: flex; align-items: center; gap: 2.955px; white-space: nowrap; }
+.place { margin: 8.864px 0 2.432px; }
+.place img { transform: translateY(-1.4px); }
+.place img, .online p img { width: 8.864px; height: 8.864px; }
+.slots {
+  --smartmed-chip-unit: .7386667px;
+  --smartmed-time-width: min(36.933px, calc((100% - 5 * 2.955px) / 6));
+  display: flex;
+  gap: 2.955px;
+}
+.online { margin-top: 12.6px; }
+.online .slots { --smartmed-time-label-inset: 0px; margin-top: 5.909px; }
+
+.doctor-list-scroll { overflow-y: auto; scrollbar-width: none; }
+.doctor-list-scroll .results { padding-bottom: 11.819px; }
+.listed-doctor + .listed-doctor { margin-top: 5.909px; }
+.listed-doctor .doctor { height: auto; min-height: 48.728px; }
+.listed-doctor .appointment { padding-top: 8.864px; }
+.listed-doctor .slots + .place { margin-top: 11.819px; }
+.listed-doctor .place { white-space: normal; }
+.listed-doctor .place img { flex: none; }
+.listed-doctor .portrait-kolyvanova img { height: 113.51%; object-position: top; }
+
+/* The outer device clips its screen, including both pages during navigation. */
+.motion-screen body { background: var(--paper); }
+.motion-screen .phone { border-radius: 0; width: 277px; height: 600px; }
+.motion-screen .phone::after { display: none; }
+
+
+.motion-screen :is(.status, .entry-home, .home-indicator) { visibility: hidden; }
+
+.motion-screen .doctor-list-scroll,
+.motion-screen [data-state="confirm"] .booking-content { clip-path: inset(32px 0 0); }
+
+/* Shared glass for controls that float above scrollable content. */
+.floating-glass { isolation: isolate; }
+.floating-glass::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgb(246 246 246 / 82%);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 -1px 8px rgb(0 0 0 / 6%);
+  opacity: var(--glass-opacity, 1);
+  transition: opacity 240ms cubic-bezier(.23, 1, .32, 1);
+  pointer-events: none;
+}
+.floating-glass[data-scroll-end] { --glass-opacity: 0; }
+.motion-screen .floating-glass::before { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .floating-glass::before { transition: none; }
+}

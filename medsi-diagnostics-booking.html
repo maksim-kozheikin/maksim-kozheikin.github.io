@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirm your details · MEDSI</title>
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/select.css">
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/booking.css">
+  <script src="assets/medsi/smartmed-diagnostics/booking.js" defer></script>
+</head>
+<body>
+  <main class="phone booking-phone" data-state="confirm" aria-label="Diagnostics">
+    <div class="booking-content">
+      <header class="navigation">
+        <div class="status" aria-hidden="true">
+          <span>9:41</span>
+          <img class="signal" src="assets/medsi/smartmed-diagnostics/signal.svg" alt="">
+          <img class="wifi" src="assets/medsi/smartmed-diagnostics/wifi.svg" alt="">
+          <img class="battery" src="assets/medsi/smartmed-diagnostics/battery.svg" alt="">
+        </div>
+        <a class="back" href="medsi-diagnostics-select.html" aria-label="Back"><img src="assets/medsi/smartmed-diagnostics/navbar.svg" alt=""></a>
+        <div class="navigation-title">
+          <strong>Diagnostics</strong>
+          <span>Maria Nazarova • Step 3 of 3</span>
+        </div>
+        <div class="appointment-title" data-booked hidden>
+          <h1>Appointment details</h1>
+          <button type="button" aria-label="Add to calendar"><img src="assets/medsi/smartmed-diagnostics/calendar-add.svg" alt=""></button>
+        </div>
+      </header>
+
+      <div class="booking-intro" data-before-booking>
+        <h1>Confirm your details</h1>
+        <aside class="referral">
+          <img src="assets/medsi/smartmed-diagnostics/referral-alert.svg" alt="">
+          <h2>Without a referral, the exam is charged</h2>
+          <p>If you're booking under your health insurance plan at no charge, make sure you have a referral for this exam. Check the price with the clinic before your visit</p>
+        </aside>
+      </div>
+
+      <section class="booking-status" aria-label="Appointment status" data-booked hidden>
+        <div class="booking-status-row">
+          <img src="assets/medsi/smartmed-diagnostics/booked.svg" alt="">
+          <p>Your diagnostic exam is booked</p>
+        </div>
+        <div class="booking-status-row">
+          <span class="payment-status-icons" aria-hidden="true">
+            <img class="payment-unpaid" src="assets/medsi/smartmed-diagnostics/unpaid.svg" alt="">
+            <svg class="payment-paid" width="29.547" height="29.547" viewBox="0 0 30 30" aria-hidden="true">
+              <path d="M9.5 15.3l4 4 7-8" pathLength="1" fill="none" stroke="#00b2ac" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <p id="payment-status">Appointment not paid</p>
+        </div>
+        <button class="booking-primary" type="button" id="appointment-payment">Pay 5 000 ₽</button>
+      </section>
+
+      <div class="booking-details">
+        <p class="room" data-booked hidden>Room 414</p>
+        <section class="exam-card" aria-label="Diagnostics details">
+          <header class="exam-heading">
+            <span><img src="assets/medsi/smartmed-diagnostics/diagnostic.svg" alt=""></span>
+            <h2>Diagnostics</h2>
+          </header>
+          <dl class="exam-fields">
+            <div class="exam-field"><dt>Exam type</dt><dd>Gastroscopy</dd></div>
+            <div class="exam-field">
+              <dt>Service</dt>
+              <dd>Gastroscopy (upper gastrointestinal endoscopy)</dd>
+              <button class="prepare" type="button">
+                <span><strong>How to prepare</strong><small>Please review before your visit</small></span>
+                <img src="assets/medsi/smartmed-diagnostics/prepare-arrow.svg" alt="">
+              </button>
+            </div>
+            <div class="exam-field"><dt>Doctor</dt><dd>Zimin Yuri Borisovich</dd></div>
+            <div class="exam-field"><dt>Patient</dt><dd>Maria Nazarova</dd></div>
+            <div class="exam-field"><dt>Appointment length</dt><dd>1 hour</dd></div>
+            <div class="exam-field">
+              <dt>Date and time</dt><dd id="appointment-date">Friday, September 20 at 11:20 AM</dd>
+              <p class="exam-note"><img src="assets/medsi/smartmed-diagnostics/price-info.svg" alt="">Times shown in the clinic's local time</p>
+            </div>
+            <div class="exam-field"><dt>Clinic</dt><dd>Clinical and Diagnostic Center on Solyanka</dd></div>
+            <div class="exam-field"><dt>Clinic address</dt><dd>12 Solyanka Street, bldg. 1, Moscow</dd></div>
+            <div class="exam-field"><dt>Price</dt><dd class="appointment-price">5 000 ₽</dd></div>
+          </dl>
+        </section>
+        <section class="clinic-card" data-booked hidden aria-label="Clinic location">
+          <div class="clinic-map"><img class="map" src="assets/medsi/smartmed-diagnostics/clinic-map.png" alt="Map of the clinic location"><img class="marker" src="assets/medsi/smartmed-diagnostics/clinic-marker.svg" alt=""></div>
+          <div class="clinic-address">
+            <img src="assets/medsi/smartmed-diagnostics/clinic-place.svg" alt="">
+            <div><strong>Clinical and Diagnostic Center on Solyanka</strong><p>12 Solyanka Street, bldg. 1, Moscow</p></div>
+          </div>
+        </section>
+        <button class="cancel-appointment" data-booked hidden type="button"><img src="assets/medsi/smartmed-diagnostics/appointment-cross.svg" alt="">Cancel appointment</button>
+      </div>
+    </div>
+    <footer class="booking-action floating-glass" data-before-booking>
+      <button class="booking-primary" type="button" id="submit-booking">
+        <span class="submit-label">Book diagnostics</span>
+        <span class="submit-progress" aria-hidden="true"><img src="assets/medsi/smartmed-diagnostics/booking-spinner.svg" alt="">Booking…</span>
+      </button>
+      <div class="booking-copy">
+        <p class="booking-terms">By tapping "Book diagnostics"<br>I accept <span>the terms and conditions</span></p>
+        <p class="booking-notice" role="status">This will take a moment.<br>We'll send you a push notification.</p>
+      </div>
+    </footer>
+    <dialog class="payment-sheet" aria-labelledby="payment-heading">
+      <form method="dialog">
+        <button class="payment-close" value="close" aria-label="Close payment">
+          <img src="assets/medsi/smartmed-diagnostics/close-banner.svg" alt="">
+        </button>
+        <h2 id="payment-heading">Pay for your appointment</h2>
+        <p>Gastroscopy · 20 Sep, 11:20</p>
+        <div class="payment-summary"><span>Bank card</span><strong>•••• 4242</strong></div>
+        <button class="booking-primary" id="confirm-payment" value="paid">Pay 5 000 ₽</button>
+      </form>
+    </dialog>
+    <div class="home-indicator" aria-hidden="true"></div>
+  </main>
+</body>
+</html>

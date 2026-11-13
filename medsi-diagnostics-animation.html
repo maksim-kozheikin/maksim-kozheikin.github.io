@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MEDSI · Diagnostic booking animation</title>
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/motion.css">
+  <script src="assets/medsi/smartmed-diagnostics/motion.js" defer></script>
+</head>
+<body>
+  <main class="preview">
+    <div class="stage" aria-label="Diagnostic booking animation">
+      <div class="camera">
+        <div class="device">
+          <iframe data-screen="entry" src="medsi-diagnostics-entry.html" title="Appointment" tabindex="-1"></iframe>
+          <iframe data-screen="catalog" src="medsi-diagnostics-specialty.html" title="Choose a diagnostic test" tabindex="-1"></iframe>
+          <iframe data-screen="types" src="medsi-diagnostics-gastroscopy.html" title="Types of gastroscopy" tabindex="-1"></iframe>
+          <iframe data-screen="doctors" src="medsi-diagnostics-select.html?flow=clinic" title="Choose a doctor and time" tabindex="-1"></iframe>
+          <iframe data-screen="confirm" src="medsi-diagnostics-booking.html?flow=clinic" title="Confirm your details" tabindex="-1"></iframe>
+          <iframe data-screen="booked" src="medsi-diagnostics-booking.html?flow=clinic&amp;state=booked" title="Appointment details" tabindex="-1"></iframe>
+          <div class="system-bar" aria-hidden="true">
+            <span>9:41</span>
+            <img src="assets/medsi/smartmed-diagnostics/signal.svg" alt="">
+            <img src="assets/medsi/smartmed-diagnostics/wifi.svg" alt="">
+            <img src="assets/medsi/smartmed-diagnostics/battery.svg" alt="">
+          </div>
+          <div class="system-home" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button type="button" id="play">Play</button>
+      <a href="medsi-diagnostics-entry.html">Try the prototype</a>
+      <input type="range" id="timeline" aria-label="Animation position" min="0" step="0.01" value="0">
+      <output for="timeline"></output>
+    </div>
+  </main>
+</body>
+</html>

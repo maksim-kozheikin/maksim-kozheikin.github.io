@@ -1,0 +1,51 @@
+:root { --stage: #F4EFEC; --shadow: #916D50; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #faf9f8; font: 14px system-ui, sans-serif; }
+.preview { width: min(100% - 24px, 720px); margin: 12px auto; }
+.stage { width: 100%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 24px; background: var(--stage); position: relative; }
+.camera { position: absolute; width: 277px; height: 600px; left: 50%; top: 50%; transform-origin: center; }
+.device {
+  position: absolute;
+  inset: 0;
+  border-radius: 17.728px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f6f6f6;
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--shadow) 28%, transparent);
+}
+.device iframe { position: absolute; inset: 0; display: block; width: 277px; height: 600px; border: 0; pointer-events: none; }
+.device iframe[aria-hidden="true"] { visibility: hidden; }
+.controls { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+.controls input { flex: 1; min-width: 0; accent-color: #00b2ac; }
+.controls button { padding: 6px 12px; }
+.capture .preview { width: 100%; margin: 0; }
+.capture .stage { border-radius: 0; }
+.capture .controls { display: none; }
+
+.system-bar {
+  position: absolute;
+  z-index: 3;
+  inset: 0 0 auto;
+  height: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 11px 11px 0 23px;
+  color: #141414;
+  font: 600 11px/13px -apple-system, sans-serif;
+  pointer-events: none;
+}
+.system-bar span { margin-right: auto; }
+.system-bar img { align-self: flex-start; margin-top: 1px; }
+.system-home {
+  position: absolute;
+  z-index: 3;
+  inset: auto auto 6px 50%;
+  width: 99.72px;
+  height: 3.693px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: #000;
+  pointer-events: none;
+}
+.controls a { color: #17645f; white-space: nowrap; }

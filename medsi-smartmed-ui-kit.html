@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartMed · Мобильный UI kit</title>
+  <link rel="stylesheet" href="assets/medsi/smartmed-diagnostics/chips.css">
+  <style>
+    @font-face { font-family: "MTS Sans"; src: url("assets/medsi/fonts/MTSSans-Regular.ttf"); font-weight: 400; }
+    @font-face { font-family: "MTS Sans"; src: url("assets/medsi/fonts/MTSSans-Medium.ttf"); font-weight: 500; }
+    body { margin: 0; background: #f6f6f6; color: #141414; font: 400 16px/24px "MTS Sans", sans-serif; }
+    main { max-width: 640px; margin: 32px auto; padding: 0 16px; }
+    h1, h2 { margin: 0; font-weight: 500; }
+    h1 { font-size: 28px; line-height: 36px; }
+    h2 { font-size: 20px; line-height: 28px; }
+    section { margin: 16px 0; padding: 20px; border-radius: 24px; background: #fff; }
+    p { margin: 6px 0 14px; }
+    .examples { display: flex; flex-wrap: wrap; gap: 4px; }
+    .account-examples { padding: 12px; border-radius: 12px; background: #ebebeb; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>SmartMed · Мобильный UI kit</h1>
+    <section id="account-chips">
+      <h2>Баланс, бонусы и город</h2>
+      <p>24 px. MTS Sans Medium 12/16. Отступы 4 px по вертикали и 8 px по бокам.</p>
+      <div class="examples account-examples">
+        <span class="smartmed-chip" data-chip="bonus"><span class="smartmed-chip-label">1 220</span><img src="assets/medsi/smartmed-diagnostics/entry-bonus.svg" alt=""></span>
+        <span class="smartmed-chip" data-chip="account"><span class="smartmed-chip-label">183 782</span><img class="smartmed-chip-currency" src="assets/medsi/smartmed-diagnostics/entry-ruble.svg" alt="₽"></span>
+        <span class="smartmed-chip" data-chip="account"><span class="smartmed-chip-label">Moscow and MO</span><img src="assets/medsi/smartmed-diagnostics/entry-location.svg" alt=""></span>
+      </div>
+    </section>
+    <section id="section-chips">
+      <h2>Recent и Favorites</h2>
+      <p>32 px. MTS Sans 12/16. Medium для выбранного пункта, Regular для остальных. Отступы 8 px по вертикали и 12 px по бокам.</p>
+      <div class="examples">
+        <span class="smartmed-chip" data-chip="section" data-selected>Recent</span>
+        <span class="smartmed-chip" data-chip="section">Favorites</span>
+      </div>
+    </section>
+    <section id="filter-chips">
+      <h2>Фильтры выбора врача</h2>
+      <p>32 px. MTS Sans 14/20. Medium для выбранного пункта, Regular для остальных. Отступы 6 px по вертикали и 16 px по бокам.</p>
+      <div class="examples">
+        <span class="smartmed-chip" data-chip="filter" data-selected>Gastroscopy</span>
+        <span class="smartmed-chip" data-chip="filter">Clinics</span>
+      </div>
+    </section>
+    <section id="time-chips">
+      <h2>Время приёма</h2>
+      <p>MTS Sans Regular 13/18 в списке врачей и 14/18 в расписании клиники. Высота 36 px.</p>
+      <div class="examples">
+        <button type="button" class="smartmed-chip" data-chip="time">08:45</button>
+        <button type="button" class="smartmed-chip" data-chip="time">11:20</button>
+        <button type="button" class="smartmed-chip" data-chip="time">12:50</button>
+        <button type="button" class="smartmed-chip" data-chip="time" aria-label="More appointment times"><img src="assets/medsi/smartmed-diagnostics/frame1851039804.svg" alt=""></button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

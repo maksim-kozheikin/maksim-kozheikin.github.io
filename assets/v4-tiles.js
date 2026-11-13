@@ -57,7 +57,7 @@ function v4Mosaic(L, mode){
       const video = `<video data-autoplay muted loop playsinline preload="none" poster="${t.poster}"${sources ? "" : ` src="${t.video}"`} aria-hidden="true" tabindex="-1">${sources}</video>`;
       img = search
         ? `<span class="m-img" id="sber-search-tile"><span class="m-search-hand">${video}</span></span>`
-        : `<span class="m-img m-video">${video}</span>`;
+        : `<span class="m-img m-video${t.w < t.h ? " m-video-portrait" : ""}">${video}</span>`;
     } else if(t.img){
       img = `<span class="m-img${t.fit==="contain"?" m-contain":""}"><img src="${t.img}" alt="" loading="lazy"></span>`;
     }
