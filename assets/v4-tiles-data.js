@@ -20,7 +20,7 @@ const V4_TILES = {
   "w:medsi-cab":[{w:8,h:5,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
   "w:medsi-ehr":[{w:12,h:7,video:"assets/medsi/ehr-motion-preview.mp4?v=visit-notes",poster:"assets/medsi/ehr-motion-poster.jpg"}],
   "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
-  "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/search-loop-no-status.mp4",poster:"assets/sber/search-loop-no-status-poster.png"}],
+  "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/chat-typing-loop.mp4",poster:"assets/sber/chat-typing-poster.png"}],
   "w:sber-video":[{w:12,h:7,video:"assets/sberlegal-demo-720.mp4",poster:"assets/sberlegal-demo-poster.jpg"}]
 };
 
@@ -52,7 +52,7 @@ const V4_WORK_TILES = [
   {id:"zephyr-3",    co:"ZephyrLab",   ti:{ru:"ZephyrLab",en:"ZephyrLab"},               href:"case-zephyr.html"},
   {id:"freelance-1", co:{ru:"Фриланс",en:"Freelance"},     ti:{ru:"Фриланс",en:"Freelance"},                 href:"life.html?id=freelance"},
   {id:"edu-1",       co:{ru:"Обучение",en:"Education"},    ti:{ru:"Обучение",en:"Education"},                href:"life.html?id=education"},
-  {id:"sber-search", co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Поиск юриста",en:"Finding a lawyer"},      href:"case-sberpravo.html#flow-design"}
+  {id:"sber-search", co:{ru:"СберПраво",en:"SberPravo"},   ti:{ru:"Чат с юристом",en:"Chat with a lawyer"},     href:"case-sberpravo.html#flow-design"}
 ];
 
 /* Lead with the MEDSI demos, followed by the SberPravo tiles. */
