@@ -16,7 +16,7 @@
 ============================================================ */
 const V4_TILES = {
   medsi:[{w:12,h:6,img:"assets/ru-medsi-One-visual-style.webp",fit:"contain"}],
-  "w:medsi-app":[{w:4,h:5,video:"assets/medsi/diagnostics-closed-loop-v6.mp4",poster:"assets/medsi/diagnostics-closed-loop-v6-poster.jpg"}],
+  "w:medsi-app":[{w:4,h:5,video:"assets/medsi/diagnostics-closed-loop-v9.mp4",poster:"assets/medsi/diagnostics-closed-loop-v6-poster.jpg"}],
   "w:medsi-cab":[{w:8,h:5,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
   "w:medsi-ehr":[{w:12,h:7,video:"assets/medsi/ehr-motion-preview.mp4?v=visit-notes",poster:"assets/medsi/ehr-motion-poster.jpg"}],
   "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
