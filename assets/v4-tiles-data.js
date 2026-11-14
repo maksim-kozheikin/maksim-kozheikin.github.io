@@ -20,7 +20,7 @@ const V4_TILES = {
   "w:medsi-cab":[{w:8,h:5,video:"assets/medsi/schedule-loop.mp4?v=in-window-notices",videoMobile:"assets/medsi/schedule-loop-720.mp4?v=in-window-notices",poster:"assets/medsi/schedule-loop-poster.png?v=in-window-notices"}],
   "w:medsi-ehr":[{w:12,h:7,video:"assets/medsi/ehr-motion-preview.mp4?v=visit-notes",poster:"assets/medsi/ehr-motion-poster.jpg"}],
   "w:sber-app":[{w:8,h:5,motion:"sber-app"}],
-  "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/chat-typing-loop.mp4",poster:"assets/sber/chat-typing-poster.png"}],
+  "w:sber-search":[{w:4,h:5,motion:"sber-search",video:"assets/sber/chat-typing-bubble-loop.mp4",poster:"assets/sber/chat-typing-bubble-poster.png"}],
   "w:sber-video":[{w:12,h:7,video:"assets/sberlegal-demo-720.mp4",poster:"assets/sberlegal-demo-poster.jpg"}]
 };
 
